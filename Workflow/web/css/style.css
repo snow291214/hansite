@@ -1,0 +1,15 @@
+.checklistbox {
+    overflow: -moz-scrollbars-vertical !important;
+    overflow: auto;
+    border-top: 1px solid silver;
+    border-left: 1px solid silver;
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    background-color: white;
+    padding: 10px;
+    height: 400px;
+    width: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    text-align: left;
+}
