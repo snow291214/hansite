@@ -52,7 +52,7 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-<!--
+
     <filter>
         <filter-name>ntlmHttpFilter</filter-name>
         <filter-class>ru.sgnhp.NtlmHttpFilter</filter-class>
@@ -73,5 +73,5 @@
         <filter-name>ntlmHttpFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
--->
+
 </web-app>

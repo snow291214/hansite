@@ -61,18 +61,15 @@ public class NtlmHttpFilter extends jcifs.http.NtlmHttpFilter {
      * and then <tt>chain.doFilter</tt>. You can override and call
      * negotiate manually to achive a variety of different behavior.
      */
-
-    
     @Override
-    public void doFilter(ServletRequest request,
-            ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         NtlmPasswordAuthentication ntlm = null;
 
-        if ((ntlm != null) && (ntlm.getUsername().startsWith("DOSNOS"))) {
+        if ((req.getRemoteAddr().startsWith("192"))) {
+            log.println("Address: " + req.getRemoteAddr());
             Config.setProperty("jcifs.smb.lmCompatibility", "0");
             Config.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
             Config.setProperty("jcifs.http.domainController", "sigma.dosnos.local");
@@ -85,7 +82,6 @@ public class NtlmHttpFilter extends jcifs.http.NtlmHttpFilter {
             Config.setProperty("jcifs.netbios.wins", "10.1.32.1");
             Config.setProperty("jcifs.smb.client.domain", "ASU");
         }
-
 
         if ((ntlm = negotiate(req, resp, false)) == null) {
             if ((ntlm = negotiate(req, resp, false)) == null) {
@@ -107,6 +103,7 @@ public class NtlmHttpFilter extends jcifs.http.NtlmHttpFilter {
      * HttpServletResponse.SC_UNAUTHORIZED).
      * @return True if the negotiation is complete, otherwise false
      */
+    @Override
     protected NtlmPasswordAuthentication negotiate(HttpServletRequest req,
             HttpServletResponse resp,
             boolean skipAuthentication) throws IOException, ServletException {

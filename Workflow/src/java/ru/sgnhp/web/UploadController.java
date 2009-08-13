@@ -32,7 +32,7 @@ public class UploadController extends SimpleFormController {
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
-        
+
         /* Сохраняем задание */
         Task task = (Task) request.getSession().getAttribute("task");
         task = taskManagerService.saveTask(task);
@@ -60,6 +60,8 @@ public class UploadController extends SimpleFormController {
             bean.setContentStream(((MultipartFile) file).getInputStream());
             uploadManagerService.saveFile(bean);
         }
+        request.getSession().setAttribute("task", null);
+        request.getSession().setAttribute("checks", null);
         return new ModelAndView(getSuccessView(), getCommandName(), command);
     }
 

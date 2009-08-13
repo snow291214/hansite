@@ -47,6 +47,8 @@ public class RegisterTaskFormController extends SimpleFormController {
                 wf.setAssignDate(task.getStartDate());
                 workflowManagerService.assignTaskToUser(wf);
             }
+            request.getSession().setAttribute("task", null);
+            request.getSession().setAttribute("checks", null);
             this.setSuccessView("index.htm");
         }
         return new ModelAndView(new RedirectView(getSuccessView()));
