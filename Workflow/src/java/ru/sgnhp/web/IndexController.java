@@ -18,7 +18,9 @@ public class IndexController implements Controller {
     private IUserManagerService userManagerService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        WorkflowUser user = userManagerService.getUserByLogin(request.getRemoteUser());
+        //WorkflowUser user = userManagerService.getUserByLogin(request.getRemoteUser());
+        String login = ((WorkflowUser)request.getSession().getAttribute("initiator")).getLogin();
+        WorkflowUser user = userManagerService.getUserByLogin(login);
         //WorkflowUser user = userManagerService.getUserByLogin("ASU\\48han");
         /*
          * Смысл такой: если в базе нет такого пользователя, его сохраняем в базу,
@@ -27,10 +29,9 @@ public class IndexController implements Controller {
          *
          */
         if (user == null) {
-            user = new WorkflowUser();
-            user.setLogin(request.getRemoteUser());
+            user = (WorkflowUser)request.getSession().getAttribute("initiator");
             userManagerService.registerNewUser(user);
-            user = userManagerService.getUserByLogin(request.getRemoteUser());
+            user = userManagerService.getUserByLogin(login);
         }
         request.getSession().setAttribute("initiator", user);
         return new ModelAndView("index");

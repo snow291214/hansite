@@ -23,6 +23,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="registerTask.htm">newTaskFormController</prop>
                 <prop key="upload.htm">uploadController</prop>
                 <prop key="success.htm">successController</prop>
+                <prop key="authentication.htm">loginFormController</prop>
             </props>
         </property>
     </bean>
@@ -94,14 +95,44 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     </bean>
 
     <!-- Success Controller-->
-
     <bean id="successController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" p:viewName="success" />
+
+    <!-- Login Form Controller-->
+    <bean name="loginFormController" class="ru.sgnhp.web.LoginFormController" >
+        <property name="sessionForm">
+            <value>true</value>
+        </property>
+        <property name="commandName">
+            <value>userLogin</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.domain.UserLogin</value>
+        </property>
+        <property name="validator">
+            <ref bean="loginFormValidator"/>
+        </property>
+        <property name="formView">
+            <value>login</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="authenticationDAO">
+            <ref bean="authenticationDAO" />
+        </property>
+    </bean>
 
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">
         <property name="taskManagerService">
             <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+
+    <bean id="loginFormValidator" class="ru.sgnhp.web.validator.LoginFormValidator">
+        <property name="authenticationDAO">
+            <ref bean="authenticationDAO" />
         </property>
     </bean>
 
@@ -147,6 +178,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="uploadDao" ref="uploadDao"/>
     </bean>
 
+    <bean id="authenticationDAO" class="ru.sgnhp.dao.impl.AuthenticationDaoImpl" />
+
     <!-- =================================================================== -->
     <!-- Transaction-wrapped Services                                        -->
     <!-- =================================================================== -->
@@ -158,6 +191,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="transactionAttributes">
             <props>
                 <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="register*">PROPAGATION_REQUIRED</prop>
                 <prop key="add*">PROPAGATION_REQUIRED</prop>
                 <prop key="save*">PROPAGATION_REQUIRED</prop>
                 <prop key="update*">PROPAGATION_REQUIRED</prop>

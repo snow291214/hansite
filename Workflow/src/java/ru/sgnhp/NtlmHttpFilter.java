@@ -45,11 +45,11 @@ import jcifs.util.LogStream;
 public class NtlmHttpFilter extends jcifs.http.NtlmHttpFilter {
 
     private static LogStream log = LogStream.getInstance();
-    private String defaultDomain = "snos.ru";
-    private String domainController = "lyra.snos.ru";
+    private String defaultDomain;// = "snos.ru";
+    private String domainController;// = "lyra.snos.ru";
     private boolean loadBalance;
-    private boolean enableBasic;
-    private boolean insecureBasic;
+    private boolean enableBasic = false;
+    private boolean insecureBasic = true;
     private String realm;
 
     @Override
@@ -68,20 +68,20 @@ public class NtlmHttpFilter extends jcifs.http.NtlmHttpFilter {
         HttpServletResponse resp = (HttpServletResponse) response;
         NtlmPasswordAuthentication ntlm = null;
 
-        if ((req.getRemoteAddr().startsWith("192"))) {
-            log.println("Address: " + req.getRemoteAddr());
-            Config.setProperty("jcifs.smb.lmCompatibility", "0");
-            Config.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
-            Config.setProperty("jcifs.http.domainController", "sigma.dosnos.local");
-            Config.setProperty("jcifs.netbios.wins", "192.168.2.40");
-            Config.setProperty("jcifs.smb.client.domain", "DOSNOS");
+        /*if ((req.getRemoteAddr().startsWith("192"))) {
+        //log.println("Address: " + req.getRemoteAddr());
+        Config.setProperty("jcifs.smb.lmCompatibility", "0");
+        Config.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
+        Config.setProperty("jcifs.http.domainController", "sigma.dosnos.local");
+        Config.setProperty("jcifs.netbios.wins", "192.168.2.40");
+        Config.setProperty("jcifs.smb.client.domain", "DOSNOS.LOCAL");
         } else {
-            Config.setProperty("jcifs.smb.lmCompatibility", "0");
-            Config.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
-            Config.setProperty("jcifs.http.domainController", "lyra.snos.ru");
-            Config.setProperty("jcifs.netbios.wins", "10.1.32.1");
-            Config.setProperty("jcifs.smb.client.domain", "ASU");
-        }
+        Config.setProperty("jcifs.smb.lmCompatibility", "0");
+        Config.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
+        Config.setProperty("jcifs.http.domainController", "lyra.snos.ru");
+        Config.setProperty("jcifs.netbios.wins", "10.1.32.1");
+        Config.setProperty("jcifs.smb.client.domain", "ASU");
+        }*/
 
         if ((ntlm = negotiate(req, resp, false)) == null) {
             if ((ntlm = negotiate(req, resp, false)) == null) {
@@ -130,6 +130,13 @@ public class NtlmHttpFilter extends jcifs.http.NtlmHttpFilter {
                     dc = chal.dc;
                     challenge = chal.challenge;
                 } else {
+                    if ((req.getRemoteAddr().startsWith("192"))) {
+                        defaultDomain = "DOSNOS";
+                        domainController = "sigma.dosnos.local";
+                    } else {
+                        defaultDomain = "ASU";
+                        domainController = "lyra.snos.ru";
+                    }
                     dc = UniAddress.getByName(domainController, true);
                     challenge = SmbSession.getChallenge(dc);
                 }

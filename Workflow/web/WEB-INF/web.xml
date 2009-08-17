@@ -54,23 +54,15 @@
     </filter-mapping>
 
     <filter>
-        <filter-name>ntlmHttpFilter</filter-name>
-        <filter-class>ru.sgnhp.NtlmHttpFilter</filter-class>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>ru.sgnhp.ldap.authentication.LDAPAuthenticationFilter</filter-class>
         <init-param>
-            <param-name>jcifs.util.loglevel</param-name>
-            <param-value>2</param-value>
-        </init-param>
-        <init-param>
-            <param-name>jcifs.smb.lmCompatibility</param-name>
-            <param-value>0</param-value>
-        </init-param>
-        <init-param>
-            <param-name>jcifs.smb.client.useExtendedSecurity</param-name>
-            <param-value>false</param-value>
+            <param-name>encoding</param-name>
+            <param-value>authentication.htm</param-value>
         </init-param>
     </filter>
     <filter-mapping>
-        <filter-name>ntlmHttpFilter</filter-name>
+        <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
