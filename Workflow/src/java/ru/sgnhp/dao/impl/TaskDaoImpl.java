@@ -43,7 +43,12 @@ public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
     }
 
     public Task getTaskByUid(Long uid) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<Task> task = getSimpleJdbcTemplate().query(SELECT+" Where Uid = ?", new UserMapper(), uid);
+        if (task.size() > 0) {
+            return (Task) task.toArray()[0];
+        } else {
+            return null;
+        }
     }
 
     public Task getTaskByInternalNumber(String number) {

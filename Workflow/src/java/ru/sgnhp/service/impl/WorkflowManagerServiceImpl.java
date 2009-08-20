@@ -1,9 +1,11 @@
 package ru.sgnhp.service.impl;
 
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.Workflow;
+import ru.sgnhp.domain.WorkflowUser;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
@@ -23,6 +25,10 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService{
 
     public void setWorkflowDao(IWorkflowDao workflowDao) {
         this.workflowDao = workflowDao;
+    }
+
+    public List<Workflow> getAssignedWorkflows(WorkflowUser user) {
+        return workflowDao.getWorkflowByUserUid(user.getUid());
     }
 
 }

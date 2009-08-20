@@ -1,5 +1,7 @@
 package ru.sgnhp.domain;
 
+import java.util.List;
+
 /*****
  *
  * @author Alexey Khudyakov
@@ -17,6 +19,7 @@ public class WorkflowUser {
     private String firstName;
     private String email;
     private Long groupUid;
+    private List<Workflow> workflows;
 
     /**
      * @return the uid
@@ -115,4 +118,13 @@ public class WorkflowUser {
     public void setGroupUid(Long groupUid) {
         this.groupUid = groupUid;
     }
+
+    public List<Workflow> getWorkflows() {
+        return workflows;
+    }
+
+    public void setWorkflows(List<Workflow> workflows) {
+        this.workflows = workflows;
+    }
+
 }

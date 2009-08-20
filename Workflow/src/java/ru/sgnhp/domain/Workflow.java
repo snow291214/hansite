@@ -1,7 +1,5 @@
 package ru.sgnhp.domain;
 
-import java.sql.Date;
-
 /*****
  *
  * @author Alexey Khudyakov
@@ -18,6 +16,7 @@ public class Workflow {
     private Short state;
     private String assignDate;
     private String finishDate;
+    private Task task;
 
     public Long getUid() {
         return uid;
@@ -82,4 +81,14 @@ public class Workflow {
     public void setFinishDate(String finishDate) {
         this.finishDate = finishDate;
     }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+
 }

@@ -31,7 +31,7 @@ public class TaskManagerServiceImpl implements ITaskManagerService {
     }
 
     public Task getTaskByUid(Long uid) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return taskDao.getTaskByUid(uid);
     }
 
     public void assignTaskToUser(String taskInternalNumber, Long initiatorUid, Long recipientUid) {

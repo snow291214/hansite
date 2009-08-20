@@ -1,5 +1,6 @@
 package ru.sgnhp.dao;
 
+import java.util.List;
 import ru.sgnhp.domain.Workflow;
 
 /*****
@@ -11,4 +12,5 @@ import ru.sgnhp.domain.Workflow;
  */
 public interface IWorkflowDao {
     void saveWorkflow(Workflow _workflow);
+    List<Workflow> getWorkflowByUserUid(Long userUid);
 }

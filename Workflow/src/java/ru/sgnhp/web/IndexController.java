@@ -18,7 +18,6 @@ public class IndexController implements Controller {
     private IUserManagerService userManagerService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //WorkflowUser user = userManagerService.getUserByLogin(request.getRemoteUser());
         String login = ((WorkflowUser)request.getSession().getAttribute("initiator")).getLogin();
         WorkflowUser user = userManagerService.getUserByLogin(login);
         //WorkflowUser user = userManagerService.getUserByLogin("ASU\\48han");
@@ -37,10 +36,8 @@ public class IndexController implements Controller {
         return new ModelAndView("index");
     }
 
-    /**
-     * @param userManagerService the userManagerService to set
-     */
     public void setUserManagerService(IUserManagerService userManagerService) {
         this.userManagerService = userManagerService;
     }
+
 }

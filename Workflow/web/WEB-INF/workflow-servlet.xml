@@ -141,6 +141,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!--User DAO-->
     <bean id="userDao" class="ru.sgnhp.dao.impl.UserDaoImpl">
         <property name="dataSource" ref="dataSource"/>
+        <property name="workflowManagerService" ref="workflowManagerService"/>
     </bean>
 
     <!--User Manager service target bean-->
@@ -161,6 +162,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!--Workflow DAO-->
     <bean id="workflowDao" class="ru.sgnhp.dao.impl.WorkflowDaoImpl">
         <property name="dataSource" ref="dataSource"/>
+        <property name="taskManagerService" ref="taskManagerService"/>
     </bean>
 
     <!--Workflow Manager service target bean-->
@@ -287,6 +289,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
     <!-- MultipartResolver for parsing file uploads, implementation for Commons FileUpload -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="100000"/>
+        <property name="maxUploadSize" value="1024000000"/>
     </bean>
 </beans>
