@@ -40,6 +40,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="userManagerService">
             <ref bean="userManagerService"/>
         </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
     </bean>
 
     <!-- Register Task Form Controller-->
@@ -108,9 +111,11 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="commandClass">
             <value>ru.sgnhp.domain.UserLogin</value>
         </property>
+        <!--
         <property name="validator">
             <ref bean="loginFormValidator"/>
         </property>
+        -->
         <property name="formView">
             <value>login</value>
         </property>
@@ -152,6 +157,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!--Task DAO-->
     <bean id="taskDao" class="ru.sgnhp.dao.impl.TaskDaoImpl">
         <property name="dataSource" ref="dataSource"/>
+        <property name="uploadManagerService" ref="uploadManagerService"/>
     </bean>
 
     <!--Task Manager service target bean-->

@@ -1,7 +1,6 @@
 package ru.sgnhp.web.validator;
 
 import java.util.Map;
-import javax.naming.directory.Attributes;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
