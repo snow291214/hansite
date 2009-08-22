@@ -33,8 +33,13 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements IUserDao {
                 user.getEmail(), user.getGroupUid());
     }
 
-    public WorkflowUser getByUid(String userUid) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public WorkflowUser getByUid(Long userUid) {
+        List<WorkflowUser> users = getSimpleJdbcTemplate().query("Select * From users Where Uid=?", new UserMapper(workflowManagerService), userUid);
+        if (users.size() > 0) {
+            return (WorkflowUser) users.toArray()[0];
+        } else {
+            return null;
+        }
     }
 
     public WorkflowUser getByLogin(String login) {
@@ -54,7 +59,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements IUserDao {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void deleteByUid(String userUid) {
+    public void deleteByUid(Long userUid) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -88,7 +93,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements IUserDao {
         user.setMiddleName(rs.getString("MiddleName"));
         user.setFirstName(rs.getString("FirstName"));
         user.setEmail(rs.getString("Email"));
-        user.setWorkflows(workflowManagerService.getAssignedWorkflows(user));
+        user.setWorkflows(workflowManagerService.getRecievedWorkflowsByUid(user.getUid()));
         return user;
     }
     }

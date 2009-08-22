@@ -34,14 +34,14 @@
         </div>
     </div>
     <div class="empty">
-        <c:forEach var="wf" items="${sessionScope.initiator.workflows}">
+        <c:forEach var="wf" items="${requestScope.assigned}">
             <div>
-                <div class="header red">
+                <div class="header blue">
                     Задача № <c:out value="${wf.task.internalNumber}"/>. <c:out value="${wf.task.description}"/>
                 </div>
                 <div>
-                    <!--Описание задачи: <c:out value="${wf.task.description}"/><br />-->
-                    Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>
+                    <!--Описание задачи: <br />-->
+                    Задачу создана для: <c:out value="${wf.receiver.lastName} ${wf.receiver.firstName} ${wf.receiver.middleName}"/>
                     Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.startDate}"/><br />
                     <div class="content">
                         Резолюция к задаче: <c:out value="${wf.description}"/>. Дата назначения задачи: <c:out value="${wf.assignDate}"/>.<br />

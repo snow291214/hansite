@@ -24,6 +24,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="upload.htm">uploadController</prop>
                 <prop key="success.htm">successController</prop>
                 <prop key="authentication.htm">loginFormController</prop>
+                <prop key="assignedTask.htm">assignedTaskViewController</prop>
             </props>
         </property>
     </bean>
@@ -124,6 +125,16 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
         <property name="authenticationDAO">
             <ref bean="authenticationDAO" />
+        </property>
+    </bean>
+
+    <!--Recieved Task Controller-->
+    <bean name="assignedTaskViewController" class="ru.sgnhp.web.AssignedTaskViewController" >
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
         </property>
     </bean>
 

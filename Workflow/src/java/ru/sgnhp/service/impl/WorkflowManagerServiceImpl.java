@@ -5,7 +5,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.Workflow;
-import ru.sgnhp.domain.WorkflowUser;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
@@ -27,8 +26,12 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService{
         this.workflowDao = workflowDao;
     }
 
-    public List<Workflow> getAssignedWorkflows(WorkflowUser user) {
-        return workflowDao.getWorkflowByUserUid(user.getUid());
+    public List<Workflow> getRecievedWorkflowsByUid(Long uid) {
+        return workflowDao.getRecievedWorkflowsByUserUid(uid);
+    }
+
+    public List<Workflow> getAssignedWorkflowsByParentUid(Long parentUid) {
+        return workflowDao.getAssignedWorkflowsByUserUid(parentUid);
     }
 
 }
