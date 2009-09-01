@@ -44,12 +44,13 @@
                     Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>
                     Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.startDate}"/><br />
                     <div class="content">
-                        Резолюция к задаче: <c:out value="${wf.description}"/>. Дата назначения задачи: <c:out value="${wf.assignDate}"/>.<br />
+                        Резолюция к задаче: <c:out value="${wf.description}"/>. Дата назначения задачи: <c:out value="${wf.assignDate}"/>. Состояние задачи: <c:out value="${wf.state}"/>.<br />
                         Файлы, прикрепленные к задаче:
                         <c:forEach var = "taskFile" items="${wf.task.taskFiles}">
                             <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
                         </c:forEach>
                         <br />
+                        <a href="<c:url value="selectUsers.htm?workflowID=${wf.uid}" />">Передать задачу</a>
                         <a href="<c:url value="taskdetails.htm?taskID=${wf.task.uid}" />">Управление задачей</a>
                     </div>
                 </div>

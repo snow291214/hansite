@@ -50,7 +50,7 @@ public class RegisterTaskFormController extends SimpleFormController {
                 wf.setParentUserUid(initiator.getUid());
                 wf.setUserUid(Long.valueOf(uid));
                 wf.setDescription(task.getDescription());
-                wf.setState(Short.valueOf("0"));
+                wf.setState("0");
                 wf.setAssignDate(task.getStartDate());
                 workflowManagerService.assignTaskToUser(wf);
             }

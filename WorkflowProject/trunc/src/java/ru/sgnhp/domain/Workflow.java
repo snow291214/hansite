@@ -14,7 +14,7 @@ public class Workflow {
     private Long parentUserUid;
     private Long userUid;
     private String description;
-    private Short state;
+    private String state;
     private String assignDate;
     private String finishDate;
     private Task task;
@@ -61,11 +61,11 @@ public class Workflow {
         this.description = description;
     }
 
-    public Short getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(Short state) {
+    public void setState(String state) {
         this.state = state;
     }
 

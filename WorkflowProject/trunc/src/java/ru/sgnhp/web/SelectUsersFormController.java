@@ -19,6 +19,7 @@ import ru.sgnhp.service.IUserManagerService;
 public class SelectUsersFormController extends AbstractController {
 
     private IUserManagerService userManagerService;
+    private String workflowUid;
 
     public IUserManagerService getUserManagerService() {
         return userManagerService;
@@ -29,13 +30,23 @@ public class SelectUsersFormController extends AbstractController {
     }
 
     @Override
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return super.handleRequest(request, response);
+    }
+
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setAttribute("actionUrl", "selectUsers.htm");
         String[] checks = request.getParameterValues("checks");
         if ((checks != null) && (checks.length > 0)) {
             request.getSession().setAttribute("checks", checks);
-            return new ModelAndView(new RedirectView("registerTask.htm"));
+            if (workflowUid == null) {
+                return new ModelAndView(new RedirectView("registerTask.htm"));
+            }else{
+                return new ModelAndView(new RedirectView("assignTask.htm"), "workflowID", workflowUid);
+            }
         } else {
+            workflowUid = request.getParameter("workflowID");
             List<WorkflowUser> users = userManagerService.getAllNormalizedUsers();
             return new ModelAndView("selectUsers", "users", users);
         }

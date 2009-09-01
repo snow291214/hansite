@@ -11,8 +11,14 @@ import ru.sgnhp.domain.Workflow;
  *****
  */
 public interface IWorkflowManagerService {
+
     void assignTaskToUser(Workflow _workflow);
-    Workflow getWorkflowByUid(String workflowUid);
+
+    Workflow getWorkflowByUid(Long workflowUid);
+
     List<Workflow> getRecievedWorkflowsByUid(Long uid);
+
     List<Workflow> getAssignedWorkflowsByParentUid(Long parentUid);
+
+    void updateWorkflow(Workflow _workflow);
 }

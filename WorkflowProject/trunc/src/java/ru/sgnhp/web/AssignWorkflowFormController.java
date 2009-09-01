@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.web.servlet.view.RedirectView;
+import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.Workflow;
 import ru.sgnhp.service.IWorkflowManagerService;
 
@@ -22,13 +24,25 @@ public class AssignWorkflowFormController extends SimpleFormController {
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
-        return null;
+        Workflow workflow = (Workflow) command;
+        workflow.setState("1");
+        workflowManagerService.updateWorkflow(workflow);
+        String[] userUids = (String[]) request.getSession().getAttribute("checks");
+        for (String uid : userUids) {
+            workflow.setUserUid(Long.valueOf(uid));
+            workflow.setAssignDate(DateUtils.nowString());
+            workflow.setState("0");
+            workflowManagerService.assignTaskToUser(workflow);
+        }
+        return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         String workflowUid = request.getParameter("workflowID");
-        Workflow workflow = workflowManagerService.getWorkflowByUid(workflowUid);
+        Workflow workflow = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
+        workflow.setParentUid(Long.parseLong(workflowUid));
+        workflow.setDescription("");
         return workflow;
     }
 

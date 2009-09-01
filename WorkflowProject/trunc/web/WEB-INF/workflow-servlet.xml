@@ -25,7 +25,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="success.htm">successController</prop>
                 <prop key="authentication.htm">loginFormController</prop>
                 <prop key="assignedTask.htm">assignedTaskViewController</prop>
-                <prop key="assignTask.htm">assingTaskController</prop>
+                <prop key="assignTask.htm">assingTaskFormController</prop>
                 <!--<prop key="workflowManager.htm">workflowManagerController</prop>-->
             </props>
         </property>
@@ -140,7 +140,15 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
-    <bean name="assingTaskController" class="ru.sgnhp.web.AssignWorkflowFormController">
+    <bean name="assingTaskFormController" class="ru.sgnhp.web.AssignWorkflowFormController">
+        <property name="commandName" value="assignWorkflow"/>
+        <property name="commandClass" value="ru.sgnhp.domain.Workflow"/>
+        <property name="formView">
+            <value>assignWorkflow</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
         </property>
@@ -267,7 +275,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
             <props>
                 <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
                 <prop key="add*">PROPAGATION_REQUIRED</prop>
-                <prop key="assign*">PROPAGATION_REQUIRED</prop>
                 <prop key="save*">PROPAGATION_REQUIRED</prop>
                 <prop key="update*">PROPAGATION_REQUIRED</prop>
                 <prop key="delete*">PROPAGATION_REQUIRED</prop>
