@@ -25,7 +25,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="success.htm">successController</prop>
                 <prop key="authentication.htm">loginFormController</prop>
                 <prop key="assignedTask.htm">assignedTaskViewController</prop>
-                <prop key="taskManager.htm">taskManagerController</prop>
+                <prop key="assignTask.htm">assingTaskController</prop>
+                <!--<prop key="workflowManager.htm">workflowManagerController</prop>-->
             </props>
         </property>
     </bean>
@@ -87,7 +88,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="commandName" value="fileUpload"/>
         <property name="commandClass" value="ru.sgnhp.domain.FileUploadBean"/>
         <property name="formView" value="upload" />
-        <property name="successView" value="index" />
+        <property name="successView" value="index.htm" />
         <property name="uploadManagerService">
             <ref bean="uploadManagerService"/>
         </property>
@@ -134,6 +135,12 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="userManagerService">
             <ref bean="userManagerService"/>
         </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <bean name="assingTaskController" class="ru.sgnhp.web.AssignWorkflowFormController">
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
         </property>

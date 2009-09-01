@@ -41,7 +41,7 @@
                 </div>
                 <div>
                     <!--Описание задачи: <br />-->
-                    Задачу создана для: <c:out value="${wf.receiver.lastName} ${wf.receiver.firstName} ${wf.receiver.middleName}"/>
+                    Задача создана для: <c:out value="${wf.receiver.lastName} ${wf.receiver.firstName} ${wf.receiver.middleName}"/>
                     Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.startDate}"/><br />
                     <div class="content">
                         Резолюция к задаче: <c:out value="${wf.description}"/>. Дата назначения задачи: <c:out value="${wf.assignDate}"/>.<br />
@@ -50,7 +50,8 @@
                             <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
                         </c:forEach>
                         <br />
-                        <a href="<c:url value="taskdetails.htm?taskID=${wf.task.uid}" />">Управление задачей</a>
+                        <a href="<c:url value="assignTask.htm?workflowID=${wf.uid}" />">Переназначить задачу</a>
+                        <a href="<c:url value="workflowManager.htm?workflowID=${wf.uid}" />">Детали задачи</a>
                     </div>
                 </div>
             </div>

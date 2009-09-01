@@ -46,6 +46,17 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
         this.taskManagerService = taskManagerService;
     }
 
+    public Workflow getWorkflowByUid(String workflowUid) {
+        List<Workflow> workflows = getSimpleJdbcTemplate().query(SELECT +
+                "  WHERE  workflows.Uid = ? order by AssignDate, State",
+                new WorkflowMapper(taskManagerService), workflowUid);
+        if (workflows.size() > 0) {
+            return (Workflow) workflows.toArray()[0];
+        } else {
+            return null;
+        }
+    }
+
     private static class WorkflowMapper implements ParameterizedRowMapper<Workflow> {
         
         private ITaskManagerService taskManagerService;
@@ -60,6 +71,7 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
         public Workflow mapRow(ResultSet rs, int rowNum) throws SQLException {
             Workflow workflow = new Workflow();
             workflow.setUid(rs.getLong("Uid"));
+            workflow.setParentUid(rs.getLong("ParentUid"));
             workflow.setTaskUid(rs.getLong("TaskUid"));
             workflow.setParentUserUid(rs.getLong("ParentUserUid"));
             workflow.setUserUid(rs.getLong("UserUid"));

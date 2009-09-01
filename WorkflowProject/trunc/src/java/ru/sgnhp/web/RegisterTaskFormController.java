@@ -19,6 +19,12 @@ import ru.sgnhp.service.IWorkflowManagerService;
  * @author Alexey Khudyakov
  * @company "Salavatgazoneftehimproekt" Ltd
  *
+ * Отличие от CreateAssignWorkflowFormController в  том, что здесь первичный
+ * ввод задачи.
+ * Заполняются атрибуты, потом сохраняется задача, потом создается воркфлоу.
+ * CreateAssignWorkflowFormController делает то же самое, только можно указать
+ * резолюцию.
+ * 
  *****
  */
 public class RegisterTaskFormController extends SimpleFormController {
@@ -39,6 +45,7 @@ public class RegisterTaskFormController extends SimpleFormController {
             String[] userUids = (String[]) request.getSession().getAttribute("checks");
             for (String uid : userUids) {
                 Workflow wf = new Workflow();
+                wf.setParentUid(Long.parseLong("-1"));
                 wf.setTaskUid(task.getUid());
                 wf.setParentUserUid(initiator.getUid());
                 wf.setUserUid(Long.valueOf(uid));
@@ -64,11 +71,14 @@ public class RegisterTaskFormController extends SimpleFormController {
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         request.setAttribute("actionUrl", "registerTask.htm");
-        Task task = new Task();
-        task.setInternalNumber(taskManagerService.getTaskNewNumber());
-        task.setExternalNumber("б/н");
-        task.setStartDate(DateUtils.nowString());
-        task.setDueDate(DateUtils.increaseDateString(3));
+        Task task = (Task) request.getAttribute("task");
+        if (task == null) {
+            task = new Task();
+            task.setInternalNumber(taskManagerService.getTaskNewNumber());
+            task.setExternalNumber("б/н");
+            task.setStartDate(DateUtils.nowString());
+            task.setDueDate(DateUtils.increaseDateString(3));
+        }
         return task;
     }
 

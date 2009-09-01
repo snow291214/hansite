@@ -34,4 +34,8 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService{
         return workflowDao.getAssignedWorkflowsByUserUid(parentUid);
     }
 
+    public Workflow getWorkflowByUid(String workflowUid) {
+       return workflowDao.getWorkflowByUid(workflowUid);
+    }
+
 }

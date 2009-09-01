@@ -26,7 +26,6 @@ import ru.sgnhp.service.IWorkflowManagerService;
  */
 public class UploadController extends SimpleFormController {
 
-    private static final String destinationDir = "C:/temp/";
     private IUploadManagerService uploadManagerService;
     private ITaskManagerService taskManagerService;
     private IWorkflowManagerService workflowManagerService;

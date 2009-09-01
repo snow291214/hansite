@@ -9,6 +9,7 @@ package ru.sgnhp.domain;
  */
 public class Workflow {
     private Long uid;
+    private Long parentUid;
     private Long taskUid;
     private Long parentUserUid;
     private Long userUid;
@@ -106,5 +107,13 @@ public class Workflow {
 
     public void setReceiver(WorkflowUser receiver) {
         this.receiver = receiver;
+    }
+
+    public Long getParentUid() {
+        return parentUid;
+    }
+
+    public void setParentUid(Long parentUid) {
+        this.parentUid = parentUid;
     }
 }

@@ -14,6 +14,8 @@ public interface IWorkflowDao {
 
     void saveWorkflow(Workflow _workflow);
 
+    Workflow getWorkflowByUid(String workflowUid);
+
     List<Workflow> getRecievedWorkflowsByUserUid(Long userUid);
 
     List<Workflow> getAssignedWorkflowsByUserUid(Long userUid);
