@@ -42,6 +42,7 @@ public class UploadController extends SimpleFormController {
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
         for (String uid : userUids) {
             Workflow wf = new Workflow();
+            wf.setParentUid(Long.parseLong("-1"));
             wf.setTaskUid(task.getUid());
             wf.setParentUserUid(initiator.getUid());
             wf.setUserUid(Long.valueOf(uid));
@@ -50,6 +51,7 @@ public class UploadController extends SimpleFormController {
             wf.setAssignDate(task.getStartDate());
             workflowManagerService.assignTaskToUser(wf);
         }
+
         /* Сохраняем файлы */
         final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
         final Map files = multiRequest.getFileMap();
