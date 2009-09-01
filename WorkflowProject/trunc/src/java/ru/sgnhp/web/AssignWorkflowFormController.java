@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.Workflow;
+import ru.sgnhp.domain.WorkflowUser;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
@@ -25,10 +26,12 @@ public class AssignWorkflowFormController extends SimpleFormController {
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         Workflow workflow = (Workflow) command;
+        WorkflowUser initiator = (WorkflowUser) request.getSession().getAttribute("initiator");
         workflow.setState("1");
         workflowManagerService.updateWorkflow(workflow);
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
         for (String uid : userUids) {
+            workflow.setParentUserUid(initiator.getUid());
             workflow.setUserUid(Long.valueOf(uid));
             workflow.setAssignDate(DateUtils.nowString());
             workflow.setState("0");
