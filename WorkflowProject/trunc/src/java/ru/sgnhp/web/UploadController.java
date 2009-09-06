@@ -10,11 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.domain.FileUploadBean;
-import ru.sgnhp.domain.Task;
-import ru.sgnhp.domain.Workflow;
-import ru.sgnhp.domain.WorkflowUser;
+import ru.sgnhp.domain.TaskBean;
+import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.ITaskManagerService;
 import ru.sgnhp.service.IUploadManagerService;
+import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
@@ -29,19 +30,20 @@ public class UploadController extends SimpleFormController {
     private IUploadManagerService uploadManagerService;
     private ITaskManagerService taskManagerService;
     private IWorkflowManagerService workflowManagerService;
+    private IUserManagerService userManagerService;
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
         /* Сохраняем задание */
-        Task task = (Task) request.getSession().getAttribute("task");
+        TaskBean task = (TaskBean) request.getSession().getAttribute("task");
         task = taskManagerService.saveTask(task);
 
         /* Назначаем задание пользователям */
-        WorkflowUser initiator = (WorkflowUser) request.getSession().getAttribute("initiator");
+        WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
         for (String uid : userUids) {
-            Workflow wf = new Workflow();
+            WorkflowBean wf = new WorkflowBean();
             wf.setParentUid(Long.parseLong("-1"));
             wf.setTaskUid(task.getUid());
             wf.setParentUserUid(initiator.getUid());
@@ -49,6 +51,9 @@ public class UploadController extends SimpleFormController {
             wf.setDescription(task.getDescription());
             wf.setState("0");
             wf.setAssignDate(task.getStartDate());
+            wf.setTask(task);
+            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
+            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
             workflowManagerService.assignTaskToUser(wf);
         }
 
@@ -81,5 +86,9 @@ public class UploadController extends SimpleFormController {
 
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
         this.workflowManagerService = workflowManagerService;
+    }
+
+    public void setUserManagerService(IUserManagerService userManagerService) {
+        this.userManagerService = userManagerService;
     }
 }

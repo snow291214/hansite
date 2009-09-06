@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.sgnhp.domain.WorkflowUser;
+import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IUserManagerService;
 
 /*****
@@ -47,7 +47,7 @@ public class SelectUsersFormController extends AbstractController {
             }
         } else {
             workflowUid = request.getParameter("workflowID");
-            List<WorkflowUser> users = userManagerService.getAllNormalizedUsers();
+            List<WorkflowUserBean> users = userManagerService.getAllNormalizedUsers();
             return new ModelAndView("selectUsers", "users", users);
         }
     }

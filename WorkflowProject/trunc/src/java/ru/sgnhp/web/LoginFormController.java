@@ -4,13 +4,14 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.dao.IAuthenticationDAO;
 import ru.sgnhp.domain.UserLogin;
-import ru.sgnhp.domain.WorkflowUser;
+import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
  *
@@ -25,7 +26,9 @@ public class LoginFormController extends SimpleFormController {
 
     @Override
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
-        WorkflowUser workflowUser = new WorkflowUser();
+        HttpSession session = request.getSession();
+        String r =  (String)session.getAttribute("requestUri");
+        WorkflowUserBean workflowUser = new WorkflowUserBean();
         //workflowUser.setLogin("48han");
         Map attributes = authenticationDAO.authenticateUser((UserLogin) command);
         workflowUser.setLogin(attributes.get("sAMAccountName").toString());
@@ -34,7 +37,8 @@ public class LoginFormController extends SimpleFormController {
         workflowUser.setMiddleName(attributes.get("givenName").toString().split(" ")[1]);
         workflowUser.setEmail(attributes.get("mail").toString());
         request.getSession().setAttribute("initiator", workflowUser);
-        return new ModelAndView(new RedirectView(getSuccessView()));
+        //return new ModelAndView(new RedirectView(getSuccessView()));
+        return new ModelAndView(new RedirectView(r.toString()));
     }
 
     @Override

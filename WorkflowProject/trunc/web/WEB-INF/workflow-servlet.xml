@@ -57,7 +57,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
             <value>registerTask</value>
         </property>
         <property name="commandClass">
-            <value>ru.sgnhp.domain.Task</value>
+            <value>ru.sgnhp.domain.TaskBean</value>
         </property>
         <!--<property name="validator">
             <ref bean="registerTaskFormValidator"/>
@@ -73,6 +73,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
         </property>
     </bean>
 
@@ -97,6 +100,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
         </property>
     </bean>
 
@@ -140,7 +146,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
     <bean name="assingTaskFormController" class="ru.sgnhp.web.AssignWorkflowFormController">
         <property name="commandName" value="assignWorkflow"/>
-        <property name="commandClass" value="ru.sgnhp.domain.Workflow"/>
+        <property name="commandClass" value="ru.sgnhp.domain.WorkflowBean"/>
         <property name="formView">
             <value>assignWorkflow</value>
         </property>
@@ -199,6 +205,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!--Workflow Manager service target bean-->
     <bean id="workflowManagerServiceTarget" class="ru.sgnhp.service.impl.WorkflowManagerServiceImpl">
         <property name="workflowDao" ref="workflowDao"/>
+        <property name="userManagerService" ref="userManagerServiceTarget" />
     </bean>
 
     <!--Upload DAO-->

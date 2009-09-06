@@ -8,8 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.DateUtils;
-import ru.sgnhp.domain.Workflow;
-import ru.sgnhp.domain.WorkflowUser;
+import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
@@ -25,8 +25,8 @@ public class AssignWorkflowFormController extends SimpleFormController {
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
-        Workflow workflow = (Workflow) command;
-        WorkflowUser initiator = (WorkflowUser) request.getSession().getAttribute("initiator");
+        WorkflowBean workflow = (WorkflowBean) command;
+        WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
         workflow.setState("1");
         workflowManagerService.updateWorkflow(workflow);
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
@@ -43,7 +43,7 @@ public class AssignWorkflowFormController extends SimpleFormController {
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         String workflowUid = request.getParameter("workflowID");
-        Workflow workflow = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
+        WorkflowBean workflow = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
         workflow.setParentUid(Long.parseLong(workflowUid));
         workflow.setDescription("");
         return workflow;

@@ -1,7 +1,7 @@
 package ru.sgnhp.service;
 
 import java.util.List;
-import ru.sgnhp.domain.Workflow;
+import ru.sgnhp.domain.WorkflowBean;
 
 /*****
  *
@@ -12,13 +12,13 @@ import ru.sgnhp.domain.Workflow;
  */
 public interface IWorkflowManagerService {
 
-    void assignTaskToUser(Workflow _workflow);
+    void assignTaskToUser(WorkflowBean _workflow);
 
-    Workflow getWorkflowByUid(Long workflowUid);
+    WorkflowBean getWorkflowByUid(Long workflowUid);
 
-    List<Workflow> getRecievedWorkflowsByUid(Long uid);
+    List<WorkflowBean> getRecievedWorkflowsByUid(Long uid);
 
-    List<Workflow> getAssignedWorkflowsByParentUid(Long parentUid);
+    List<WorkflowBean> getAssignedWorkflowsByParentUid(Long parentUid);
 
-    void updateWorkflow(Workflow _workflow);
+    void updateWorkflow(WorkflowBean _workflow);
 }

@@ -1,8 +1,8 @@
 package ru.sgnhp.service;
 
 import java.util.List;
-import ru.sgnhp.domain.Task;
-import ru.sgnhp.domain.WorkflowUser;
+import ru.sgnhp.domain.TaskBean;
+import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
  *
@@ -13,15 +13,15 @@ import ru.sgnhp.domain.WorkflowUser;
  */
 public interface ITaskManagerService {
 
-    Task saveTask(Task task);
+    TaskBean saveTask(TaskBean task);
 
-    void updateTask(Task task);
+    void updateTask(TaskBean task);
 
-    void closeTask(Task task);
+    void closeTask(TaskBean task);
 
-    Task getTaskByUid(Long uid);
+    TaskBean getTaskByUid(Long uid);
 
-    List<Task> getTasksByUser(WorkflowUser user);
+    List<TaskBean> getTasksByUser(WorkflowUserBean user);
 
     public String getTaskNewNumber();
 }

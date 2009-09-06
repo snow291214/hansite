@@ -1,7 +1,7 @@
 package ru.sgnhp.service;
 
 import java.util.List;
-import ru.sgnhp.domain.WorkflowUser;
+import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
  *
@@ -12,19 +12,19 @@ import ru.sgnhp.domain.WorkflowUser;
  */
 public interface IUserManagerService {
 
-    void registerNewUser(WorkflowUser siteUser);
+    void registerNewUser(WorkflowUserBean siteUser);
 
-    void updateUser(WorkflowUser siteUser);
+    void updateUser(WorkflowUserBean siteUser);
 
     void deleteUser(Long userUid);
 
-    WorkflowUser getUserByLogin(String login);
+    WorkflowUserBean getUserByLogin(String login);
 
-    WorkflowUser getUserByEmail(String email);
+    WorkflowUserBean getUserByEmail(String email);
 
-    WorkflowUser getUserByUid(Long userUid);
+    WorkflowUserBean getUserByUid(Long userUid);
 
-    List<WorkflowUser> getAllUsers();
+    List<WorkflowUserBean> getAllUsers();
 
-    List<WorkflowUser> getAllNormalizedUsers();
+    List<WorkflowUserBean> getAllNormalizedUsers();
 }
