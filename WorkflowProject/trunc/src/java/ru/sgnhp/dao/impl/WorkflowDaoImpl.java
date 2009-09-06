@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import ru.sgnhp.dao.IWorkflowDao;
-import ru.sgnhp.domain.Workflow;
+import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.ITaskManagerService;
 
 /*****
@@ -23,22 +23,22 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     private static String UPDATE = "Update workflows set `ParentUid` = ?, `TaskUid` = ?, `ParentUserUid` = ?, `UserUid` = ?,`Description` = ?, `State` = ?,`AssignDate` = ?,`FinishDate` = ? where uid = ?";
     private ITaskManagerService taskManagerService;
 
-    public void saveWorkflow(Workflow _workflow) {
+    public void saveWorkflow(WorkflowBean _workflow) {
         getSimpleJdbcTemplate().update(INSERT, _workflow.getParentUid(), _workflow.getTaskUid(), _workflow.getParentUserUid(),
                 _workflow.getUserUid(), _workflow.getDescription(),
                 _workflow.getState(), _workflow.getAssignDate(), _workflow.getFinishDate());
     }
 
-    public List<Workflow> getRecievedWorkflowsByUserUid(Long userUid) {
-        List<Workflow> workflows = getSimpleJdbcTemplate().query(SELECT +
+    public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid) {
+        List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
                 ", state  WHERE  workflows.UserUid = ? And " +
                 "state.StateUid = workflows.state order by AssignDate, State",
                 new WorkflowMapper(taskManagerService), userUid);
         return workflows;
     }
 
-    public List<Workflow> getAssignedWorkflowsByUserUid(Long userUid) {
-        List<Workflow> workflows = getSimpleJdbcTemplate().query(SELECT +
+    public List<WorkflowBean> getAssignedWorkflowsByUserUid(Long userUid) {
+        List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
                 ",state  WHERE  workflows.ParentUserUid = ? And " +
                 "state.StateUid = workflows.state order by AssignDate, State",
                 new WorkflowMapper(taskManagerService), userUid);
@@ -49,24 +49,24 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
         this.taskManagerService = taskManagerService;
     }
 
-    public Workflow getWorkflowByUid(Long workflowUid) {
-        List<Workflow> workflows = getSimpleJdbcTemplate().query(SELECT +
+    public WorkflowBean getWorkflowByUid(Long workflowUid) {
+        List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
                 ",state  WHERE  workflows.Uid = ? order by AssignDate, State",
                 new WorkflowMapper(taskManagerService), workflowUid);
         if (workflows.size() > 0) {
-            return (Workflow) workflows.toArray()[0];
+            return (WorkflowBean) workflows.toArray()[0];
         } else {
             return null;
         }
     }
 
-    public void updateWorkflow(Workflow _workflow) {
+    public void updateWorkflow(WorkflowBean _workflow) {
         getSimpleJdbcTemplate().update(UPDATE, _workflow.getParentUid(), _workflow.getTaskUid(), _workflow.getParentUserUid(),
                 _workflow.getUserUid(), _workflow.getDescription(),
                 _workflow.getState(), _workflow.getAssignDate(), _workflow.getFinishDate(), _workflow.getUid());
     }
 
-    private static class WorkflowMapper implements ParameterizedRowMapper<Workflow> {
+    private static class WorkflowMapper implements ParameterizedRowMapper<WorkflowBean> {
 
         private ITaskManagerService taskManagerService;
 
@@ -77,8 +77,8 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
             this.taskManagerService = taskManagerService;
         }
 
-        public Workflow mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Workflow workflow = new Workflow();
+        public WorkflowBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WorkflowBean workflow = new WorkflowBean();
             workflow.setUid(rs.getLong("Uid"));
             workflow.setParentUid(rs.getLong("ParentUid"));
             workflow.setTaskUid(rs.getLong("TaskUid"));

@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import ru.sgnhp.domain.WorkflowUser;
+import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
  *
@@ -28,7 +28,8 @@ public class LDAPAuthenticationFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession session = ((HttpServletRequest) request).getSession();
-        WorkflowUser workflowUser = (WorkflowUser) session.getAttribute("initiator");
+        WorkflowUserBean workflowUser = (WorkflowUserBean) session.getAttribute("initiator");
+        session.setAttribute("requestUri", ((HttpServletRequest) request).getRequestURI());
         if (workflowUser != null) {
             chain.doFilter(request, response);
         } else {

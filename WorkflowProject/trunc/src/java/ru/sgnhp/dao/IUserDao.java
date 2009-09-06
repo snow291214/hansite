@@ -5,8 +5,8 @@
 package ru.sgnhp.dao;
 
 import java.util.List;
-import ru.sgnhp.domain.Workflow;
-import ru.sgnhp.domain.WorkflowUser;
+import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
  *
@@ -17,21 +17,21 @@ import ru.sgnhp.domain.WorkflowUser;
  */
 public interface IUserDao {
 
-    void save(WorkflowUser user);
+    void save(WorkflowUserBean user);
 
-    void update(WorkflowUser user);
+    void update(WorkflowUserBean user);
 
-    WorkflowUser getByUid(Long userUid);
+    WorkflowUserBean getByUid(Long userUid);
 
-    WorkflowUser getByLogin(String login);
+    WorkflowUserBean getByLogin(String login);
 
-    WorkflowUser getByEmail(String email);
+    WorkflowUserBean getByEmail(String email);
 
-    void delete(WorkflowUser user);
+    void delete(WorkflowUserBean user);
 
     void deleteByUid(Long userUid);
 
-    List<WorkflowUser> getAllUsers();
+    List<WorkflowUserBean> getAllUsers();
 
-    List<WorkflowUser> getNormalisedUsers();
+    List<WorkflowUserBean> getNormalisedUsers();
 }

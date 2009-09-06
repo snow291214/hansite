@@ -2,7 +2,7 @@ package ru.sgnhp.web.validator;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.sgnhp.domain.Task;
+import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.service.ITaskManagerService;
 
 /*****
@@ -24,7 +24,7 @@ public class RegisterTaskFormValidator implements Validator{
     }
 
     public boolean supports(Class clazz) {
-        return clazz.equals(Task.class);
+        return clazz.equals(TaskBean.class);
     }
 
     public void validate(Object arg0, Errors errors) {

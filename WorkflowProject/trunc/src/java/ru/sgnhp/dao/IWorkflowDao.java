@@ -1,7 +1,7 @@
 package ru.sgnhp.dao;
 
 import java.util.List;
-import ru.sgnhp.domain.Workflow;
+import ru.sgnhp.domain.WorkflowBean;
 
 /*****
  *
@@ -12,13 +12,13 @@ import ru.sgnhp.domain.Workflow;
  */
 public interface IWorkflowDao {
 
-    void saveWorkflow(Workflow _workflow);
+    void saveWorkflow(WorkflowBean _workflow);
 
-    Workflow getWorkflowByUid(Long workflowUid);
+    WorkflowBean getWorkflowByUid(Long workflowUid);
 
-    List<Workflow> getRecievedWorkflowsByUserUid(Long userUid);
+    List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid);
 
-    List<Workflow> getAssignedWorkflowsByUserUid(Long userUid);
+    List<WorkflowBean> getAssignedWorkflowsByUserUid(Long userUid);
 
-    void updateWorkflow(Workflow _workflow);
+    void updateWorkflow(WorkflowBean _workflow);
 }
