@@ -1,6 +1,5 @@
 package ru.sgnhp.web;
 
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,18 +26,17 @@ public class LoginFormController extends SimpleFormController {
     @Override
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
         HttpSession session = request.getSession();
-        String r =  (String)session.getAttribute("requestUri");
         WorkflowUserBean workflowUser = new WorkflowUserBean();
-        //workflowUser.setLogin("48han");
-        Map attributes = authenticationDAO.authenticateUser((UserLogin) command);
+        workflowUser.setLogin("48han");
+        /*Map attributes = authenticationDAO.authenticateUser((UserLogin) command);
         workflowUser.setLogin(attributes.get("sAMAccountName").toString());
         workflowUser.setLastName(attributes.get("sn").toString());
         workflowUser.setFirstName(attributes.get("givenName").toString().split(" ")[0]);
         workflowUser.setMiddleName(attributes.get("givenName").toString().split(" ")[1]);
-        workflowUser.setEmail(attributes.get("mail").toString());
+        workflowUser.setEmail(attributes.get("mail").toString());*/
         request.getSession().setAttribute("initiator", workflowUser);
         //return new ModelAndView(new RedirectView(getSuccessView()));
-        return new ModelAndView(new RedirectView(r.toString()));
+        return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
     @Override

@@ -57,7 +57,7 @@
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>ru.sgnhp.ldap.authentication.LDAPAuthenticationFilter</filter-class>
         <init-param>
-            <param-name>encoding</param-name>
+            <param-name>loginPage</param-name>
             <param-value>authentication.htm</param-value>
         </init-param>
     </filter>

@@ -23,7 +23,7 @@ public class LDAPAuthenticationFilter implements Filter {
     private String authenticationPage;
 
     public void init(FilterConfig filterConfig) throws ServletException {
-        this.authenticationPage = filterConfig.getInitParameter("encoding");
+        this.authenticationPage = filterConfig.getInitParameter("loginPage");
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
