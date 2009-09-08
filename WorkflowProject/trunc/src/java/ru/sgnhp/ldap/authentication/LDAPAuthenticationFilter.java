@@ -29,11 +29,10 @@ public class LDAPAuthenticationFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession session = ((HttpServletRequest) request).getSession();
         WorkflowUserBean workflowUser = (WorkflowUserBean) session.getAttribute("initiator");
-        session.setAttribute("requestUri", ((HttpServletRequest) request).getRequestURI());
+        //session.setAttribute("requestUri", ((HttpServletRequest) request).getRequestURI());
         if (workflowUser != null) {
             chain.doFilter(request, response);
         } else {
-            //chain.doFilter(request, response);
             RequestDispatcher rd = request.getRequestDispatcher(authenticationPage);
             rd.forward(request, response);
         }

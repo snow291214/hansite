@@ -1,12 +1,21 @@
 package ru.sgnhp.service.impl;
 
-import java.net.URL;
 import java.util.List;
-import org.apache.commons.mail.HtmlEmail;
+import java.util.Properties;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
+
 /*****
  *
  * @author Alexey Khudyakov
@@ -22,38 +31,68 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
     private static String fromName;
     private static IUserManagerService userManagerService;
 
-    public void assignTaskToUser(WorkflowBean _workflow) {
-        HtmlEmail email = new HtmlEmail();
+    protected void sendmail(WorkflowBean _workflow) {
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", mailHostName);
+        Session session = Session.getDefaultInstance(props, null);
+        MimeMessage message = new MimeMessage(session);
         try {
-            email.setHostName(mailHostName);
-            email.addTo(_workflow.getReceiver().getEmail(),
-                    _workflow.getReceiver().getLastName() +
-                    _workflow.getReceiver().getFirstName() +
-                    _workflow.getReceiver().getMiddleName());
-            email.setFrom(fromAddress, fromName, "utf-8");
-            email.setSubject("Была создана новая задача");
-            
-            // embed the image and get the content id
-            URL url = new URL("http://www.apache.org/images/asf_logo_wide.gif");
-            String cid = email.embed(url, "Apache logo");
-            email.setCharset("utf-8");
-            // set the html message
-            email.setHtmlMsg("<html><h1>Задача № " +
-                    _workflow.getTask().getInternalNumber()+"</h1>" +
-                    "<p>Задачу назначил: "+_workflow.getAssignee().getFirstName()+" "
-                    +_workflow.getAssignee().getMiddleName()+" "
-                    +_workflow.getAssignee().getLastName()+"</p>"
-                    +"<p>Резолюция к задаче: "+_workflow.getDescription()
-                    +"</p>"
-                    +"</html>");
-            // set the alternative message
-            email.setTextMsg("Your email client does not support HTML messages");
 
-            // send the email
-            email.send();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            message.setFrom(new InternetAddress(fromAddress));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(_workflow.getReceiver().getEmail()));
+            message.setSubject("Была создана новая задача","utf-8");
+            
+            Multipart multipart = new MimeMultipart("related");
+            BodyPart htmlPart = new MimeBodyPart();
+
+            htmlPart.setContent("<html><h1>Задача № " +
+                    _workflow.getTask().getInternalNumber() + "</h1>" +
+                    "<p>Задачу назначил: " + _workflow.getAssignee().getFirstName() +
+                    " " + _workflow.getAssignee().getMiddleName() + " " +
+                    _workflow.getAssignee().getLastName() + "</p>" +
+                    "<p>Резолюция к задаче: " + _workflow.getDescription() +
+                    "</p>" + "</html>", "text/html;charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (Exception e) {
+            System.err.println(e);
         }
+    }
+
+    public void assignTaskToUser(WorkflowBean _workflow) {
+        sendmail(_workflow);
+        /*HtmlEmail email = new HtmlEmail();
+        try {
+        email.setHostName(mailHostName);
+        email.addTo(_workflow.getReceiver().getEmail(),
+        _workflow.getReceiver().getLastName() +
+        _workflow.getReceiver().getFirstName() +
+        _workflow.getReceiver().getMiddleName());
+        email.setFrom(fromAddress, fromName, "utf-8");
+        email.setSubject("Была создана новая задача");
+
+        // embed the image and get the content id
+        URL url = new URL("http://www.apache.org/images/asf_logo_wide.gif");
+        String cid = email.embed(url, "Apache logo");
+        email.setCharset("utf-8");
+        // set the html message
+        email.setHtmlMsg("<html><h1>Задача № " +
+        _workflow.getTask().getInternalNumber()+"</h1>" +
+        "<p>Задачу назначил: "+_workflow.getAssignee().getFirstName()+" "
+        +_workflow.getAssignee().getMiddleName()+" "
+        +_workflow.getAssignee().getLastName()+"</p>"
+        +"<p>Резолюция к задаче: "+_workflow.getDescription()
+        +"</p>"
+        +"</html>");
+        // set the alternative message
+        email.setTextMsg("Your email client does not support HTML messages");
+
+        // send the email
+        email.send();
+        } catch (Exception ex) {
+        ex.printStackTrace();
+        }*/
         workflowDao.saveWorkflow(_workflow);
     }
 

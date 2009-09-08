@@ -29,7 +29,7 @@
     </bean>
 
     <bean id="emailConfig" class="ru.sgnhp.service.impl.WorkflowManagerServiceImpl">
-        <property name="mailHostName" value="sgnhp.snos.ru"/>
+        <property name="mailHostName" value="10.16.13.51"/>
         <property name="fromAddress" value="workflow@sgnhp.snos.ru"/>
         <property name="fromName" value="Система электронного документооборота СГНХП" />
     </bean>

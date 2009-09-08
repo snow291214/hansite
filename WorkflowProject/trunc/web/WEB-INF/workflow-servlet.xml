@@ -120,11 +120,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="commandClass">
             <value>ru.sgnhp.domain.UserLogin</value>
         </property>
-        <!--
         <property name="validator">
             <ref bean="loginFormValidator"/>
         </property>
-        -->
         <property name="formView">
             <value>login</value>
         </property>
