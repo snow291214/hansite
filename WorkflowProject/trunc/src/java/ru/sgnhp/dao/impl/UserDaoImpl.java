@@ -19,7 +19,7 @@ import ru.sgnhp.service.IWorkflowManagerService;
 public class UserDaoImpl extends SimpleJdbcDaoSupport implements IUserDao {
 
     private static String INSERT = "Insert Into users(`Login`,`LastName`,`FirstName`,`MiddleName`,`Email`) Values(?,?,?,?,?)";
-    private static String UPDATE = "Update users set `LastName`=?,`FirstName`=?,`MiddleName`=?,`Email`=? where `Uid`=?";
+    private static String UPDATE = "Update users set `LastName`=?,`FirstName`=?,`MiddleName`=?,`Email`=?, `SessionUid=?` where `Uid`=?";
     private static String SELECT = "Select * from users";
 
     private IWorkflowManagerService workflowManagerService;
@@ -31,7 +31,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements IUserDao {
 
     public void update(WorkflowUserBean user) {
         getSimpleJdbcTemplate().update(UPDATE, user.getLastName(), user.getFirstName(), user.getMiddleName(),
-                user.getEmail(), user.getGroupUid());
+                user.getEmail(), user.getSessionUid(), user.getUid());
     }
 
     public WorkflowUserBean getByUid(Long userUid) {
@@ -94,7 +94,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements IUserDao {
             user.setMiddleName(rs.getString("MiddleName"));
             user.setFirstName(rs.getString("FirstName"));
             user.setEmail(rs.getString("Email"));
-            //user.setWorkflows(workflowManagerService.getRecievedWorkflowsByUid(user.getUid()));
+            user.setSessionUid("SessionUid");
             return user;
         }
     }

@@ -20,7 +20,7 @@ public class WorkflowUserBean {
     private String email;
     private Long groupUid;
     private List<WorkflowBean> workflows;
-
+    private String sessionUid;
     /**
      * @return the uid
      */
@@ -125,6 +125,14 @@ public class WorkflowUserBean {
 
     public void setWorkflows(List<WorkflowBean> workflows) {
         this.workflows = workflows;
+    }
+
+    public String getSessionUid() {
+        return sessionUid;
+    }
+
+    public void setSessionUid(String sessionUid) {
+        this.sessionUid = sessionUid;
     }
 
 }

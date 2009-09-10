@@ -43,9 +43,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="userManagerService">
             <ref bean="userManagerService"/>
         </property>
-        <property name="workflowManagerService">
-            <ref bean="workflowManagerService"/>
-        </property>
     </bean>
 
     <!-- Register Task Form Controller-->
