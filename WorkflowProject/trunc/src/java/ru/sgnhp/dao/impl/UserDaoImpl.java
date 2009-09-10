@@ -21,6 +21,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements IUserDao {
     private static String INSERT = "Insert Into users(`Login`,`LastName`,`FirstName`,`MiddleName`,`Email`) Values(?,?,?,?,?)";
     private static String UPDATE = "Update users set `LastName`=?,`FirstName`=?,`MiddleName`=?,`Email`=? where `Uid`=?";
     private static String SELECT = "Select * from users";
+
     private IWorkflowManagerService workflowManagerService;
 
     public void save(WorkflowUserBean user) {
@@ -78,23 +79,23 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements IUserDao {
     }
 
     private static class UserMapper implements ParameterizedRowMapper<WorkflowUserBean> {
-    
-    private final IWorkflowManagerService workflowManagerService;
 
-    UserMapper(IWorkflowManagerService workflowManagerService) {
-        this.workflowManagerService = workflowManagerService;
-    }
+        private final IWorkflowManagerService workflowManagerService;
 
-    public WorkflowUserBean mapRow(ResultSet rs, int rowNum) throws SQLException {
-        WorkflowUserBean user = new WorkflowUserBean();
-        user.setUid(rs.getLong("Uid"));
-        user.setLogin(rs.getString("Login"));
-        user.setLastName(rs.getString("LastName"));
-        user.setMiddleName(rs.getString("MiddleName"));
-        user.setFirstName(rs.getString("FirstName"));
-        user.setEmail(rs.getString("Email"));
-        user.setWorkflows(workflowManagerService.getRecievedWorkflowsByUid(user.getUid()));
-        return user;
-    }
+        UserMapper(IWorkflowManagerService workflowManagerService) {
+            this.workflowManagerService = workflowManagerService;
+        }
+
+        public WorkflowUserBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WorkflowUserBean user = new WorkflowUserBean();
+            user.setUid(rs.getLong("Uid"));
+            user.setLogin(rs.getString("Login"));
+            user.setLastName(rs.getString("LastName"));
+            user.setMiddleName(rs.getString("MiddleName"));
+            user.setFirstName(rs.getString("FirstName"));
+            user.setEmail(rs.getString("Email"));
+            //user.setWorkflows(workflowManagerService.getRecievedWorkflowsByUid(user.getUid()));
+            return user;
+        }
     }
 }

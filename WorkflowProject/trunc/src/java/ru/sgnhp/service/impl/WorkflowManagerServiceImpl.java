@@ -1,5 +1,6 @@
 package ru.sgnhp.service.impl;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.BodyPart;
@@ -37,17 +38,18 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         Session session = Session.getDefaultInstance(props, null);
         MimeMessage message = new MimeMessage(session);
         try {
-
-            message.setFrom(new InternetAddress(fromAddress));
+            InternetAddress address = new InternetAddress(fromAddress);
+            address.setPersonal(fromName);
+            message.setFrom(address);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(_workflow.getReceiver().getEmail()));
-            message.setSubject("Была создана новая задача","utf-8");
-            
+            message.setSubject("Была создана новая задача", "utf-8");
+
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
 
             htmlPart.setContent("<html><h1>Задача № " +
                     _workflow.getTask().getInternalNumber() + "</h1>" +
-                    "<p>Задачу назначил: " + _workflow.getAssignee().getFirstName() +
+                    "<p>Задачу назначил: " + _workflow.getReceiver().getFirstName() +
                     " " + _workflow.getAssignee().getMiddleName() + " " +
                     _workflow.getAssignee().getLastName() + "</p>" +
                     "<p>Резолюция к задаче: " + _workflow.getDescription() +
@@ -99,13 +101,26 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
     public void setWorkflowDao(IWorkflowDao workflowDao) {
         this.workflowDao = workflowDao;
     }
-
-    public List<WorkflowBean> getRecievedWorkflowsByUid(Long uid) {
-        return workflowDao.getRecievedWorkflowsByUserUid(uid);
+    /*
+     *  Получаем список Workflows по Uid
+     *  и проставляем туда пользователей
+     */
+    public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long uid) {
+        List<WorkflowBean> wfs = workflowDao.getRecievedWorkflowsByUserUid(uid);
+        for (WorkflowBean wf : wfs) {
+            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
+            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
+        }
+        return wfs;
     }
 
-    public List<WorkflowBean> getAssignedWorkflowsByParentUid(Long parentUid) {
-        return workflowDao.getAssignedWorkflowsByUserUid(parentUid);
+    public List<WorkflowBean> getAssignedWorkflowsByUserUid(Long parentUid) {
+        List<WorkflowBean> wfs = workflowDao.getAssignedWorkflowsByUserUid(parentUid);
+        for (WorkflowBean wf : wfs) {
+            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
+            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
+        }
+        return wfs;
     }
 
     public WorkflowBean getWorkflowByUid(Long workflowUid) {

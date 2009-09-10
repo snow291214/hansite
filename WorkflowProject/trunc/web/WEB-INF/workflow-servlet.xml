@@ -136,9 +136,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
     <!--Recieved Task Controller-->
     <bean name="assignedTaskViewController" class="ru.sgnhp.web.AssignedTaskViewController" >
-        <property name="userManagerService">
+        <!--<property name="userManagerService">
             <ref bean="userManagerService"/>
-        </property>
+        </property>-->
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
         </property>
@@ -183,6 +183,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!--User Manager service target bean-->
     <bean id="userManagerServiceTarget" class="ru.sgnhp.service.impl.UserManagerServiceImpl">
         <property name="userDao" ref="userDao"/>
+        <property name="workflowManagerService" ref="workflowManagerService"/>
     </bean>
 
     <!--Task DAO-->

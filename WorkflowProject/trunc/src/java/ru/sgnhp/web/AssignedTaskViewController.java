@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
-import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /**
@@ -22,24 +21,18 @@ import ru.sgnhp.service.IWorkflowManagerService;
  */
 public class AssignedTaskViewController implements Controller {
 
-    private IUserManagerService userManagerService;
+    //private IUserManagerService userManagerService;
     private IWorkflowManagerService workflowManagerService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         Long initiatorUid = ((WorkflowUserBean) request.getSession().getAttribute("initiator")).getUid();
-
-        List<WorkflowBean> wfs = workflowManagerService.getAssignedWorkflowsByParentUid(initiatorUid);
-        for (WorkflowBean wf : wfs) {
-            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
-        }
+        List<WorkflowBean> wfs = workflowManagerService.getAssignedWorkflowsByUserUid(initiatorUid);
         return new ModelAndView("assignedTask", "assigned", wfs);
     }
 
-    public void setUserManagerService(IUserManagerService userManagerService) {
+    /*public void setUserManagerService(IUserManagerService userManagerService) {
         this.userManagerService = userManagerService;
-    }
+    }*/
 
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
         this.workflowManagerService = workflowManagerService;

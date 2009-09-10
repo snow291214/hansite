@@ -4,8 +4,10 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import ru.sgnhp.dao.IUserDao;
+import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IUserManagerService;
+import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
  *
@@ -17,6 +19,7 @@ import ru.sgnhp.service.IUserManagerService;
 public class UserManagerServiceImpl implements IUserManagerService{
 
     private IUserDao userDao;
+    private IWorkflowManagerService workflowManagerService;
     protected final Log logger = LogFactory.getLog(getClass());
 
     public void registerNewUser(WorkflowUserBean siteUser) {
@@ -32,7 +35,9 @@ public class UserManagerServiceImpl implements IUserManagerService{
     }
 
     public WorkflowUserBean getUserByLogin(String login) {
-        return userDao.getByLogin(login);
+        WorkflowUserBean user = userDao.getByLogin(login);
+        user.setWorkflows(workflowManagerService.getRecievedWorkflowsByUserUid(user.getUid()));
+        return user;
     }
 
     public WorkflowUserBean getUserByEmail(String email) {
@@ -40,7 +45,8 @@ public class UserManagerServiceImpl implements IUserManagerService{
     }
 
     public WorkflowUserBean getUserByUid(Long userUid) {
-        return userDao.getByUid(userUid);
+        WorkflowUserBean user = userDao.getByUid(userUid);
+        return user;
     }
 
     public List<WorkflowUserBean> getAllUsers() {
@@ -57,5 +63,9 @@ public class UserManagerServiceImpl implements IUserManagerService{
 
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
+        this.workflowManagerService = workflowManagerService;
     }
 }

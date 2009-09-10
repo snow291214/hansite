@@ -16,9 +16,9 @@ public interface IWorkflowManagerService {
 
     WorkflowBean getWorkflowByUid(Long workflowUid);
 
-    List<WorkflowBean> getRecievedWorkflowsByUid(Long uid);
+    List<WorkflowBean> getRecievedWorkflowsByUserUid(Long uid);
 
-    List<WorkflowBean> getAssignedWorkflowsByParentUid(Long parentUid);
+    List<WorkflowBean> getAssignedWorkflowsByUserUid(Long parentUid);
 
     void updateWorkflow(WorkflowBean _workflow);
 }
