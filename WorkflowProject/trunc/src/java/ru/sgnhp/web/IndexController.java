@@ -6,7 +6,6 @@ package ru.sgnhp.web;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,9 +18,11 @@ public class IndexController implements Controller {
     private IUserManagerService userManagerService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = ((WorkflowUserBean) request.getSession().getAttribute("initiator")).getLogin();
-        WorkflowUserBean user = userManagerService.getUserByLogin(login);
-        Cookie cookie = new Cookie("userUid", user.getLogin());
+        WorkflowUserBean user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
+        String login = user.getLogin();
+
+        //Cookie cookie =  new LongLivedCookie("sessionUid", request.getSession().getId());
+        //response.addCookie(null);
         //WorkflowUser user = userManagerService.getUserByLogin("ASU\\48han");
         /*
          * Смысл такой: если в базе нет такого пользователя, его сохраняем в базу,
@@ -29,6 +30,7 @@ public class IndexController implements Controller {
          * Uid и логин, чтобы потом в дальнейшем использовать.
          *
          */
+        user = userManagerService.getUserByLogin(login);
         if (user == null) {
             user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
             userManagerService.registerNewUser(user);

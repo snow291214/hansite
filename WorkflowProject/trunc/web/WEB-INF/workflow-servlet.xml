@@ -26,7 +26,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="authentication.htm">loginFormController</prop>
                 <prop key="assignedTask.htm">assignedTaskViewController</prop>
                 <prop key="assignTask.htm">assingTaskFormController</prop>
-                <!--<prop key="workflowManager.htm">workflowManagerController</prop>-->
+                <prop key="workflowManager.htm">workflowManagerFormController</prop>
             </props>
         </property>
     </bean>
@@ -141,11 +141,27 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
+    <!-- Assign Task Form Controller -->
     <bean name="assingTaskFormController" class="ru.sgnhp.web.AssignWorkflowFormController">
         <property name="commandName" value="assignWorkflow"/>
         <property name="commandClass" value="ru.sgnhp.domain.WorkflowBean"/>
         <property name="formView">
             <value>assignWorkflow</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Workflow Manager Form Controller -->
+    <bean name="workflowManagerFormController" class="ru.sgnhp.web.WorkflowManagerFormController">
+        <property name="commandName" value="workflowManager"/>
+        <property name="commandClass" value="ru.sgnhp.domain.WorkflowBean"/>
+        <property name="formView">
+            <value>workflowManager</value>
         </property>
         <property name="successView">
             <value>index.htm</value>

@@ -32,14 +32,14 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
     private static String fromName;
     private static IUserManagerService userManagerService;
 
-    protected void sendmail(WorkflowBean _workflow) {
+    protected void sendmailAssign(WorkflowBean _workflow) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
         Session session = Session.getDefaultInstance(props, null);
         MimeMessage message = new MimeMessage(session);
         try {
             InternetAddress address = new InternetAddress(fromAddress);
-            address.setPersonal(fromName);
+            address.setPersonal(fromName, "utf-8");
             message.setFrom(address);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(_workflow.getReceiver().getEmail()));
             message.setSubject("Была создана новая задача", "utf-8");
@@ -47,13 +47,13 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
 
-            htmlPart.setContent("<html><h1>Задача № " +
-                    _workflow.getTask().getInternalNumber() + "</h1>" +
-                    "<p>Задачу назначил: " + _workflow.getReceiver().getFirstName() +
+            htmlPart.setContent("<html><body><h2>Задача № " +
+                    _workflow.getTask().getInternalNumber() + "</h2>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " + _workflow.getReceiver().getFirstName() +
                     " " + _workflow.getAssignee().getMiddleName() + " " +
                     _workflow.getAssignee().getLastName() + "</p>" +
-                    "<p>Резолюция к задаче: " + _workflow.getDescription() +
-                    "</p>" + "</html>", "text/html;charset=utf-8");
+                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " + _workflow.getDescription() +
+                    "</p><a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачу</a></body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);
@@ -63,38 +63,7 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
     }
 
     public void assignTaskToUser(WorkflowBean _workflow) {
-        sendmail(_workflow);
-        /*HtmlEmail email = new HtmlEmail();
-        try {
-        email.setHostName(mailHostName);
-        email.addTo(_workflow.getReceiver().getEmail(),
-        _workflow.getReceiver().getLastName() +
-        _workflow.getReceiver().getFirstName() +
-        _workflow.getReceiver().getMiddleName());
-        email.setFrom(fromAddress, fromName, "utf-8");
-        email.setSubject("Была создана новая задача");
-
-        // embed the image and get the content id
-        URL url = new URL("http://www.apache.org/images/asf_logo_wide.gif");
-        String cid = email.embed(url, "Apache logo");
-        email.setCharset("utf-8");
-        // set the html message
-        email.setHtmlMsg("<html><h1>Задача № " +
-        _workflow.getTask().getInternalNumber()+"</h1>" +
-        "<p>Задачу назначил: "+_workflow.getAssignee().getFirstName()+" "
-        +_workflow.getAssignee().getMiddleName()+" "
-        +_workflow.getAssignee().getLastName()+"</p>"
-        +"<p>Резолюция к задаче: "+_workflow.getDescription()
-        +"</p>"
-        +"</html>");
-        // set the alternative message
-        email.setTextMsg("Your email client does not support HTML messages");
-
-        // send the email
-        email.send();
-        } catch (Exception ex) {
-        ex.printStackTrace();
-        }*/
+        sendmailAssign(_workflow);
         workflowDao.saveWorkflow(_workflow);
     }
 

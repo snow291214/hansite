@@ -4,7 +4,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import ru.sgnhp.dao.IUserDao;
-import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
@@ -16,7 +15,7 @@ import ru.sgnhp.service.IWorkflowManagerService;
  *
  *****
  */
-public class UserManagerServiceImpl implements IUserManagerService{
+public class UserManagerServiceImpl implements IUserManagerService {
 
     private IUserDao userDao;
     private IWorkflowManagerService workflowManagerService;
@@ -36,8 +35,12 @@ public class UserManagerServiceImpl implements IUserManagerService{
 
     public WorkflowUserBean getUserByLogin(String login) {
         WorkflowUserBean user = userDao.getByLogin(login);
-        user.setWorkflows(workflowManagerService.getRecievedWorkflowsByUserUid(user.getUid()));
-        return user;
+        if (user != null) {
+            user.setWorkflows(workflowManagerService.getRecievedWorkflowsByUserUid(user.getUid()));
+            return user;
+        } else {
+            return null;
+        }
     }
 
     public WorkflowUserBean getUserByEmail(String email) {

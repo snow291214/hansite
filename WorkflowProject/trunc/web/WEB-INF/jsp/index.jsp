@@ -51,7 +51,7 @@
                         </c:forEach>
                         <br />
                         <a href="<c:url value="selectUsers.htm?workflowID=${wf.uid}" />">Передать задачу</a>
-                        <a href="<c:url value="taskdetails.htm?taskID=${wf.task.uid}" />">Управление задачей</a>
+                        <a href="<c:url value="workflowManager.htm?workflowID=${wf.uid}" />">Управление задачей</a>
                     </div>
                 </div>
             </div>
