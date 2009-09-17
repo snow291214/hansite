@@ -1,6 +1,5 @@
 package ru.sgnhp.service.impl;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.BodyPart;
@@ -117,5 +116,14 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
 
     public void setUserManagerService(IUserManagerService userManagerService) {
         WorkflowManagerServiceImpl.userManagerService = userManagerService;
+    }
+
+    public WorkflowBean getFirstWorkflowByWorkflowUid(Long workflowUid) {
+        WorkflowBean wf = workflowDao.getWorkflowByUid(workflowUid);
+        while(wf.getParentUid() != -1){
+            workflowUid = wf.getUid();
+            wf = workflowDao.getWorkflowByUid(workflowUid);
+        }
+        return null;
     }
 }

@@ -18,7 +18,7 @@
                 <spring:bind path="workflowManager.state">
                     <td>
                         <select name="${status.expression}" style="width : 200">
-                            
+                            ${status.value}
                             <c:choose>
                                 <c:when test="${status.value eq 'Не начата'}">
                                     <option value="0" selected>Не начата</option>
