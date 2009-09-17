@@ -22,5 +22,5 @@ public interface IWorkflowManagerService {
 
     void updateWorkflow(WorkflowBean _workflow);
 
-    WorkflowBean getFirstWorkflowByWorkflowUid(Long workflowUid);
+    List<String> getWorkflowMembersByWorkflowUid(Long workflowUid);
 }
