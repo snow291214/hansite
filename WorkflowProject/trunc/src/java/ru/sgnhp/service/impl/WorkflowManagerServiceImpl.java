@@ -2,6 +2,7 @@ package ru.sgnhp.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.BodyPart;
@@ -15,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
@@ -121,18 +123,17 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         WorkflowManagerServiceImpl.userManagerService = userManagerService;
     }
 
-    public List<String> getWorkflowMembersByWorkflowUid(Long workflowUid, ArrayList<String> path) {
+    public HashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, HashMap roadmap) {
         WorkflowBean workflowBean = this.getWorkflowByUid(workflowUid);
-        path.add(workflowBean.getReceiver().getLastName());
-        if(workflowBean.getParentUid() != -1)
-        {
+        ArrayList<WorkflowUserBean> members = new ArrayList<WorkflowUserBean>();
+        members.add(workflowBean.getAssignee());
+        members.add(workflowBean.getReceiver());
+        roadmap.put(workflowBean.getUid(), members);
+        if (workflowBean.getParentUid() != -1) {
             workflowUid = workflowBean.getParentUid();
-            this.getWorkflowMembersByWorkflowUid(workflowUid, path);
-        }else{
-            path.add(workflowBean.getAssignee().getLastName());
+            this.getWorkflowMembersByWorkflowUid(workflowUid, roadmap);
         }
-        Collections.reverse(path);
-        return path;
+        return roadmap;
     }
 
     public void updateWorkflowState(WorkflowBean _workflow) {

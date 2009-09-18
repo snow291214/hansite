@@ -123,8 +123,8 @@ div.blue div.box-inner
 }
 
 .clear { /* generic container (i.e. div) for floating buttons */
-    overflow: hidden;
-    width: 100%;
+         overflow: hidden;
+         width: 100%;
 }
 
 a.button {
@@ -155,4 +155,26 @@ a.button:active {
 a.button:active span {
     background-position: bottom left;
     padding: 6px 0 4px 18px; /* push text down 1px */
+}
+
+table.workflowManager {
+    font-family:arial;
+    font-size:10pt;
+}
+
+td.all{
+    border: 1px solid #000000;
+    font-size:8pt;
+}
+
+td.bottom{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #000000;
+}
+
+td.left{
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #000000;
 }

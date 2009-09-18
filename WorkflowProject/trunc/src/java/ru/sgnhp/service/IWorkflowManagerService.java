@@ -1,8 +1,10 @@
 package ru.sgnhp.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
  *
@@ -25,6 +27,6 @@ public interface IWorkflowManagerService {
 
     void updateWorkflowState(WorkflowBean _workflow);
 
-    List<String> getWorkflowMembersByWorkflowUid(Long workflowUid, ArrayList<String>path);
+    HashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, HashMap roadmap);
 
 }

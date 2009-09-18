@@ -4,8 +4,18 @@
 </head>
 
 <body>
-    <c:forEach var="member" items="${requestScope.members}">
-        ${member}<br>
+    <c:forEach var="workflow" items="${requestScope.roadmap}">
+        <table class="workflowManager">
+            <tr>
+                <td class="left">От: ${workflow.value[0].lastName} ${workflow.value[0].firstName}</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="all">ID Workflow: ${workflow.key}</td>
+                <td class="bottom">Кому: ${workflow.value[1].lastName} ${workflow.value[1].firstName}</td>
+            </tr>
+        </table>
+        <br />
     </c:forEach>
     <form name="Form1" method="post" action="${actionUrl}">
         <table>
