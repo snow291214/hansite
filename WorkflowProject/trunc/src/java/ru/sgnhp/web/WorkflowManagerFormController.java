@@ -1,5 +1,6 @@
 package ru.sgnhp.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,15 +15,19 @@ import ru.sgnhp.service.IWorkflowManagerService;
  *
  *****
  */
-public class WorkflowManagerFormController  extends SimpleFormController {
+public class WorkflowManagerFormController extends SimpleFormController {
+
     private IWorkflowManagerService workflowManagerService;
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         request.setAttribute("actionUrl", "workflowManager.htm");
         String workflowUid = request.getParameter("workflowID");
-        List<String> members = workflowManagerService.getWorkflowMembersByWorkflowUid(Long.parseLong(workflowUid));
         WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
+        ArrayList<String> path = new ArrayList<String>();
+        path.add(workflowBean.getReceiver().getLastName());
+        List<String> members = workflowManagerService.getWorkflowMembersByWorkflowUid(workflowBean.getParentUid(), path);
+        request.setAttribute("members", members);
         return workflowBean;
     }
 

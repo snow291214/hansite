@@ -67,6 +67,11 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
                 _workflow.getState(), _workflow.getAssignDate(), _workflow.getFinishDate(), _workflow.getUid());
     }
 
+    public void updateWorkflowState(WorkflowBean _workflow) {
+        getSimpleJdbcTemplate().update("Update workflows set State = ? where Uid = ?",
+                _workflow.getState(), _workflow.getUid());
+    }
+
     private static class WorkflowMapper implements ParameterizedRowMapper<WorkflowBean> {
 
         private ITaskManagerService taskManagerService;

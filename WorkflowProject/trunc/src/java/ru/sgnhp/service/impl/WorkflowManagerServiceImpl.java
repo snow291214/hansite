@@ -50,7 +50,7 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
 
             htmlPart.setContent("<html><body><h2>Задача № " +
                     _workflow.getTask().getInternalNumber() + "</h2>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " + _workflow.getReceiver().getFirstName() +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " + _workflow.getAssignee().getFirstName() +
                     " " + _workflow.getAssignee().getMiddleName() + " " +
                     _workflow.getAssignee().getLastName() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " + _workflow.getDescription() +
@@ -75,6 +75,7 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
      *  Получаем список Workflows по Uid
      *  и проставляем туда пользователей
      */
+
     public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long uid) {
         List<WorkflowBean> wfs = workflowDao.getRecievedWorkflowsByUserUid(uid);
         for (WorkflowBean wf : wfs) {
@@ -120,15 +121,21 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         WorkflowManagerServiceImpl.userManagerService = userManagerService;
     }
 
-    public List<String> getWorkflowMembersByWorkflowUid(Long workflowUid) {
-        ArrayList<String> path = new ArrayList();
-        WorkflowBean wf = workflowDao.getWorkflowByUid(workflowUid);
-        while(wf.getParentUid() != -1){
-            workflowUid = wf.getUid();
-            wf = workflowDao.getWorkflowByUid(workflowUid);
-            path.add(wf.getAssignee().getLastName());
+    public List<String> getWorkflowMembersByWorkflowUid(Long workflowUid, ArrayList<String> path) {
+        WorkflowBean workflowBean = this.getWorkflowByUid(workflowUid);
+        path.add(workflowBean.getReceiver().getLastName());
+        if(workflowBean.getParentUid() != -1)
+        {
+            workflowUid = workflowBean.getParentUid();
+            this.getWorkflowMembersByWorkflowUid(workflowUid, path);
+        }else{
+            path.add(workflowBean.getAssignee().getLastName());
         }
         Collections.reverse(path);
         return path;
+    }
+
+    public void updateWorkflowState(WorkflowBean _workflow) {
+        workflowDao.updateWorkflowState(_workflow);
     }
 }

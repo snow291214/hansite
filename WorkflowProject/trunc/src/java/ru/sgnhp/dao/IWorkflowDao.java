@@ -21,4 +21,6 @@ public interface IWorkflowDao {
     List<WorkflowBean> getAssignedWorkflowsByUserUid(Long userUid);
 
     void updateWorkflow(WorkflowBean _workflow);
+
+    void updateWorkflowState(WorkflowBean _workflow);
 }

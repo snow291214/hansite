@@ -28,9 +28,10 @@ public class AssignWorkflowFormController extends SimpleFormController {
         WorkflowBean workflow = (WorkflowBean) command;
         WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
         workflow.setState("1");
-        workflowManagerService.updateWorkflow(workflow);
+        workflowManagerService.updateWorkflowState(workflow);
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
         for (String uid : userUids) {
+            workflow.setParentUid(workflow.getUid());
             workflow.setParentUserUid(initiator.getUid());
             workflow.setUserUid(Long.valueOf(uid));
             workflow.setAssignDate(DateUtils.nowString());
@@ -44,7 +45,6 @@ public class AssignWorkflowFormController extends SimpleFormController {
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflow = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
-        workflow.setParentUid(Long.parseLong(workflowUid));
         workflow.setDescription("");
         return workflow;
     }

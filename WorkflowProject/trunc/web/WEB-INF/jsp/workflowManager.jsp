@@ -4,6 +4,9 @@
 </head>
 
 <body>
+    <c:forEach var="member" items="${requestScope.members}">
+        ${member}<br>
+    </c:forEach>
     <form name="Form1" method="post" action="${actionUrl}">
         <table>
             <tr>
