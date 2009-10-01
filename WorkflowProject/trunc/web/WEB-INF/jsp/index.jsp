@@ -9,7 +9,7 @@
            ${sessionScope.initiator.middleName}
            (${sessionScope.initiator.login})" />
 
-    <p><a href="<c:url value="selectUsers.htm"/>">Назначить задачу</a></p>
+    <p><a href="<c:url value="selectUsers.htm"/>">Создать задачу</a></p>
 
     <div>
         <div class="box w300 red">
