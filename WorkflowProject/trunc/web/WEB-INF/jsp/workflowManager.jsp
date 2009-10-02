@@ -18,6 +18,7 @@
         <br />
     </c:forEach>
     <form name="Form1" method="post" action="${actionUrl}">
+        <input type="hidden" name="workflowID" value="${workflowID}">
         <table>
             <tr>
                 <td>Внутренний номер задачи:</td>
@@ -31,7 +32,6 @@
                 <spring:bind path="workflowManager.state">
                     <td>
                         <select name="${status.expression}" style="width : 200">
-                            ${status.value}
                             <c:choose>
                                 <c:when test="${status.value eq 'Не начата'}">
                                     <option value="0" selected>Не начата</option>
@@ -74,6 +74,7 @@
                 </spring:bind>
             </tr>
         </table>
+        <p><input type="submit" align="right" value="Сохранить"></p>
     </form>
 </body>
 </html>

@@ -35,7 +35,7 @@ public class LoginFormController extends SimpleFormController {
         workflowUser.setFirstName(attributes.get("givenName").toString().split(" ")[0]);
         workflowUser.setMiddleName(attributes.get("givenName").toString().split(" ")[1]);
         workflowUser.setEmail(attributes.get("mail").toString());
-        request.getSession().setAttribute("initiator", workflowUser);
+        session.setAttribute("initiator", workflowUser);
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
