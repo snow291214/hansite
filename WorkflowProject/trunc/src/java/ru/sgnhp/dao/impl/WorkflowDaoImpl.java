@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import ru.sgnhp.DateUtils;
 import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.ITaskManagerService;
@@ -26,7 +27,7 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     public void saveWorkflow(WorkflowBean _workflow) {
         getSimpleJdbcTemplate().update(INSERT, _workflow.getParentUid(), _workflow.getTaskUid(), _workflow.getParentUserUid(),
                 _workflow.getUserUid(), _workflow.getDescription(),
-                _workflow.getState(), _workflow.getAssignDate(), _workflow.getFinishDate());
+                _workflow.getState(), DateUtils.stringToDate(_workflow.getAssignDate()), DateUtils.stringToDate(_workflow.getFinishDate()));
     }
 
     public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid) {
@@ -64,12 +65,21 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     public void updateWorkflow(WorkflowBean _workflow) {
         getSimpleJdbcTemplate().update(UPDATE, _workflow.getParentUid(), _workflow.getTaskUid(), _workflow.getParentUserUid(),
                 _workflow.getUserUid(), _workflow.getDescription(),
-                _workflow.getState(), _workflow.getAssignDate(), _workflow.getFinishDate(), _workflow.getUid());
+                _workflow.getState(), DateUtils.stringToDate(_workflow.getAssignDate()),
+                DateUtils.stringToDate(_workflow.getFinishDate()), _workflow.getUid());
     }
 
     public void updateWorkflowState(WorkflowBean _workflow) {
         getSimpleJdbcTemplate().update("Update workflows set State = ? where Uid = ?",
                 _workflow.getState(), _workflow.getUid());
+    }
+
+    public List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid) {
+        List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
+                ", state  WHERE  workflows.UserUid = ? And " +
+                "state.StateUid = workflows.state and workflows.state = 3 order by AssignDate, State",
+                new WorkflowMapper(taskManagerService), userUid);
+        return workflows;
     }
 
     private static class WorkflowMapper implements ParameterizedRowMapper<WorkflowBean> {

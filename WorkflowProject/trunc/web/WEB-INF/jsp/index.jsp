@@ -9,7 +9,7 @@
            ${sessionScope.initiator.middleName}
            (${sessionScope.initiator.login})" />
 
-    <p><a href="<c:url value="selectUsers.htm"/>">Создать задачу</a></p>
+    <p><a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> || <a href="<c:url value="logout.htm"/>">Завершить работу</a></p>
 
     <div>
         <div class="box w300 red">
@@ -28,7 +28,7 @@
 
         <div class="box w300 green">
             <div class="box-inner">
-                Завершенные задачи
+                <a class="box" href="<c:url value="completedTask.htm" />">Завершенные Вами задачи</a>
             </div>
             <em class="ctl"><b>•</b></em><em class="ctr"><b>•</b></em><em class="cbl"><b>•</b></em><em class="cbr"><b>•</b></em>
         </div>

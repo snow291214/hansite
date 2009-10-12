@@ -14,6 +14,8 @@ public class DateUtils {
 
     public static Date stringToDate(String dateString) {
         Date date = null;
+        if(dateString == null)
+            return null;
         try {
             DateFormat formatter;
             formatter = new SimpleDateFormat(DATE_FORMAT_NOW);

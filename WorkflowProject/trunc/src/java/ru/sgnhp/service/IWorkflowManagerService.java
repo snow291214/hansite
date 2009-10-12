@@ -23,6 +23,8 @@ public interface IWorkflowManagerService {
 
     List<WorkflowBean> getAssignedWorkflowsByUserUid(Long parentUid);
 
+    List<WorkflowBean> getCompletedWorkflowsByUserUid(Long parentUid);
+
     void updateWorkflow(WorkflowBean _workflow);
 
     void updateWorkflowState(WorkflowBean _workflow);

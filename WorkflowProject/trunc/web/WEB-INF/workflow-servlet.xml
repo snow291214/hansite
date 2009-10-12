@@ -19,12 +19,14 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
+                <prop key="logout.htm">logoutController</prop>
                 <prop key="selectUsers.htm">selectUsersFormController</prop>
                 <prop key="registerTask.htm">newTaskFormController</prop>
                 <prop key="upload.htm">uploadController</prop>
                 <prop key="success.htm">successController</prop>
                 <prop key="authentication.htm">loginFormController</prop>
                 <prop key="assignedTask.htm">assignedTaskViewController</prop>
+                <prop key="completedTask.htm">completedTaskController</prop>
                 <prop key="assignTask.htm">assingTaskFormController</prop>
                 <prop key="workflowManager.htm">workflowManagerFormController</prop>
             </props>
@@ -44,6 +46,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
             <ref bean="userManagerService"/>
         </property>
     </bean>
+
+    <!-- Logout Controller -->
+    <bean name="logoutController" class="ru.sgnhp.web.LogoutController" />
 
     <!-- Register Task Form Controller-->
     <bean name="newTaskFormController" class="ru.sgnhp.web.RegisterTaskFormController" >
@@ -131,11 +136,18 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
-    <!--Recieved Task Controller-->
+    <!--Assigned Task Controller-->
     <bean name="assignedTaskViewController" class="ru.sgnhp.web.AssignedTaskViewController" >
         <!--<property name="userManagerService">
             <ref bean="userManagerService"/>
         </property>-->
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!--Completed Task Controller-->
+    <bean name="completedTaskController" class="ru.sgnhp.web.CompletedTaskController" >
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
         </property>

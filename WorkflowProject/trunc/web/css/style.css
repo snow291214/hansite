@@ -18,6 +18,10 @@ div.header.blue{
     color:white;
 }
 
+div.header.green{
+    background:#5a9802;
+    color:white;
+}
 
 div.content{
     margin-left:30px;

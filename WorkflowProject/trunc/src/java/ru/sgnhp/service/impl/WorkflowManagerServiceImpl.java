@@ -95,6 +95,15 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         return wfs;
     }
 
+    public List<WorkflowBean> getCompletedWorkflowsByUserUid(Long uid) {
+        List<WorkflowBean> wfs = workflowDao.getCompletedWorkflowsByUserUid(uid);
+        for (WorkflowBean wf : wfs) {
+            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
+            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
+        }
+        return wfs;
+    }
+
     public WorkflowBean getWorkflowByUid(Long workflowUid) {
         WorkflowBean wf = workflowDao.getWorkflowByUid(workflowUid);
         wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
