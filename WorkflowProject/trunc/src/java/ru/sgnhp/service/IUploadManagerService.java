@@ -15,4 +15,6 @@ public interface IUploadManagerService {
     void saveFile(FileUploadBean bean);
 
     List<FileUploadBean> getFileUploadBeanByTaskUid(Long taskUid);
+
+    FileUploadBean getFileUploadBeanByUid(Long fileUploadBeanUid);
 }

@@ -1,6 +1,7 @@
 package ru.sgnhp.domain;
 
 import java.io.InputStream;
+import java.sql.Blob;
 
 /*****
  *
@@ -15,6 +16,7 @@ public class FileUploadBean {
     private Long taskUid;
     private String fileName;
     private InputStream contentStream;
+    private Blob blob;
 
     public Long getUid() {
         return uid;
@@ -46,6 +48,14 @@ public class FileUploadBean {
 
     public void setContentStream(InputStream contentStream) {
         this.contentStream = contentStream;
+    }
+
+    public Blob getBlob() {
+        return blob;
+    }
+
+    public void setBlob(Blob blob) {
+        this.blob = blob;
     }
 }
 

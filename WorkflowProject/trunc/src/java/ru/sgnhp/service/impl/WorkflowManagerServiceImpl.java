@@ -64,9 +64,11 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         }
     }
 
-    public void assignTaskToUser(WorkflowBean _workflow) {
-        sendmailAssign(_workflow);
-        workflowDao.saveWorkflow(_workflow);
+    public void assignTaskToUser(WorkflowBean wf) {
+        wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
+        wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
+        sendmailAssign(wf);
+        workflowDao.saveWorkflow(wf);
     }
 
     public void setWorkflowDao(IWorkflowDao workflowDao) {

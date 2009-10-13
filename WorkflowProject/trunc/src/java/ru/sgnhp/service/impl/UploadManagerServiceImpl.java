@@ -32,4 +32,8 @@ public class UploadManagerServiceImpl implements IUploadManagerService{
         this.uploadDao = uploadDao;
     }
 
+    public FileUploadBean getFileUploadBeanByUid(Long fileUploadBeanUid) {
+        return uploadDao.getFileUploadBeanByUid(fileUploadBeanUid);
+    }
+
 }

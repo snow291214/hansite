@@ -27,7 +27,8 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     public void saveWorkflow(WorkflowBean _workflow) {
         getSimpleJdbcTemplate().update(INSERT, _workflow.getParentUid(), _workflow.getTaskUid(), _workflow.getParentUserUid(),
                 _workflow.getUserUid(), _workflow.getDescription(),
-                _workflow.getState(), DateUtils.stringToDate(_workflow.getAssignDate()), DateUtils.stringToDate(_workflow.getFinishDate()));
+                _workflow.getState(), DateUtils.stringToDate(_workflow.getAssignDate(), "yyyy-MM-dd"),
+                DateUtils.stringToDate(_workflow.getFinishDate(), "yyyy-MM-dd"));
     }
 
     public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid) {
@@ -65,8 +66,8 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     public void updateWorkflow(WorkflowBean _workflow) {
         getSimpleJdbcTemplate().update(UPDATE, _workflow.getParentUid(), _workflow.getTaskUid(), _workflow.getParentUserUid(),
                 _workflow.getUserUid(), _workflow.getDescription(),
-                _workflow.getState(), DateUtils.stringToDate(_workflow.getAssignDate()),
-                DateUtils.stringToDate(_workflow.getFinishDate()), _workflow.getUid());
+                _workflow.getState(), DateUtils.stringToDate(_workflow.getAssignDate(), "yyyy-MM-dd"),
+                DateUtils.stringToDate(_workflow.getFinishDate(), "yyyy-MM-dd"), _workflow.getUid());
     }
 
     public void updateWorkflowState(WorkflowBean _workflow) {

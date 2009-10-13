@@ -12,13 +12,13 @@ public class DateUtils {
 
     private static final String DATE_FORMAT_NOW = "dd.MM.yyyy";
 
-    public static Date stringToDate(String dateString) {
+    public static Date stringToDate(String dateString,String dateFormat) {
         Date date = null;
         if(dateString == null)
             return null;
         try {
             DateFormat formatter;
-            formatter = new SimpleDateFormat(DATE_FORMAT_NOW);
+            formatter = new SimpleDateFormat(dateFormat);
             date = new java.sql.Date(formatter.parse(dateString).getTime());
         } catch (ParseException ex) {
             Logger.getLogger(DateUtils.class.getName()).log(Level.SEVERE, null, ex);
