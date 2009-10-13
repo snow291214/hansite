@@ -240,6 +240,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean id="workflowManagerServiceTarget" class="ru.sgnhp.service.impl.WorkflowManagerServiceImpl">
         <property name="workflowDao" ref="workflowDao"/>
         <property name="userManagerService" ref="userManagerServiceTarget" />
+        <property name="stateManagerService" ref="stateManagerServiceTarget" />
     </bean>
 
     <!--Upload DAO-->
@@ -253,6 +254,16 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     </bean>
 
     <bean id="authenticationDAO" class="ru.sgnhp.dao.impl.AuthenticationDaoImpl" />
+
+    <!--State DAO-->
+    <bean id="stateDao" class="ru.sgnhp.dao.impl.StateDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--State Manager service target bean-->
+    <bean id="stateManagerServiceTarget" class="ru.sgnhp.service.impl.StateManagerServiceImpl">
+        <property name="stateDao" ref="stateDao"/>
+    </bean>
 
     <!-- =================================================================== -->
     <!-- Transaction-wrapped Services                                        -->
@@ -317,6 +328,17 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="save*">PROPAGATION_REQUIRED</prop>
                 <prop key="update*">PROPAGATION_REQUIRED</prop>
                 <prop key="delete*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- State Manager Sevice -->
+    <bean id="stateManagerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="target" ref="stateManagerServiceTarget"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
             </props>
         </property>
     </bean>

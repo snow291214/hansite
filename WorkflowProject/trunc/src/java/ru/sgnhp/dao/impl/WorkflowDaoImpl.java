@@ -34,7 +34,7 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid) {
         List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
                 ", state  WHERE  workflows.UserUid = ? And " +
-                "state.StateUid = workflows.state order by AssignDate, State",
+                "state.StateUid = workflows.state and workflows.state <> 3 order by AssignDate, State",
                 new WorkflowMapper(taskManagerService), userUid);
         return workflows;
     }

@@ -14,8 +14,10 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import ru.sgnhp.dao.IWorkflowDao;
+import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.service.IStateManagerService;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
@@ -33,8 +35,9 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
     private static String fromAddress;
     private static String fromName;
     private static IUserManagerService userManagerService;
+    private IStateManagerService stateManagerService;
 
-    protected void sendmailAssign(WorkflowBean _workflow) {
+    private void sendmailAssign(WorkflowBean _workflow) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
         Session session = Session.getDefaultInstance(props, null);
@@ -56,6 +59,41 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
                     _workflow.getAssignee().getLastName() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " + _workflow.getDescription() +
                     "</p><a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачу</a></body></html>", "text/html;charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    private void sendmailChangeState(WorkflowBean _workflow) {
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", mailHostName);
+        Session session = Session.getDefaultInstance(props, null);
+        MimeMessage message = new MimeMessage(session);
+        try {
+            InternetAddress address = new InternetAddress(fromAddress);
+            address.setPersonal(fromName, "utf-8");
+            message.setFrom(address);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(_workflow.getAssignee().getEmail()));
+            message.setSubject("Изменение статуса задачи", "utf-8");
+
+            Multipart multipart = new MimeMultipart("related");
+            BodyPart htmlPart = new MimeBodyPart();
+
+            StateBean bean = stateManagerService.getStateByStateUid(Integer.parseInt(_workflow.getState()));
+
+            htmlPart.setContent("<html><body>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Изменение статуса у назначенной Вами задачи № " +
+                    _workflow.getTask().getInternalNumber() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Получатель задачи: " +
+                    _workflow.getReceiver().getLastName() + " " +
+                    _workflow.getReceiver().getFirstName() + " " +
+                    _workflow.getReceiver().getMiddleName() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
+                    _workflow.getTask().getDescription() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " + bean.getStateDescription() + "</p></body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);
@@ -148,5 +186,10 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
 
     public void updateWorkflowState(WorkflowBean _workflow) {
         workflowDao.updateWorkflowState(_workflow);
+        sendmailChangeState(_workflow);
+    }
+
+    public void setStateManagerService(IStateManagerService stateManagerService) {
+        this.stateManagerService = stateManagerService;
     }
 }
