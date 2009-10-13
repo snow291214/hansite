@@ -34,7 +34,7 @@ public class AssignWorkflowFormController extends SimpleFormController {
             workflow.setParentUid(workflow.getUid());
             workflow.setParentUserUid(initiator.getUid());
             workflow.setUserUid(Long.valueOf(uid));
-            workflow.setAssignDate(DateUtils.nowString());
+            workflow.setAssignDate(DateUtils.nowString("yyyy-MM-dd"));
             workflow.setState("0");
             workflowManagerService.assignTaskToUser(workflow);
         }

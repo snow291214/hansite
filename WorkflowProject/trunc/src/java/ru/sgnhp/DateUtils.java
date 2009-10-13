@@ -12,7 +12,7 @@ public class DateUtils {
 
     private static final String DATE_FORMAT_NOW = "dd.MM.yyyy";
 
-    public static Date stringToDate(String dateString,String dateFormat) {
+    public static Date stringToDate(String dateString, String dateFormat) {
         Date date = null;
         if(dateString == null)
             return null;
@@ -26,9 +26,9 @@ public class DateUtils {
         return date;
     }
 
-    public static String nowString() {
+    public static String nowString(String dateFormat) {
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         return sdf.format(cal.getTime());
     }
 

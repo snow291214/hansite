@@ -83,7 +83,7 @@ public class RegisterTaskFormController extends SimpleFormController {
             task = new TaskBean();
             task.setInternalNumber(taskManagerService.getTaskNewNumber());
             task.setExternalNumber("б/н");
-            task.setStartDate(DateUtils.nowString());
+            task.setStartDate(DateUtils.nowString("dd.MM.yyyy"));
             task.setDueDate(DateUtils.increaseDateString(3));
         }
         return task;
