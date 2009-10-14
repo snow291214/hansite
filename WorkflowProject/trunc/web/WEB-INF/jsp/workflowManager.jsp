@@ -4,6 +4,7 @@
 </head>
 
 <body>
+    <!--
     <c:forEach var="workflow" items="${requestScope.roadmap}">
         <table class="workflowManager">
             <tr>
@@ -17,6 +18,7 @@
         </table>
         <br />
     </c:forEach>
+    -->
     <form name="Form1" method="post" action="${actionUrl}">
         <input type="hidden" name="workflowID" value="${workflowID}">
         <table>
@@ -40,7 +42,7 @@
                                     <option value="0">Не начата</option>
                                 </c:otherwise>
                             </c:choose>
-
+                            <!--
                             <c:choose>
                                 <c:when test="${status.value eq 'Передана'}">
                                     <option value="1" selected>Передана</option>
@@ -49,7 +51,7 @@
                                     <option value="1">Передана</option>
                                 </c:otherwise>
                             </c:choose>
-
+                            -->
                             <c:choose>
                                 <c:when test="${status.value eq 'В работе'}">
                                     <option value="2" selected>В работе</option>

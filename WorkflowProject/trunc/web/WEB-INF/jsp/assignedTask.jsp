@@ -50,7 +50,9 @@
                             <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
                         </c:forEach>
                         <br />
+                        <!--
                         <a href="<c:url value="workflowManager.htm?workflowID=${wf.uid}" />">Детали задачи</a>
+                        -->
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@ package ru.sgnhp.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.BodyPart;
@@ -171,7 +172,7 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         WorkflowManagerServiceImpl.userManagerService = userManagerService;
     }
 
-    public HashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, HashMap roadmap) {
+    public LinkedHashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, LinkedHashMap roadmap) {
         WorkflowBean workflowBean = this.getWorkflowByUid(workflowUid);
         ArrayList<WorkflowUserBean> members = new ArrayList<WorkflowUserBean>();
         members.add(workflowBean.getAssignee());

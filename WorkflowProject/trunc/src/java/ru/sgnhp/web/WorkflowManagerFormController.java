@@ -2,6 +2,7 @@ package ru.sgnhp.web;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,7 @@ public class WorkflowManagerFormController extends SimpleFormController {
         request.setAttribute("actionUrl", "workflowManager.htm");
         String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflowBean = getWorkflowManagerService().getWorkflowByUid(Long.parseLong(workflowUid));
-        HashMap<Long, ArrayList<WorkflowUserBean>> roadmap = new HashMap<Long, ArrayList<WorkflowUserBean>>();
+        LinkedHashMap<Long, ArrayList<WorkflowUserBean>> roadmap = new LinkedHashMap<Long, ArrayList<WorkflowUserBean>>();
         if (workflowBean.getParentUid() == -1) {
             ArrayList<WorkflowUserBean> members = new ArrayList<WorkflowUserBean>();
             members.add(workflowBean.getAssignee());
@@ -47,7 +48,6 @@ public class WorkflowManagerFormController extends SimpleFormController {
             members.add(workflowBean.getReceiver());
             roadmap.put(workflowBean.getUid(), members);
             roadmap = getWorkflowManagerService().getWorkflowMembersByWorkflowUid(workflowBean.getParentUid(), roadmap);
-            //roadmap.
         }
         request.setAttribute("roadmap", roadmap);
         request.setAttribute("workflowID", workflowUid);
