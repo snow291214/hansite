@@ -27,7 +27,7 @@ public class WorkflowManagerFormController extends SimpleFormController {
 
     @Override
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
-        workflowManagerService.updateWorkflowState((WorkflowBean)command);
+        workflowManagerService.updateWorkflowState((WorkflowBean) command);
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
@@ -48,6 +48,11 @@ public class WorkflowManagerFormController extends SimpleFormController {
             members.add(workflowBean.getReceiver());
             roadmap.put(workflowBean.getUid(), members);
             roadmap = getWorkflowManagerService().getWorkflowMembersByWorkflowUid(workflowBean.getParentUid(), roadmap);
+            LinkedHashMap buff = new LinkedHashMap();
+            for (int i = roadmap.size() - 1; i >= 0; i--) {
+                buff.put(roadmap.keySet().toArray()[i], roadmap.values().toArray()[i]);
+            }
+            roadmap = buff;
         }
         request.setAttribute("roadmap", roadmap);
         request.setAttribute("workflowID", workflowUid);

@@ -4,7 +4,6 @@
 </head>
 
 <body>
-    <!--
     <c:forEach var="workflow" items="${requestScope.roadmap}">
         <table class="workflowManager">
             <tr>
@@ -18,7 +17,6 @@
         </table>
         <br />
     </c:forEach>
-    -->
     <form name="Form1" method="post" action="${actionUrl}">
         <input type="hidden" name="workflowID" value="${workflowID}">
         <table>
