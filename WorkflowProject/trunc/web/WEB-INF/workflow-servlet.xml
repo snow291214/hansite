@@ -30,6 +30,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="completedTask.htm">completedTaskController</prop>
                 <prop key="assignTask.htm">assingTaskFormController</prop>
                 <prop key="workflowManager.htm">workflowManagerFormController</prop>
+                <prop key="executionRequest.htm">executionRequestController</prop>
             </props>
         </property>
     </bean>
@@ -48,8 +49,12 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
-    <!-- Logout Controller -->
-    <bean name="logoutController" class="ru.sgnhp.web.LogoutController" />
+    <!-- Execution Request Controller -->
+    <bean name="executionRequestController" class="ru.sgnhp.web.ExecutionRequestController">
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
 
     <!-- Download Controller -->
     <bean name="downloadController" class="ru.sgnhp.web.DownloadController">
@@ -57,6 +62,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
             <ref bean="uploadManagerService"/>
         </property>
     </bean>
+
+    <!-- Logout Controller -->
+    <bean name="logoutController" class="ru.sgnhp.web.LogoutController" />
 
     <!-- Register Task Form Controller-->
     <bean name="newTaskFormController" class="ru.sgnhp.web.RegisterTaskFormController" >

@@ -31,4 +31,6 @@ public interface IWorkflowManagerService {
 
     LinkedHashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, LinkedHashMap roadmap);
 
+    public void sendmailRemind(WorkflowBean _workflow);
+
 }

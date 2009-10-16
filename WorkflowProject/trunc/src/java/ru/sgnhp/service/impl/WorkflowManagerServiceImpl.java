@@ -103,6 +103,42 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         }
     }
 
+    public void sendmailRemind(WorkflowBean _workflow){
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", mailHostName);
+        Session session = Session.getDefaultInstance(props, null);
+        MimeMessage message = new MimeMessage(session);
+        try {
+            InternetAddress address = new InternetAddress(fromAddress);
+            address.setPersonal(fromName, "utf-8");
+            message.setFrom(address);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(_workflow.getReceiver().getEmail()));
+            message.setSubject("Запрос о выполнении задачи", "utf-8");
+
+            Multipart multipart = new MimeMultipart("related");
+            BodyPart htmlPart = new MimeBodyPart();
+
+            StateBean bean = stateManagerService.getStateByStateUid(Integer.parseInt(_workflow.getState()));
+
+            htmlPart.setContent("<html><body>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Прошу предоставить отчет о состоянии задачи № " +
+                    _workflow.getTask().getInternalNumber() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " +
+                    _workflow.getAssignee().getLastName() + " " +
+                    _workflow.getAssignee().getFirstName() + " " +
+                    _workflow.getAssignee().getMiddleName() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
+                    _workflow.getDescription() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " +
+                    bean.getStateDescription() + "</p></body></html>", "text/html;charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
     public void assignTaskToUser(WorkflowBean wf) {
         wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
         wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
