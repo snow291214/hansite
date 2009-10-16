@@ -113,12 +113,11 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
             address.setPersonal(fromName, "utf-8");
             message.setFrom(address);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(_workflow.getReceiver().getEmail()));
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(_workflow.getAssignee().getEmail()));
             message.setSubject("Запрос о выполнении задачи", "utf-8");
 
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
-
-            StateBean bean = stateManagerService.getStateByStateUid(Integer.parseInt(_workflow.getState()));
 
             htmlPart.setContent("<html><body>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Прошу предоставить отчет о состоянии задачи № " +
@@ -130,7 +129,7 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
                     "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
                     _workflow.getDescription() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " +
-                    bean.getStateDescription() + "</p></body></html>", "text/html;charset=utf-8");
+                    _workflow.getState() + "</p></body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);

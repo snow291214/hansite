@@ -13,7 +13,7 @@ public class ExecutionRequestController  implements Controller {
     private IWorkflowManagerService workflowManagerService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String workflowUid = request.getParameter("worflowID");
+        String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
         workflowManagerService.sendmailRemind(workflowBean);
         return null;
