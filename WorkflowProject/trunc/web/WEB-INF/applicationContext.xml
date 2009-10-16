@@ -35,11 +35,37 @@
         <property name="password" value="${jdbc.password}"/>
         <property name="driverClass" value="${jdbc.driverClassName}"/>
         <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="initialPoolSize" value="0"/>
-        <property name="maxPoolSize" value="20"/>
-        <property name="minPoolSize" value="5"/>
-        <property name="acquireIncrement" value="1"/>
-        <property name="acquireRetryAttempts" value="0"/>
+
+        <property name="initialPoolSize">
+            <value>${jdbc.initialPoolSize}</value>
+        </property>
+        <property name="minPoolSize">
+            <value>${jdbc.minPoolSize}</value>
+        </property>
+        <property name="maxPoolSize">
+            <value>${jdbc.maxPoolSize}</value>
+        </property>
+        <property name="acquireRetryAttempts">
+            <value>${jdbc.acquireRetryAttempts}</value>
+        </property>
+        <property name="acquireIncrement">
+            <value>${jdbc.acquireIncrement}</value>
+        </property>
+        <property name="idleConnectionTestPeriod">
+            <value>${jdbc.idleConnectionTestPeriod}</value>
+        </property>
+        <property name="maxIdleTime">
+            <value>${jdbc.maxIdleTime}</value>
+        </property>
+        <property name="maxConnectionAge">
+            <value>${jdbc.maxConnectionAge}</value>
+        </property>
+        <property name="preferredTestQuery">
+            <value>${jdbc.preferredTestQuery}</value>
+        </property>
+        <property name="testConnectionOnCheckin">
+            <value>${jdbc.testConnectionOnCheckin}</value>
+        </property>
     </bean>
 
     <bean id="transactionManager"
