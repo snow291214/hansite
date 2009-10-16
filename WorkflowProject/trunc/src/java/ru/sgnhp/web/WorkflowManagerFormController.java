@@ -1,7 +1,6 @@
 package ru.sgnhp.web;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
