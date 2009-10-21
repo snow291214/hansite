@@ -5,7 +5,6 @@
 package ru.sgnhp.dao;
 
 import java.util.List;
-import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****

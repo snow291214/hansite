@@ -82,7 +82,7 @@ public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
             Calendar cal = Calendar.getInstance();
             String year = Integer.toString(cal.get(Calendar.YEAR));
             number = Integer.toString(rs.getInt("C") + 1);
-            number = "T." + year + "-" + number;
+            number = "T." + year + "." + number;
         } catch (InvalidResultSetAccessException ex) {
             Logger.getLogger(TaskDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

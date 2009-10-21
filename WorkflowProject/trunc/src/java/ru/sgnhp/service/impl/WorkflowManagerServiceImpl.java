@@ -1,7 +1,6 @@
 package ru.sgnhp.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
@@ -103,7 +102,7 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         }
     }
 
-    public void sendmailRemind(WorkflowBean _workflow){
+    public void sendmailRemind(WorkflowBean _workflow) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
         Session session = Session.getDefaultInstance(props, null);
@@ -130,6 +129,74 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
                     _workflow.getDescription() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " +
                     _workflow.getState() + "</p></body></html>", "text/html;charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    public void taskReminder() {
+        List<WorkflowUserBean> users = userManagerService.getAllNormalizedUsers();
+        for (WorkflowUserBean user : users) {
+            List<WorkflowBean> workflows = this.getRecievedWorkflowsByUserUid(user.getUid());
+            if (!workflows.isEmpty()) {
+                sendmailSheduler((ArrayList) workflows);
+            }
+        }
+    }
+
+    private void sendmailSheduler(ArrayList<WorkflowBean> wfs) {
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", mailHostName);
+        Session session = Session.getDefaultInstance(props, null);
+        MimeMessage message = new MimeMessage(session);
+        try {
+            InternetAddress address = new InternetAddress(fromAddress);
+            address.setPersonal(fromName, "utf-8");
+            message.setFrom(address);
+            WorkflowBean bean = (WorkflowBean) wfs.toArray()[0];
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(bean.getReceiver().getEmail()));
+            message.setSubject("У Вас есть невыполненные задачи!", "utf-8");
+
+            Multipart multipart = new MimeMultipart("related");
+            BodyPart htmlPart = new MimeBodyPart();
+
+            String tableBody = "";
+
+            for (WorkflowBean wf : wfs) {
+                tableBody += "<tr>" +
+                        "<td>" + wf.getTask().getInternalNumber() + "</td>" +
+                        "<td>" + wf.getTask().getDescription() + "</td>" +
+                        "<td>" + wf.getTask().getStartDate() + "</td>" +
+                        "<td>" + wf.getTask().getDueDate() + "</td>" +
+                        "<td>" + wf.getAssignee().getLastName() + " " +
+                        wf.getAssignee().getFirstName() + " " +
+                        wf.getAssignee().getMiddleName() + "</td>" +
+                        "<td>" + wf.getDescription() + "</td>" +
+                        "</tr>";
+            }
+            htmlPart.setContent("<html><head><style type=\"text/css\"> " +
+                    "body {font-family:Arial;font-size:small;}" +
+                    "table {font-family:Arial; font-size:8pt;border-collapse:collapse}" +
+                    "td {border: 1px solid #000000;}" +
+                    "</style></style></head><body>" +
+                    "<p>" +
+                    "Вам были назначены следующие задания:" +
+                    "</p>" +
+                    "<table width=100%>" +
+                    "<tr align=center>" +
+                    "<td width=10%>Номер задачи</td>" +
+                    "<td width=30%>Описание задачи</td>" +
+                    "<td width=10%>Дата начала</td>" +
+                    "<td width=10%>Срок до</td>" +
+                    "<td width=20%>Задачу поставил</td>" +
+                    "<td width=20%>Резолюция к задаче</td>" +
+                    "</tr>" +
+                    tableBody +
+                    "</table>" +
+                    "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);

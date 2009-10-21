@@ -9,7 +9,11 @@
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
     
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
-    
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="/WEB-INF/classes/mail.properties"/>
+
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
@@ -249,6 +253,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="workflowDao" ref="workflowDao"/>
         <property name="userManagerService" ref="userManagerServiceTarget" />
         <property name="stateManagerService" ref="stateManagerServiceTarget" />
+        <property name="mailHostName" value="${mail.mailHostName}"/>
+        <property name="fromAddress" value="${mail.fromAddress}"/>
+        <property name="fromName" value="${mail.fromName}" />
     </bean>
 
     <!--Upload DAO-->
@@ -392,4 +399,31 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="1024000000"/>
     </bean>
+
+    <!--============================== Sheduling  ===========================-->
+
+    <bean id="simpleService" class="ru.sgnhp.sheduling.impl.SimpleWorkServiceImpl"/>
+
+    <bean id="methodInvokingJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="taskReminder"/>
+    </bean>
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingJobDetail"/>
+        </property>
+        <property name="cronExpression"> <!-- -->
+            <value>* * 8 * 1-5 ?</value>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger" />
+            </list>
+        </property>
+    </bean>
+
 </beans>

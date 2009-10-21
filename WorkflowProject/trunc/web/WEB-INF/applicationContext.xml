@@ -14,21 +14,7 @@
 
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="/WEB-INF/classes/jdbc.properties" />
-
-    <!--
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <property name="maxActive" value="20"/>
-        <property name="maxIdle" value="10"/>
-        <property name="maxWait" value="10000"/>
-        <property name="removeAbandoned" value="true"/>
-        <property name="removeAbandonedTimeout" value="60"/>
-    </bean>
-    -->
+          p:location="/WEB-INF/classes/jdbc.properties"/>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="user" value="${jdbc.username}"/>
@@ -71,12 +57,6 @@
     <bean id="transactionManager"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean id="emailConfig" class="ru.sgnhp.service.impl.WorkflowManagerServiceImpl">
-        <property name="mailHostName" value="10.16.13.51"/>
-        <property name="fromAddress" value="workflow@sgnhp.snos.ru"/>
-        <property name="fromName" value="Система электронного документооборота СГНХП" />
     </bean>
 
 </beans>

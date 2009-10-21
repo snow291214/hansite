@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IWorkflowManagerService;
 
@@ -16,7 +17,7 @@ public class ExecutionRequestController  implements Controller {
         String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
         workflowManagerService.sendmailRemind(workflowBean);
-        return null;
+        return new ModelAndView(new RedirectView("assignedTask.htm"), "workflowID", workflowUid);
     }
 
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {

@@ -530,9 +530,11 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.commons-email-1.1.jar-1}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-email-1.1.jar-1" todir="${dist.ear.dir}"/>
         <copyfiles files="${file.reference.mail.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.mail.jar" todir="${dist.ear.dir}"/>
         <copyfiles files="${file.reference.c3p0-0.9.1.2.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.c3p0-0.9.1.2.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.quartz-1.6.5.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.quartz-1.6.5.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.commons-collections-3.2.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-collections-3.2.1.jar" todir="${dist.ear.dir}"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.libs.jstl11.classpath} ${manifest.file.reference.aspectjweaver-1.5.0.jar} ${manifest.file.reference.commons-dbcp-1.2.2.jar} ${manifest.file.reference.commons-pool-1.5.1.jar} ${manifest.file.reference.commons-fileupload-1.2.1.jar} ${manifest.file.reference.commons-io-1.4.jar} ${manifest.file.reference.spring-test.jar-1} ${manifest.file.reference.commons-logging-1.1.1.jar-1} ${manifest.libs.spring-webmvc.classpath} ${manifest.libs.spring-framework.classpath} ${manifest.file.reference.commons-email-1.1.jar} ${manifest.file.reference.commons-email-1.1.jar-1} ${manifest.file.reference.mail.jar} ${manifest.file.reference.c3p0-0.9.1.2.jar} "/>
+            <attribute name="Class-Path" value="${manifest.libs.jstl11.classpath} ${manifest.file.reference.aspectjweaver-1.5.0.jar} ${manifest.file.reference.commons-dbcp-1.2.2.jar} ${manifest.file.reference.commons-pool-1.5.1.jar} ${manifest.file.reference.commons-fileupload-1.2.1.jar} ${manifest.file.reference.commons-io-1.4.jar} ${manifest.file.reference.spring-test.jar-1} ${manifest.file.reference.commons-logging-1.1.1.jar-1} ${manifest.libs.spring-webmvc.classpath} ${manifest.libs.spring-framework.classpath} ${manifest.file.reference.commons-email-1.1.jar} ${manifest.file.reference.commons-email-1.1.jar-1} ${manifest.file.reference.mail.jar} ${manifest.file.reference.c3p0-0.9.1.2.jar} ${manifest.file.reference.quartz-1.6.5.jar} ${manifest.file.reference.commons-collections-3.2.1.jar} "/>
         </manifest>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
@@ -550,6 +552,8 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.commons-email-1.1.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mail.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.c3p0-0.9.1.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.quartz-1.6.5.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.commons-collections-3.2.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest" if="do.tmp.war.package" name="do-ear-dist">
         <dirname file="${dist.ear.war}" property="dist.jar.dir"/>
