@@ -47,13 +47,21 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
         return workflows;
     }
 
+    public List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid) {
+        List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
+                ", state  WHERE  workflows.UserUid = ? And " +
+                "state.StateUid = workflows.state and workflows.state = 3 order by AssignDate, State",
+                new WorkflowMapper(taskManagerService), userUid);
+        return workflows;
+    }
+
     public void setTaskManagerService(ITaskManagerService taskManagerService) {
         this.taskManagerService = taskManagerService;
     }
 
     public WorkflowBean getWorkflowByUid(Long workflowUid) {
         List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
-                ",state  WHERE  workflows.Uid = ? And state.StateUid = workflows.state "+
+                ",state  WHERE  workflows.Uid = ? And state.StateUid = workflows.state " +
                 "order by AssignDate, State",
                 new WorkflowMapper(taskManagerService), workflowUid);
         if (workflows.size() > 0) {
@@ -75,12 +83,25 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
                 _workflow.getState(), _workflow.getUid());
     }
 
-    public List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid) {
-        List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
+    public int getRecievedWorkflowsCountByUserUid(Long userUid) {
+        return getSimpleJdbcTemplate().queryForInt("SELECT count(*) from workflows" +
+                ", state  WHERE  workflows.UserUid = ? And " +
+                "state.StateUid = workflows.state and workflows.state in (0,2) order by AssignDate, State",
+                userUid);
+    }
+
+    public int getAssignedWorkflowsCountByUserUid(Long userUid) {
+        return getSimpleJdbcTemplate().queryForInt("SELECT count(*) from workflows" +
+                ",state  WHERE  workflows.ParentUserUid = ? And " +
+                "state.StateUid = workflows.state order by AssignDate, State",
+                userUid);
+    }
+
+    public int getCompletedWorkflowsCountByUserUid(Long userUid) {
+        return getSimpleJdbcTemplate().queryForInt("SELECT count(*) from workflows" +
                 ", state  WHERE  workflows.UserUid = ? And " +
                 "state.StateUid = workflows.state and workflows.state = 3 order by AssignDate, State",
-                new WorkflowMapper(taskManagerService), userUid);
-        return workflows;
+                userUid);
     }
 
     private static class WorkflowMapper implements ParameterizedRowMapper<WorkflowBean> {

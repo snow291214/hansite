@@ -28,7 +28,7 @@
 
         <div class="box w300 green">
             <div class="box-inner">
-                <a class="box" href="<c:url value="completedTask.htm" />">Завершенные Вами задачи</a>
+                <a class="box" href="<c:url value="completedTask.htm" />">Завершенные Вами задачи(${requestScope.count})</a>
             </div>
             <em class="ctl"><b>•</b></em><em class="ctr"><b>•</b></em><em class="cbl"><b>•</b></em><em class="cbr"><b>•</b></em>
         </div>

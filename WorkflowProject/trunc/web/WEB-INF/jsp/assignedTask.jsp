@@ -21,7 +21,7 @@
 
         <div class="box w300 blue">
             <div class="box-inner">
-                <a class="box" href="<c:url value="assignedTask.htm" />">Задачи, назначенные Вами</a>
+                <a class="box" href="<c:url value="assignedTask.htm" />">Задачи, назначенные Вами(${requestScope.count})</a>
             </div>
             <em class="ctl"><b>•</b></em><em class="ctr"><b>•</b></em><em class="cbl"><b>•</b></em><em class="cbr"><b>•</b></em>
         </div>

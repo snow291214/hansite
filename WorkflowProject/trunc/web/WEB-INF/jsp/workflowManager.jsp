@@ -15,7 +15,6 @@
                 <td class="bottom">Кому: ${workflow.value[1].lastName} ${workflow.value[1].firstName}</td>
             </tr>
         </table>
-        <br />
     </c:forEach>
     <form name="Form1" method="post" action="${actionUrl}">
         <input type="hidden" name="workflowID" value="${workflowID}">

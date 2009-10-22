@@ -295,4 +295,16 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
     public void setStateManagerService(IStateManagerService stateManagerService) {
         this.stateManagerService = stateManagerService;
     }
+
+    public int getRecievedWorkflowsCountByUserUid(Long userUid) {
+        return workflowDao.getRecievedWorkflowsCountByUserUid(userUid);
+    }
+
+    public int getAssignedWorkflowsCountByUserUid(Long userUid) {
+        return workflowDao.getAssignedWorkflowsCountByUserUid(userUid);
+    }
+
+    public int getCompletedWorkflowsCountByUserUid(Long userUid) {
+        return workflowDao.getCompletedWorkflowsCountByUserUid(userUid);
+    }
 }

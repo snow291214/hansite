@@ -37,7 +37,7 @@ public class IndexController implements Controller {
             user = userManagerService.getUserByLogin(login);
         }
         request.getSession().setAttribute("initiator", user);
-        return new ModelAndView("index");
+        return new ModelAndView("index","count",user.getWorkflows().size());
     }
 
     public void setUserManagerService(IUserManagerService userManagerService) {

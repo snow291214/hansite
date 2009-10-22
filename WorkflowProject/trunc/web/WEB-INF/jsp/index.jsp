@@ -14,7 +14,7 @@
     <div>
         <div class="box w300 red">
             <div class="box-inner">
-                <a class="box" href="<c:url value="index.htm" />">Задачи, назначенные Вам</a>
+                <a class="box" href="<c:url value="index.htm" />">Задачи, назначенные Вам (${requestScope.count})</a>
             </div>
             <em class="ctl"><b>•</b></em><em class="ctr"><b>•</b></em><em class="cbl"><b>•</b></em><em class="cbr"><b>•</b></em>
         </div>

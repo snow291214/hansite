@@ -34,4 +34,10 @@ public interface IWorkflowManagerService {
     void sendmailRemind(WorkflowBean _workflow);
 
     void taskReminder();
+
+    int getRecievedWorkflowsCountByUserUid(Long userUid);
+
+    int getAssignedWorkflowsCountByUserUid(Long userUid);
+
+    int getCompletedWorkflowsCountByUserUid(Long userUid);
 }

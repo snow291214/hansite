@@ -23,6 +23,8 @@ public class AssignedTaskViewController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long initiatorUid = ((WorkflowUserBean) request.getSession().getAttribute("initiator")).getUid();
         List<WorkflowBean> wfs = workflowManagerService.getAssignedWorkflowsByUserUid(initiatorUid);
+        int count = workflowManagerService.getAssignedWorkflowsCountByUserUid(initiatorUid);
+        request.setAttribute("count", count);
         return new ModelAndView("assignedTask", "assigned", wfs);
     }
 

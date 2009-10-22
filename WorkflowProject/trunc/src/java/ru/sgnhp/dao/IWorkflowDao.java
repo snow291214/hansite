@@ -18,11 +18,18 @@ public interface IWorkflowDao {
 
     List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid);
 
+    int getRecievedWorkflowsCountByUserUid(Long userUid);
+
     List<WorkflowBean> getAssignedWorkflowsByUserUid(Long userUid);
 
+    int getAssignedWorkflowsCountByUserUid(Long userUid);
+
     List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid);
+
+   int getCompletedWorkflowsCountByUserUid(Long userUid);
 
     void updateWorkflow(WorkflowBean _workflow);
 
     void updateWorkflowState(WorkflowBean _workflow);
+
 }

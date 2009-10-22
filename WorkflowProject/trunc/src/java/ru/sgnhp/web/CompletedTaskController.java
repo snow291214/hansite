@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ru.sgnhp.web;
 
 import java.io.IOException;
@@ -20,18 +19,19 @@ import ru.sgnhp.service.IWorkflowManagerService;
  *
  * @author 48han
  */
-public class CompletedTaskController  implements Controller {
+public class CompletedTaskController implements Controller {
 
     private IWorkflowManagerService workflowManagerService;
-    
+
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long initiatorUid = ((WorkflowUserBean) request.getSession().getAttribute("initiator")).getUid();
         List<WorkflowBean> wfs = workflowManagerService.getCompletedWorkflowsByUserUid(initiatorUid);
+        int count = workflowManagerService.getCompletedWorkflowsCountByUserUid(initiatorUid);
+        request.setAttribute("count", count);
         return new ModelAndView("completedTask", "completed", wfs);
     }
 
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
         this.workflowManagerService = workflowManagerService;
     }
-
 }
