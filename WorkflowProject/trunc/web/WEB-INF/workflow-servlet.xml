@@ -439,7 +439,7 @@ Expression	 Meaning
             <ref bean="methodInvokingJobDetail"/>
         </property>
         <property name="cronExpression">
-            <value>0 30 15 ? * MON-FRI</value>
+            <value>0 0 8 ? * MON-FRI</value>
         </property>
     </bean>
 
