@@ -203,6 +203,20 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
+    <bean name="searchTaskFormController" class="ru.sgnhp.web.SearchTaskFormController">
+        <property name="commandName" value="searchTask"/>
+        <property name="commandClass" value="ru.sgnhp.domain.SearchTaskBean"/>
+        <property name="formView">
+            <value>index.htm</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">
