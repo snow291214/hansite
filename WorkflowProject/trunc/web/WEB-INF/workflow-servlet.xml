@@ -402,8 +402,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
     <!--============================== Sheduling  ===========================-->
 
-    <bean id="simpleService" class="ru.sgnhp.sheduling.impl.SimpleWorkServiceImpl"/>
-
     <bean id="methodInvokingJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="workflowManagerService"/>
         <property name="targetMethod" value="taskReminder"/>

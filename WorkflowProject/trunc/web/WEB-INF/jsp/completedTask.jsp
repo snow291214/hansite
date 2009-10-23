@@ -3,14 +3,14 @@
 </head>
 
 <body>
-    <c:out value="Здравствуйте,
-           ${sessionScope.initiator.lastName}
-           ${sessionScope.initiator.firstName}
-           ${sessionScope.initiator.middleName}
-           (${sessionScope.initiator.login})" />
-
-    <p><a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> || <a href="<c:url value="logout.htm"/>">Завершить работу</a></p>
-
+    <p><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="10" hspace="10"/>
+        <c:out value="Здравствуйте,
+               ${sessionScope.initiator.lastName}
+               ${sessionScope.initiator.firstName}
+               ${sessionScope.initiator.middleName}
+               (${sessionScope.initiator.login}) || " />
+        <a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> || <a href="<c:url value="logout.htm"/>">Завершить работу</a>
+    </p>
     <div>
         <div class="box w300 red">
             <div class="box-inner">
