@@ -1,12 +1,12 @@
 ﻿<%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <title>Система электронного документооборота ООО "Салаватгазонефтехимпроект"</title>
 </head>
-
 <body>
     <table>
         <tr>
-            <td rowspan="3"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
-            <td><c:out value="Здравствуйте,
+            <td rowspan="2"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
+            <td height="30px"><c:out value="Здравствуйте,
                    ${sessionScope.initiator.lastName}
                    ${sessionScope.initiator.firstName}
                    ${sessionScope.initiator.middleName}
@@ -15,7 +15,7 @@
             </td>
             <td> || Поиск по резолюции </td>
             <td align="center">
-                <form action="index.htm">
+                <form name="Form1" method="post" action="searchTask.htm">
                     <input type="text" value=""/>
                     <input type="submit"/>
                 </form>

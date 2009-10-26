@@ -35,6 +35,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="assignTask.htm">assingTaskFormController</prop>
                 <prop key="workflowManager.htm">workflowManagerFormController</prop>
                 <prop key="executionRequest.htm">executionRequestController</prop>
+                <prop key="searchTask.htm">searchTaskController</prop>
             </props>
         </property>
     </bean>
@@ -203,14 +204,14 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
-    <bean name="searchTaskFormController" class="ru.sgnhp.web.SearchTaskFormController">
+    <bean name="searchTaskController" class="ru.sgnhp.web.SearchTaskFormController">
         <property name="commandName" value="searchTask"/>
         <property name="commandClass" value="ru.sgnhp.domain.SearchTaskBean"/>
         <property name="formView">
-            <value>index.htm</value>
+            <value>index</value>
         </property>
         <property name="successView">
-            <value>index.htm</value>
+            <value>index</value>
         </property>
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>

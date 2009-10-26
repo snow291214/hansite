@@ -6,20 +6,15 @@
     <table>
         <tr>
             <td rowspan="2"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
-            <td><c:out value="Здравствуйте,
+            <td height="30px"><c:out value="Здравствуйте,
                    ${sessionScope.initiator.lastName}
                    ${sessionScope.initiator.firstName}
                    ${sessionScope.initiator.middleName}
                    (${sessionScope.initiator.login}) || " />
                 <a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> || <a href="<c:url value="logout.htm"/>">Завершить работу</a>
             </td>
-            <td> || Поиск по резолюции </td>
-            <td>
-                <form action="index.htm">
-                    <input type="text" value="" />
-                    <input type="submit"/>
-                </form>
-            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
         </tr>
         <tr>
             <td colspan="3">
