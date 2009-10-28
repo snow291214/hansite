@@ -1,17 +1,17 @@
 package ru.sgnhp.domain;
 
 public class SearchTaskBean {
-    private String TaskInternalNumber;
+    private String taskInternalNumber;
     private Boolean isTaskInternalNumber;
-    private String TaskDescription;
+    private String taskDescription;
     private Boolean isTaskDescription;
 
     public String getTaskInternalNumber() {
-        return TaskInternalNumber;
+        return taskInternalNumber;
     }
 
     public void setTaskInternalNumber(String TaskInternalNumber) {
-        this.TaskInternalNumber = TaskInternalNumber;
+        this.taskInternalNumber = TaskInternalNumber;
     }
 
     public Boolean getIsTaskInternalNumber() {
@@ -23,11 +23,11 @@ public class SearchTaskBean {
     }
 
     public String getTaskDescription() {
-        return TaskDescription;
+        return taskDescription;
     }
 
     public void setTaskDescription(String TaskDescription) {
-        this.TaskDescription = TaskDescription;
+        this.taskDescription = TaskDescription;
     }
 
     public Boolean getIsTaskDescription() {

@@ -1,5 +1,4 @@
 ﻿<%@ include file="/WEB-INF/jsp/include.jsp" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <title>Система электронного документооборота ООО "Салаватгазонефтехимпроект"</title>
 </head>
 <body>
@@ -11,18 +10,13 @@
                    ${sessionScope.initiator.firstName}
                    ${sessionScope.initiator.middleName}
                    (${sessionScope.initiator.login}) || " />
-                <a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> || <a href="<c:url value="logout.htm"/>">Завершить работу</a>
-            </td>
-            <td> || Поиск по резолюции </td>
-            <td align="center">
-                <form name="Form1" method="post" action="searchTask.htm">
-                    <input type="text" value=""/>
-                    <input type="submit"/>
-                </form>
+                <a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> || 
+                <a href="<c:url value="logout.htm"/>">Завершить работу</a> || 
+                <a href="searchTask.htm">Поиск</a>
             </td>
         </tr>
         <tr>
-            <td colspan="3">
+            <td colspan="2">
                 <div>
                     <div class="box w300 red">
                         <div class="box-inner">

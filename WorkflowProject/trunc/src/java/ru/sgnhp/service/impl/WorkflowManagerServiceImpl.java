@@ -14,6 +14,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import ru.sgnhp.dao.IWorkflowDao;
+import ru.sgnhp.domain.SearchTaskBean;
 import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
@@ -252,6 +253,15 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
         wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
         return wf;
+    }
+
+    public List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean){
+        List<WorkflowBean> wfs = workflowDao.getWorkflowsByDescription(userUid, searchTaskBean.getTaskDescription());
+        for (WorkflowBean wf : wfs) {
+            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
+            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
+        }
+        return wfs;
     }
 
     public void updateWorkflow(WorkflowBean _workflow) {

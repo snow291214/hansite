@@ -28,7 +28,6 @@ public class LoginFormController extends SimpleFormController {
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
         HttpSession session = request.getSession();
         WorkflowUserBean workflowUser = new WorkflowUserBean();
-        workflowUser.setLogin("48han");
         Map attributes = authenticationDAO.authenticateUser((UserLogin) command);
         workflowUser.setLogin(attributes.get("sAMAccountName").toString());
         workflowUser.setLastName(attributes.get("sn").toString());

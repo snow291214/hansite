@@ -3,6 +3,7 @@ package ru.sgnhp.service;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import ru.sgnhp.domain.SearchTaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 
@@ -18,6 +19,8 @@ public interface IWorkflowManagerService {
     void assignTaskToUser(WorkflowBean _workflow);
 
     WorkflowBean getWorkflowByUid(Long workflowUid);
+
+    List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean);
 
     List<WorkflowBean> getRecievedWorkflowsByUserUid(Long uid);
 

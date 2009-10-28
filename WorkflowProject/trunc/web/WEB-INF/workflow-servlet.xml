@@ -35,7 +35,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="assignTask.htm">assingTaskFormController</prop>
                 <prop key="workflowManager.htm">workflowManagerFormController</prop>
                 <prop key="executionRequest.htm">executionRequestController</prop>
-                <prop key="searchTask.htm">searchTaskController</prop>
+                <prop key="searchTask.htm">searchTaskFormController</prop>
+                <prop key="searchResult.htm">searchResultController</prop>
             </props>
         </property>
     </bean>
@@ -204,20 +205,25 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
-    <bean name="searchTaskController" class="ru.sgnhp.web.SearchTaskFormController">
+    <!-- Search Task Controller -->
+    <bean name="searchTaskFormController" class="ru.sgnhp.web.SearchTaskFormController">
         <property name="commandName" value="searchTask"/>
         <property name="commandClass" value="ru.sgnhp.domain.SearchTaskBean"/>
         <property name="formView">
-            <value>index</value>
+            <value>searchTask</value>
         </property>
         <property name="successView">
-            <value>index</value>
+            <value>searchResult.htm</value>
         </property>
+    </bean>
+
+    <!-- Search Result Controller -->
+    <bean name="searchResultController" class="ru.sgnhp.web.SearchResultController">
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
         </property>
     </bean>
-
+  
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">

@@ -104,6 +104,15 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
                 userUid);
     }
 
+    public List<WorkflowBean> getWorkflowsByDescription(Long userUid, String description) {
+        List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
+                ", state  WHERE  workflows.UserUid = ? And " +
+                "state.StateUid = workflows.State " +
+                "And workflows.Description like ? order by AssignDate, workflows.State",
+                new WorkflowMapper(taskManagerService), userUid, "%" + description + "%");
+        return workflows;
+    }
+
     private static class WorkflowMapper implements ParameterizedRowMapper<WorkflowBean> {
 
         private ITaskManagerService taskManagerService;
