@@ -20,7 +20,7 @@ public interface IWorkflowDao {
 
     int getRecievedWorkflowsCountByUserUid(Long userUid);
 
-    List<WorkflowBean> getAssignedWorkflowsByUserUid(Long userUid);
+    List<WorkflowBean> getAssignedWorkflowsByUserUid(Long userUid, Boolean completed);
 
     int getAssignedWorkflowsCountByUserUid(Long userUid);
 
