@@ -32,7 +32,7 @@
             <div id="container" >
                 <p>Имя файла: <input type="file" name="files" id="f1"/></p>
             </div>
-            <input type="submit" />
+            <input type="submit"  value="Сохранить"/>
         </form:form>
     </body>
 </html>

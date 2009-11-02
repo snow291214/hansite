@@ -8,7 +8,9 @@
             <tr>
                 <td>Резолюция:</td>
                 <spring:bind path="assignWorkflow.description">
-                    <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
+                    <td>
+                        <textarea rows="8" cols="23" name="<c:out value="${status.expression}"/>">${status.value}</textarea>
+                    </td>
                     <td><font color="red">${status.errorMessage}</font></td>
                 </spring:bind>
             </tr>

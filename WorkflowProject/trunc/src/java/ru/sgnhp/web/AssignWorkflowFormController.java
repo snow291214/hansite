@@ -45,7 +45,7 @@ public class AssignWorkflowFormController extends SimpleFormController {
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflow = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
-        workflow.setDescription("");
+        workflow.setDescription(null);
         return workflow;
     }
 

@@ -197,6 +197,7 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
                     "</tr>" +
                     tableBody +
                     "</table>" +
+                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачи</a>"+
                     "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);

@@ -25,14 +25,16 @@ import ru.sgnhp.service.IUploadManagerService;
  */
 public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
 
-    private static String INSERT = "Insert Into tasks(`InternalNumber`,`ExternalNumber`,`Description`,`StartDate`,`DueDate`) Values(?,?,?,?,?)";
+    private static String INSERT = "Insert Into tasks(`InternalNumber`,`ExternalNumber`,`ExternalCompany`,`ExternalAssignee`,`Description`,`StartDate`,`DueDate`) Values(?,?,?,?,?,?,?)";
     private static String COUNT = "Select Count(*) As C from tasks";
     private static String SELECT = "Select * from tasks";
     private IUploadManagerService uploadManagerService;
     
     public void saveTask(TaskBean task) {
-        getSimpleJdbcTemplate().update(INSERT, task.getInternalNumber(), task.getExternalNumber(),
-                task.getDescription(), DateUtils.stringToDate(task.getStartDate(),"dd.MM.yyyy"), DateUtils.stringToDate(task.getDueDate(),"dd.MM.yyyy"));
+        getSimpleJdbcTemplate().update(INSERT, task.getInternalNumber(), 
+                task.getExternalNumber(),task.getExternalCompany(), task.getExternalAssignee(),
+                task.getDescription(), DateUtils.stringToDate(task.getStartDate(),"dd.MM.yyyy"),
+                DateUtils.stringToDate(task.getDueDate(),"dd.MM.yyyy"));
     }
 
     public void updateTask(TaskBean task) {
@@ -106,6 +108,8 @@ public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
             task.setUid(rs.getLong("Uid"));
             task.setInternalNumber(rs.getString("InternalNumber"));
             task.setExternalNumber(rs.getString("ExternalNumber"));
+            task.setExternalCompany(rs.getString("ExternalCompany"));
+            task.setExternalAssignee(rs.getString("ExternalAssignee"));
             task.setDescription(rs.getString("Description"));
             task.setStartDate(rs.getDate("StartDate").toString());
             task.setDueDate(rs.getDate("DueDate").toString());

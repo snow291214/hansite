@@ -13,6 +13,8 @@ public class TaskBean {
     private Long uid;
     private String internalNumber;
     private String externalNumber;
+    private String externalCompany;
+    private String externalAssignee;
     private String description;
     private String startDate;
     private String dueDate;
@@ -72,5 +74,21 @@ public class TaskBean {
 
     public void setTaskFiles(List<FileUploadBean> taskFiles) {
         this.taskFiles = taskFiles;
+    }
+
+    public String getExternalAssignee() {
+        return externalAssignee;
+    }
+
+    public void setExternalAssignee(String externalAssignee) {
+        this.externalAssignee = externalAssignee;
+    }
+
+    public String getExternalCompany() {
+        return externalCompany;
+    }
+
+    public void setExternalCompany(String externalCompany) {
+        this.externalCompany = externalCompany;
     }
 }

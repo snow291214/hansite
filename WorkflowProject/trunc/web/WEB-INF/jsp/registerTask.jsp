@@ -22,9 +22,26 @@
                 </spring:bind>
             </tr>
             <tr>
+                <td>Компания:</td>
+                <spring:bind path="registerTask.externalCompany">
+                    <td><input type="text" name="${status.expression}" value="${status.value}"></td>
+                    <td><font color="red">${status.errorMessage}</font></td>
+                </spring:bind>
+            </tr>
+            <tr>
+                <td>Ф.И.О. отправителя:</td>
+                <spring:bind path="registerTask.externalAssignee">
+                    <td><input type="text" name="${status.expression}" value="${status.value}"></td>
+                    <td><font color="red">${status.errorMessage}</font></td>
+                </spring:bind>
+            </tr>
+            <tr>
                 <td>Резолюция:</td>
                 <spring:bind path="registerTask.description">
-                    <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
+                    <!--<td><input type="text" name="${status.expression}" value="${status.value}" /></td>-->
+                    <td>
+                        <textarea rows="8" cols="23" name="<c:out value="${status.expression}"/>">${status.value}</textarea>
+                    </td>
                     <td><font color="red">${status.errorMessage}</font></td>
                 </spring:bind>
             </tr>
