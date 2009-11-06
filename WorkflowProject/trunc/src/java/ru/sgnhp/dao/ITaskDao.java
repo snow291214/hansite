@@ -21,11 +21,11 @@ public interface ITaskDao {
 
     TaskBean getTaskByUid(Long uid);
 
-    TaskBean getTaskByInternalNumber(String number);
+    TaskBean getTaskByInternalNumber(int number);
 
     TaskBean getTaskByExternalNumber(String number);
 
     List<TaskBean> getTasksByUser(WorkflowUserBean user);
 
-    String getTaskNewNumber();
+    int getTaskNewNumber();
 }

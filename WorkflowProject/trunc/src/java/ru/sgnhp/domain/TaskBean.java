@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class TaskBean {
     private Long uid;
-    private String internalNumber;
+    private int internalNumber;
     private String externalNumber;
     private String externalCompany;
     private String externalAssignee;
@@ -28,11 +28,11 @@ public class TaskBean {
         this.uid = uid;
     }
 
-    public String getInternalNumber() {
+    public int getInternalNumber() {
         return internalNumber;
     }
 
-    public void setInternalNumber(String internalNumber) {
+    public void setInternalNumber(int internalNumber) {
         this.internalNumber = internalNumber;
     }
 

@@ -50,7 +50,7 @@ public class TaskManagerServiceImpl implements ITaskManagerService {
         this.taskDao = taskDao;
     }
 
-    public String getTaskNewNumber() {
+    public int getTaskNewNumber() {
         return taskDao.getTaskNewNumber();
     }
 }
