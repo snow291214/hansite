@@ -19,10 +19,12 @@ public class Main {
      */
     public static void main(String[] args) {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/ru/sgnhp/applicationContext.xml");
-        IGroupsService service = (IGroupsService) ctx.getBean("entityService");
+        IGroupsService service = (IGroupsService) ctx.getBean("groupsService");
         Groups entity = new Groups();
-        entity.setName("Группа администраторов");
-        entity.setDescription("Администраторы");
-        service.saveEntity(entity);
+        entity.setId(1L);
+        entity.setName("Администраторы");
+        entity.setDescription("Группа администраторов");
+        //service.saveEntity(entity);
+        service.save(entity);
     }
 }

@@ -9,9 +9,6 @@ import ru.sgnhp.entity.Groups;
  *
  *****
  */
-public interface IGroupsService {
+public interface IGroupsService extends IGenericService<Groups, Long>{
 
-    public void saveEntity(Groups entity);
-
-    public void updateEntity(Groups entity);
 }

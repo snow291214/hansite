@@ -35,12 +35,12 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean id="entityDAO" class="ru.sgnhp.dao.impl.GroupsDao">
+    <bean id="groupsDAO" class="ru.sgnhp.dao.impl.GroupsDao">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean id="entityService" class="ru.sgnhp.services.impl.GroupsService">
-        <property name="dao" ref="entityDAO" />
+    <bean id="groupsService" class="ru.sgnhp.services.impl.GroupsService">
+        <property name="dao" ref="groupsDAO" />
     </bean>
 
 </beans>

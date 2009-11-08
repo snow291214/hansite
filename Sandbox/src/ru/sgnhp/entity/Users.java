@@ -17,14 +17,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-public class Users implements Serializable{
+public class Users implements Serializable {
+
     @Id
     @Column(name = "Uid")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long uid;
-    @Column(name = "groupUid")
+    @Column(name = "groupUid", nullable = false)
     private Long groupUid;
-    @Column(name = "Login")
+    @Column(name = "Login", nullable = false)
     private String login;
     @Column(name = "LastName")
     private String lastName;
@@ -36,6 +37,7 @@ public class Users implements Serializable{
     private String email;
     @Column(name = "SessionUid")
     private String sessionUid;
+
     /**
      * @return the uid
      */

@@ -1,8 +1,6 @@
 package ru.sgnhp.services.impl;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import ru.sgnhp.dao.IGroupsDao;
+import ru.sgnhp.dao.IGenericDao;
 import ru.sgnhp.entity.Groups;
 import ru.sgnhp.services.IGroupsService;
 
@@ -13,22 +11,9 @@ import ru.sgnhp.services.IGroupsService;
  *
  *****
  */
-@Transactional(readOnly = true)
-public class GroupsService implements IGroupsService {
+public class GroupsService extends GenericService<Groups, Long> implements IGroupsService {
 
-    private IGroupsDao dao;
-
-    public void setDao(IGroupsDao dao) {
-        this.dao = dao;
-    }
-
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void saveEntity(Groups entity) {
-        dao.save(entity);
-    }
-
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void updateEntity(Groups entity) {
-        dao.save(entity);
+    public GroupsService(IGenericDao<Groups, Long> genericDao) {
+        super(genericDao);
     }
 }
