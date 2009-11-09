@@ -15,7 +15,6 @@
         }else{
             incN.setAttribute("value", "")
         }
-
     }
 </script>
 

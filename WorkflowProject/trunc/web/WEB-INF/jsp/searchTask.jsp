@@ -10,7 +10,7 @@
                 <td>Поиск по внутреннему номеру задачи</td>
                 <td>
                     <spring:bind path="searchTask.isTaskInternalNumber">
-                        <input type="radio" name="${status.expression}" <c:if test="${status.value}">checked</c:if>/>
+                        <input type="radio" name="find" <c:if test="${status.value}">checked</c:if>/>
                     </spring:bind>
                 </td>
                 <td>
@@ -23,7 +23,7 @@
                 <td>Поиск по резолюции к задаче</td>
                 <td>
                     <spring:bind path="searchTask.isTaskDescription">
-                        <input type="radio" name="${status.expression}" <c:if test="${status.value}">checked</c:if>/>
+                        <input type="radio" name="find" <c:if test="${status.value}">checked</c:if>/>
                     </spring:bind>
                 </td>
                 <td>
