@@ -6,7 +6,7 @@ package sandbox;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgnhp.entity.Groups;
-import ru.sgnhp.services.IGroupsService;
+import ru.sgnhp.services.IGenericService;
 
 /**
  *
@@ -18,8 +18,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/ru/sgnhp/applicationContext.xml");
-        IGroupsService service = (IGroupsService) ctx.getBean("groupsService");
+        IGenericService service = (IGenericService) ctx.getBean("groupsService");
         Groups entity = new Groups();
         entity.setId(1L);
         entity.setName("Администраторы");

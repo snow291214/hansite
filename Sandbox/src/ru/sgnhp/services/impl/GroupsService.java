@@ -1,6 +1,10 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ru.sgnhp.services.impl;
 
-import ru.sgnhp.dao.IGenericDao;
+import ru.sgnhp.dao.IGroupsDao;
 import ru.sgnhp.entity.Groups;
 import ru.sgnhp.services.IGroupsService;
 
@@ -13,7 +17,7 @@ import ru.sgnhp.services.IGroupsService;
  */
 public class GroupsService extends GenericService<Groups, Long> implements IGroupsService {
 
-    public GroupsService(IGenericDao<Groups, Long> genericDao) {
-        super(genericDao);
+    public GroupsService(IGroupsDao groupsDao) {
+        super(groupsDao);
     }
 }

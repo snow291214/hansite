@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
-<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
-
-    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+            <param name="ConversionPattern"
+                value="%p - %C{1}.%M(%L) | %m%n"/>
         </layout>
     </appender>
 
-    <category name="org.apache.log4j.xml">
-        <priority value="info" />
-    </category>
+    <logger name="org.apache">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="servletunit.struts">
+        <level value="INFO"/>
+    </logger>
+
+    <logger name="net.sf.hibernate">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="com.opensymphony.oscache">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="org.springframework">
+        <level value="INFO"/>
+    </logger>
 
     <root>
-        <priority value ="debug" />
-        <appender-ref ref="STDOUT" />
+        <level value="ERROR"/>
+        <appender-ref ref="CONSOLE"/>
     </root>
-
 </log4j:configuration>

@@ -8,16 +8,16 @@ import java.io.Serializable;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import ru.sgnhp.dao.IGenericDao;
 import ru.sgnhp.services.IGenericService;
 
-/**
+/*****
  *
- * @author Repspected User
+ * @author Alexey Khudyakov
+ * @company "Salavatgazoneftehimproekt" Ltd
+ *
+ *****
  */
-@Transactional(readOnly = true)
 public class GenericService<T, PK extends Serializable> implements IGenericService<T, PK> {
 
     /**
@@ -30,7 +30,7 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     protected IGenericDao<T, PK> genericDao;
 
     /**
-     * Public constructor for creating a new GenericService.
+     * Public constructor for creating a new GenericManagerImpl.
      * @param genericDao the GenericDao to use for persistence
      */
     public GenericService(final IGenericDao<T, PK> genericDao) {
@@ -40,7 +40,6 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     /**
      * {@inheritDoc}
      */
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<T> getAll() {
         return genericDao.getAll();
     }
@@ -48,7 +47,6 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     /**
      * {@inheritDoc}
      */
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public T get(PK id) {
         return genericDao.get(id);
     }
@@ -56,7 +54,6 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     /**
      * {@inheritDoc}
      */
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public boolean exists(PK id) {
         return genericDao.exists(id);
     }
@@ -64,7 +61,6 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     /**
      * {@inheritDoc}
      */
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public T save(T object) {
         return genericDao.save(object);
     }
@@ -72,9 +68,7 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     /**
      * {@inheritDoc}
      */
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void remove(PK id) {
         genericDao.remove(id);
     }
 }
-

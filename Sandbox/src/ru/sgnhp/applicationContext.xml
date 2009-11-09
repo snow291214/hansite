@@ -39,8 +39,13 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean id="groupsService" class="ru.sgnhp.services.impl.GroupsService">
-        <property name="dao" ref="groupsDAO" />
+    <bean id="groupsService" class="ru.sgnhp.services.impl.GenericService">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.entity.Groups"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
     </bean>
 
 </beans>
