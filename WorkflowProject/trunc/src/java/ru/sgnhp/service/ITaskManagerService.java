@@ -23,5 +23,7 @@ public interface ITaskManagerService {
 
     List<TaskBean> getTasksByUser(WorkflowUserBean user);
 
-    public int getTaskNewNumber();
+    int getTaskNewNumber();
+    
+    int getIncomingNewNumber();
 }

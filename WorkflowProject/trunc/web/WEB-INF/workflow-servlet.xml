@@ -37,6 +37,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="executionRequest.htm">executionRequestController</prop>
                 <prop key="searchTask.htm">searchTaskFormController</prop>
                 <prop key="searchResult.htm">searchResultController</prop>
+                <prop key="ajax.htm">ajaxController</prop>
             </props>
         </property>
     </bean>
@@ -223,7 +224,14 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
             <ref bean="workflowManagerService"/>
         </property>
     </bean>
-  
+
+    <!-- Search Result Controller -->
+    <bean name="ajaxController" class="ru.sgnhp.web.AjaxController">
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">

@@ -53,4 +53,8 @@ public class TaskManagerServiceImpl implements ITaskManagerService {
     public int getTaskNewNumber() {
         return taskDao.getTaskNewNumber();
     }
+
+    public int getIncomingNewNumber() {
+        return taskDao.getIncomingNewNumber();
+    }
 }

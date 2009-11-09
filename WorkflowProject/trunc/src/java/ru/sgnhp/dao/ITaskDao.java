@@ -28,4 +28,6 @@ public interface ITaskDao {
     List<TaskBean> getTasksByUser(WorkflowUserBean user);
 
     int getTaskNewNumber();
+
+    int getIncomingNewNumber();
 }

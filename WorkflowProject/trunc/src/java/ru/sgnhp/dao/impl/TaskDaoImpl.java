@@ -23,13 +23,14 @@ import ru.sgnhp.service.IUploadManagerService;
  */
 public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
 
-    private static String INSERT = "Insert Into tasks(`InternalNumber`,`ExternalNumber`,`ExternalCompany`,`ExternalAssignee`,`Description`,`StartDate`,`DueDate`) Values(?,?,?,?,?,?,?)";
+    private static String INSERT = "Insert Into tasks(`InternalNumber`,`IncomingNumber`,`ExternalNumber`,`ExternalCompany`,`ExternalAssignee`,`Description`,`StartDate`,`DueDate`) Values(?,?,?,?,?,?,?,?)";
     private static String maxInternalNumber = "Select Max(InternalNumber) As C from tasks";
+    private static String maxIncomingNumber = "Select Max(IncomingNumber) As C from tasks";
     private static String SELECT = "Select * from tasks";
     private IUploadManagerService uploadManagerService;
 
     public void saveTask(TaskBean task) {
-        getSimpleJdbcTemplate().update(INSERT, task.getInternalNumber(),
+        getSimpleJdbcTemplate().update(INSERT, task.getInternalNumber(), task.getIncomingNumber(),
                 task.getExternalNumber(), task.getExternalCompany(), task.getExternalAssignee(),
                 task.getDescription(), DateUtils.stringToDate(task.getStartDate(), "dd.MM.yyyy"),
                 DateUtils.stringToDate(task.getDueDate(), "dd.MM.yyyy"));
@@ -44,7 +45,7 @@ public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
     }
 
     public TaskBean getTaskByUid(Long uid) {
-        List<TaskBean> task = getSimpleJdbcTemplate().query(SELECT + " Where Uid = ?", new UserMapper(uploadManagerService), uid);
+        List<TaskBean> task = getSimpleJdbcTemplate().query(SELECT + " Where Uid = ? order by InternalNumber", new UserMapper(uploadManagerService), uid);
         if (task.size() > 0) {
             return (TaskBean) task.toArray()[0];
         } else {
@@ -99,6 +100,17 @@ public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
         return number;
     }
 
+    public int getIncomingNewNumber() {
+        int number = -1;
+        try {
+            number = getJdbcTemplate().queryForInt(maxIncomingNumber);
+            number++;
+        } catch (InvalidResultSetAccessException ex) {
+            Logger.getLogger(TaskDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return number;
+    }
+
     public void setUploadManagerService(IUploadManagerService uploadManagerService) {
         this.uploadManagerService = uploadManagerService;
     }
@@ -115,6 +127,7 @@ public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
             TaskBean task = new TaskBean();
             task.setUid(rs.getLong("Uid"));
             task.setInternalNumber(rs.getInt("InternalNumber"));
+            task.setIncomingNumber(rs.getLong("IncomingNumber"));
             task.setExternalNumber(rs.getString("ExternalNumber"));
             task.setExternalCompany(rs.getString("ExternalCompany"));
             task.setExternalAssignee(rs.getString("ExternalAssignee"));

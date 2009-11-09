@@ -51,7 +51,7 @@
                 </div>
                 <div>
                     <!--Описание задачи: <br />-->
-                    Компания: ${wf.task.externalCompany}. Исходящий номер: ${wf.task.externalNumber}.
+                    Компания: ${wf.task.externalCompany}. Входящий номер письма: ${wf.task.incomingNumber}. Исходящий номер: ${wf.task.externalNumber}.
                     Отправитель: ${wf.task.externalAssignee}<br />
                     Задача создана для: <c:out value="${wf.receiver.lastName} ${wf.receiver.firstName} ${wf.receiver.middleName}"/>
                     Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.startDate}"/> Состояние задачи: <font color="red"><b><c:out value="${wf.state}"/></b>.</font><br />

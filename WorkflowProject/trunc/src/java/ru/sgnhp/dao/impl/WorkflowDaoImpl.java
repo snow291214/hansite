@@ -34,7 +34,7 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid) {
         List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
                 ", state  WHERE  workflows.UserUid = ? And " +
-                "state.StateUid = workflows.state and workflows.state in (0,2) order by AssignDate, State",
+                "state.StateUid = workflows.state and workflows.state in (0,2) order by Uid Desc",
                 new WorkflowMapper(taskManagerService), userUid);
         return workflows;
     }
@@ -43,10 +43,10 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
         String selectString = "";
         if (!completed) {
             selectString = SELECT + ",state  WHERE  workflows.ParentUserUid = ? And " +
-                    "state.StateUid = workflows.state  and workflows.state<>3 order by AssignDate, State";
+                    "state.StateUid = workflows.state  and workflows.state<>3  order by Uid Desc";
         } else {
             selectString = SELECT + ",state  WHERE  workflows.ParentUserUid = ? And " +
-                    "state.StateUid = workflows.state and workflows.state=3 order by AssignDate, State";
+                    "state.StateUid = workflows.state and workflows.state=3  order by Uid Desc";
         }
         List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(selectString,
                 new WorkflowMapper(taskManagerService), userUid);
@@ -56,7 +56,7 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     public List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid) {
         List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
                 ", state  WHERE  workflows.UserUid = ? And " +
-                "state.StateUid = workflows.state and workflows.state = 3 order by AssignDate, State",
+                "state.StateUid = workflows.state and workflows.state = 3 order by Uid Desc",
                 new WorkflowMapper(taskManagerService), userUid);
         return workflows;
     }
@@ -68,7 +68,7 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     public WorkflowBean getWorkflowByUid(Long workflowUid) {
         List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
                 ",state  WHERE  workflows.Uid = ? And state.StateUid = workflows.state " +
-                "order by AssignDate, State",
+                "order by Uid Desc",
                 new WorkflowMapper(taskManagerService), workflowUid);
         if (workflows.size() > 0) {
             return (WorkflowBean) workflows.toArray()[0];
@@ -92,21 +92,21 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     public int getRecievedWorkflowsCountByUserUid(Long userUid) {
         return getSimpleJdbcTemplate().queryForInt("SELECT count(*) from workflows" +
                 ", state  WHERE  workflows.UserUid = ? And " +
-                "state.StateUid = workflows.state and workflows.state in (0,2) order by AssignDate, State",
+                "state.StateUid = workflows.state and workflows.state in (0,2)",
                 userUid);
     }
 
     public int getAssignedWorkflowsCountByUserUid(Long userUid) {
         return getSimpleJdbcTemplate().queryForInt("SELECT count(*) from workflows" +
                 ",state  WHERE  workflows.ParentUserUid = ? And " +
-                "state.StateUid = workflows.state order by AssignDate, State",
+                "state.StateUid = workflows.state",
                 userUid);
     }
 
     public int getCompletedWorkflowsCountByUserUid(Long userUid) {
         return getSimpleJdbcTemplate().queryForInt("SELECT count(*) from workflows" +
                 ", state  WHERE  workflows.UserUid = ? And " +
-                "state.StateUid = workflows.state and workflows.state = 3 order by AssignDate, State",
+                "state.StateUid = workflows.state and workflows.state = 3",
                 userUid);
     }
 
@@ -114,7 +114,7 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
         List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
                 ", state  WHERE  workflows.UserUid = ? And " +
                 "state.StateUid = workflows.State " +
-                "And workflows.Description like ? order by AssignDate, workflows.State",
+                "And workflows.Description like ? order by Uid Desc",
                 new WorkflowMapper(taskManagerService), userUid, "%" + description + "%");
         return workflows;
     }

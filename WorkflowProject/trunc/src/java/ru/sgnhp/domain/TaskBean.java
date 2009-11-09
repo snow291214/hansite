@@ -12,6 +12,7 @@ import java.util.List;
 public class TaskBean {
     private Long uid;
     private int internalNumber;
+    private Long incomingNumber;
     private String externalNumber;
     private String externalCompany;
     private String externalAssignee;
@@ -90,5 +91,13 @@ public class TaskBean {
 
     public void setExternalCompany(String externalCompany) {
         this.externalCompany = externalCompany;
+    }
+
+    public Long getIncomingNumber() {
+        return incomingNumber;
+    }
+
+    public void setIncomingNumber(Long incomingNumber) {
+        this.incomingNumber = incomingNumber;
     }
 }

@@ -50,7 +50,7 @@
                 </div>
                 <div>
                     <!--Описание задачи: <c:out value="${wf.task.description}"/><br />-->
-                    Компания: ${wf.task.externalCompany}. Исходящий номер: ${wf.task.externalNumber}.
+                    Компания: ${wf.task.externalCompany}. Входящий номер письма: ${wf.task.incomingNumber}. Исходящий номер: ${wf.task.externalNumber}.
                     Отправитель: ${wf.task.externalAssignee}<br />
                     Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>
                     Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.dueDate}"/><br />
