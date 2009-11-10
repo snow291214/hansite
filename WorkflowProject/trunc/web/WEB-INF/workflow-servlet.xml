@@ -38,6 +38,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="searchTask.htm">searchTaskFormController</prop>
                 <prop key="searchResult.htm">searchResultController</prop>
                 <prop key="ajax.htm">ajaxController</prop>
+                <prop key="roadmap.htm">roadmapController</prop>
             </props>
         </property>
     </bean>
@@ -225,10 +226,17 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
-    <!-- Search Result Controller -->
+    <!-- Ajax Controller -->
     <bean name="ajaxController" class="ru.sgnhp.web.AjaxController">
         <property name="taskManagerService">
             <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Workflow Roadmap Controller -->
+    <bean name="roadmapController" class="ru.sgnhp.web.RoadmapController">
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
         </property>
     </bean>
 

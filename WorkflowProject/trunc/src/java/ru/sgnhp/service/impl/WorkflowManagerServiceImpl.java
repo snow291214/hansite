@@ -290,12 +290,22 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         WorkflowManagerServiceImpl.userManagerService = userManagerService;
     }
 
-    public LinkedHashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, LinkedHashMap roadmap) {
+    /*public LinkedHashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, LinkedHashMap roadmap) {
         WorkflowBean workflowBean = this.getWorkflowByUid(workflowUid);
         ArrayList<WorkflowUserBean> members = new ArrayList<WorkflowUserBean>();
         members.add(workflowBean.getAssignee());
         members.add(workflowBean.getReceiver());
         roadmap.put(workflowBean.getUid(), members);
+        if (workflowBean.getParentUid() != -1) {
+            workflowUid = workflowBean.getParentUid();
+            this.getWorkflowMembersByWorkflowUid(workflowUid, roadmap);
+        }
+        return roadmap;
+    }*/
+
+    public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, ArrayList roadmap){
+        WorkflowBean workflowBean = this.getWorkflowByUid(workflowUid);
+        roadmap.add(workflowBean);
         if (workflowBean.getParentUid() != -1) {
             workflowUid = workflowBean.getParentUid();
             this.getWorkflowMembersByWorkflowUid(workflowUid, roadmap);

@@ -32,7 +32,9 @@ public interface IWorkflowManagerService {
 
     void updateWorkflowState(WorkflowBean _workflow);
 
-    LinkedHashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, LinkedHashMap roadmap);
+    //LinkedHashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, LinkedHashMap roadmap);
+
+    public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, ArrayList roadmap);
 
     void sendmailRemind(WorkflowBean _workflow);
 

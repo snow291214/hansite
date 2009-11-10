@@ -4,18 +4,26 @@
 </head>
 
 <body>
-    <c:forEach var="workflow" items="${requestScope.roadmap}">
-        <table class="workflowManager">
+    <c:set var="counter" value="1" scope="page" />
+    <table>
+        <tr>
+            <td class="all">№</td>
+            <td class="all">WorkflowID</td>
+            <td class="all">От кого</td>
+            <td class="all">К кому</td>
+            <td class="all">Передано с резолюцией</td>
+        </tr>
+        <c:forEach var="workflow" items="${requestScope.roadmap}">
             <tr>
-                <td class="left">От: ${workflow.value[0].lastName} ${workflow.value[0].firstName}</td>
-                <td>&nbsp;</td>
+                <td class="all">${counter}</td>
+                <td class="all">${workflow.uid}</td>
+                <td class="all">${workflow.assignee.lastName} ${workflow.assignee.firstName} ${workflow.assignee.middleName}</td>
+                <td class="all">${workflow.receiver.lastName} ${workflow.receiver.firstName} ${workflow.receiver.middleName}</td>
+                <td class="all">${workflow.description}</td>
             </tr>
-            <tr>
-                <td class="all">ID Workflow: ${workflow.key}</td>
-                <td class="bottom">Кому: ${workflow.value[1].lastName} ${workflow.value[1].firstName}</td>
-            </tr>
-        </table>
-    </c:forEach>
+            <c:set var="counter" value="${counter+1}" scope="page" />
+        </c:forEach>
+    </table>
     <form name="Form1" method="post" action="${actionUrl}">
         <input type="hidden" name="workflowID" value="${workflowID}">
         <table>

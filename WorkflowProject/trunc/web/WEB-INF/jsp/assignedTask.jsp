@@ -63,6 +63,7 @@
                         </c:forEach>
                         <br />
                         <a href="<c:url value="executionRequest.htm?workflowID=${wf.uid}" />">Запросить отчет</a>
+                        <a href="<c:url value="roadmap.htm?workflowID=${wf.uid}" />">Просмотреть маршрут задачи</a>
                     </div>
                 </div>
             </div>

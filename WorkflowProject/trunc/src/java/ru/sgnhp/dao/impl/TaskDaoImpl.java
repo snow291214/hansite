@@ -31,8 +31,9 @@ public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
 
     public void saveTask(TaskBean task) {
         getSimpleJdbcTemplate().update(INSERT, task.getInternalNumber(), task.getIncomingNumber(),
-                task.getExternalNumber(), task.getExternalCompany(), task.getExternalAssignee(),
-                task.getDescription(), DateUtils.stringToDate(task.getStartDate(), "dd.MM.yyyy"),
+                task.getExternalNumber().toUpperCase(), task.getExternalCompany(),
+                task.getExternalAssignee(), task.getDescription(),
+                DateUtils.stringToDate(task.getStartDate(), "dd.MM.yyyy"),
                 DateUtils.stringToDate(task.getDueDate(), "dd.MM.yyyy"));
     }
 

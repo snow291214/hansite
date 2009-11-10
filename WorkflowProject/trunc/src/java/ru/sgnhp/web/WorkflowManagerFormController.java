@@ -1,7 +1,7 @@
 package ru.sgnhp.web;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.domain.WorkflowBean;
-import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
@@ -30,28 +29,47 @@ public class WorkflowManagerFormController extends SimpleFormController {
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
+//    @Override
+//    protected Object formBackingObject(HttpServletRequest request) throws ServletException {
+//        request.setAttribute("actionUrl", "workflowManager.htm");
+//        String workflowUid = request.getParameter("workflowID");
+//        WorkflowBean workflowBean = getWorkflowManagerService().getWorkflowByUid(Long.parseLong(workflowUid));
+//        LinkedHashMap<Long, ArrayList<WorkflowUserBean>> roadmap = new LinkedHashMap<Long, ArrayList<WorkflowUserBean>>();
+//        if (workflowBean.getParentUid() == -1) {
+//            ArrayList<WorkflowUserBean> members = new ArrayList<WorkflowUserBean>();
+//            members.add(workflowBean.getAssignee());
+//            members.add(workflowBean.getReceiver());
+//            roadmap.put(workflowBean.getUid(), members);
+//        } else {
+//            ArrayList<WorkflowUserBean> members = new ArrayList<WorkflowUserBean>();
+//            members.add(workflowBean.getAssignee());
+//            members.add(workflowBean.getReceiver());
+//            roadmap.put(workflowBean.getUid(), members);
+//            roadmap = getWorkflowManagerService().getWorkflowMembersByWorkflowUid(workflowBean.getParentUid(), roadmap);
+//            LinkedHashMap buff = new LinkedHashMap();
+//            for (int i = roadmap.size() - 1; i >= 0; i--) {
+//                buff.put(roadmap.keySet().toArray()[i], roadmap.values().toArray()[i]);
+//            }
+//            roadmap = buff;
+//        }
+//        request.setAttribute("roadmap", roadmap);
+//        request.setAttribute("workflowID", workflowUid);
+//        return workflowBean;
+//    }
+
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         request.setAttribute("actionUrl", "workflowManager.htm");
         String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflowBean = getWorkflowManagerService().getWorkflowByUid(Long.parseLong(workflowUid));
-        LinkedHashMap<Long, ArrayList<WorkflowUserBean>> roadmap = new LinkedHashMap<Long, ArrayList<WorkflowUserBean>>();
+        //LinkedHashMap<Long, ArrayList<WorkflowUserBean>> roadmap = new LinkedHashMap<Long, ArrayList<WorkflowUserBean>>();
+        ArrayList<WorkflowBean> roadmap = new ArrayList<WorkflowBean>();
         if (workflowBean.getParentUid() == -1) {
-            ArrayList<WorkflowUserBean> members = new ArrayList<WorkflowUserBean>();
-            members.add(workflowBean.getAssignee());
-            members.add(workflowBean.getReceiver());
-            roadmap.put(workflowBean.getUid(), members);
+            roadmap.add(workflowBean);
         } else {
-            ArrayList<WorkflowUserBean> members = new ArrayList<WorkflowUserBean>();
-            members.add(workflowBean.getAssignee());
-            members.add(workflowBean.getReceiver());
-            roadmap.put(workflowBean.getUid(), members);
-            roadmap = getWorkflowManagerService().getWorkflowMembersByWorkflowUid(workflowBean.getParentUid(), roadmap);
-            LinkedHashMap buff = new LinkedHashMap();
-            for (int i = roadmap.size() - 1; i >= 0; i--) {
-                buff.put(roadmap.keySet().toArray()[i], roadmap.values().toArray()[i]);
-            }
-            roadmap = buff;
+            roadmap.add(workflowBean);
+            roadmap = this.workflowManagerService.getWorkflowMembersByWorkflowUid(workflowBean.getParentUid(), roadmap);
+            Collections.reverse(roadmap);
         }
         request.setAttribute("roadmap", roadmap);
         request.setAttribute("workflowID", workflowUid);
