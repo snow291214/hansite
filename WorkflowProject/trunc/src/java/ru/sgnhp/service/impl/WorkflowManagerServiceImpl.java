@@ -48,7 +48,9 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
             address.setPersonal(fromName, "utf-8");
             message.setFrom(address);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(_workflow.getReceiver().getEmail()));
-            message.setSubject("Была создана новая задача", "utf-8");
+            message.setSubject("Была создана новая задача: "+
+                    _workflow.getAssignee().getLastName()+
+                    "->"+_workflow.getReceiver().getLastName(), "utf-8");
 
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
@@ -59,7 +61,9 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
                     " " + _workflow.getAssignee().getMiddleName() + " " +
                     _workflow.getAssignee().getLastName() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " + _workflow.getDescription() +
-                    "</p><a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачу</a></body></html>", "text/html;charset=utf-8");
+                    "</p><a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачу</a>" +
+                    "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"+
+                    "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);
@@ -198,6 +202,7 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
                     tableBody +
                     "</table>" +
                     "<a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачи</a>"+
+                    "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"+
                     "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
