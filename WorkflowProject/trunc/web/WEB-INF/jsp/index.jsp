@@ -46,7 +46,7 @@
         <c:forEach var="wf" items="${sessionScope.initiator.workflows}">
             <div>
                 <div class="header red">
-                    Задача № <c:out value="${wf.task.internalNumber}"/>. <c:out value="${wf.task.description}"/>
+                    <b>Задача № <c:out value="${wf.task.internalNumber}"/>. <c:out value="${wf.task.description}"/></b>
                 </div>
                 <div>
                     <!--Описание задачи: <c:out value="${wf.task.description}"/><br />-->
@@ -55,7 +55,7 @@
                     Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>
                     Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.dueDate}"/><br />
                     <div class="content">
-                        Резолюция к задаче: <c:out value="${wf.description}"/>. Дата назначения задачи: <c:out value="${wf.assignDate}"/>. Состояние задачи: <font color="red"><b><c:out value="${wf.state}"/></b>.</font><br />
+                        Резолюция к задаче: <b><u><c:out value="${wf.description}"/></u></b>. Дата назначения задачи: <c:out value="${wf.assignDate}"/>. Состояние задачи: <font color="red"><b><c:out value="${wf.state}"/></b>.</font><br />
                         Файлы, прикрепленные к задаче:
                         <c:forEach var = "taskFile" items="${wf.task.taskFiles}">
                             <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
