@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ru.sgnhp.entity;
 
 import java.io.Serializable;
@@ -21,9 +16,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-/**
+/*****
  *
- * @author alexey
+ * @author Alexey Khudyakov
+ * @company "Salavatgazoneftehimproekt" Ltd
+ *
+ *****
  */
 @Entity
 @Table(name = "files", catalog = "workflowdb", schema = "", uniqueConstraints = {@UniqueConstraint(columnNames = {"Uid"})})
@@ -31,15 +29,15 @@ import javax.persistence.UniqueConstraint;
 public class Files implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
     private Integer uid;
     @Column(name = "FileName", length = 100)
     private String fileName;
     @Lob
-    @Column(name = "Blob")
-    private byte[] blob;
+    @Column(name = "BlobField")
+    private byte[] blobField;
     @JoinColumn(name = "TaskUid", referencedColumnName = "Uid")
     @ManyToOne(fetch = FetchType.LAZY)
     private Tasks taskUid;
@@ -67,12 +65,12 @@ public class Files implements Serializable {
         this.fileName = fileName;
     }
 
-    public byte[] getBlob() {
-        return blob;
+    public byte[] getBlobField() {
+        return blobField;
     }
 
-    public void setBlob(byte[] blob) {
-        this.blob = blob;
+    public void setBlobField(byte[] blobField) {
+        this.blobField = blobField;
     }
 
     public Tasks getTaskUid() {
