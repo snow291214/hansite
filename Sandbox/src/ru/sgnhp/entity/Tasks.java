@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ru.sgnhp.entity;
 
 import java.io.Serializable;
@@ -23,24 +18,33 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-/**
+/*****
  *
- * @author alexey
+ * @author Alexey Khudyakov
+ * @company "Salavatgazoneftehimproekt" Ltd
+ *
+ *****
  */
 @Entity
 @Table(name = "tasks", catalog = "workflowdb", schema = "", uniqueConstraints = {@UniqueConstraint(columnNames = {"Uid"})})
-@NamedQueries({@NamedQuery(name = "Tasks.findAll", query = "SELECT t FROM Tasks t"), @NamedQuery(name = "Tasks.findByUid", query = "SELECT t FROM Tasks t WHERE t.uid = :uid"), @NamedQuery(name = "Tasks.findByInternalNumber", query = "SELECT t FROM Tasks t WHERE t.internalNumber = :internalNumber"), @NamedQuery(name = "Tasks.findByExternalNumber", query = "SELECT t FROM Tasks t WHERE t.externalNumber = :externalNumber"), @NamedQuery(name = "Tasks.findByDescription", query = "SELECT t FROM Tasks t WHERE t.description = :description"), @NamedQuery(name = "Tasks.findByStartDate", query = "SELECT t FROM Tasks t WHERE t.startDate = :startDate"), @NamedQuery(name = "Tasks.findByDueDate", query = "SELECT t FROM Tasks t WHERE t.dueDate = :dueDate")})
+@NamedQueries({@NamedQuery(name = "Tasks.findAll", query = "SELECT t FROM Tasks t"), @NamedQuery(name = "Tasks.findByUid", query = "SELECT t FROM Tasks t WHERE t.uid = :uid"), @NamedQuery(name = "Tasks.findByInternalNumber", query = "SELECT t FROM Tasks t WHERE t.internalNumber = :internalNumber"), @NamedQuery(name = "Tasks.findByIncomingNumber", query = "SELECT t FROM Tasks t WHERE t.incomingNumber = :incomingNumber"), @NamedQuery(name = "Tasks.findByExternalNumber", query = "SELECT t FROM Tasks t WHERE t.externalNumber = :externalNumber"), @NamedQuery(name = "Tasks.findByExternalCompany", query = "SELECT t FROM Tasks t WHERE t.externalCompany = :externalCompany"), @NamedQuery(name = "Tasks.findByExternalAssignee", query = "SELECT t FROM Tasks t WHERE t.externalAssignee = :externalAssignee"), @NamedQuery(name = "Tasks.findByDescription", query = "SELECT t FROM Tasks t WHERE t.description = :description"), @NamedQuery(name = "Tasks.findByStartDate", query = "SELECT t FROM Tasks t WHERE t.startDate = :startDate"), @NamedQuery(name = "Tasks.findByDueDate", query = "SELECT t FROM Tasks t WHERE t.dueDate = :dueDate")})
 public class Tasks implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
     private Integer uid;
-    @Column(name = "InternalNumber", length = 20)
-    private String internalNumber;
+    @Column(name = "InternalNumber")
+    private Integer internalNumber;
+    @Column(name = "IncomingNumber")
+    private Integer incomingNumber;
     @Column(name = "ExternalNumber", length = 20)
     private String externalNumber;
+    @Column(name = "ExternalCompany", length = 150)
+    private String externalCompany;
+    @Column(name = "ExternalAssignee", length = 150)
+    private String externalAssignee;
     @Column(name = "Description", length = 250)
     private String description;
     @Column(name = "StartDate")
@@ -67,12 +71,20 @@ public class Tasks implements Serializable {
         this.uid = uid;
     }
 
-    public String getInternalNumber() {
+    public Integer getInternalNumber() {
         return internalNumber;
     }
 
-    public void setInternalNumber(String internalNumber) {
+    public void setInternalNumber(Integer internalNumber) {
         this.internalNumber = internalNumber;
+    }
+
+    public Integer getIncomingNumber() {
+        return incomingNumber;
+    }
+
+    public void setIncomingNumber(Integer incomingNumber) {
+        this.incomingNumber = incomingNumber;
     }
 
     public String getExternalNumber() {
@@ -81,6 +93,22 @@ public class Tasks implements Serializable {
 
     public void setExternalNumber(String externalNumber) {
         this.externalNumber = externalNumber;
+    }
+
+    public String getExternalCompany() {
+        return externalCompany;
+    }
+
+    public void setExternalCompany(String externalCompany) {
+        this.externalCompany = externalCompany;
+    }
+
+    public String getExternalAssignee() {
+        return externalAssignee;
+    }
+
+    public void setExternalAssignee(String externalAssignee) {
+        this.externalAssignee = externalAssignee;
     }
 
     public String getDescription() {
