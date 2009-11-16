@@ -13,7 +13,7 @@
     <property name="hibernate.use_sql_comments">true</property>
     <property name="hibernate.connection.charSet">true</property>
     <mapping class="ru.sgnhp.entity.Groups"/>
-    <!--<mapping class="ru.sgnhp.entity.Tasks" package="ru.sgnhp.entity"/>
-    <mapping class="ru.sgnhp.entity.Files" package="ru.sgnhp.entity"/>-->
+    <mapping class="ru.sgnhp.entity.Tasks" package="ru.sgnhp.entity"/>
+    <mapping class="ru.sgnhp.entity.Files" package="ru.sgnhp.entity"/>
   </session-factory>
 </hibernate-configuration>
