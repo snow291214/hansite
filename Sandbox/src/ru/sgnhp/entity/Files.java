@@ -1,3 +1,8 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ru.sgnhp.entity;
 
 import java.io.Serializable;
@@ -15,6 +20,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.ForeignKey;
+
+
 
 /*****
  *
@@ -35,12 +43,13 @@ public class Files implements Serializable {
     private Integer uid;
     @Column(name = "FileName", length = 100)
     private String fileName;
+    @Column(name = "BlobField", columnDefinition = "LONGBLOB")
     @Lob
-    @Column(name = "BlobField")
     private byte[] blobField;
+    @ForeignKey(name="fk_tasks")
     @JoinColumn(name = "TaskUid", referencedColumnName = "Uid")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Tasks taskUid;
+    private Tasks tasks;
 
     public Files() {
     }
@@ -74,11 +83,11 @@ public class Files implements Serializable {
     }
 
     public Tasks getTaskUid() {
-        return taskUid;
+        return tasks;
     }
 
     public void setTaskUid(Tasks taskUid) {
-        this.taskUid = taskUid;
+        this.tasks = taskUid;
     }
 
     @Override

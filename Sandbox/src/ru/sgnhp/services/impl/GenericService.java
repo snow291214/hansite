@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.sgnhp.dao.IGenericDao;
 import ru.sgnhp.services.IGenericService;
 
@@ -18,6 +20,7 @@ import ru.sgnhp.services.IGenericService;
  *
  *****
  */
+@Transactional(readOnly = true)
 public class GenericService<T, PK extends Serializable> implements IGenericService<T, PK> {
 
     /**
@@ -40,6 +43,8 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     /**
      * {@inheritDoc}
      */
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<T> getAll() {
         return genericDao.getAll();
     }
@@ -47,6 +52,8 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     /**
      * {@inheritDoc}
      */
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public T get(PK id) {
         return genericDao.get(id);
     }
@@ -54,6 +61,8 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     /**
      * {@inheritDoc}
      */
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public boolean exists(PK id) {
         return genericDao.exists(id);
     }
@@ -61,13 +70,17 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
     /**
      * {@inheritDoc}
      */
-    public T save(T object) {
-        return genericDao.save(object);
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void save(T object) {
+        genericDao.save(object);
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void remove(PK id) {
         genericDao.remove(id);
     }

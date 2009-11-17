@@ -82,8 +82,8 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public T save(T object) {
-        return (T) super.getHibernateTemplate().merge(object);
+    public void save(T object) {
+        super.getHibernateTemplate().saveOrUpdate(object);
     }
 
     /**

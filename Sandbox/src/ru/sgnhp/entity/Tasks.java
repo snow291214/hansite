@@ -1,8 +1,14 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ru.sgnhp.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /*****
  *
@@ -53,8 +61,9 @@ public class Tasks implements Serializable {
     @Column(name = "DueDate")
     @Temporal(TemporalType.DATE)
     private Date dueDate;
-    @OneToMany(mappedBy = "taskUid", fetch = FetchType.LAZY)
-    private Collection<Files> filesCollection;
+    @OneToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Files> filesSet = new HashSet<Files>();
 
     public Tasks() {
     }
@@ -135,12 +144,12 @@ public class Tasks implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public Collection<Files> getFilesCollection() {
-        return filesCollection;
+    public Set<Files> getFilesSet() {
+        return filesSet;
     }
 
-    public void setFilesCollection(Collection<Files> filesCollection) {
-        this.filesCollection = filesCollection;
+    public void setFilesSet(Set<Files> filesSet) {
+        this.filesSet = filesSet;
     }
 
     @Override
