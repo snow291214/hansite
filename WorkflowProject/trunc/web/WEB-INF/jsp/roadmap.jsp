@@ -24,5 +24,8 @@
             <c:set var="counter" value="${counter+1}" scope="page" />
         </c:forEach>
     </table>
+    <form>
+        <button type="button" onclick="javascript:history.back();">Назад</button>
+    </form>
 </body>
 </html>

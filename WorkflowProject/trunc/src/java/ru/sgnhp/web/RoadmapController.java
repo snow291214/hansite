@@ -30,7 +30,7 @@ public class RoadmapController implements Controller {
             roadmap.add(workflowBean);
         } else {
             roadmap.add(workflowBean);
-            roadmap = this.workflowManagerService.getWorkflowMembersByWorkflowUid(workflowBean.getParentUid(), roadmap);
+            roadmap = this.workflowManagerService.getWorkflowMembersByWorkflowUid(workflowBean.getUid(), workflowBean.getParentUid(), roadmap);
             Collections.reverse(roadmap);
         }
         return new ModelAndView("roadmap", "roadmap", roadmap);

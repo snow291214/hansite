@@ -77,6 +77,18 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
         }
     }
 
+    public WorkflowBean getWorkflowByParentUid(Long parentUid) {
+        List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
+                ",state  WHERE  workflows.ParentUid = ? And state.StateUid = workflows.state " +
+                "order by Uid Desc",
+                new WorkflowMapper(taskManagerService), parentUid);
+        if (workflows.size() > 0) {
+            return (WorkflowBean) workflows.toArray()[0];
+        } else {
+            return null;
+        }
+    }
+
     public void updateWorkflow(WorkflowBean _workflow) {
         getSimpleJdbcTemplate().update(UPDATE, _workflow.getParentUid(), _workflow.getTaskUid(), _workflow.getParentUserUid(),
                 _workflow.getUserUid(), _workflow.getDescription(),

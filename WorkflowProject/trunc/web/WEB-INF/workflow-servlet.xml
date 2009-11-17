@@ -59,6 +59,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
     <!-- Execution Request Controller -->
     <bean name="executionRequestController" class="ru.sgnhp.web.ExecutionRequestController">
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
         </property>
@@ -290,9 +293,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="workflowDao" ref="workflowDao"/>
         <property name="userManagerService" ref="userManagerServiceTarget" />
         <property name="stateManagerService" ref="stateManagerServiceTarget" />
-        <property name="mailHostName" value="${mail.mailHostName}"/>
+        <property name="mailService" ref="mailServiceManager" />
+        <!--<property name="mailHostName" value="${mail.mailHostName}"/>
         <property name="fromAddress" value="${mail.fromAddress}"/>
-        <property name="fromName" value="${mail.fromName}" />
+        <property name="fromName" value="${mail.fromName}" />-->
     </bean>
 
     <!--Upload DAO-->
@@ -315,6 +319,16 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!--State Manager service target bean-->
     <bean id="stateManagerServiceTarget" class="ru.sgnhp.service.impl.StateManagerServiceImpl">
         <property name="stateDao" ref="stateDao"/>
+    </bean>
+
+    <!--Mail Service target bean-->
+
+    <bean id="mailServiceManager" class="ru.sgnhp.service.impl.MailServiceImpl">
+        <property name="userManagerService" ref="userManagerServiceTarget" />
+        <property name="stateManagerService" ref="stateManagerServiceTarget" />
+        <property name="mailHostName" value="${mail.mailHostName}"/>
+        <property name="fromAddress" value="${mail.fromAddress}"/>
+        <property name="fromName" value="${mail.fromName}" />
     </bean>
 
     <!-- =================================================================== -->

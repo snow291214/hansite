@@ -68,7 +68,8 @@ public class WorkflowManagerFormController extends SimpleFormController {
             roadmap.add(workflowBean);
         } else {
             roadmap.add(workflowBean);
-            roadmap = this.workflowManagerService.getWorkflowMembersByWorkflowUid(workflowBean.getParentUid(), roadmap);
+            roadmap = this.workflowManagerService.getWorkflowMembersByWorkflowUid(workflowBean.getUid(),
+                    workflowBean.getParentUid(), roadmap);
             Collections.reverse(roadmap);
         }
         request.setAttribute("roadmap", roadmap);

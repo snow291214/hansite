@@ -37,7 +37,7 @@
                 </spring:bind>
             </tr>
             <tr>
-                <td>Входящий номер документа:</td>
+                <td>Исходящий номер:</td>
                 <spring:bind path="registerTask.externalNumber">
                     <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
                     <td><font color="red">${status.errorMessage}</font></td>

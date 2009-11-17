@@ -16,6 +16,8 @@ public interface IWorkflowDao {
 
     WorkflowBean getWorkflowByUid(Long workflowUid);
 
+    WorkflowBean getWorkflowByParentUid(Long parentUid);
+
     List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid);
 
     int getRecievedWorkflowsCountByUserUid(Long userUid);
