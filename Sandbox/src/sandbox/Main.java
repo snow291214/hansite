@@ -51,17 +51,18 @@ public class Main {
         ITasksService tasksService = (ITasksService) ctx.getBean("tasksService");
         IFilesService filesService = (IFilesService) ctx.getBean("filesService");
 
-        //CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("d:\\temp\\doc1.csv"), "cp1251"));
-        CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("/media/win_d/temp/doc1.csv"), "cp1251"));
+        CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("d:\\temp\\doc1.csv"), "cp1251"));
+        //CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("/media/win_d/temp/doc1.csv"), "cp1251"));
         reader.setDelimiter(';');
         int counter = 1;
         while (reader.readRecord()) {
 
             Files file = new Files();
-            boolean exists = (new File("/media/win_d/temp/in/" + reader.get(0) + ".pdf")).exists();
+            //boolean exists = (new File("/media/win_d/temp/in/" + reader.get(0) + ".pdf")).exists();
+            boolean exists = (new File("\\media\\win_d\\temp\\in\\" + reader.get(0) + ".pdf")).exists();
             if (exists) {
-                //file.setBlobField(getBytesFromFile(new File("D:\\temp\\in\\" + reader.get(0) + ".pdf")));
-                file.setBlobField(getBytesFromFile(new File("/media/win_d/temp/in/" + reader.get(0) + ".pdf")));
+                file.setBlobField(getBytesFromFile(new File("D:\\temp\\in\\" + reader.get(0) + ".pdf")));
+                //file.setBlobField(getBytesFromFile(new File("/media/win_d/temp/in/" + reader.get(0) + ".pdf")));
             }
             file.setFileName(reader.get(0) + ".pdf");
             //ArrayList<Files> files = new ArrayList<Files>();
