@@ -9,19 +9,20 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.domain.SearchTaskBean;
 
-public class SearchTaskFormController extends SimpleFormController{
+public class SearchTaskFormController extends SimpleFormController {
 
     @Override
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
-        request.getSession().setAttribute("searchTaskBean",command);
+        SearchTaskBean searchTaskBean = (SearchTaskBean)command;
+        String searchType = request.getParameter("searchType");
+        searchTaskBean.setSearchType(Integer.parseInt(searchType));
+        request.getSession().setAttribute("searchTaskBean", command);
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         SearchTaskBean searchTaskBean = new SearchTaskBean();
-        searchTaskBean.setIsTaskInternalNumber(Boolean.FALSE);
-        searchTaskBean.setIsTaskDescription(Boolean.TRUE);
-        return  searchTaskBean;
+        return searchTaskBean;
     }
 }

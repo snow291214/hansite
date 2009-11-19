@@ -9,9 +9,7 @@
             <tr>
                 <td>Поиск по внутреннему номеру задачи</td>
                 <td>
-                    <spring:bind path="searchTask.isTaskInternalNumber">
-                        <input type="radio" name="find" <c:if test="${status.value}">checked</c:if>/>
-                    </spring:bind>
+                    <input type="radio" name="searchType" value="0" />
                 </td>
                 <td>
                     <spring:bind path="searchTask.taskInternalNumber">
@@ -20,11 +18,31 @@
                 </td>
             </tr>
             <tr>
+                <td>Поиск по входящему номеру</td>
+                <td>
+                    <input type="radio" name="searchType" value="1" />
+                </td>
+                <td>
+                    <spring:bind path="searchTask.taskIncomingNumber">
+                        <input type="text" name="${status.expression}" value="${status.value}"/>
+                    </spring:bind>
+                </td>
+            </tr>
+            <tr>
+                <td>Отправитель (кто подписал письмо)</td>
+                <td>
+                    <input type="radio" name="searchType" value="2" />
+                </td>
+                <td>
+                    <spring:bind path="searchTask.assigneeName">
+                        <input type="text" name="${status.expression}" value="${status.value}"/>
+                    </spring:bind>
+                </td>
+            </tr>
+            <tr>
                 <td>Поиск по резолюции к задаче</td>
                 <td>
-                    <spring:bind path="searchTask.isTaskDescription">
-                        <input type="radio" name="find" <c:if test="${status.value}">checked</c:if>/>
-                    </spring:bind>
+                    <input type="radio" name="searchType" value="3" checked/>
                 </td>
                 <td>
                     <spring:bind path="searchTask.taskDescription">

@@ -2,9 +2,10 @@ package ru.sgnhp.domain;
 
 public class SearchTaskBean {
     private String taskInternalNumber;
-    private Boolean isTaskInternalNumber;
+    private String taskIncomingNumber;
+    private String assigneeName;
     private String taskDescription;
-    private Boolean isTaskDescription;
+    private int searchType;
 
     public String getTaskInternalNumber() {
         return taskInternalNumber;
@@ -12,14 +13,6 @@ public class SearchTaskBean {
 
     public void setTaskInternalNumber(String TaskInternalNumber) {
         this.taskInternalNumber = TaskInternalNumber;
-    }
-
-    public Boolean getIsTaskInternalNumber() {
-        return isTaskInternalNumber;
-    }
-
-    public void setIsTaskInternalNumber(Boolean isTaskInternalNumber) {
-        this.isTaskInternalNumber = isTaskInternalNumber;
     }
 
     public String getTaskDescription() {
@@ -30,11 +23,27 @@ public class SearchTaskBean {
         this.taskDescription = TaskDescription;
     }
 
-    public Boolean getIsTaskDescription() {
-        return isTaskDescription;
+    public String getTaskIncomingNumber() {
+        return taskIncomingNumber;
     }
 
-    public void setIsTaskDescription(Boolean isTaskDescription) {
-        this.isTaskDescription = isTaskDescription;
+    public void setTaskIncomingNumber(String taskIncomingNumber) {
+        this.taskIncomingNumber = taskIncomingNumber;
+    }
+
+    public String getAssigneeName() {
+        return assigneeName;
+    }
+
+    public void setAssigneeName(String assigneeName) {
+        this.assigneeName = assigneeName;
+    }
+
+    public int getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(int searchType) {
+        this.searchType = searchType;
     }
 }
