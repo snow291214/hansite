@@ -12,6 +12,7 @@
             <td class="all">От кого</td>
             <td class="all">К кому</td>
             <td class="all">Передано с резолюцией</td>
+            <td class="all">Статус</td>
         </tr>
         <c:forEach var="workflow" items="${requestScope.roadmap}">
             <tr>
@@ -19,7 +20,8 @@
                 <td class="all">${workflow.uid}</td>
                 <td class="all">${workflow.assignee.lastName} ${workflow.assignee.firstName} ${workflow.assignee.middleName}</td>
                 <td class="all">${workflow.receiver.lastName} ${workflow.receiver.firstName} ${workflow.receiver.middleName}</td>
-                <td class="all">${workflow.description}</td>
+                <td class="all">&nbsp;${workflow.description}</td>
+                <td class="all">&nbsp;${workflow.state}</td>
             </tr>
             <c:set var="counter" value="${counter+1}" scope="page" />
         </c:forEach>
