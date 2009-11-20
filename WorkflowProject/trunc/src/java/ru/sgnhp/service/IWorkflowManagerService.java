@@ -20,8 +20,6 @@ public interface IWorkflowManagerService {
 
     WorkflowBean getWorkflowByUid(Long workflowUid);
 
-    List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean);
-
     List<WorkflowBean> getRecievedWorkflowsByUserUid(Long uid);
 
     List<WorkflowBean> getAssignedWorkflowsByUserUid(Long parentUid, Boolean completed);
@@ -33,11 +31,9 @@ public interface IWorkflowManagerService {
     void updateWorkflowState(WorkflowBean _workflow);
 
     //LinkedHashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, LinkedHashMap roadmap);
-
     public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, Long workflowParentUid, ArrayList roadmap);
 
     //void sendmailRemind(WorkflowBean _workflow);
-
     void taskReminder();
 
     int getRecievedWorkflowsCountByUserUid(Long userUid);
@@ -45,4 +41,8 @@ public interface IWorkflowManagerService {
     int getAssignedWorkflowsCountByUserUid(Long userUid);
 
     int getCompletedWorkflowsCountByUserUid(Long userUid);
+
+    List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean);
+
+    List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid);
 }

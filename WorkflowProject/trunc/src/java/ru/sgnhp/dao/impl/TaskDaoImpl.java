@@ -116,6 +116,21 @@ public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
         this.uploadManagerService = uploadManagerService;
     }
 
+    public TaskBean getTaskByIncomingNumber(int number) {
+        List<TaskBean> task = getSimpleJdbcTemplate().query(SELECT + " Where IncomingNumber = ? ", new UserMapper(uploadManagerService), number);
+        if (task.size() > 0) {
+            return (TaskBean) task.toArray()[0];
+        } else {
+            return null;
+        }
+    }
+
+    public List<TaskBean> getTasksByExternalAssignee(String externalAssignee) {
+        return getSimpleJdbcTemplate().query(SELECT +
+                " Where ExternalAssignee Like ? ", new UserMapper(uploadManagerService),
+                "%" + externalAssignee + "%");
+    }
+
     private static class UserMapper implements ParameterizedRowMapper<TaskBean> {
 
         private final IUploadManagerService uploadManagerService;

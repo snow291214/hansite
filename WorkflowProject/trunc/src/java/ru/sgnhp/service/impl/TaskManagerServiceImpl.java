@@ -57,4 +57,12 @@ public class TaskManagerServiceImpl implements ITaskManagerService {
     public int getIncomingNewNumber() {
         return taskDao.getIncomingNewNumber();
     }
+
+    public TaskBean getTaskByIncomingNumber(int number) {
+        return taskDao.getTaskByIncomingNumber(number);
+    }
+
+    public List<TaskBean> getTasksByExternalAssignee(String externalAssignee) {
+        return taskDao.getTasksByExternalAssignee(externalAssignee);
+    }
 }

@@ -131,6 +131,14 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
         return workflows;
     }
 
+    public List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid) {
+        List<WorkflowBean> workflows = getSimpleJdbcTemplate().query(SELECT +
+                ", state  WHERE state.StateUid = workflows.State " +
+                "And workflows.TaskUid=? And workflows.ParentUid=-1 order by Uid Desc",
+                new WorkflowMapper(taskManagerService), taskUid);
+        return workflows;
+    }
+
     private static class WorkflowMapper implements ParameterizedRowMapper<WorkflowBean> {
 
         private ITaskManagerService taskManagerService;

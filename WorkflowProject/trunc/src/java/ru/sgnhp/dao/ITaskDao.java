@@ -25,6 +25,10 @@ public interface ITaskDao {
 
     TaskBean getTaskByExternalNumber(String number);
 
+    TaskBean getTaskByIncomingNumber(int number);
+
+    List<TaskBean> getTasksByExternalAssignee(String externalAssignee);
+
     List<TaskBean> getTasksByUser(WorkflowUserBean user);
 
     int getTaskNewNumber();

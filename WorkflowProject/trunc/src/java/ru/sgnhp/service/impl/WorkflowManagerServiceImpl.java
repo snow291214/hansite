@@ -97,15 +97,6 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         return wf;
     }
 
-    public List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean) {
-        List<WorkflowBean> wfs = workflowDao.getWorkflowsByDescription(userUid, searchTaskBean.getTaskDescription());
-        for (WorkflowBean wf : wfs) {
-            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
-        }
-        return wfs;
-    }
-
     public void updateWorkflow(WorkflowBean _workflow) {
         workflowDao.updateWorkflow(_workflow);
     }
@@ -126,9 +117,11 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
     }
 
     public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, Long workflowParentUid, ArrayList roadmap) {
-        ArrayList up = stepDown(workflowUid, new ArrayList());
+        ArrayList<WorkflowBean> up = stepDown(workflowUid, new ArrayList());
         Collections.reverse(up);
-        roadmap = stepUp(workflowParentUid, roadmap);
+        if (workflowParentUid != -1) {
+            roadmap = stepUp(workflowParentUid, roadmap);
+        }
         up.addAll(roadmap);
         return up;
     }
@@ -176,5 +169,23 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
 
     public void setMailService(IMailService mailService) {
         this.mailService = mailService;
+    }
+
+    public List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean) {
+        List<WorkflowBean> wfs = workflowDao.getWorkflowsByDescription(userUid, searchTaskBean.getTaskDescription());
+//        for (WorkflowBean wf : wfs) {
+//            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
+//            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
+//        }
+        return wfs;
+    }
+
+    public List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid) {
+        List<WorkflowBean> wfs = workflowDao.getWorkflowsByTaskUid(taskUid);
+//        for (WorkflowBean wf : wfs) {
+//            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
+//            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
+//        }
+        return wfs;
     }
 }

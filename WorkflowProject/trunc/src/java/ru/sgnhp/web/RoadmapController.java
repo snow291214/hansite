@@ -26,13 +26,13 @@ public class RoadmapController implements Controller {
         String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
         ArrayList<WorkflowBean> roadmap = new ArrayList<WorkflowBean>();
-        if (workflowBean.getParentUid() == -1) {
-            roadmap.add(workflowBean);
-        } else {
+        //if (workflowBean.getParentUid() == -1) {
+            //roadmap.add(workflowBean);
+        //} else {
             roadmap.add(workflowBean);
             roadmap = this.workflowManagerService.getWorkflowMembersByWorkflowUid(workflowBean.getUid(), workflowBean.getParentUid(), roadmap);
             Collections.reverse(roadmap);
-        }
+        //}
         return new ModelAndView("roadmap", "roadmap", roadmap);
     }
 

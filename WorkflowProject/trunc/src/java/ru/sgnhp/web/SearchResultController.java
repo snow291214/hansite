@@ -8,13 +8,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import ru.sgnhp.domain.SearchTaskBean;
+import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.service.ITaskManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 public class SearchResultController implements Controller {
 
     private IWorkflowManagerService workflowManagerService;
+    private ITaskManagerService taskManagerService;
 
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
         this.workflowManagerService = workflowManagerService;
@@ -27,26 +30,45 @@ public class SearchResultController implements Controller {
         SearchTaskBean searchTaskBean = (SearchTaskBean) request.getSession().getAttribute("searchTaskBean");
         switch (searchTaskBean.getSearchType()) {
             case 0:
+                //Find By Internal Number
                 result = "searchResult";
                 //workflowBeans = workflowManagerService.getWorkflowsByDescription(user.getUid(), searchTaskBean);
                 request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 1:
+                //Find By Incoming Number
                 result = "searchResult";
+                TaskBean taskBean = taskManagerService.getTaskByIncomingNumber(
+                        Integer.parseInt(searchTaskBean.getTaskIncomingNumber()));
+                workflowBeans = workflowManagerService.getWorkflowsByTaskUid(taskBean.getUid());
                 //workflowBeans = workflowManagerService.getWorkflowsByDescription(user.getUid(), searchTaskBean);
                 request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 2:
+                //Find By Assignee
                 result = "searchResult";
-                //workflowBeans = workflowManagerService.getWorkflowsByDescription(user.getUid(), searchTaskBean);
+                List<TaskBean> taskBeans = taskManagerService.getTasksByExternalAssignee(searchTaskBean.getAssigneeName());
+                for (TaskBean b : taskBeans) {
+                    Long uid = b.getUid();
+                    if (workflowBeans == null) {
+                        workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                    } else {
+                        workflowBeans.addAll(workflowManagerService.getWorkflowsByTaskUid(uid));
+                    }
+                }
                 request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 3:
+                //Find By description
                 result = "searchResult";
                 workflowBeans = workflowManagerService.getWorkflowsByDescription(user.getUid(), searchTaskBean);
                 request.getSession().setAttribute("searchTaskBean", null);
                 break;
         }
         return new ModelAndView(result, "workflowBeans", workflowBeans);
+    }
+
+    public void setTaskManagerService(ITaskManagerService taskManagerService) {
+        this.taskManagerService = taskManagerService;
     }
 }

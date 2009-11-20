@@ -11,10 +11,10 @@
                    ${sessionScope.initiator.firstName}
                    ${sessionScope.initiator.middleName}
                    (${sessionScope.initiator.login}) || " />
-                <a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> || <a href="<c:url value="logout.htm"/>">Завершить работу</a>
+                <a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> ||
+                <a href="<c:url value="logout.htm"/>">Завершить работу</a> ||
+                <a href="searchTask.htm">Поиск</a>
             </td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
         </tr>
         <tr>
             <td colspan="3">

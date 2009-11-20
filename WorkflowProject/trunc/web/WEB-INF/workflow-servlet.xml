@@ -227,6 +227,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
         </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
     </bean>
 
     <!-- Ajax Controller -->

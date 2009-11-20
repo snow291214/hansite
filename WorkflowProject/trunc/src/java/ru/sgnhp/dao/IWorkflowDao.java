@@ -28,12 +28,13 @@ public interface IWorkflowDao {
 
     List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid);
 
-   int getCompletedWorkflowsCountByUserUid(Long userUid);
-
-   List<WorkflowBean> getWorkflowsByDescription(Long userUid, String description);
+    int getCompletedWorkflowsCountByUserUid(Long userUid);
 
     void updateWorkflow(WorkflowBean _workflow);
 
     void updateWorkflowState(WorkflowBean _workflow);
 
+    List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid);
+
+    List<WorkflowBean> getWorkflowsByDescription(Long userUid, String description);
 }
