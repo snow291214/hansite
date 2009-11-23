@@ -15,5 +15,6 @@
     <mapping class="ru.sgnhp.entity.Groups"/>
     <mapping class="ru.sgnhp.entity.Tasks"/>
     <mapping class="ru.sgnhp.entity.Files"/>
+    <mapping class="ru.sgnhp.entity.Workflows" />
   </session-factory>
 </hibernate-configuration>

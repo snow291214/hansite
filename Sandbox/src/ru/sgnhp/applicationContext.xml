@@ -70,4 +70,13 @@
         </constructor-arg>
     </bean>
 
+    <bean id="workflowsService" class="ru.sgnhp.services.impl.WorkflowsService">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.entity.Workflows"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
 </beans>

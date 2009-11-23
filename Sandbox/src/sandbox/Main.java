@@ -13,12 +13,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgnhp.entity.Files;
 import ru.sgnhp.entity.Tasks;
+import ru.sgnhp.entity.Workflows;
 import ru.sgnhp.services.IFilesService;
 import ru.sgnhp.services.ITasksService;
+import ru.sgnhp.services.IWorkflowsService;
 
 /**
  *
@@ -50,6 +51,7 @@ public class Main {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/ru/sgnhp/applicationContext.xml");
         ITasksService tasksService = (ITasksService) ctx.getBean("tasksService");
         IFilesService filesService = (IFilesService) ctx.getBean("filesService");
+        IWorkflowsService workflowsService = (IWorkflowsService) ctx.getBean("workflowsService");
 
         CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("d:\\temp\\doc1.csv"), "cp1251"));
         //CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("/media/win_d/temp/doc1.csv"), "cp1251"));
@@ -59,7 +61,7 @@ public class Main {
 
             Files file = new Files();
             //boolean exists = (new File("/media/win_d/temp/in/" + reader.get(0) + ".pdf")).exists();
-            boolean exists = (new File("\\media\\win_d\\temp\\in\\" + reader.get(0) + ".pdf")).exists();
+            boolean exists = (new File("D:\\temp\\in\\" + reader.get(0) + ".pdf")).exists();
             if (exists) {
                 file.setBlobField(getBytesFromFile(new File("D:\\temp\\in\\" + reader.get(0) + ".pdf")));
                 //file.setBlobField(getBytesFromFile(new File("/media/win_d/temp/in/" + reader.get(0) + ".pdf")));
@@ -77,13 +79,27 @@ public class Main {
             task.setStartDate(date.parse(reader.get(1)));
             if (!reader.get(5).equals("")) {
                 task.setDueDate(date.parse(reader.get(5)));
+            }else{
+                task.setDueDate(date.parse(reader.get(1)));
             }
             task.setDescription(reader.get(2));
             task.getFilesSet().add(file);
             file.setTaskUid(task);
             tasksService.save(task);
             filesService.save(file);
-            
+
+            Workflows workflows = new Workflows();
+            workflows.setState(Short.parseShort("3"));
+            workflows.setParentUid(-1);
+            workflows.setParentUserUid(79);
+            workflows.setUserUid(75);
+            workflows.setAssignDate(task.getStartDate());
+            workflows.setFinishDate(task.getDueDate());
+            workflows.setDescription(task.getDescription());
+            workflows.setTaskUid(task);
+            workflowsService.save(workflows);
+
+
             counter++;
         }
         reader.close();
