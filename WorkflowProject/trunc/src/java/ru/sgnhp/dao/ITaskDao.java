@@ -34,4 +34,6 @@ public interface ITaskDao {
     int getTaskNewNumber();
 
     int getIncomingNewNumber();
+
+    List<TaskBean> getTasksByDescription(String description);
 }

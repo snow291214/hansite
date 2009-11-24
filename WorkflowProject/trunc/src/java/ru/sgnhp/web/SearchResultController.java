@@ -26,7 +26,8 @@ public class SearchResultController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String result = "index";
         List<WorkflowBean> workflowBeans = null;
-        WorkflowUserBean user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
+        List<TaskBean> taskBeans = null;
+        //WorkflowUserBean user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
         SearchTaskBean searchTaskBean = (SearchTaskBean) request.getSession().getAttribute("searchTaskBean");
         switch (searchTaskBean.getSearchType()) {
             case 0:
@@ -47,7 +48,7 @@ public class SearchResultController implements Controller {
             case 2:
                 //Find By Assignee
                 result = "searchResult";
-                List<TaskBean> taskBeans = taskManagerService.getTasksByExternalAssignee(searchTaskBean.getAssigneeName());
+                taskBeans = taskManagerService.getTasksByExternalAssignee(searchTaskBean.getAssigneeName());
                 for (TaskBean b : taskBeans) {
                     Long uid = b.getUid();
                     if (workflowBeans == null) {
@@ -61,8 +62,18 @@ public class SearchResultController implements Controller {
             case 3:
                 //Find By description
                 result = "searchResult";
-                workflowBeans = workflowManagerService.getWorkflowsByDescription(user.getUid(), searchTaskBean);
+                taskBeans = taskManagerService.getTasksByDescription(searchTaskBean.getTaskDescription());
+                for (TaskBean b : taskBeans) {
+                    Long uid = b.getUid();
+                    if (workflowBeans == null) {
+                        workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                    } else {
+                        workflowBeans.addAll(workflowManagerService.getWorkflowsByTaskUid(uid));
+                    }
+                }
                 request.getSession().setAttribute("searchTaskBean", null);
+//                workflowBeans = workflowManagerService.getWorkflowsByDescription(user.getUid(), searchTaskBean);
+//                request.getSession().setAttribute("searchTaskBean", null);
                 break;
         }
         return new ModelAndView(result, "workflowBeans", workflowBeans);

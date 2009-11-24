@@ -65,4 +65,8 @@ public class TaskManagerServiceImpl implements ITaskManagerService {
     public List<TaskBean> getTasksByExternalAssignee(String externalAssignee) {
         return taskDao.getTasksByExternalAssignee(externalAssignee);
     }
+
+    public List<TaskBean> getTasksByDescription(String description) {
+        return taskDao.getTasksByDescription(description);
+    }
 }

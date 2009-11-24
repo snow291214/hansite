@@ -131,6 +131,12 @@ public class TaskDaoImpl extends SimpleJdbcDaoSupport implements ITaskDao {
                 "%" + externalAssignee + "%");
     }
 
+    public List<TaskBean> getTasksByDescription(String description) {
+        return getSimpleJdbcTemplate().query(SELECT +
+                " Where Description Like ? ", new UserMapper(uploadManagerService),
+                "%" + description + "%");
+    }
+
     private static class UserMapper implements ParameterizedRowMapper<TaskBean> {
 
         private final IUploadManagerService uploadManagerService;

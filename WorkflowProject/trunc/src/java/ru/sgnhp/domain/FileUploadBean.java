@@ -16,7 +16,7 @@ public class FileUploadBean {
     private Long taskUid;
     private String fileName;
     private InputStream contentStream;
-    private Blob blob;
+    private Blob blobField;
 
     public Long getUid() {
         return uid;
@@ -51,11 +51,11 @@ public class FileUploadBean {
     }
 
     public Blob getBlob() {
-        return blob;
+        return blobField;
     }
 
     public void setBlob(Blob blob) {
-        this.blob = blob;
+        this.blobField = blob;
     }
 }
 

@@ -21,13 +21,15 @@ public interface ITaskManagerService {
 
     TaskBean getTaskByUid(Long uid);
 
-    TaskBean getTaskByIncomingNumber(int number);
-
     List<TaskBean> getTasksByUser(WorkflowUserBean user);
-
-    List<TaskBean> getTasksByExternalAssignee(String externalAssignee);
 
     int getTaskNewNumber();
     
     int getIncomingNewNumber();
+
+    List<TaskBean> getTasksByExternalAssignee(String externalAssignee);
+
+    TaskBean getTaskByIncomingNumber(int number);
+
+    List<TaskBean> getTasksByDescription(String description);
 }

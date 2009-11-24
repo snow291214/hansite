@@ -17,7 +17,7 @@ import ru.sgnhp.domain.FileUploadBean;
  */
 public class UploadDaoImpl extends SimpleJdbcDaoSupport implements IUploadDao {
 
-    private static String INSERT = "Insert Into files(`TaskUid`,`FileName`,`Blob`) Values(?,?,?)";
+    private static String INSERT = "Insert Into files(`TaskUid`,`FileName`,`BlobField`) Values(?,?,?)";
     private static String SelectPart = "SELECT files.Uid, files.FileName FROM  files";
     private static String SelectAll = "SELECT * FROM  files";
 
@@ -55,7 +55,7 @@ public class UploadDaoImpl extends SimpleJdbcDaoSupport implements IUploadDao {
             FileUploadBean bean = new FileUploadBean();
             bean.setUid(rs.getLong("Uid"));
             bean.setFileName(rs.getString("FileName"));
-            bean.setBlob(rs.getBlob("Blob"));
+            bean.setBlob(rs.getBlob("BlobField"));
             return bean;
         }
     }
