@@ -1,14 +1,12 @@
 package ru.sgnhp.domain;
 
 import java.util.List;
-
-/*****
+ /*****
  *
  * @author Alexey Khudyakov
  * @company "Salavatgazoneftehimproekt" Ltd
  *
- *****
- */
+ *****/
 public class TaskBean {
     private Long uid;
     private int internalNumber;

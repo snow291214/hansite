@@ -5,8 +5,9 @@
 </head>
 <body>
     <form name="formSearch" method="post" action="searchTask.htm">
-        <table>
+        <table border="0" cellspacing="0" cellpadding="5">
             <tr>
+                <td rowspan="5"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
                 <td>Поиск по внутреннему номеру задачи</td>
                 <td>
                     <input type="radio" name="searchType" value="0" />
@@ -53,7 +54,10 @@
             <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><input type="submit"><td>
+                <td>
+                    <input type="button" onclick="javascript:history.back();" value="Назад"/>
+                    <input type="submit" value="Поиск" />
+                <td>
             </tr>
         </table>
     </form>

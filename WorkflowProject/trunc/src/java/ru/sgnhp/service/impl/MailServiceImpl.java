@@ -41,10 +41,13 @@ public class MailServiceImpl implements IMailService {
             InternetAddress address = new InternetAddress(fromAddress);
             address.setPersonal(fromName, "utf-8");
             message.setFrom(address);
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(_workflow.getReceiver().getEmail()));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(_workflow.getReceiver().getEmail()));
             message.setSubject("Была создана новая задача: " +
+                    "["+_workflow.getTask().getInternalNumber()+"] "+
                     _workflow.getAssignee().getLastName() +
-                    " -- >" + _workflow.getReceiver().getLastName(), "utf-8");
+                    " == > " +
+                    _workflow.getReceiver().getLastName(), "utf-8");
 
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
@@ -62,7 +65,7 @@ public class MailServiceImpl implements IMailService {
             message.setContent(multipart);
             Transport.send(message);
         } catch (Exception e) {
-            System.err.println(e);
+           e.printStackTrace();
         }
     }
 
