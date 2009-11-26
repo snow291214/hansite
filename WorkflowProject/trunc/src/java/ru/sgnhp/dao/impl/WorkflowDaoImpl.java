@@ -19,16 +19,22 @@ import ru.sgnhp.service.ITaskManagerService;
  */
 public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDao {
 
-    private static String INSERT = "Insert Into workflows(`ParentUid`,`TaskUid`,`ParentUserUid`,`UserUid`,`Description`,`State`,`AssignDate`,`FinishDate`) Values(?,?,?,?,?,?,?,?)";
+    private static String INSERT = "Insert Into workflows(`ParentUid`,`TaskUid`," +
+            "`ParentUserUid`,`UserUid`,`Description`,`State`,`AssignDate`," +
+            "`FinishDate`,`WorkflowNote`) Values(?,?,?,?,?,?,?,?,?)";
     private static String SELECT = "SELECT * FROM workflows";
-    private static String UPDATE = "Update workflows set `ParentUid` = ?, `TaskUid` = ?, `ParentUserUid` = ?, `UserUid` = ?,`Description` = ?, `State` = ?,`AssignDate` = ?,`FinishDate` = ? where uid = ?";
+    private static String UPDATE = "Update workflows set `ParentUid` = ?, " +
+            "`TaskUid` = ?, `ParentUserUid` = ?, `UserUid` = ?,`Description` = ?, " +
+            "`State` = ?,`AssignDate` = ?,`FinishDate` = ? `WorkflowNote` = ? " +
+            "where uid = ?";
     private ITaskManagerService taskManagerService;
 
     public void saveWorkflow(WorkflowBean _workflow) {
         getSimpleJdbcTemplate().update(INSERT, _workflow.getParentUid(), _workflow.getTaskUid(), _workflow.getParentUserUid(),
                 _workflow.getUserUid(), _workflow.getDescription(),
                 _workflow.getState(), DateUtils.stringToDate(_workflow.getAssignDate(), "yyyy-MM-dd"),
-                DateUtils.stringToDate(_workflow.getFinishDate(), "yyyy-MM-dd"));
+                DateUtils.stringToDate(_workflow.getFinishDate(), "yyyy-MM-dd"),
+                _workflow.getWorkflowNote());
     }
 
     public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid) {
@@ -97,8 +103,9 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
     }
 
     public void updateWorkflowState(WorkflowBean _workflow) {
-        getSimpleJdbcTemplate().update("Update workflows set State = ? where Uid = ?",
-                _workflow.getState(), _workflow.getUid());
+        //this.saveWorkflow(_workflow);
+        getSimpleJdbcTemplate().update("Update workflows set State = ?, WorkflowNote = ? where Uid = ?",
+                _workflow.getState(), _workflow.getWorkflowNote(), _workflow.getUid());
     }
 
     public int getRecievedWorkflowsCountByUserUid(Long userUid) {
@@ -161,6 +168,7 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
             workflow.setState(rs.getString("StateDescription"));
             workflow.setAssignDate(rs.getString("AssignDate"));
             workflow.setFinishDate(rs.getString("FinishDate"));
+            workflow.setWorkflowNote(rs.getString("WorkflowNote"));
             workflow.setTask(taskManagerService.getTaskByUid(workflow.getTaskUid()));
             return workflow;
         }

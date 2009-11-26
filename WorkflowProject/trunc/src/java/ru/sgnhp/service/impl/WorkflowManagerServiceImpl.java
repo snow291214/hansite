@@ -3,6 +3,7 @@ package ru.sgnhp.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import ru.sgnhp.DateUtils;
 import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.SearchTaskBean;
 import ru.sgnhp.domain.WorkflowBean;
@@ -98,6 +99,9 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
     }
 
     public void updateWorkflow(WorkflowBean _workflow) {
+        if(_workflow.getState().equals("3")){
+            _workflow.setFinishDate(DateUtils.nowString("yyyy-MM-dd"));
+        }
         workflowDao.updateWorkflow(_workflow);
     }
 

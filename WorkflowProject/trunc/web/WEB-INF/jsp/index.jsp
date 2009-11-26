@@ -55,7 +55,14 @@
                     Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>
                     Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.dueDate}"/><br />
                     <div class="content">
-                        Резолюция к задаче: <b><u><c:out value="${wf.description}"/></u></b>. Дата назначения задачи: <c:out value="${wf.assignDate}"/>. Состояние задачи: <font color="red"><b><c:out value="${wf.state}"/></b>.</font><br />
+                        Резолюция к задаче: <b><u><c:out value="${wf.description}"/></u></b>. 
+                        Дата назначения задачи: <c:out value="${wf.assignDate}"/>.
+                        Состояние задачи:
+                        <font color="red"><b><c:out value="${wf.state}"/></b>.
+                            <c:if test="${wf.workflowNote != ''}">
+                            ${wf.workflowNote}
+                            </c:if>
+                        </font><br />
                         Файлы, прикрепленные к задаче:
                         <c:forEach var = "taskFile" items="${wf.task.taskFiles}">
                             <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>

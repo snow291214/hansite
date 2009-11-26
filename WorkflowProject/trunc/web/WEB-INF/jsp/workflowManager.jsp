@@ -47,16 +47,6 @@
                                     <option value="0">Не начата</option>
                                 </c:otherwise>
                             </c:choose>
-                            <!--
-                            <c:choose>
-                                <c:when test="${status.value eq 'Передана'}">
-                                    <option value="1" selected>Передана</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="1">Передана</option>
-                                </c:otherwise>
-                            </c:choose>
-                            -->
                             <c:choose>
                                 <c:when test="${status.value eq 'В работе'}">
                                     <option value="2" selected>В работе</option>
@@ -74,8 +64,16 @@
                                     <option value="3">Завершена</option>
                                 </c:otherwise>
                             </c:choose>
-
                         </select>
+                    </td>
+                    <td><font color="red">${status.errorMessage}</font></td>
+                </spring:bind>
+            </tr>
+            <tr>
+                <td>Записка к смене состояния задачи:</td>
+                <spring:bind path="workflowManager.workflowNote">
+                    <td>
+                        <textarea rows="4" cols="22" name="<c:out value="${status.expression}"/>">${status.value}</textarea>
                     </td>
                     <td><font color="red">${status.errorMessage}</font></td>
                 </spring:bind>

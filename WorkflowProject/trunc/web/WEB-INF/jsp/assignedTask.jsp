@@ -54,7 +54,13 @@
                     Компания: ${wf.task.externalCompany}. Входящий номер письма: ${wf.task.incomingNumber}. Исходящий номер: ${wf.task.externalNumber}.
                     Отправитель: ${wf.task.externalAssignee}<br />
                     Задача создана для: <c:out value="${wf.receiver.lastName} ${wf.receiver.firstName} ${wf.receiver.middleName}"/>
-                    Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.startDate}"/> Состояние задачи: <font color="red"><b><c:out value="${wf.state}"/></b>.</font><br />
+                    Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.startDate}"/>
+                    Состояние задачи:
+                    <font color="red"><b><c:out value="${wf.state}"/></b>.
+                        <c:if test="${wf.workflowNote != ''}">
+                            ${wf.workflowNote}
+                        </c:if>
+                    </font><br />
                     <div class="content">
                         <b><u>Резолюция к задаче: <c:out value="${wf.description}"/>.</u></b> Дата назначения задачи: <c:out value="${wf.assignDate}"/>.<br />
                         Файлы, прикрепленные к задаче:

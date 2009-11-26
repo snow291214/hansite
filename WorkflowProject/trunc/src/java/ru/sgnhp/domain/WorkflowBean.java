@@ -17,6 +17,7 @@ public class WorkflowBean {
     private String state;
     private String assignDate;
     private String finishDate;
+    private String workflowNote;
     private TaskBean task;
     private WorkflowUserBean assignee;
     private WorkflowUserBean receiver;
@@ -133,5 +134,13 @@ public class WorkflowBean {
 
     public void setParentUid(Long parentUid) {
         this.parentUid = parentUid;
+    }
+
+    public String getWorkflowNote() {
+        return workflowNote;
+    }
+
+    public void setWorkflowNote(String workflowNote) {
+        this.workflowNote = workflowNote;
     }
 }

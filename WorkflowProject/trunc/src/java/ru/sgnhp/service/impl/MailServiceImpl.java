@@ -78,7 +78,8 @@ public class MailServiceImpl implements IMailService {
             InternetAddress address = new InternetAddress(fromAddress);
             address.setPersonal(fromName, "utf-8");
             message.setFrom(address);
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(_workflow.getAssignee().getEmail()));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(_workflow.getAssignee().getEmail()));
             message.setSubject("Изменение статуса задачи", "utf-8");
 
             Multipart multipart = new MimeMultipart("related");
@@ -96,7 +97,9 @@ public class MailServiceImpl implements IMailService {
                     _workflow.getReceiver().getMiddleName() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
                     _workflow.getTask().getDescription() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " + bean.getStateDescription() + "</p></body></html>", "text/html;charset=utf-8");
+                    "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " + bean.getStateDescription() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Записка к смене статуса: "+ _workflow.getWorkflowNote() + "</p>"+
+                    "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);
