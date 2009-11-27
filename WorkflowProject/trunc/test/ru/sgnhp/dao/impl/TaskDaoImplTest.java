@@ -40,7 +40,7 @@ public class TaskDaoImplTest extends AbstractTransactionalDataSourceSpringContex
     @Test
     public void testSaveTask() {
         TaskBean task = new TaskBean();
-        task.setInternalNumber("T.2009-1");
+        task.setInternalNumber(1);
         task.setExternalNumber("ВН-1101/74");
         task.setDescription("Для рассмотрения и принятия решения");
         Calendar cal = Calendar.getInstance();
