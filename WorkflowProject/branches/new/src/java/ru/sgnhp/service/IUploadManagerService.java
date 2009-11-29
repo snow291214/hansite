@@ -1,7 +1,7 @@
 package ru.sgnhp.service;
 
-import java.util.List;
-import ru.sgnhp.domain.FileUploadBean;
+import ru.sgnhp.domain.FileBean;
+
 
 /*****
  *
@@ -10,11 +10,6 @@ import ru.sgnhp.domain.FileUploadBean;
  *
  *****
  */
-public interface IUploadManagerService {
+public interface IUploadManagerService extends IGenericService<FileBean, Long>{
 
-    void saveFile(FileUploadBean bean);
-
-    List<FileUploadBean> getFileUploadBeanByTaskUid(Long taskUid);
-
-    FileUploadBean getFileUploadBeanByUid(Long fileUploadBeanUid);
 }

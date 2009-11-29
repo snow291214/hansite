@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.sgnhp.domain.FileUploadBean;
+import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
@@ -37,7 +37,7 @@ public class UploadController extends SimpleFormController {
 
         /* Сохраняем задание */
         TaskBean task = (TaskBean) request.getSession().getAttribute("task");
-        task = taskManagerService.saveTask(task);
+        task = taskManagerService.save(task);
 
         /* Назначаем задание пользователям */
         WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
@@ -50,7 +50,7 @@ public class UploadController extends SimpleFormController {
             wf.setUserUid(Long.valueOf(uid));
             wf.setDescription(task.getDescription());
             wf.setState("0");
-            wf.setAssignDate(task.getStartDate());
+            wf.setAssignDate(task.getStartDate().toString());
             wf.setTask(task);
             wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
             wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
@@ -61,11 +61,11 @@ public class UploadController extends SimpleFormController {
         final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
         final Map files = multiRequest.getFileMap();
         for (Object file : files.values()) {
-            FileUploadBean bean = new FileUploadBean();
-            bean.setTaskUid(task.getUid());
+            FileBean bean = new FileBean();
+            bean.setTaskUid(task);
             bean.setFileName(((MultipartFile) file).getOriginalFilename());
-            bean.setContentStream(((MultipartFile) file).getInputStream());
-            uploadManagerService.saveFile(bean);
+            bean.setBlobField(((MultipartFile) file).getBytes());
+            uploadManagerService.save(bean);
         }
         request.getSession().setAttribute("task", null);
         request.getSession().setAttribute("checks", null);

@@ -169,7 +169,7 @@ public class WorkflowDaoImpl extends SimpleJdbcDaoSupport implements IWorkflowDa
             workflow.setAssignDate(rs.getString("AssignDate"));
             workflow.setFinishDate(rs.getString("FinishDate"));
             workflow.setWorkflowNote(rs.getString("WorkflowNote"));
-            workflow.setTask(taskManagerService.getTaskByUid(workflow.getTaskUid()));
+            workflow.setTask(taskManagerService.get(workflow.getTaskUid()));
             return workflow;
         }
     }

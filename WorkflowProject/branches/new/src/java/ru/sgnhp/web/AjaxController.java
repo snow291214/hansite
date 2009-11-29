@@ -24,7 +24,7 @@ public class AjaxController implements Controller {
         response.setCharacterEncoding("utf-8");
         response.setHeader("Cache-Control", "no-cache");
         response.getWriter().write("<InternalNumber>");
-        response.getWriter().write("<value>" + taskManagerService.getIncomingNewNumber() + "</value>");
+        response.getWriter().write("<value>" + taskManagerService.getNewIncomingNumber() + "</value>");
         response.getWriter().write("</InternalNumber>");
         return null;
     }

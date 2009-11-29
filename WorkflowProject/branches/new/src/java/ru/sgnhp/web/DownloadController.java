@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import ru.sgnhp.Translit;
-import ru.sgnhp.domain.FileUploadBean;
+import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.service.IUploadManagerService;
 
 public class DownloadController implements Controller {
@@ -16,8 +16,9 @@ public class DownloadController implements Controller {
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String fileUid = request.getParameter("fileID");
-        FileUploadBean bean = uploadManagerService.getFileUploadBeanByUid(Long.parseLong(fileUid));
-
+        //FileBean bean = uploadManagerService.getFileUploadBeanByUid(Long.parseLong(fileUid));
+        
+        FileBean bean = uploadManagerService.get(Long.parseLong(fileUid));
         String fileType = bean.getFileName().substring(bean.getFileName().indexOf(".") + 1, bean.getFileName().length());
 
 
@@ -40,7 +41,8 @@ public class DownloadController implements Controller {
 
 
         ServletOutputStream outputStream = response.getOutputStream();
-        byte[] bs = bean.getBlob().getBytes(1, (int) bean.getBlob().length());
+        //byte[] bs = bean .getBytes(1, (int) bean.getBlob().length());
+        byte[] bs = bean.getBlobField();
         outputStream.write(bs);
         outputStream.flush();
         outputStream.close();

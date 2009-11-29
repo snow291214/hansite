@@ -2,30 +2,30 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.sgnhp.dao.impl;
+package ru.sgnhp.service.impl;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 import org.junit.Test;
-import ru.sgnhp.dao.ITaskDao;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.domain.TaskBean;
+import ru.sgnhp.service.ITaskManagerService;
 
 /**
  *
  * @author 48han
  */
-public class TaskDaoImplTest extends AbstractTransactionalDataSourceSpringContextTests {
+public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceSpringContextTests {
 
-    private ITaskDao taskDao;
+    private ITaskManagerService taskManagerService;
 
-    public TaskDaoImplTest() {
+    public TaskManagerServiceImplTest() {
     }
 
     @Test
-    public void testSaveTask() {
+    public void saveTask() {
         TaskBean taskBean = new TaskBean();
         taskBean.setInternalNumber(101);
         taskBean.setIncomingNumber(102);
@@ -43,56 +43,56 @@ public class TaskDaoImplTest extends AbstractTransactionalDataSourceSpringContex
         Set<FileBean> fileBeans = new LinkedHashSet<FileBean>();
         fileBeans.add(fileBean);
 
-        taskDao.save(taskBean);
+        taskManagerService.save(taskBean);
     }
 
     @Test
     public void testGetTaskByInternalNumber() {
-        assertNotNull(taskDao.getTaskByInternalNumber(101));
+        assertNotNull(taskManagerService.getTaskByInternalNumber(101));
     }
 
     @Test
     public void testGetTaskByExternalNumber() {
-        assertNotNull(taskDao.getTaskByExternalNumber("Исх-202"));
+        assertNotNull(taskManagerService.getTaskByExternalNumber("Исх-202"));
     }
 
     @Test
     public void testGetTaskByIncomingNumber() {
-        assertNotNull(taskDao.getTaskByIncomingNumber(1));
+        assertNotNull(taskManagerService.getTaskByIncomingNumber(1));
     }
 
     @Test
     public void testGetTasksByExternalAssignee() {
-        assertNotNull(taskDao.getTasksByExternalAssignee("%Магафуров%"));
+        assertNotNull(taskManagerService.getTasksByExternalAssignee("Магафуров"));
     }
 
     @Test
     public void testGetTasksByDescription() {
-        assertNotNull(taskDao.getTasksByDescription("%Медсервис%"));
+        assertNotNull(taskManagerService.getTasksByDescription("Медсервис"));
     }
 
     @Test
     public void testGetNewInternalNumber() {
-        assertEquals(406, taskDao.getNewInternalNumber());
+        assertEquals(407, taskManagerService.getNewInternalNumber());
     }
 
     @Test
     public void testGetNewIncomingNumber() {
-        assertEquals(401, taskDao.getNewIncomingNumber());
+        assertEquals(402, taskManagerService.getNewIncomingNumber());
     }
 
     @Test
     public void testGetfiles() {
-        TaskBean taskBean = taskDao.get(2620L);
+        TaskBean taskBean = taskManagerService.get(2620L);
         assertNotNull(taskBean.getFilesSet());
-    }
-
-    public void setTaskDao(ITaskDao taskDao) {
-        this.taskDao = taskDao;
     }
 
     @Override
     protected String[] getConfigLocations() {
         return new String[]{"classpath:test-context.xml"};
+    }
+
+    public void setTaskManagerService(ITaskManagerService taskManagerService) {
+        this.taskManagerService = taskManagerService;
     }
 }

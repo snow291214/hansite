@@ -1,8 +1,6 @@
 package ru.sgnhp.dao;
 
-import java.util.List;
-import ru.sgnhp.domain.FileUploadBean;
-
+import ru.sgnhp.domain.FileBean;
 /*****
  *
  * @author Alexey Khudyakov
@@ -10,11 +8,9 @@ import ru.sgnhp.domain.FileUploadBean;
  *
  *****
  */
-public interface IUploadDao {
+public interface IUploadDao extends IGenericDao<FileBean, Long>{
 
-    void saveFile (FileUploadBean bean);
+    //List<FileBean> getFileBeansByTaskUid(Long taskUid);
 
-    List<FileUploadBean> getFileUploadBeanByTaskUid(Long taskUid);
-
-    FileUploadBean getFileUploadBeanByUid(Long fileUploadBeanUid);
+    //FileUploadBean getFileUploadBeanByUid(Long fileUploadBeanUid);
 }

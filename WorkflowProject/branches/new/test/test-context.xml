@@ -1,31 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-<!-- the test application context definition for the jdbc based tests -->
-    <bean id="taskDao" class="ru.sgnhp.dao.impl.TaskDaoImpl">
-        <property name="dataSource" ref="dataSource" />
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <bean id="propertyConfigurer"  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties" />
     </bean>
 
-    <bean id="workflowDao" class="ru.sgnhp.dao.impl.WorkflowDaoImpl">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
-
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="user" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
-    </bean>
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:jdbc.properties</value>
-            </list>
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+
+        <property name="initialPoolSize">
+            <value>${jdbc.initialPoolSize}</value>
+        </property>
+        <property name="minPoolSize">
+            <value>${jdbc.minPoolSize}</value>
+        </property>
+        <property name="maxPoolSize">
+            <value>${jdbc.maxPoolSize}</value>
+        </property>
+        <property name="acquireRetryAttempts">
+            <value>${jdbc.acquireRetryAttempts}</value>
+        </property>
+        <property name="acquireIncrement">
+            <value>${jdbc.acquireIncrement}</value>
+        </property>
+        <property name="idleConnectionTestPeriod">
+            <value>${jdbc.idleConnectionTestPeriod}</value>
+        </property>
+        <property name="maxIdleTime">
+            <value>${jdbc.maxIdleTime}</value>
+        </property>
+        <property name="maxConnectionAge">
+            <value>${jdbc.maxConnectionAge}</value>
+        </property>
+        <property name="preferredTestQuery">
+            <value>${jdbc.preferredTestQuery}</value>
+        </property>
+        <property name="testConnectionOnCheckin">
+            <value>${jdbc.testConnectionOnCheckin}</value>
         </property>
     </bean>
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+        <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+            </props>
+        </property>
     </bean>
+
+    <tx:annotation-driven transaction-manager="txManager" />
+
+    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="taskDao" class="ru.sgnhp.dao.impl.TaskDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="taskManagerService" class="ru.sgnhp.service.impl.TaskManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.TaskBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="taskDao" ref="taskDao"/>
+    </bean>
+    
 </beans>

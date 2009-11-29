@@ -1,8 +1,7 @@
 package ru.sgnhp.service.impl;
 
-import java.util.List;
-import ru.sgnhp.dao.IUploadDao;
-import ru.sgnhp.domain.FileUploadBean;
+import ru.sgnhp.dao.IGenericDao;
+import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.service.IUploadManagerService;
 
 /*****
@@ -12,28 +11,9 @@ import ru.sgnhp.service.IUploadManagerService;
  *
  *****
  */
-public class UploadManagerServiceImpl implements IUploadManagerService{
+public class UploadManagerServiceImpl extends GenericServiceImpl<FileBean, Long> implements IUploadManagerService{
 
-    private IUploadDao uploadDao;
-
-    public void saveFile(FileUploadBean bean) {
-        getUploadDao().saveFile(bean);
+    public UploadManagerServiceImpl(IGenericDao<FileBean, Long> genericDao) {
+        super(genericDao);
     }
-
-    public List<FileUploadBean> getFileUploadBeanByTaskUid(Long taskUid) {
-        return uploadDao.getFileUploadBeanByTaskUid(taskUid);
-    }
-
-    public IUploadDao getUploadDao() {
-        return uploadDao;
-    }
-
-    public void setUploadDao(IUploadDao uploadDao) {
-        this.uploadDao = uploadDao;
-    }
-
-    public FileUploadBean getFileUploadBeanByUid(Long fileUploadBeanUid) {
-        return uploadDao.getFileUploadBeanByUid(fileUploadBeanUid);
-    }
-
 }

@@ -42,7 +42,7 @@ public class RegisterTaskFormController extends SimpleFormController {
             request.getSession().setAttribute("task", task);
             this.setSuccessView("upload.htm");
         } else {
-            task = taskManagerService.saveTask(task);
+            task = taskManagerService.save(task);
             WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
             String[] userUids = (String[]) request.getSession().getAttribute("checks");
 
@@ -55,7 +55,7 @@ public class RegisterTaskFormController extends SimpleFormController {
                 wf.setUserUid(Long.valueOf(uid));
                 wf.setDescription(task.getDescription());
                 wf.setState("0");
-                wf.setAssignDate(task.getStartDate());
+                wf.setAssignDate(task.getStartDate().toString());
                 wf.setTask(task);
                 wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
                 wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
@@ -81,10 +81,10 @@ public class RegisterTaskFormController extends SimpleFormController {
         TaskBean task = (TaskBean) request.getAttribute("task");
         if (task == null) {
             task = new TaskBean();
-            task.setInternalNumber(taskManagerService.getTaskNewNumber());
+            task.setInternalNumber(taskManagerService.getNewInternalNumber());
             task.setExternalNumber("б/н");
-            task.setStartDate(DateUtils.nowString("dd.MM.yyyy"));
-            task.setDueDate(DateUtils.increaseDateString(3));
+            task.setStartDate(DateUtils.nowDate());
+            task.setDueDate(DateUtils.increaseDate(DateUtils.nowDate(),3));
         }
         return task;
     }

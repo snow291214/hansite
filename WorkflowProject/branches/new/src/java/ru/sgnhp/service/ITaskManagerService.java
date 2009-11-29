@@ -2,7 +2,6 @@ package ru.sgnhp.service;
 
 import java.util.List;
 import ru.sgnhp.domain.TaskBean;
-import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
  *
@@ -11,25 +10,19 @@ import ru.sgnhp.domain.WorkflowUserBean;
  *
  *****
  */
-public interface ITaskManagerService {
+public interface ITaskManagerService extends IGenericService<TaskBean, Long>{
 
-    TaskBean saveTask(TaskBean task);
+    TaskBean getTaskByInternalNumber(int number);
 
-    void updateTask(TaskBean task);
+    TaskBean getTaskByExternalNumber(String number);
 
-    void closeTask(TaskBean task);
-
-    TaskBean getTaskByUid(Long uid);
-
-    List<TaskBean> getTasksByUser(WorkflowUserBean user);
-
-    int getTaskNewNumber();
-    
-    int getIncomingNewNumber();
+    TaskBean getTaskByIncomingNumber(int number);
 
     List<TaskBean> getTasksByExternalAssignee(String externalAssignee);
 
-    TaskBean getTaskByIncomingNumber(int number);
+    int getNewInternalNumber();
+
+    int getNewIncomingNumber();
 
     List<TaskBean> getTasksByDescription(String description);
 }

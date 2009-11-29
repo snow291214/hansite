@@ -2,7 +2,6 @@ package ru.sgnhp.dao;
 
 import java.util.List;
 import ru.sgnhp.domain.TaskBean;
-import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
  *
@@ -11,15 +10,7 @@ import ru.sgnhp.domain.WorkflowUserBean;
  *
  *****
  */
-public interface ITaskDao {
-
-    void saveTask(TaskBean task);
-
-    void updateTask(TaskBean task);
-
-    void closeTask(TaskBean task);
-
-    TaskBean getTaskByUid(Long uid);
+public interface ITaskDao extends IGenericDao<TaskBean, Long>{
 
     TaskBean getTaskByInternalNumber(int number);
 
@@ -29,11 +20,9 @@ public interface ITaskDao {
 
     List<TaskBean> getTasksByExternalAssignee(String externalAssignee);
 
-    List<TaskBean> getTasksByUser(WorkflowUserBean user);
+    int getNewInternalNumber();
 
-    int getTaskNewNumber();
-
-    int getIncomingNewNumber();
+    int getNewIncomingNumber();
 
     List<TaskBean> getTasksByDescription(String description);
 }

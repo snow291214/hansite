@@ -517,43 +517,59 @@ exists or setup the property manually. For example like this:
     <target depends="init,compile,compile-jsps,-pre-dist,-do-dist-with-manifest,-do-dist-without-manifest" name="do-dist"/>
     <target depends="init" if="dist.ear.dir" name="library-inclusion-in-manifest">
         <copyfiles files="${libs.jstl11.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.jstl11.classpath" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.aspectjweaver-1.5.0.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.aspectjweaver-1.5.0.jar" todir="${dist.ear.dir}"/>
         <copyfiles files="${file.reference.commons-dbcp-1.2.2.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-dbcp-1.2.2.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.commons-pool-1.5.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-pool-1.5.1.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.commons-fileupload-1.2.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-fileupload-1.2.1.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.commons-io-1.4.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-io-1.4.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.spring-test.jar-1}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.spring-test.jar-1" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.commons-logging-1.1.1.jar-1}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-logging-1.1.1.jar-1" todir="${dist.ear.dir}"/>
         <copyfiles files="${libs.spring-webmvc.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.spring-webmvc.classpath" todir="${dist.ear.dir}"/>
         <copyfiles files="${libs.spring-framework.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.spring-framework.classpath" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.commons-email-1.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-email-1.1.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.commons-email-1.1.jar-1}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-email-1.1.jar-1" todir="${dist.ear.dir}"/>
         <copyfiles files="${file.reference.mail.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.mail.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.c3p0-0.9.1.2.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.c3p0-0.9.1.2.jar" todir="${dist.ear.dir}"/>
         <copyfiles files="${file.reference.quartz-1.6.5.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.quartz-1.6.5.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.commons-collections-3.2.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-collections-3.2.1.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.hibernate-annotations.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.hibernate-annotations.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.hibernate-entitymanager.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.hibernate-entitymanager.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.hibernate-testing.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.hibernate-testing.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.hibernate3.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.hibernate3.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.c3p0-0.9.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.c3p0-0.9.1.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.c3p0-oracle-thin-extras-0.9.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.c3p0-oracle-thin-extras-0.9.1.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.commons-logging-1.1.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-logging-1.1.1.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.antlr-2.7.6.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.antlr-2.7.6.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.commons-collections-3.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-collections-3.1.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.dom4j-1.6.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.dom4j-1.6.1.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.javassist-3.9.0.GA.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.javassist-3.9.0.GA.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.jta-1.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.jta-1.1.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.slf4j-api-1.5.8.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.slf4j-api-1.5.8.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.ejb3-persistence.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.ejb3-persistence.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.slf4j-log4j12.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.slf4j-log4j12.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.log4j.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.log4j.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.hibernate-commons-annotations.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.hibernate-commons-annotations.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.ehcache-1.2.3.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.ehcache-1.2.3.jar" todir="${dist.ear.dir}"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.libs.jstl11.classpath} ${manifest.file.reference.aspectjweaver-1.5.0.jar} ${manifest.file.reference.commons-dbcp-1.2.2.jar} ${manifest.file.reference.commons-pool-1.5.1.jar} ${manifest.file.reference.commons-fileupload-1.2.1.jar} ${manifest.file.reference.commons-io-1.4.jar} ${manifest.file.reference.spring-test.jar-1} ${manifest.file.reference.commons-logging-1.1.1.jar-1} ${manifest.libs.spring-webmvc.classpath} ${manifest.libs.spring-framework.classpath} ${manifest.file.reference.commons-email-1.1.jar} ${manifest.file.reference.commons-email-1.1.jar-1} ${manifest.file.reference.mail.jar} ${manifest.file.reference.c3p0-0.9.1.2.jar} ${manifest.file.reference.quartz-1.6.5.jar} ${manifest.file.reference.commons-collections-3.2.1.jar} "/>
+            <attribute name="Class-Path" value="${manifest.libs.jstl11.classpath} ${manifest.file.reference.commons-dbcp-1.2.2.jar} ${manifest.libs.spring-webmvc.classpath} ${manifest.libs.spring-framework.classpath} ${manifest.file.reference.mail.jar} ${manifest.file.reference.quartz-1.6.5.jar} ${manifest.file.reference.hibernate-annotations.jar} ${manifest.file.reference.hibernate-entitymanager.jar} ${manifest.file.reference.hibernate-testing.jar} ${manifest.file.reference.hibernate3.jar} ${manifest.file.reference.c3p0-0.9.1.jar} ${manifest.file.reference.c3p0-oracle-thin-extras-0.9.1.jar} ${manifest.file.reference.commons-logging-1.1.1.jar} ${manifest.file.reference.antlr-2.7.6.jar} ${manifest.file.reference.commons-collections-3.1.jar} ${manifest.file.reference.dom4j-1.6.1.jar} ${manifest.file.reference.javassist-3.9.0.GA.jar} ${manifest.file.reference.jta-1.1.jar} ${manifest.file.reference.slf4j-api-1.5.8.jar} ${manifest.file.reference.ejb3-persistence.jar} ${manifest.file.reference.slf4j-log4j12.jar} ${manifest.file.reference.log4j.jar} ${manifest.file.reference.hibernate-commons-annotations.jar} ${manifest.file.reference.ehcache-1.2.3.jar} "/>
         </manifest>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
         <copyfiles files="${libs.jstl11.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.aspectjweaver-1.5.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.commons-dbcp-1.2.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.commons-pool-1.5.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.commons-fileupload-1.2.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.commons-io-1.4.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.spring-test.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.commons-logging-1.1.1.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.spring-webmvc.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.spring-framework.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.commons-email-1.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.commons-email-1.1.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mail.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.c3p0-0.9.1.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.quartz-1.6.5.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.commons-collections-3.2.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.hibernate-annotations.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.hibernate-entitymanager.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.hibernate-testing.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.hibernate3.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.c3p0-0.9.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.c3p0-oracle-thin-extras-0.9.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.commons-logging-1.1.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.antlr-2.7.6.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.commons-collections-3.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.dom4j-1.6.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.javassist-3.9.0.GA.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.jta-1.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.slf4j-api-1.5.8.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.ejb3-persistence.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.slf4j-log4j12.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.log4j.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.hibernate-commons-annotations.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.ehcache-1.2.3.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest" if="do.tmp.war.package" name="do-ear-dist">
         <dirname file="${dist.ear.war}" property="dist.jar.dir"/>
