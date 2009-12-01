@@ -10,11 +10,7 @@ import ru.sgnhp.domain.WorkflowBean;
  *
  *****
  */
-public interface IWorkflowDao {
-
-    void saveWorkflow(WorkflowBean _workflow);
-
-    WorkflowBean getWorkflowByUid(Long workflowUid);
+public interface IWorkflowDao extends IGenericDao<WorkflowBean,Long> {
 
     WorkflowBean getWorkflowByParentUid(Long parentUid);
 
@@ -29,10 +25,6 @@ public interface IWorkflowDao {
     List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid);
 
     int getCompletedWorkflowsCountByUserUid(Long userUid);
-
-    void updateWorkflow(WorkflowBean _workflow);
-
-    void updateWorkflowState(WorkflowBean _workflow);
 
     List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid);
 

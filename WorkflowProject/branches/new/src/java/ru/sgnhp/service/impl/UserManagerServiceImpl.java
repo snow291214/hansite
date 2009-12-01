@@ -1,12 +1,13 @@
 package ru.sgnhp.service.impl;
 
-import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import ru.sgnhp.dao.IGenericDao;
 import ru.sgnhp.dao.IUserDao;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IUserManagerService;
-import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
  *
@@ -15,60 +16,27 @@ import ru.sgnhp.service.IWorkflowManagerService;
  *
  *****
  */
-public class UserManagerServiceImpl implements IUserManagerService {
+@Transactional(readOnly = true)
+public class UserManagerServiceImpl extends GenericServiceImpl<WorkflowUserBean, Long> implements IUserManagerService {
 
     private IUserDao userDao;
-    private IWorkflowManagerService workflowManagerService;
     protected final Log logger = LogFactory.getLog(getClass());
 
-    public void registerNewUser(WorkflowUserBean siteUser) {
-        userDao.save(siteUser);
+    public UserManagerServiceImpl(IGenericDao<WorkflowUserBean, Long> genericDao) {
+        super(genericDao);
     }
 
-    public void updateUser(WorkflowUserBean siteUser) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void deleteUser(Long userUid) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public WorkflowUserBean getUserByLogin(String login) {
-        WorkflowUserBean user = userDao.getByLogin(login);
-        if (user != null) {
-            user.setWorkflows(workflowManagerService.getRecievedWorkflowsByUserUid(user.getUid()));
-            return user;
-        } else {
-            return null;
-        }
+        return userDao.getByLogin(login);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public WorkflowUserBean getUserByEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public WorkflowUserBean getUserByUid(Long userUid) {
-        WorkflowUserBean user = userDao.getByUid(userUid);
-        return user;
-    }
-
-    public List<WorkflowUserBean> getAllUsers() {
-        return userDao.getAllUsers();
-    }
-
-    public List<WorkflowUserBean> getAllNormalizedUsers() {
-        return userDao.getNormalisedUsers();
-    }
-
-    public IUserDao getUserDao() {
-        return userDao;
+        return userDao.getByEmail(email);
     }
 
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
-    }
-
-    public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
-        this.workflowManagerService = workflowManagerService;
     }
 }

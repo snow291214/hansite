@@ -80,5 +80,33 @@
         </constructor-arg>
         <property name="taskDao" ref="taskDao"/>
     </bean>
-    
+
+    <bean id="stateDao" class="ru.sgnhp.dao.impl.StateDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="stateManagerService" class="ru.sgnhp.service.impl.StateManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.StateBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="stateDao" ref="stateDao"/>
+    </bean>
+
+    <bean id="userDao" class="ru.sgnhp.dao.impl.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="userManagerService" class="ru.sgnhp.service.impl.UserManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.WorkflowUserBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
 </beans>

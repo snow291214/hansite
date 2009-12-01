@@ -70,6 +70,7 @@ public class TaskBean implements Serializable {
     @Column(name = "DueDate")
     @Temporal(TemporalType.DATE)
     private Date dueDate;
+
     @OneToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FileBean> filesSet = new HashSet<FileBean>();

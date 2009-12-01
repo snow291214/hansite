@@ -23,19 +23,17 @@
     </bean>
 
 
-<!--
-    <bean id="tasksDao" class="ru.sgnhp.dao.impl.TasksDao">
+    <bean id="stateDao" class="ru.sgnhp.dao.impl.StateDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean id="tasksService" class="ru.sgnhp.services.impl.TasksService">
+    <bean id="stateManagerService" class="ru.sgnhp.service.impl.StateManagerServiceImpl">
         <constructor-arg>
             <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
-                <constructor-arg value="ru.sgnhp.entity.Tasks"/>
+                <constructor-arg value="ru.sgnhp.domain.StateBean"/>
                 <property name="sessionFactory" ref="sessionFactory"/>
             </bean>
         </constructor-arg>
+        <property name="stateDao" ref="stateDao"/>
     </bean>
--->
-
 </beans>

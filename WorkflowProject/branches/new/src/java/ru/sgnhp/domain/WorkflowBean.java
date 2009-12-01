@@ -1,5 +1,24 @@
 package ru.sgnhp.domain;
 
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.ForeignKey;
+
 /*****
  *
  * @author Alexey Khudyakov
@@ -7,69 +26,81 @@ package ru.sgnhp.domain;
  *
  *****
  */
-public class WorkflowBean {
-    private Long uid;
-    private Long parentUid;
-    private Long taskUid;
-    private Long parentUserUid;
-    private Long userUid;
-    private String description;
-    private String state;
-    private String assignDate;
-    private String finishDate;
-    private String workflowNote;
-    private TaskBean task;
-    private WorkflowUserBean assignee;
+@Entity
+@Table(name = "workflows", catalog = "workflowdb", schema = "", uniqueConstraints = {@UniqueConstraint(columnNames = {"Uid"})})
+@NamedQueries({
+    @NamedQuery(name = "WorkflowBean.findAll", query = "SELECT w FROM WorkflowBean w"),
+    @NamedQuery(name = "WorkflowBean.findByUid", query = "SELECT w FROM WorkflowBean w WHERE w.uid = :uid"),
+    @NamedQuery(name = "WorkflowBean.findByParentUid", query = "SELECT w FROM WorkflowBean w WHERE w.parentUid = :parentUid"),
+    @NamedQuery(name = "WorkflowBean.findByAssignDate", query = "SELECT w FROM WorkflowBean w WHERE w.assignDate = :assignDate"),
+    @NamedQuery(name = "WorkflowBean.findByFinishDate", query = "SELECT w FROM WorkflowBean w WHERE w.finishDate = :finishDate"),
+    @NamedQuery(name = "WorkflowBean.findRecievedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid in (0,2)"),
+    @NamedQuery(name = "WorkflowBean.findAssignedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.assigne.uid = :userUid and w.stateBean.stateUid <> 3"),
+    @NamedQuery(name = "WorkflowBean.findAssignedAndCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.assigne.uid = :userUid and w.stateBean.stateUid = 3"),
+    @NamedQuery(name = "WorkflowBean.findCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid = 3")
+})
+public class WorkflowBean implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "Uid", nullable = false)
+    private Integer uid;
+    @Basic(optional = false)
+    @Column(name = "ParentUid", nullable = false)
+    private int parentUid;
+    @Basic(optional = false)
+    @ForeignKey(name = "fk_workflows_users_parent")
+    @JoinColumn(name = "ParentUserUid", referencedColumnName = "Uid", nullable = false)
+    @ManyToOne(optional = false)
     private WorkflowUserBean receiver;
+    @ForeignKey(name = "fk_workflows_users")
+    @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
+    @ManyToOne(optional = false)
+    private WorkflowUserBean assigne;
+    @Lob
+    @Column(name = "Description", length = 65535)
+    private String description;
+    @ForeignKey(name = "fk_workflows_state")
+    @JoinColumn(name = "State", referencedColumnName = "StateUid", nullable = false)
+    @ManyToOne(optional = false)
+    private StateBean stateBean;
+    @Column(name = "AssignDate")
+    @Temporal(TemporalType.DATE)
+    private Date assignDate;
+    @Column(name = "FinishDate")
+    @Temporal(TemporalType.DATE)
+    private Date finishDate;
+    @Lob
+    @Column(name = "WorkflowNote", length = 65535)
+    private String workflowNote;
+    @ForeignKey(name = "fk_workflows_tasks")
+    @JoinColumn(name = "TaskUid", referencedColumnName = "Uid", nullable = false)
+    @ManyToOne(optional = false)
+    private TaskBean taskBean;
 
     public WorkflowBean() {
     }
 
-    public WorkflowBean(Long uid, Long parentUid, Long taskUid, Long parentUserUid, Long userUid, String description, String state, String assignDate, String finishDate, TaskBean task, WorkflowUserBean assignee, WorkflowUserBean receiver) {
+    public WorkflowBean(Integer uid) {
         this.uid = uid;
-        this.parentUid = parentUid;
-        this.taskUid = taskUid;
-        this.parentUserUid = parentUserUid;
-        this.userUid = userUid;
-        this.description = description;
-        this.state = state;
-        this.assignDate = assignDate;
-        this.finishDate = finishDate;
-        this.task = task;
-        this.assignee = assignee;
-        this.receiver = receiver;
     }
 
-    public Long getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 
-    public Long getTaskUid() {
-        return taskUid;
+    public int getParentUid() {
+        return parentUid;
     }
 
-    public void setTaskUid(Long taskUid) {
-        this.taskUid = taskUid;
-    }
-
-    public Long getParentUserUid() {
-        return parentUserUid;
-    }
-
-    public void setParentUserUid(Long parentUserUid) {
-        this.parentUserUid = parentUserUid;
-    }
-
-    public Long getUserUid() {
-        return userUid;
-    }
-
-    public void setUserUid(Long userUid) {
-        this.userUid = userUid;
+    public void setParentUid(int parentUid) {
+        this.parentUid = parentUid;
     }
 
     public String getDescription() {
@@ -80,60 +111,28 @@ public class WorkflowBean {
         this.description = description;
     }
 
-    public String getState() {
-        return state;
+    public StateBean getState() {
+        return stateBean;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setState(StateBean state) {
+        this.stateBean = state;
     }
 
-    public String getAssignDate() {
+    public Date getAssignDate() {
         return assignDate;
     }
 
-    public void setAssignDate(String assignDate) {
+    public void setAssignDate(Date assignDate) {
         this.assignDate = assignDate;
     }
 
-    public String getFinishDate() {
+    public Date getFinishDate() {
         return finishDate;
     }
 
-    public void setFinishDate(String finishDate) {
+    public void setFinishDate(Date finishDate) {
         this.finishDate = finishDate;
-    }
-
-    public TaskBean getTask() {
-        return task;
-    }
-
-    public void setTask(TaskBean task) {
-        this.task = task;
-    }
-
-    public WorkflowUserBean getAssignee() {
-        return assignee;
-    }
-
-    public void setAssignee(WorkflowUserBean assignee) {
-        this.assignee = assignee;
-    }
-
-    public WorkflowUserBean getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(WorkflowUserBean receiver) {
-        this.receiver = receiver;
-    }
-
-    public Long getParentUid() {
-        return parentUid;
-    }
-
-    public void setParentUid(Long parentUid) {
-        this.parentUid = parentUid;
     }
 
     public String getWorkflowNote() {
@@ -142,5 +141,54 @@ public class WorkflowBean {
 
     public void setWorkflowNote(String workflowNote) {
         this.workflowNote = workflowNote;
+    }
+
+    public TaskBean getTaskUid() {
+        return taskBean;
+    }
+
+    public void setTaskUid(TaskBean taskUid) {
+        this.taskBean = taskUid;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (uid != null ? uid.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof WorkflowBean)) {
+            return false;
+        }
+        WorkflowBean other = (WorkflowBean) object;
+        if ((this.uid == null && other.uid != null) || (this.uid != null && !this.uid.equals(other.uid))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ru.sgnhp.domain.WorkflowBean[uid=" + uid + "]";
+    }
+
+    public WorkflowUserBean getAssigne() {
+        return assigne;
+    }
+
+    public void setAssigne(WorkflowUserBean assigne) {
+        this.assigne = assigne;
+    }
+
+    public WorkflowUserBean getReciver() {
+        return receiver;
+    }
+
+    public void setReciver(WorkflowUserBean receiver) {
+        this.receiver = receiver;
     }
 }

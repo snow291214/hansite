@@ -1,6 +1,21 @@
 package ru.sgnhp.domain;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /*****
  *
@@ -9,122 +24,103 @@ import java.util.List;
  *
  *****
  */
+@Entity
+@Table(name = "users", catalog = "workflowdb", schema = "")
+@NamedQueries({
+    @NamedQuery(name = "WorkflowUserBean.findAll", query = "SELECT w FROM WorkflowUserBean w"),
+    @NamedQuery(name = "WorkflowUserBean.findByUid", query = "SELECT w FROM WorkflowUserBean w WHERE w.uid = :uid"),
+    @NamedQuery(name = "WorkflowUserBean.findByLogin", query = "SELECT w FROM WorkflowUserBean w WHERE w.login = :login"),
+    @NamedQuery(name = "WorkflowUserBean.findByLastName", query = "SELECT w FROM WorkflowUserBean w WHERE w.lastName = :lastName"),
+    @NamedQuery(name = "WorkflowUserBean.findByFirstName", query = "SELECT w FROM WorkflowUserBean w WHERE w.firstName = :firstName"),
+    @NamedQuery(name = "WorkflowUserBean.findByMiddleName", query = "SELECT w FROM WorkflowUserBean w WHERE w.middleName = :middleName"),
+    @NamedQuery(name = "WorkflowUserBean.findByEmail", query = "SELECT w FROM WorkflowUserBean w WHERE w.email = :email"),
+    @NamedQuery(name = "WorkflowUserBean.findBySessionUid", query = "SELECT w FROM WorkflowUserBean w WHERE w.sessionUid = :sessionUid")})
+public class WorkflowUserBean implements Serializable {
 
-public class WorkflowUserBean {
-
-    private Long uid;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "Uid", nullable = false)
+    private Integer uid;
+    @Basic(optional = false)
+    @Column(name = "Login", nullable = false, length = 20)
     private String login;
+    @Column(name = "LastName", length = 50)
     private String lastName;
-    private String middleName;
+    @Column(name = "FirstName", length = 50)
     private String firstName;
+    @Column(name = "MiddleName", length = 50)
+    private String middleName;
+    @Column(name = "Email", length = 50)
     private String email;
-    private Long groupUid;
-    private List<WorkflowBean> workflows;
+    @Column(name = "SessionUid", length = 50)
     private String sessionUid;
-    /**
-     * @return the uid
-     */
-    public Long getUid() {
-        return uid;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "assigne", fetch = FetchType.LAZY)
+    private Set<WorkflowBean> assignedWorkflows = new HashSet<WorkflowBean>();
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
+    private Set<WorkflowBean> receivedWorkflows = new HashSet<WorkflowBean>();
+
+    public WorkflowUserBean() {
     }
 
-    /**
-     * @param uid the uid to set
-     */
-    public void setUid(Long uid) {
+    public WorkflowUserBean(Integer uid) {
         this.uid = uid;
     }
 
-    /**
-     * @return the login
-     */
+    public WorkflowUserBean(Integer uid, String login) {
+        this.uid = uid;
+        this.login = login;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
     public String getLogin() {
         return login;
     }
 
-    /**
-     * @param login the login to set
-     */
     public void setLogin(String login) {
         this.login = login;
     }
 
-    /**
-     * @return the lastName
-     */
     public String getLastName() {
         return lastName;
     }
 
-    /**
-     * @param lastName the lastName to set
-     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    /**
-     * @return the middleName
-     */
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    /**
-     * @param middleName the middleName to set
-     */
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    /**
-     * @return the firstNameName
-     */
     public String getFirstName() {
         return firstName;
     }
 
-    /**
-     * @param firstNameName the firstNameName to set
-     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    /**
-     * @return the email
-     */
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * @return the groupUid
-     */
-    public Long getGroupUid() {
-        return groupUid;
-    }
-
-    /**
-     * @param groupUid the groupUid to set
-     */
-    public void setGroupUid(Long groupUid) {
-        this.groupUid = groupUid;
-    }
-
-    public List<WorkflowBean> getWorkflows() {
-        return workflows;
-    }
-
-    public void setWorkflows(List<WorkflowBean> workflows) {
-        this.workflows = workflows;
     }
 
     public String getSessionUid() {
@@ -135,4 +131,44 @@ public class WorkflowUserBean {
         this.sessionUid = sessionUid;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (uid != null ? uid.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof WorkflowUserBean)) {
+            return false;
+        }
+        WorkflowUserBean other = (WorkflowUserBean) object;
+        if ((this.uid == null && other.uid != null) || (this.uid != null && !this.uid.equals(other.uid))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ru.sgnhp.domain.WorkflowUserBean[uid=" + uid + "]";
+    }
+
+    public Set<WorkflowBean> getAssignedWorkflows() {
+        return assignedWorkflows;
+    }
+
+    public void setAssignedWorkflows(Set<WorkflowBean> assignedWorkflows) {
+        this.assignedWorkflows = assignedWorkflows;
+    }
+
+    public Set<WorkflowBean> getReceivedWorkflows() {
+        return receivedWorkflows;
+    }
+
+    public void setReceivedWorkflows(Set<WorkflowBean> receivedWorkflows) {
+        this.receivedWorkflows = receivedWorkflows;
+    }
 }
