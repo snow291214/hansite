@@ -4,12 +4,9 @@
  */
 package ru.sgnhp.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
-import ru.sgnhp.domain.StateBean;
-import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IMailService;
