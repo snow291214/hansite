@@ -14,13 +14,15 @@ import ru.sgnhp.domain.WorkflowUserBean;
  *
  *****
  */
-public interface IWorkflowManagerService {
+public interface IWorkflowManagerService extends IGenericService<WorkflowBean,Long>{
 
-    void assignTaskToUser(WorkflowBean _workflow);
+    WorkflowBean assignTaskToUser(WorkflowBean _workflow);
 
     WorkflowBean getWorkflowByUid(Long workflowUid);
 
     List<WorkflowBean> getRecievedWorkflowsByUserUid(Long uid);
+
+    List<WorkflowBean> getRecievedWorkflows();
 
     List<WorkflowBean> getAssignedWorkflowsByUserUid(Long parentUid, Boolean completed);
 
@@ -28,21 +30,13 @@ public interface IWorkflowManagerService {
 
     void updateWorkflow(WorkflowBean _workflow);
 
-    void updateWorkflowState(WorkflowBean _workflow);
-
-    //LinkedHashMap<Long, ArrayList<WorkflowUserBean>> getWorkflowMembersByWorkflowUid(Long workflowUid, LinkedHashMap roadmap);
     public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, Long workflowParentUid, ArrayList roadmap);
 
-    //void sendmailRemind(WorkflowBean _workflow);
     void taskReminder();
-
-    int getRecievedWorkflowsCountByUserUid(Long userUid);
-
-    int getAssignedWorkflowsCountByUserUid(Long userUid);
-
-    int getCompletedWorkflowsCountByUserUid(Long userUid);
 
     List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean);
 
     List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid);
+
+    List<WorkflowBean> getWorkflowByParentUid(Long workflowUid);
 }

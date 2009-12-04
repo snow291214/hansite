@@ -11,10 +11,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IMailService;
-import ru.sgnhp.service.IStateManagerService;
 import ru.sgnhp.service.IUserManagerService;
 
 /*****
@@ -29,8 +27,8 @@ public class MailServiceImpl implements IMailService {
     private String mailHostName;
     private String fromAddress;
     private String fromName;
-    private IUserManagerService userManagerService;
-    private IStateManagerService stateManagerService;
+//    private IUserManagerService userManagerService;
+//    private IStateManagerService stateManagerService;
 
     public void sendmailAssign(WorkflowBean _workflow) {
         Properties props = System.getProperties();
@@ -44,7 +42,7 @@ public class MailServiceImpl implements IMailService {
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(_workflow.getReceiver().getEmail()));
             message.setSubject("Была создана новая задача: " +
-                    "["+_workflow.getTask().getInternalNumber()+"] "+
+                    "[" + _workflow.getTaskBean().getInternalNumber() + "] " +
                     _workflow.getAssignee().getLastName() +
                     " == > " +
                     _workflow.getReceiver().getLastName(), "utf-8");
@@ -53,7 +51,7 @@ public class MailServiceImpl implements IMailService {
             BodyPart htmlPart = new MimeBodyPart();
 
             htmlPart.setContent("<html><body><h2>Задача № " +
-                    _workflow.getTask().getInternalNumber() + "</h2>" +
+                    _workflow.getTaskBean().getInternalNumber() + "</h2>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " + _workflow.getAssignee().getFirstName() +
                     " " + _workflow.getAssignee().getMiddleName() + " " +
                     _workflow.getAssignee().getLastName() + "</p>" +
@@ -65,7 +63,7 @@ public class MailServiceImpl implements IMailService {
             message.setContent(multipart);
             Transport.send(message);
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -85,20 +83,20 @@ public class MailServiceImpl implements IMailService {
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
 
-            StateBean bean = stateManagerService.getStateByStateUid(Integer.parseInt(_workflow.getState()));
-
             htmlPart.setContent("<html><body>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Изменение статуса у назначенной Вами задачи № " +
-                    _workflow.getTask().getInternalNumber() +" ("+
-                    _workflow.getTask().getDescription()+")</p>" +
+                    _workflow.getTaskBean().getInternalNumber() + " (" +
+                    _workflow.getTaskBean().getDescription() + ")</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Получатель задачи: " +
                     _workflow.getReceiver().getLastName() + " " +
                     _workflow.getReceiver().getFirstName() + " " +
                     _workflow.getReceiver().getMiddleName() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
-                    _workflow.getTask().getDescription() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " + bean.getStateDescription() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Записка к смене статуса: "+ _workflow.getWorkflowNote() + "</p>"+
+                    _workflow.getTaskBean().getDescription() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " +
+                    _workflow.getState().getStateDescription() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Записка к смене статуса: " +
+                    _workflow.getWorkflowNote() + "</p>" +
                     "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
@@ -126,7 +124,7 @@ public class MailServiceImpl implements IMailService {
 
             htmlPart.setContent("<html><body>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Прошу предоставить отчет о состоянии задачи № " +
-                    _workflow.getTask().getInternalNumber() + "</p>" +
+                    _workflow.getTaskBean().getInternalNumber() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " +
                     _workflow.getAssignee().getLastName() + " " +
                     _workflow.getAssignee().getFirstName() + " " +
@@ -163,10 +161,10 @@ public class MailServiceImpl implements IMailService {
 
             for (WorkflowBean wf : wfs) {
                 tableBody += "<tr>" +
-                        "<td>" + wf.getTask().getInternalNumber() + "</td>" +
-                        "<td>" + wf.getTask().getDescription() + "</td>" +
-                        "<td>" + wf.getTask().getStartDate() + "</td>" +
-                        "<td>" + wf.getTask().getDueDate() + "</td>" +
+                        "<td>" + wf.getTaskBean().getInternalNumber() + "</td>" +
+                        "<td>" + wf.getTaskBean().getDescription() + "</td>" +
+                        "<td>" + wf.getTaskBean().getStartDate() + "</td>" +
+                        "<td>" + wf.getTaskBean().getDueDate() + "</td>" +
                         "<td>" + wf.getAssignee().getLastName() + " " +
                         wf.getAssignee().getFirstName() + " " +
                         wf.getAssignee().getMiddleName() + "</td>" +
@@ -203,13 +201,13 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
-    public IStateManagerService getStateManagerService() {
-        return stateManagerService;
-    }
-
-    public void setStateManagerService(IStateManagerService stateManagerService) {
-        this.stateManagerService = stateManagerService;
-    }
+//    public IStateManagerService getStateManagerService() {
+//        return stateManagerService;
+//    }
+//
+//    public void setStateManagerService(IStateManagerService stateManagerService) {
+//        this.stateManagerService = stateManagerService;
+//    }
 
     public void setMailHostName(String mailHostName) {
         this.mailHostName = mailHostName;
@@ -232,9 +230,9 @@ public class MailServiceImpl implements IMailService {
     /**
      * @param userManagerService the userManagerService to set
      */
-    public void setUserManagerService(IUserManagerService userManagerService) {
-        this.userManagerService = userManagerService;
-    }
+//    public void setUserManagerService(IUserManagerService userManagerService) {
+//        this.userManagerService = userManagerService;
+//    }
 
     /**
      * @return the mailHostName
@@ -257,10 +255,10 @@ public class MailServiceImpl implements IMailService {
         return fromName;
     }
 
-    /**
-     * @return the userManagerService
-     */
-    public IUserManagerService getUserManagerService() {
-        return userManagerService;
-    }
+//    /**
+//     * @return the userManagerService
+//     */
+//    public IUserManagerService getUserManagerService() {
+//        return userManagerService;
+//    }
 }

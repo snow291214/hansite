@@ -1,5 +1,6 @@
 package ru.sgnhp.dao;
 
+import java.util.Date;
 import java.util.List;
 import ru.sgnhp.domain.WorkflowBean;
 
@@ -10,21 +11,27 @@ import ru.sgnhp.domain.WorkflowBean;
  *
  *****
  */
-public interface IWorkflowDao extends IGenericDao<WorkflowBean,Long> {
+public interface IWorkflowDao extends IGenericDao<WorkflowBean, Long> {
 
-    WorkflowBean getWorkflowByParentUid(Long parentUid);
+    List<WorkflowBean> getWorkflowByParentUid(Long parentUid);
+
+    List<WorkflowBean> getByAssignDate(Date assignedDate);
+
+    List<WorkflowBean> getByFinishDate(Date finishDate);
+
+    List<WorkflowBean> getRecievedWorkflows();
 
     List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid);
 
-    int getRecievedWorkflowsCountByUserUid(Long userUid);
+    //int getRecievedWorkflowsCountByUserUid(Long userUid);
 
     List<WorkflowBean> getAssignedWorkflowsByUserUid(Long userUid, Boolean completed);
 
-    int getAssignedWorkflowsCountByUserUid(Long userUid);
+    //int getAssignedWorkflowsCountByUserUid(Long userUid);
 
     List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid);
 
-    int getCompletedWorkflowsCountByUserUid(Long userUid);
+    //int getCompletedWorkflowsCountByUserUid(Long userUid);
 
     List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid);
 

@@ -35,30 +35,33 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "WorkflowBean.findByAssignDate", query = "SELECT w FROM WorkflowBean w WHERE w.assignDate = :assignDate"),
     @NamedQuery(name = "WorkflowBean.findByFinishDate", query = "SELECT w FROM WorkflowBean w WHERE w.finishDate = :finishDate"),
     @NamedQuery(name = "WorkflowBean.findRecievedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid in (0,2)"),
-    @NamedQuery(name = "WorkflowBean.findAssignedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.assigne.uid = :userUid and w.stateBean.stateUid <> 3"),
-    @NamedQuery(name = "WorkflowBean.findAssignedAndCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.assigne.uid = :userUid and w.stateBean.stateUid = 3"),
-    @NamedQuery(name = "WorkflowBean.findCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid = 3")
+    @NamedQuery(name = "WorkflowBean.findReceived", query = "SELECT w FROM WorkflowBean w WHERE w.stateBean.stateUid in (0,2)"),
+    @NamedQuery(name = "WorkflowBean.findAssignedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.assignee.uid = :userUid and w.stateBean.stateUid <> 3"),
+    @NamedQuery(name = "WorkflowBean.findAssignedAndCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.assignee.uid = :userUid and w.stateBean.stateUid = 3"),
+    @NamedQuery(name = "WorkflowBean.findCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid = 3"),
+    @NamedQuery(name = "WorkflowBean.findByDescription", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.description like :description"),
+    @NamedQuery(name = "WorkflowBean.findByTaskUid", query = "SELECT w FROM WorkflowBean w WHERE w.taskBean.uid = :taskUid and w.parentUid = -1")
 })
 public class WorkflowBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Basic(optional = false)
     @Column(name = "ParentUid", nullable = false)
-    private int parentUid;
+    private Long parentUid;
     @Basic(optional = false)
     @ForeignKey(name = "fk_workflows_users_parent")
     @JoinColumn(name = "ParentUserUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false)
-    private WorkflowUserBean receiver;
+    private WorkflowUserBean assignee;
     @ForeignKey(name = "fk_workflows_users")
     @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false)
-    private WorkflowUserBean assigne;
+    private WorkflowUserBean receiver;
     @Lob
     @Column(name = "Description", length = 65535)
     private String description;
@@ -83,23 +86,23 @@ public class WorkflowBean implements Serializable {
     public WorkflowBean() {
     }
 
-    public WorkflowBean(Integer uid) {
+    public WorkflowBean(Long uid) {
         this.uid = uid;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
-    public int getParentUid() {
+    public Long getParentUid() {
         return parentUid;
     }
 
-    public void setParentUid(int parentUid) {
+    public void setParentUid(Long parentUid) {
         this.parentUid = parentUid;
     }
 
@@ -143,14 +146,6 @@ public class WorkflowBean implements Serializable {
         this.workflowNote = workflowNote;
     }
 
-    public TaskBean getTaskUid() {
-        return taskBean;
-    }
-
-    public void setTaskUid(TaskBean taskUid) {
-        this.taskBean = taskUid;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -176,19 +171,27 @@ public class WorkflowBean implements Serializable {
         return "ru.sgnhp.domain.WorkflowBean[uid=" + uid + "]";
     }
 
-    public WorkflowUserBean getAssigne() {
-        return assigne;
+    public WorkflowUserBean getAssignee() {
+        return assignee;
     }
 
-    public void setAssigne(WorkflowUserBean assigne) {
-        this.assigne = assigne;
+    public void setAssignee(WorkflowUserBean assignee) {
+        this.assignee = assignee;
     }
 
-    public WorkflowUserBean getReciver() {
+    public WorkflowUserBean getReceiver() {
         return receiver;
     }
 
-    public void setReciver(WorkflowUserBean receiver) {
+    public void setReceiver(WorkflowUserBean receiver) {
         this.receiver = receiver;
+    }
+
+    public TaskBean getTaskBean() {
+        return taskBean;
+    }
+
+    public void setTaskBean(TaskBean taskBean) {
+        this.taskBean = taskBean;
     }
 }

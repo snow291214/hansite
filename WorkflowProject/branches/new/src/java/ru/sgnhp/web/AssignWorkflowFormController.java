@@ -8,8 +8,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.DateUtils;
+import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.service.IStateManagerService;
+import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
@@ -22,20 +25,22 @@ import ru.sgnhp.service.IWorkflowManagerService;
 public class AssignWorkflowFormController extends SimpleFormController {
 
     private IWorkflowManagerService workflowManagerService;
+    private IUserManagerService userManagerService;
+    private IStateManagerService stateManagerService;
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         WorkflowBean workflow = (WorkflowBean) command;
         WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
-        workflow.setState("1");
-        workflowManagerService.updateWorkflowState(workflow);
+        workflow.setState(new StateBean(1L));
+        workflowManagerService.updateWorkflow(workflow);
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
         for (String uid : userUids) {
             workflow.setParentUid(workflow.getUid());
-            workflow.setParentUserUid(initiator.getUid());
-            workflow.setUserUid(Long.valueOf(uid));
-            workflow.setAssignDate(DateUtils.nowString("yyyy-MM-dd"));
-            workflow.setState("0");
+            workflow.setAssignee(initiator);
+            workflow.setReceiver(userManagerService.get(Long.valueOf(uid)));
+            workflow.setAssignDate(DateUtils.nowDate());
+            workflow.setState(stateManagerService.get(1L));
             workflowManagerService.assignTaskToUser(workflow);
         }
         return new ModelAndView(new RedirectView(getSuccessView()));
@@ -55,5 +60,13 @@ public class AssignWorkflowFormController extends SimpleFormController {
 
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
         this.workflowManagerService = workflowManagerService;
+    }
+
+    public void setUserManagerService(IUserManagerService userManagerService) {
+        this.userManagerService = userManagerService;
+    }
+
+    public void setStateManagerService(IStateManagerService stateManagerService) {
+        this.stateManagerService = stateManagerService;
     }
 }

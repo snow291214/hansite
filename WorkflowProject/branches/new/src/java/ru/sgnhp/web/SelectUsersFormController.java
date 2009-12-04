@@ -47,7 +47,7 @@ public class SelectUsersFormController extends AbstractController {
             }
         } else {
             workflowUid = request.getParameter("workflowID");
-            List<WorkflowUserBean> users = userManagerService.getAllNormalizedUsers();
+            List<WorkflowUserBean> users = userManagerService.getAll();
             return new ModelAndView("selectUsers", "users", users);
         }
     }

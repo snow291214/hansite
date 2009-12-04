@@ -3,13 +3,15 @@ package ru.sgnhp.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.sgnhp.DateUtils;
+import ru.sgnhp.dao.IGenericDao;
 import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.SearchTaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IMailService;
-import ru.sgnhp.service.IStateManagerService;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
@@ -20,18 +22,20 @@ import ru.sgnhp.service.IWorkflowManagerService;
  *
  *****
  */
-public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
+@Transactional(readOnly = true)
+public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean, Long> implements IWorkflowManagerService {
 
     private IWorkflowDao workflowDao;
-//    private static String mailHostName;
-//    private static String fromAddress;
-//    private static String fromName;
     private static IUserManagerService userManagerService;
     private IMailService mailService;
-    private IStateManagerService stateManagerService;
 
+    public WorkflowManagerServiceImpl(IGenericDao<WorkflowBean, Long> genericDao) {
+        super(genericDao);
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void taskReminder() {
-        List<WorkflowUserBean> users = userManagerService.getAllNormalizedUsers();
+        List<WorkflowUserBean> users = userManagerService.getAll();
         for (WorkflowUserBean user : users) {
             List<WorkflowBean> workflows = this.getRecievedWorkflowsByUserUid(user.getUid());
             if (!workflows.isEmpty()) {
@@ -40,86 +44,56 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         }
     }
 
-    public void assignTaskToUser(WorkflowBean wf) {
-        wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-        wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public WorkflowBean assignTaskToUser(WorkflowBean wf) {
+        wf = workflowDao.save(wf);
         mailService.sendmailAssign(wf);
-        workflowDao.saveWorkflow(wf);
+        return wf;
     }
 
     public void setWorkflowDao(IWorkflowDao workflowDao) {
         this.workflowDao = workflowDao;
     }
-    /*
-     *  Получаем список Workflows по Uid
-     *  и проставляем туда пользователей
-     */
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long uid) {
-        List<WorkflowBean> wfs = workflowDao.getRecievedWorkflowsByUserUid(uid);
-        for (WorkflowBean wf : wfs) {
-            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
-        }
-        return wfs;
+        return workflowDao.getRecievedWorkflowsByUserUid(uid);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<WorkflowBean> getAssignedWorkflowsByUserUid(Long parentUid, Boolean completed) {
-        List<WorkflowBean> wfs = workflowDao.getAssignedWorkflowsByUserUid(parentUid, completed);
-        for (WorkflowBean wf : wfs) {
-            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
-        }
-        return wfs;
+        return workflowDao.getAssignedWorkflowsByUserUid(parentUid, completed);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<WorkflowBean> getCompletedWorkflowsByUserUid(Long uid) {
-        List<WorkflowBean> wfs = workflowDao.getCompletedWorkflowsByUserUid(uid);
-        for (WorkflowBean wf : wfs) {
-            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
-        }
-        return wfs;
+        return workflowDao.getCompletedWorkflowsByUserUid(uid);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public WorkflowBean getWorkflowByUid(Long workflowUid) {
-        WorkflowBean wf = workflowDao.getWorkflowByUid(workflowUid);
-        wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-        wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
-        return wf;
+        return workflowDao.get(workflowUid);
     }
 
-    public WorkflowBean getWorkflowByParentUid(Long workflowUid) {
-        WorkflowBean wf = workflowDao.getWorkflowByParentUid(workflowUid);
-        if (wf != null) {
-            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
-        }
-        return wf;
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public List<WorkflowBean> getWorkflowByParentUid(Long workflowUid) {
+        return workflowDao.getWorkflowByParentUid(workflowUid);
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void updateWorkflow(WorkflowBean _workflow) {
-        if(_workflow.getState().equals("3")){
-            _workflow.setFinishDate(DateUtils.nowString("yyyy-MM-dd"));
+        if (_workflow.getState().getStateUid() == 3) {
+            _workflow.setFinishDate(DateUtils.nowDate());
         }
-        workflowDao.updateWorkflow(_workflow);
+        workflowDao.save(_workflow);
+        mailService.sendmailChangeState(_workflow);
     }
 
-//    public void setMailHostName(String mailHostName) {
-//        WorkflowManagerServiceImpl.mailHostName = mailHostName;
-//    }
-//
-//    public void setFromAddress(String fromAddress) {
-//        WorkflowManagerServiceImpl.fromAddress = fromAddress;
-//    }
-//
-//    public void setFromName(String fromName) {
-//        WorkflowManagerServiceImpl.fromName = fromName;
-//    }
     public void setUserManagerService(IUserManagerService userManagerService) {
         WorkflowManagerServiceImpl.userManagerService = userManagerService;
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, Long workflowParentUid, ArrayList roadmap) {
         ArrayList<WorkflowBean> up = stepDown(workflowUid, new ArrayList());
         Collections.reverse(up);
@@ -141,7 +115,7 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
     }
 
     private ArrayList<WorkflowBean> stepDown(Long workflowUid, ArrayList roadmap) {
-        WorkflowBean workflowBean = this.getWorkflowByParentUid(workflowUid);
+        WorkflowBean workflowBean = this.getWorkflowByParentUid(workflowUid).get(0);
         if (workflowBean != null) {
             roadmap.add(workflowBean);
             workflowUid = workflowBean.getUid();
@@ -150,46 +124,22 @@ public class WorkflowManagerServiceImpl implements IWorkflowManagerService {
         return roadmap;
     }
 
-    public void updateWorkflowState(WorkflowBean _workflow) {
-        workflowDao.updateWorkflowState(_workflow);
-        mailService.sendmailChangeState(_workflow);
-    }
-
-    public void setStateManagerService(IStateManagerService stateManagerService) {
-        this.stateManagerService = stateManagerService;
-    }
-
-    public int getRecievedWorkflowsCountByUserUid(Long userUid) {
-        return workflowDao.getRecievedWorkflowsCountByUserUid(userUid);
-    }
-
-    public int getAssignedWorkflowsCountByUserUid(Long userUid) {
-        return workflowDao.getAssignedWorkflowsCountByUserUid(userUid);
-    }
-
-    public int getCompletedWorkflowsCountByUserUid(Long userUid) {
-        return workflowDao.getCompletedWorkflowsCountByUserUid(userUid);
-    }
-
     public void setMailService(IMailService mailService) {
         this.mailService = mailService;
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean) {
-        List<WorkflowBean> wfs = workflowDao.getWorkflowsByDescription(userUid, searchTaskBean.getTaskDescription());
-//        for (WorkflowBean wf : wfs) {
-//            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-//            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
-//        }
-        return wfs;
+        return workflowDao.getWorkflowsByDescription(userUid, searchTaskBean.getTaskDescription());
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid) {
-        List<WorkflowBean> wfs = workflowDao.getWorkflowsByTaskUid(taskUid);
-//        for (WorkflowBean wf : wfs) {
-//            wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-//            wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
-//        }
-        return wfs;
+        return workflowDao.getWorkflowsByTaskUid(taskUid);
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public List<WorkflowBean> getRecievedWorkflows() {
+        return workflowDao.getRecievedWorkflows();
     }
 }

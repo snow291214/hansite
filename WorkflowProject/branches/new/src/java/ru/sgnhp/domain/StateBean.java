@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,7 +28,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "StateBean.findByStateDescription", query = "SELECT s FROM StateBean s WHERE s.stateDescription = :stateDescription")})
     
 public class StateBean implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
     @Id
     @Basic(optional = false)
     @Column(name = "StateUid", nullable = false)
@@ -37,7 +37,7 @@ public class StateBean implements Serializable {
     @Column(name = "StateDescription", nullable = false, length = 10)
     private String stateDescription;
 
-    @OneToMany(mappedBy = "stateBean", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "stateBean")
     private Set<WorkflowBean> workflowsSet = new HashSet<WorkflowBean>();
 
     public StateBean() {

@@ -1,5 +1,6 @@
 package ru.sgnhp.dao.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,20 +20,20 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         super(WorkflowBean.class);
     }
 
-    public WorkflowBean getWorkflowByParentUid(Long parentUid) {
+    public List<WorkflowBean> getWorkflowByParentUid(Long parentUid) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("parentUid", parentUid);
         List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByParentUid", value);
         if (list == null || list.size() == 0) {
             return null;
         }
-        return list.get(0);
+        return list;
     }
 
     public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("userUid", userUid);
-        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByUserUid", value);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findRecievedByUserUid", value);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -49,7 +50,7 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         List<WorkflowBean> list = null;
         if (!completed) {
             list = this.findByNamedQuery("WorkflowBean.findAssignedByUserUid", value);
-        }else{
+        } else {
             list = this.findByNamedQuery("WorkflowBean.findAssignedAndCompletedByUserUid", value);
         }
         if (list == null || list.size() == 0) {
@@ -63,7 +64,13 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
     }
 
     public List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("userUid", userUid);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findCompletedByUserUid", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
     }
 
     public int getCompletedWorkflowsCountByUserUid(Long userUid) {
@@ -71,10 +78,52 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
     }
 
     public List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("taskUid", taskUid);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByTaskUid", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
     }
 
     public List<WorkflowBean> getWorkflowsByDescription(Long userUid, String description) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("userUid", userUid);
+        value.put("description", description);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByDescription", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
+
+    public List<WorkflowBean> getByAssignDate(Date assignedDate) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("assignDate", assignedDate);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByAssignDate", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
+
+    public List<WorkflowBean> getByFinishDate(Date finishDate) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("finishDate", finishDate);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByFinishDate", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
+
+    public List<WorkflowBean> getRecievedWorkflows() {
+        Map<String, Object> value = new HashMap<String, Object>();
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findReceived", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
     }
 }

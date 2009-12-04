@@ -47,7 +47,7 @@ public interface IGenericDao <T, PK extends Serializable>{
      */
     //T save(T object);
     T save(T object);
-
+    
     /**
      * Generic method to delete an object based on class and id
      * @param id the identifier (primary key) of the object to remove

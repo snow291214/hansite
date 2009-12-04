@@ -33,11 +33,10 @@ public class IndexController implements Controller {
         user = userManagerService.getUserByLogin(login);
         if (user == null) {
             user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
-            userManagerService.registerNewUser(user);
-            user = userManagerService.getUserByLogin(login);
+            user = userManagerService.save(user);
         }
         request.getSession().setAttribute("initiator", user);
-        return new ModelAndView("index","count",user.getWorkflows().size());
+        return new ModelAndView("index","count",user.getAssignedWorkflows().size());
     }
 
     public void setUserManagerService(IUserManagerService userManagerService) {

@@ -11,6 +11,7 @@ import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.service.IStateManagerService;
 import ru.sgnhp.service.ITaskManagerService;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
@@ -33,6 +34,7 @@ public class RegisterTaskFormController extends SimpleFormController {
     private ITaskManagerService taskManagerService;
     private IWorkflowManagerService workflowManagerService;
     private IUserManagerService userManagerService;
+    private IStateManagerService stateManagerService;
 
     @Override
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
@@ -49,16 +51,13 @@ public class RegisterTaskFormController extends SimpleFormController {
             //Refactoring is needed here.
             for (String uid : userUids) {
                 WorkflowBean wf = new WorkflowBean();
-                wf.setParentUid(Long.parseLong("-1"));
-                wf.setTaskUid(task.getUid());
-                wf.setParentUserUid(initiator.getUid());
-                wf.setUserUid(Long.valueOf(uid));
+                wf.setParentUid(-1L);
+                wf.setTaskBean(task);
+                wf.setAssignee(initiator);
+                wf.setReceiver(userManagerService.get(Long.valueOf(uid)));
                 wf.setDescription(task.getDescription());
-                wf.setState("0");
-                wf.setAssignDate(task.getStartDate().toString());
-                wf.setTask(task);
-                wf.setAssignee(userManagerService.getUserByUid(wf.getParentUserUid()));
-                wf.setReceiver(userManagerService.getUserByUid(wf.getUserUid()));
+                wf.setState(stateManagerService.get(0L));
+                wf.setAssignDate(task.getStartDate());
                 workflowManagerService.assignTaskToUser(wf);
             }
             request.getSession().setAttribute("task", null);
@@ -68,13 +67,6 @@ public class RegisterTaskFormController extends SimpleFormController {
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
-    /*@Override
-    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
-    String dateFormat = getMessageSourceAccessor().getMessage("format.date","dd.MM.yyyy");
-    SimpleDateFormat df = new SimpleDateFormat(dateFormat);
-    df.setLenient(true);
-    binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(df, true));
-    }*/
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         request.setAttribute("actionUrl", "registerTask.htm");
@@ -93,16 +85,11 @@ public class RegisterTaskFormController extends SimpleFormController {
         this.taskManagerService = taskManagerService;
     }
 
-    /**
-     * @return the workflowManagerService
-     */
     public IWorkflowManagerService getWorkflowManagerService() {
         return workflowManagerService;
     }
 
-    /**
-     * @param workflowManagerService the workflowManagerService to set
-     */
+
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
         this.workflowManagerService = workflowManagerService;
     }

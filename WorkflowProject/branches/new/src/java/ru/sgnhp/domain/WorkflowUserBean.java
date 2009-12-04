@@ -42,7 +42,7 @@ public class WorkflowUserBean implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Basic(optional = false)
     @Column(name = "Login", nullable = false, length = 20)
     private String login;
@@ -57,7 +57,7 @@ public class WorkflowUserBean implements Serializable {
     @Column(name = "SessionUid", length = 50)
     private String sessionUid;
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @OneToMany(mappedBy = "assigne", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
     private Set<WorkflowBean> assignedWorkflows = new HashSet<WorkflowBean>();
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
@@ -66,20 +66,20 @@ public class WorkflowUserBean implements Serializable {
     public WorkflowUserBean() {
     }
 
-    public WorkflowUserBean(Integer uid) {
+    public WorkflowUserBean(Long uid) {
         this.uid = uid;
     }
 
-    public WorkflowUserBean(Integer uid, String login) {
+    public WorkflowUserBean(Long uid, String login) {
         this.uid = uid;
         this.login = login;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

@@ -28,7 +28,7 @@ public class AssignedTaskViewController implements Controller {
         } else {
             wfs = workflowManagerService.getAssignedWorkflowsByUserUid(initiatorUid, true);
         }
-        int count = workflowManagerService.getAssignedWorkflowsCountByUserUid(initiatorUid);
+        int count = wfs.size();
         request.setAttribute("count", count);
         return new ModelAndView("assignedTask", "assigned", wfs);
     }

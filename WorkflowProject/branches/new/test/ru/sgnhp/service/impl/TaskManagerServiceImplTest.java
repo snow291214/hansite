@@ -4,6 +4,11 @@
  */
 package ru.sgnhp.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import org.junit.Test;
@@ -11,7 +16,9 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
 import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.domain.TaskBean;
+import ru.sgnhp.service.IStateManagerService;
 import ru.sgnhp.service.ITaskManagerService;
+import ru.sgnhp.service.IWorkflowManagerService;
 
 /**
  *
@@ -25,7 +32,7 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
     }
 
     @Test
-    public void saveTask() {
+    public void saveTask() throws FileNotFoundException, IOException {
         TaskBean taskBean = new TaskBean();
         taskBean.setInternalNumber(101);
         taskBean.setIncomingNumber(102);
@@ -35,8 +42,35 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
         taskBean.setExternalAssignee("EA");
         taskBean.setExternalCompany("EC");
 
+        File file = new File("D:\\temp\\doc.csv");
+        InputStream is = new FileInputStream(file);
+        // Get the size of the file
+        long length = file.length();
+        // You cannot create an array using a long type.
+        // It needs to be an int type.
+        // Before converting to an int type, check
+        // to ensure that file is not larger than Integer.MAX_VALUE.
+        if (length > Integer.MAX_VALUE) {
+            // File is too large
+        }
+        // Create the byte array to hold the data
+        byte[] bytes = new byte[(int) length];
+        // Read in the bytes
+        int offset = 0;
+        int numRead = 0;
+        while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+            offset += numRead;
+        }
+        // Ensure all the bytes have been read in
+        if (offset < bytes.length) {
+            throw new IOException("Could not completely read file " + file.getName());
+        }
+        // Close the input stream and return bytes
+        is.close();
+
+
         FileBean fileBean = new FileBean();
-        fileBean.setBlobField(null);
+        fileBean.setBlobField(bytes);
         fileBean.setFileName("102.pdf");
         fileBean.setTaskUid(taskBean);
 
@@ -53,7 +87,7 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 
     @Test
     public void testGetTaskByExternalNumber() {
-        assertNotNull(taskManagerService.getTaskByExternalNumber("Исх-202"));
+        assertNotNull(taskManagerService.getTaskByExternalNumber("ИСХ-061-02-35134"));
     }
 
     @Test
@@ -73,17 +107,17 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 
     @Test
     public void testGetNewInternalNumber() {
-        assertEquals(407, taskManagerService.getNewInternalNumber());
+        assertEquals(517, taskManagerService.getNewInternalNumber());
     }
 
     @Test
     public void testGetNewIncomingNumber() {
-        assertEquals(402, taskManagerService.getNewIncomingNumber());
+        assertEquals(476, taskManagerService.getNewIncomingNumber());
     }
 
     @Test
     public void testGetfiles() {
-        TaskBean taskBean = taskManagerService.get(2620L);
+        TaskBean taskBean = taskManagerService.get(12L);
         assertNotNull(taskBean.getFilesSet());
     }
 
