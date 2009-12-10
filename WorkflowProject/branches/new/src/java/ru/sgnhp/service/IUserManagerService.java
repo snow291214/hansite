@@ -1,5 +1,6 @@
 package ru.sgnhp.service;
 
+import java.util.List;
 import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
@@ -14,4 +15,6 @@ public interface IUserManagerService extends IGenericService<WorkflowUserBean, L
     WorkflowUserBean getUserByLogin(String login);
 
     WorkflowUserBean getUserByEmail(String email);
+
+    List<WorkflowUserBean> getAll();
 }

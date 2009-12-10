@@ -1,4 +1,4 @@
-package ru.sgnhp.domain;
+package ru.sgnhp.dto;
 
 /*****
  *

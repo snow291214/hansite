@@ -1,7 +1,7 @@
 package ru.sgnhp.dao;
 
 import java.util.Map;
-import ru.sgnhp.domain.UserLogin;
+import ru.sgnhp.dto.UserLogin;
 
 /*****
  *

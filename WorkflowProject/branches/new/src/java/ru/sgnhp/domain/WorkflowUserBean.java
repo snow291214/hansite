@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -27,14 +28,21 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "users", catalog = "workflowdb", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "WorkflowUserBean.findAll", query = "SELECT w FROM WorkflowUserBean w"),
+    @NamedQuery(name = "WorkflowUserBean.findAll", query = "SELECT w FROM WorkflowUserBean w order by w.lastName"),
     @NamedQuery(name = "WorkflowUserBean.findByUid", query = "SELECT w FROM WorkflowUserBean w WHERE w.uid = :uid"),
-    @NamedQuery(name = "WorkflowUserBean.findByLogin", query = "SELECT w FROM WorkflowUserBean w WHERE w.login = :login"),
-    @NamedQuery(name = "WorkflowUserBean.findByLastName", query = "SELECT w FROM WorkflowUserBean w WHERE w.lastName = :lastName"),
-    @NamedQuery(name = "WorkflowUserBean.findByFirstName", query = "SELECT w FROM WorkflowUserBean w WHERE w.firstName = :firstName"),
-    @NamedQuery(name = "WorkflowUserBean.findByMiddleName", query = "SELECT w FROM WorkflowUserBean w WHERE w.middleName = :middleName"),
-    @NamedQuery(name = "WorkflowUserBean.findByEmail", query = "SELECT w FROM WorkflowUserBean w WHERE w.email = :email"),
-    @NamedQuery(name = "WorkflowUserBean.findBySessionUid", query = "SELECT w FROM WorkflowUserBean w WHERE w.sessionUid = :sessionUid")})
+    @NamedQuery(name = "WorkflowUserBean.findByLogin", query = "SELECT w FROM " +
+    //"WorkflowUserBean w left join fetch w.receivedWorkflows left join fetch w.assignedWorkflows  WHERE w.login = :login"),
+    "WorkflowUserBean w WHERE w.login = :login"),
+    @NamedQuery(name = "WorkflowUserBean.findByLastName", query = "SELECT w FROM" +
+    " WorkflowUserBean w WHERE w.lastName = :lastName"),
+    @NamedQuery(name = "WorkflowUserBean.findByFirstName", query = "SELECT w FROM " +
+    "WorkflowUserBean w WHERE w.firstName = :firstName"),
+    @NamedQuery(name = "WorkflowUserBean.findByMiddleName", query = "SELECT w FROM " +
+    "WorkflowUserBean w WHERE w.middleName = :middleName"),
+    @NamedQuery(name = "WorkflowUserBean.findByEmail", query = "SELECT w FROM " +
+    "WorkflowUserBean w WHERE w.email = :email"),
+    @NamedQuery(name = "WorkflowUserBean.findBySessionUid", query = "SELECT w FROM " +
+    "WorkflowUserBean w WHERE w.sessionUid = :sessionUid")})
 public class WorkflowUserBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,9 +66,11 @@ public class WorkflowUserBean implements Serializable {
     private String sessionUid;
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
+    @OrderBy("uid desc")
     private Set<WorkflowBean> assignedWorkflows = new HashSet<WorkflowBean>();
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
+    @OrderBy("uid desc")
     private Set<WorkflowBean> receivedWorkflows = new HashSet<WorkflowBean>();
 
     public WorkflowUserBean() {

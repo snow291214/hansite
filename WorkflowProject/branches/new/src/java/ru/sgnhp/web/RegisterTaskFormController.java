@@ -1,13 +1,19 @@
 package ru.sgnhp.web;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.DateUtils;
+import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
@@ -37,6 +43,14 @@ public class RegisterTaskFormController extends SimpleFormController {
     private IStateManagerService stateManagerService;
 
     @Override
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        CustomDateEditor editor = new CustomDateEditor(df, false);
+        binder.registerCustomEditor(Date.class, editor);
+        super.initBinder(request,binder);
+    }
+
+    @Override
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
         TaskBean task = (TaskBean) command;
         String files = request.getParameter("hasFiles");
@@ -56,7 +70,8 @@ public class RegisterTaskFormController extends SimpleFormController {
                 wf.setAssignee(initiator);
                 wf.setReceiver(userManagerService.get(Long.valueOf(uid)));
                 wf.setDescription(task.getDescription());
-                wf.setState(stateManagerService.get(0L));
+                StateBean state = stateManagerService.get(0L);
+                wf.setState(state);
                 wf.setAssignDate(task.getStartDate());
                 workflowManagerService.assignTaskToUser(wf);
             }
@@ -76,7 +91,7 @@ public class RegisterTaskFormController extends SimpleFormController {
             task.setInternalNumber(taskManagerService.getNewInternalNumber());
             task.setExternalNumber("б/н");
             task.setStartDate(DateUtils.nowDate());
-            task.setDueDate(DateUtils.increaseDate(DateUtils.nowDate(),3));
+            task.setDueDate(DateUtils.increaseDate(DateUtils.nowDate(), 3));
         }
         return task;
     }
@@ -89,12 +104,15 @@ public class RegisterTaskFormController extends SimpleFormController {
         return workflowManagerService;
     }
 
-
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
         this.workflowManagerService = workflowManagerService;
     }
 
     public void setUserManagerService(IUserManagerService userManagerService) {
         this.userManagerService = userManagerService;
+    }
+
+    public void setStateManagerService(IStateManagerService stateManagerService) {
+        this.stateManagerService = stateManagerService;
     }
 }

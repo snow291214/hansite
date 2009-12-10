@@ -1,5 +1,6 @@
 package ru.sgnhp.web;
 
+
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,5 +90,9 @@ public class UploadController extends SimpleFormController {
 
     public void setUserManagerService(IUserManagerService userManagerService) {
         this.userManagerService = userManagerService;
+    }
+
+    public void setStateManagerService(IStateManagerService stateManagerService) {
+        this.stateManagerService = stateManagerService;
     }
 }

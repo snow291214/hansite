@@ -13,7 +13,7 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import ru.sgnhp.dao.IAuthenticationDAO;
-import ru.sgnhp.domain.UserLogin;
+import ru.sgnhp.dto.UserLogin;
 
 /*****
  *

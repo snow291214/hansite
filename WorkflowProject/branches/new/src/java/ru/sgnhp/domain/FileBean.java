@@ -44,7 +44,7 @@ public class FileBean implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Column(name = "FileName", length = 100)
     private String fileName;
     @Lob
@@ -59,15 +59,15 @@ public class FileBean implements Serializable {
     public FileBean() {
     }
 
-    public FileBean(Integer uid) {
+    public FileBean(Long uid) {
         this.uid = uid;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

@@ -43,28 +43,27 @@
         </tr>
     </table>
     <div class="empty">
-        <c:forEach var="wf" items="${sessionScope.initiator.workflows}">
+        <c:forEach var="wf" items="${requestScope.workflows}">
             <div>
                 <div class="header red">
-                    <b>Задача № <c:out value="${wf.task.internalNumber}"/>. <c:out value="${wf.task.description}"/></b>
+                    Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
                 </div>
                 <div>
-                    <!--Описание задачи: <c:out value="${wf.task.description}"/><br />-->
-                    Компания: ${wf.task.externalCompany}. Входящий номер письма: ${wf.task.incomingNumber}. Исходящий номер: ${wf.task.externalNumber}.
-                    Отправитель: ${wf.task.externalAssignee}<br />
-                    Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>
-                    Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.dueDate}"/><br />
-                    <div class="content">
-                        Резолюция к задаче: <b><u><c:out value="${wf.description}"/></u></b>. 
-                        Дата назначения задачи: <c:out value="${wf.assignDate}"/>.
-                        Состояние задачи:
-                        <font color="red"><b><c:out value="${wf.state}"/></b>.
-                            <c:if test="${wf.workflowNote != ''}">
+                    <!--Описание задачи: <br />-->
+                    Компания: ${wf.taskBean.externalCompany}. Входящий номер письма: ${wf.taskBean.incomingNumber}. Исходящий номер: ${wf.taskBean.externalNumber}.
+                    Отправитель: ${wf.taskBean.externalAssignee}<br />
+                    Задача создана для: <c:out value="${wf.receiver.lastName} ${wf.receiver.firstName} ${wf.receiver.middleName}"/>
+                    Дата начала задачи: <c:out value="${wf.taskBean.startDate}"/> Срок до: <c:out value="${wf.taskBean.startDate}"/>
+                    Состояние задачи:
+                    <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.
+                        <c:if test="${wf.workflowNote != ''}">
                             ${wf.workflowNote}
-                            </c:if>
-                        </font><br />
+                        </c:if>
+                    </font><br />
+                    <div class="content">
+                        <b><u>Резолюция к задаче: <c:out value="${wf.description}"/>.</u></b> Дата назначения задачи: <c:out value="${wf.assignDate}"/>.<br />
                         Файлы, прикрепленные к задаче:
-                        <c:forEach var = "taskFile" items="${wf.task.taskFiles}">
+                        <c:forEach var = "taskFile" items="${wf.taskBean.filesSet}">
                             <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
                         </c:forEach>
                         <br />

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.dao.IAuthenticationDAO;
-import ru.sgnhp.domain.UserLogin;
+import ru.sgnhp.dto.UserLogin;
 import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****

@@ -14,15 +14,26 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
           p:location="/WEB-INF/classes/mail.properties"/>
 
-    <!--
-    Most controllers will use the ControllerClassNameHandlerMapping above, but
-    for the index controller we are using ParameterizableViewController, so we must
-    define an explicit mapping for it.
-    -->
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
+                <prop key="logout.htm">logoutController</prop>
+                <prop key="download.htm">downloadController</prop>
+                <prop key="selectUsers.htm">selectUsersFormController</prop>
+                <prop key="registerTask.htm">newTaskFormController</prop>
+                <prop key="upload.htm">uploadController</prop>
+                <prop key="success.htm">successController</prop>
+                <prop key="authentication.htm">loginFormController</prop>
+                <prop key="assignedTask.htm">assignedTaskViewController</prop>
+                <prop key="completedTask.htm">completedTaskController</prop>
+                <prop key="assignTask.htm">assingTaskFormController</prop>
+                <prop key="workflowManager.htm">workflowManagerFormController</prop>
+                <prop key="executionRequest.htm">executionRequestController</prop>
+                <prop key="searchTask.htm">searchTaskFormController</prop>
+                <prop key="searchResult.htm">searchResultController</prop>
+                <prop key="ajax.htm">ajaxController</prop>
+                <prop key="roadmap.htm">roadmapController</prop>
             </props>
         </property>
     </bean>
@@ -34,11 +45,231 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
     <!--========================= Controllers ===============================-->
 
+    <!-- Login Form Controller-->
+    <bean name="loginFormController" class="ru.sgnhp.web.LoginFormController" >
+        <property name="sessionForm">
+            <value>true</value>
+        </property>
+        <property name="commandName">
+            <value>userLogin</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.dto.UserLogin</value>
+        </property>
+        <property name="validator">
+            <ref bean="loginFormValidator"/>
+        </property>
+        <property name="formView">
+            <value>login</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="authenticationDAO">
+            <ref bean="authenticationDAO" />
+        </property>
+    </bean>
+
     <!-- Index Controller -->
     <bean name="indexController" class="ru.sgnhp.web.IndexController" >
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Execution Request Controller -->
+    <bean name="executionRequestController" class="ru.sgnhp.web.ExecutionRequestController">
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Download Controller -->
+    <bean name="downloadController" class="ru.sgnhp.web.DownloadController">
+        <property name="uploadManagerService">
+            <ref bean="uploadManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Logout Controller -->
+    <bean name="logoutController" class="ru.sgnhp.web.LogoutController" />
+
+    <!-- Register Task Form Controller-->
+    <bean name="newTaskFormController" class="ru.sgnhp.web.RegisterTaskFormController" >
+        <property name="sessionForm">
+            <value>true</value>
+        </property>
+        <property name="commandName">
+            <value>registerTask</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.domain.TaskBean</value>
+        </property>
+        <!--<property name="validator">
+            <ref bean="registerTaskFormValidator"/>
+        </property>-->
+        <property name="formView">
+            <value>registerTask</value>
+        </property>
+        <property name="successView">
+            <value>upload.htm</value>
+        </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Select Users Form Controller-->
+    <bean name="selectUsersFormController" class="ru.sgnhp.web.SelectUsersFormController" >
+        <property name="userManagerService">
+            <ref bean="userManagerService" />
+        </property>
+    </bean>
+
+    <!-- Upload Controller-->
+    <bean name="uploadController" class="ru.sgnhp.web.UploadController" >
+        <property name="commandName" value="fileUpload"/>
+        <property name="commandClass" value="ru.sgnhp.domain.FileBean"/>
+        <property name="formView" value="upload" />
+        <property name="successView" value="index.htm" />
+        <property name="uploadManagerService">
+            <ref bean="uploadManagerService"/>
+        </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Success Controller-->
+    <bean id="successController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" p:viewName="success" />
+
+    <!--Assigned Task Controller-->
+    <bean name="assignedTaskViewController" class="ru.sgnhp.web.AssignedTaskViewController" >
         <!--<property name="userManagerService">
             <ref bean="userManagerService"/>
         </property>-->
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
     </bean>
 
+    <!--Completed Task Controller-->
+    <bean name="completedTaskController" class="ru.sgnhp.web.CompletedTaskController" >
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Assign Task Form Controller -->
+    <bean name="assingTaskFormController" class="ru.sgnhp.web.AssignWorkflowFormController">
+        <property name="commandName" value="assignWorkflow"/>
+        <property name="commandClass" value="ru.sgnhp.domain.WorkflowBean"/>
+        <property name="formView">
+            <value>assignWorkflow</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Workflow Manager Form Controller -->
+    <bean name="workflowManagerFormController" class="ru.sgnhp.web.WorkflowManagerFormController">
+        <property name="commandName" value="workflowManager"/>
+        <property name="commandClass" value="ru.sgnhp.domain.WorkflowBean"/>
+        <property name="formView">
+            <value>workflowManager</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Search Task Controller -->
+    <bean name="searchTaskFormController" class="ru.sgnhp.web.SearchTaskFormController">
+        <property name="commandName" value="searchTask"/>
+        <property name="commandClass" value="ru.sgnhp.domain.SearchTaskBean"/>
+        <property name="formView">
+            <value>searchTask</value>
+        </property>
+        <property name="successView">
+            <value>searchResult.htm</value>
+        </property>
+    </bean>
+
+    <!-- Search Result Controller -->
+    <bean name="searchResultController" class="ru.sgnhp.web.SearchResultController">
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Ajax Controller -->
+    <bean name="ajaxController" class="ru.sgnhp.web.AjaxController">
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Workflow Roadmap Controller -->
+    <bean name="roadmapController" class="ru.sgnhp.web.RoadmapController">
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!--========================== Validators ===============================-->
+
+    <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+
+    <bean id="loginFormValidator" class="ru.sgnhp.web.validator.LoginFormValidator">
+        <property name="authenticationDAO">
+            <ref bean="authenticationDAO" />
+        </property>
+    </bean>
+    
+    <!--======================== Authentication =============================-->
+    <bean id="authenticationDAO" class="ru.sgnhp.dao.impl.AuthenticationDaoImpl" />
+
+    <!--============================== File Upload ==========================-->
+    <!-- MultipartResolver for parsing file uploads, implementation for Commons FileUpload -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1024000000"/>
+    </bean>
 </beans>

@@ -1,5 +1,6 @@
 package ru.sgnhp.service.impl;
 
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,6 +25,12 @@ public class UserManagerServiceImpl extends GenericServiceImpl<WorkflowUserBean,
 
     public UserManagerServiceImpl(IGenericDao<WorkflowUserBean, Long> genericDao) {
         super(genericDao);
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
+    public List<WorkflowUserBean> getAll() {
+        return userDao.getAll();
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)

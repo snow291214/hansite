@@ -47,23 +47,23 @@
         <c:forEach var="wf" items="${requestScope.completed}">
             <div>
                 <div class="header green">
-                    Задача № <c:out value="${wf.task.internalNumber}"/>. <c:out value="${wf.task.description}"/>
+                    Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
                 </div>
                 <div>
-                    Компания: ${wf.task.externalCompany}. Входящий номер письма: ${wf.task.incomingNumber}. Исходящий номер: ${wf.task.externalNumber}.                    Компания: ${wf.task.externalCompany}. Исходящий номер: ${wf.task.externalNumber}.
-                    Отправитель: ${wf.task.externalAssignee}<br />
+                    Компания: ${wf.taskBean.externalCompany}. Входящий номер письма: ${wf.taskBean.incomingNumber}. Исходящий номер: ${wf.taskBean.externalNumber}.
+                    Отправитель: ${wf.taskBean.externalAssignee}<br />
                     Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>
-                    Дата начала задачи: <c:out value="${wf.task.startDate}"/> Срок до: <c:out value="${wf.task.startDate}"/><br />
+                    Дата начала задачи: <c:out value="${wf.taskBean.startDate}"/> Срок до: <c:out value="${wf.taskBean.startDate}"/><br />
                     <div class="content">
                         Резолюция к задаче: <c:out value="${wf.description}"/>. Дата назначения задачи: <c:out value="${wf.assignDate}"/>.
                         Состояние задачи:
-                        <font color="red"><b><c:out value="${wf.state}"/></b>.
+                        <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.
                             <c:if test="${wf.workflowNote != ''}">
                                 ${wf.workflowNote}
                             </c:if>
                         </font><br />
                         Файлы, прикрепленные к задаче:
-                        <c:forEach var = "taskFile" items="${wf.task.taskFiles}">
+                        <c:forEach var = "taskFile" items="${wf.taskBean.filesSet}">
                             <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
                         </c:forEach>
                         <br />

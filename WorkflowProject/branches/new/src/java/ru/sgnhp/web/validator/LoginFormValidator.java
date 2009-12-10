@@ -5,7 +5,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.sgnhp.dao.IAuthenticationDAO;
-import ru.sgnhp.domain.UserLogin;
+import ru.sgnhp.dto.UserLogin;
 
 /*****
  *
