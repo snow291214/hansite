@@ -1,6 +1,7 @@
 package ru.sgnhp.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +24,15 @@ public class AssignedTaskViewController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long initiatorUid = ((WorkflowUserBean) request.getSession().getAttribute("initiator")).getUid();
         List<WorkflowBean> wfs = null;
+        int count = 0;
         if (request.getParameter("completed") == null) {
             wfs = workflowManagerService.getAssignedWorkflowsByUserUid(initiatorUid, false);
         } else {
             wfs = workflowManagerService.getAssignedWorkflowsByUserUid(initiatorUid, true);
         }
-        int count = wfs.size();
+        if (wfs != null){
+            count = wfs.size();
+        }
         request.setAttribute("count", count);
         return new ModelAndView("assignedTask", "assigned", wfs);
     }

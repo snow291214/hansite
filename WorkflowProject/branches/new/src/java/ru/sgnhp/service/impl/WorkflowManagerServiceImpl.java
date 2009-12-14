@@ -9,8 +9,10 @@ import ru.sgnhp.DateUtils;
 import ru.sgnhp.dao.IGenericDao;
 import ru.sgnhp.dao.IWorkflowDao;
 import ru.sgnhp.domain.SearchTaskBean;
+import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.dto.WorkflowBeanDto;
 import ru.sgnhp.service.IMailService;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
@@ -44,7 +46,7 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         }
     }
 
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public WorkflowBean assignTaskToUser(WorkflowBean wf) {
         wf = workflowDao.save(wf);
         mailService.sendmailAssign(wf);
@@ -80,12 +82,12 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         return workflowDao.getWorkflowByParentUid(workflowUid);
     }
 
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public void updateWorkflow(WorkflowBean _workflow) {
         if (_workflow.getState().getStateUid() == 3) {
             _workflow.setFinishDate(DateUtils.nowDate());
         }
-        workflowDao.save(_workflow);
+        workflowDao.updateWorkflow(_workflow);
         mailService.sendmailChangeState(_workflow);
     }
 
@@ -115,11 +117,13 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     }
 
     private ArrayList<WorkflowBean> stepDown(Long workflowUid, ArrayList roadmap) {
-        WorkflowBean workflowBean = this.getWorkflowByParentUid(workflowUid).get(0);
-        if (workflowBean != null) {
-            roadmap.add(workflowBean);
-            workflowUid = workflowBean.getUid();
-            stepDown(workflowUid, roadmap);
+        List<WorkflowBean> workflowBeans = this.getWorkflowByParentUid(workflowUid);
+        if (workflowBeans != null) {
+            for (WorkflowBean workflowBean : workflowBeans) {
+                roadmap.add(workflowBean);
+                workflowUid = workflowBean.getUid();
+                stepDown(workflowUid, roadmap);
+            }
         }
         return roadmap;
     }
@@ -141,5 +145,16 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<WorkflowBean> getRecievedWorkflows() {
         return workflowDao.getRecievedWorkflows();
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean) {
+        if (stateBean.getStateUid() == 3) {
+            beanDto.setFinishDate(DateUtils.nowDate());
+        }
+        beanDto = workflowDao.updateWorkflowState(beanDto, stateBean);
+        WorkflowBean workflowBean = this.getWorkflowByUid(beanDto.getUid());
+        mailService.sendmailChangeState(workflowBean);
+        return beanDto;
     }
 }

@@ -70,8 +70,7 @@ public class RegisterTaskFormController extends SimpleFormController {
                 wf.setAssignee(initiator);
                 wf.setReceiver(userManagerService.get(Long.valueOf(uid)));
                 wf.setDescription(task.getDescription());
-                StateBean state = stateManagerService.get(0L);
-                wf.setState(state);
+                wf.setState(stateManagerService.get(0L));
                 wf.setAssignDate(task.getStartDate());
                 workflowManagerService.assignTaskToUser(wf);
             }

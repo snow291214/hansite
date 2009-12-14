@@ -22,7 +22,7 @@
                 <td class="all">${workflow.assignee.lastName} ${workflow.assignee.firstName} ${workflow.assignee.middleName}</td>
                 <td class="all">${workflow.receiver.lastName} ${workflow.receiver.firstName} ${workflow.receiver.middleName}</td>
                 <td class="all">&nbsp;${workflow.description}</td>
-                <td class="all">&nbsp;${workflow.state}</td>
+                <td class="all">&nbsp;${workflow.state.stateDescription}</td>
                 <td class="all">&nbsp;${workflow.workflowNote}</td>
             </tr>
             <c:set var="counter" value="${counter+1}" scope="page" />

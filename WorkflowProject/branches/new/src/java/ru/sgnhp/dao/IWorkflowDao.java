@@ -2,7 +2,9 @@ package ru.sgnhp.dao;
 
 import java.util.Date;
 import java.util.List;
+import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.dto.WorkflowBeanDto;
 
 /*****
  *
@@ -36,4 +38,8 @@ public interface IWorkflowDao extends IGenericDao<WorkflowBean, Long> {
     List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid);
 
     List<WorkflowBean> getWorkflowsByDescription(Long userUid, String description);
+
+    void updateWorkflow(WorkflowBean workflowBean);
+
+    WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean);
 }

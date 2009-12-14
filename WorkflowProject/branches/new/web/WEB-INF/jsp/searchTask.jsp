@@ -8,9 +8,9 @@
         <table border="0" cellspacing="0" cellpadding="5">
             <tr>
                 <td rowspan="5"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
-                <td>Поиск по внутреннему номеру задачи</td>
+                <td><label for="byInternalNumber">Поиск по внутреннему номеру задачи</label></td>
                 <td>
-                    <input type="radio" name="searchType" value="0" />
+                    <input type="radio" name="searchType" id="byInternalNumber" value="0" />
                 </td>
                 <td>
                     <spring:bind path="searchTask.taskInternalNumber">
@@ -19,9 +19,9 @@
                 </td>
             </tr>
             <tr>
-                <td>Поиск по входящему номеру</td>
+                <td><label for="byIncomingNumber">Поиск по входящему номеру</label></td>
                 <td>
-                    <input type="radio" name="searchType" value="1" />
+                    <input type="radio" name="searchType" id="byIncomingNumber" value="1" />
                 </td>
                 <td>
                     <spring:bind path="searchTask.taskIncomingNumber">
@@ -30,9 +30,9 @@
                 </td>
             </tr>
             <tr>
-                <td>Отправитель (кто подписал письмо)</td>
+                <td><label for="byAssigneeName">Отправитель (кто подписал письмо)</label></td>
                 <td>
-                    <input type="radio" name="searchType" value="2" />
+                    <input type="radio" name="searchType" id="byAssigneeName" value="2" />
                 </td>
                 <td>
                     <spring:bind path="searchTask.assigneeName">
@@ -41,9 +41,9 @@
                 </td>
             </tr>
             <tr>
-                <td>Поиск по резолюции к задаче</td>
+                <td><label for="byDescription">Поиск по резолюции к задаче</label></td>
                 <td>
-                    <input type="radio" name="searchType" value="3" checked/>
+                    <input type="radio" name="searchType" id="byDescription" value="3" checked/>
                 </td>
                 <td>
                     <spring:bind path="searchTask.taskDescription">

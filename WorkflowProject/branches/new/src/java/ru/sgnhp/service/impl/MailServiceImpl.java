@@ -13,7 +13,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IMailService;
-import ru.sgnhp.service.IUserManagerService;
 
 /*****
  *
@@ -132,7 +131,8 @@ public class MailServiceImpl implements IMailService {
                     "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
                     _workflow.getDescription() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " +
-                    _workflow.getState() + "</p></body></html>", "text/html;charset=utf-8");
+                    _workflow.getState().getStateDescription() + "</p></body></html>",
+                    "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);
@@ -200,65 +200,27 @@ public class MailServiceImpl implements IMailService {
             System.err.println(e);
         }
     }
-
-//    public IStateManagerService getStateManagerService() {
-//        return stateManagerService;
-//    }
-//
-//    public void setStateManagerService(IStateManagerService stateManagerService) {
-//        this.stateManagerService = stateManagerService;
-//    }
-
     public void setMailHostName(String mailHostName) {
         this.mailHostName = mailHostName;
     }
 
-    /**
-     * @param fromAddress the fromAddress to set
-     */
     public void setFromAddress(String fromAddress) {
         this.fromAddress = fromAddress;
     }
 
-    /**
-     * @param fromName the fromName to set
-     */
     public void setFromName(String fromName) {
         this.fromName = fromName;
     }
 
-    /**
-     * @param userManagerService the userManagerService to set
-     */
-//    public void setUserManagerService(IUserManagerService userManagerService) {
-//        this.userManagerService = userManagerService;
-//    }
-
-    /**
-     * @return the mailHostName
-     */
     public String getMailHostName() {
         return mailHostName;
     }
 
-    /**
-     * @return the fromAddress
-     */
     public String getFromAddress() {
         return fromAddress;
     }
 
-    /**
-     * @return the fromName
-     */
     public String getFromName() {
         return fromName;
     }
-
-//    /**
-//     * @return the userManagerService
-//     */
-//    public IUserManagerService getUserManagerService() {
-//        return userManagerService;
-//    }
 }

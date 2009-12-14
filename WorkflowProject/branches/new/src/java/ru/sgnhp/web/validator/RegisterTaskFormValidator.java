@@ -1,6 +1,7 @@
 package ru.sgnhp.web.validator;
 
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.service.ITaskManagerService;
@@ -28,6 +29,6 @@ public class RegisterTaskFormValidator implements Validator{
     }
 
     public void validate(Object arg0, Errors errors) {
-        //ValidationUtils.rejectIfEmpty(errors, "description", "task.description.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "task.description.empty");
     }
 }

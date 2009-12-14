@@ -29,18 +29,18 @@
         <table>
             <tr>
                 <td>Внутренний номер задачи:</td>
-                <spring:bind path="workflowManager.task.internalNumber">
+                <spring:bind path="workflowManager.taskBean.internalNumber">
                     <td><input type="text" name="${status.expression}" value="${status.value}" disabled="true"></td>
                     <td><font color="red">${status.errorMessage}</font></td>
                 </spring:bind>
             </tr>
             <tr>
                 <td>Состояние задачи:</td>
-                <spring:bind path="workflowManager.state">
+                <spring:bind path="workflowManager.state.stateUid">
                     <td>
                         <select name="${status.expression}" style="width : 200">
                             <c:choose>
-                                <c:when test="${status.value eq 'Не начата'}">
+                                <c:when test="${status.value eq 0}">
                                     <option value="0" selected>Не начата</option>
                                 </c:when>
                                 <c:otherwise>
@@ -48,7 +48,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <c:choose>
-                                <c:when test="${status.value eq 'В работе'}">
+                                <c:when test="${status.value eq 2}">
                                     <option value="2" selected>В работе</option>
                                 </c:when>
                                 <c:otherwise>
@@ -57,7 +57,7 @@
                             </c:choose>
 
                             <c:choose>
-                                <c:when test="${status.value eq 'Завершена'}">
+                                <c:when test="${status.value eq 3}">
                                     <option value="3" selected>Завершена</option>
                                 </c:when>
                                 <c:otherwise>
@@ -79,7 +79,7 @@
                 </spring:bind>
             </tr>
         </table>
-        <p><input type="submit" align="right" value="Сохранить"></p>
+        <p><button type="button" onclick="javascript:history.back();"><< Назад</button><input type="submit" align="right" value="Сохранить"></p>
     </form>
 </body>
 </html>

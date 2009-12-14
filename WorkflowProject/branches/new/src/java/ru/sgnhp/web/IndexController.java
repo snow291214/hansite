@@ -35,16 +35,19 @@ public class IndexController implements Controller {
          *
          */
         //Необходимо переписать
+        int count = 0;
         user = userManagerService.getUserByLogin(login);
         if (user == null) {
             user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
             user = userManagerService.save(user);
         }
         request.getSession().setAttribute("initiator", user);
-
         List<WorkflowBean> workflows = getWorkflowManagerService().getRecievedWorkflowsByUserUid(user.getUid());
+        if (workflows != null) {
+            count = workflows.size();
+        }
         request.setAttribute("workflows", workflows);
-        return new ModelAndView("index","count", workflows.size());
+        return new ModelAndView("index", "count", count);
     }
 
     public void setUserManagerService(IUserManagerService userManagerService) {

@@ -26,7 +26,11 @@ public class CompletedTaskController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long initiatorUid = ((WorkflowUserBean) request.getSession().getAttribute("initiator")).getUid();
         List<WorkflowBean> wfs = workflowManagerService.getCompletedWorkflowsByUserUid(initiatorUid);
-        request.setAttribute("count", wfs.size());
+        int count = 0;
+        if (wfs != null) {
+            count = wfs.size();
+        }
+        request.setAttribute("count", count);
         return new ModelAndView("completedTask", "completed", wfs);
     }
 

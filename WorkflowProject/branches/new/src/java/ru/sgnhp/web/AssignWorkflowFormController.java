@@ -11,6 +11,7 @@ import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.dto.WorkflowBeanDto;
 import ru.sgnhp.service.IStateManagerService;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
@@ -27,21 +28,27 @@ public class AssignWorkflowFormController extends SimpleFormController {
     private IWorkflowManagerService workflowManagerService;
     private IUserManagerService userManagerService;
     private IStateManagerService stateManagerService;
+    private String oldDescription;
+    private String description;
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
-        WorkflowBean workflow = (WorkflowBean) command;
+        WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto)command;
         WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
-        workflow.setState(new StateBean(1L));
-        workflowManagerService.updateWorkflow(workflow);
+        workflowBeanDto = workflowManagerService.updateWorkflowState(workflowBeanDto, stateManagerService.get(1L));
+
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
         for (String uid : userUids) {
-            workflow.setParentUid(workflow.getUid());
-            workflow.setAssignee(initiator);
-            workflow.setReceiver(userManagerService.get(Long.valueOf(uid)));
-            workflow.setAssignDate(DateUtils.nowDate());
-            workflow.setState(stateManagerService.get(1L));
-            workflowManagerService.assignTaskToUser(workflow);
+            WorkflowBean workflowBean = new WorkflowBean();
+            workflowBean.setParentUid(workflowBeanDto.getUid());
+            workflowBean.setAssignee(initiator);
+            workflowBean.setReceiver(userManagerService.get(Long.valueOf(uid)));
+            workflowBean.setDescription(workflowBeanDto.getDescription());
+            workflowBean.setTaskBean(workflowBeanDto.getTaskBean());
+            workflowBean.setAssignDate(DateUtils.nowDate());
+            workflowBean.setState(stateManagerService.get(0L));
+            workflowBean.setWorkflowNote("");
+            workflowManagerService.assignTaskToUser(workflowBean);
         }
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
@@ -49,9 +56,12 @@ public class AssignWorkflowFormController extends SimpleFormController {
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         String workflowUid = request.getParameter("workflowID");
-        WorkflowBean workflow = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
-        workflow.setDescription(null);
-        return workflow;
+        //WorkflowBean workflow = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
+        //oldDescription = workflow.getDescription();
+        //workflow.setDescription(null);
+        WorkflowBeanDto workflowBeanDto = new WorkflowBeanDto();
+        workflowBeanDto.setUid(Long.parseLong(workflowUid));
+        return workflowBeanDto;
     }
 
     public IWorkflowManagerService getWorkflowManagerService() {

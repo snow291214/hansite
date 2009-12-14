@@ -40,7 +40,8 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "WorkflowBean.findAssignedAndCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.assignee.uid = :userUid and w.stateBean.stateUid = 3  order by w.uid desc"),
     @NamedQuery(name = "WorkflowBean.findCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid = 3 order by w.uid desc"),
     @NamedQuery(name = "WorkflowBean.findByDescription", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.description like :description order by w.uid desc"),
-    @NamedQuery(name = "WorkflowBean.findByTaskUid", query = "SELECT w FROM WorkflowBean w WHERE w.taskBean.uid = :taskUid and w.parentUid = -1")
+    @NamedQuery(name = "WorkflowBean.findByTaskUid", query = "SELECT w FROM WorkflowBean w WHERE w.taskBean.uid = :taskUid and w.parentUid = -1"),
+    @NamedQuery(name = "WorkflowBean.updateWorkflowState", query = "UPDATE WorkflowBean w SET w.stateBean = :stateBean WHERE w.uid = :uid")
 })
 public class WorkflowBean implements Serializable {
 

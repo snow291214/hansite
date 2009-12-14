@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ru.sgnhp.dao.IWorkflowDao;
+import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.dto.WorkflowBeanDto;
 
 /*****
  *
@@ -125,5 +127,27 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
             return null;
         }
         return list;
+    }
+
+    public void updateWorkflow(WorkflowBean workflowBean) {
+        WorkflowBean bean = this.get(workflowBean.getUid());
+        bean.setState(workflowBean.getState());
+        super.save(bean);
+    }
+
+    public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean){
+        WorkflowBean workflowBean = this.get(beanDto.getUid());
+        workflowBean.setState(stateBean);
+        workflowBean = super.save(workflowBean);
+        beanDto.setUid(workflowBean.getUid());
+        beanDto.setParentUid(workflowBean.getParentUid());
+        beanDto.setTaskBean(workflowBean.getTaskBean());
+        beanDto.setAssignee(workflowBean.getAssignee());
+        beanDto.setReceiver(workflowBean.getReceiver());
+        beanDto.setAssignDate(workflowBean.getAssignDate());
+        beanDto.setFinishDate(workflowBean.getFinishDate());
+        beanDto.setStateBean(stateBean);
+        beanDto.setWorkflowNote("");
+        return beanDto;
     }
 }

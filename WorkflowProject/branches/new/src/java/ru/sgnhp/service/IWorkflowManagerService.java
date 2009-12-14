@@ -1,11 +1,11 @@
 package ru.sgnhp.service;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import ru.sgnhp.domain.SearchTaskBean;
+import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
-import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.dto.WorkflowBeanDto;
 
 /*****
  *
@@ -30,6 +30,8 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean,Lo
 
     void updateWorkflow(WorkflowBean _workflow);
 
+    WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean);
+
     public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, Long workflowParentUid, ArrayList roadmap);
 
     void taskReminder();
@@ -39,4 +41,5 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean,Lo
     List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid);
 
     List<WorkflowBean> getWorkflowByParentUid(Long workflowUid);
+    
 }

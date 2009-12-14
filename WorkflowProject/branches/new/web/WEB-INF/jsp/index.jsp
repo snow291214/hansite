@@ -46,27 +46,31 @@
         <c:forEach var="wf" items="${requestScope.workflows}">
             <div>
                 <div class="header red">
-                    Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
+                    <b>Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/></b>
                 </div>
                 <div>
-                    <!--Описание задачи: <br />-->
-                    Компания: ${wf.taskBean.externalCompany}. Входящий номер письма: ${wf.taskBean.incomingNumber}. Исходящий номер: ${wf.taskBean.externalNumber}.
+                    <!--Описание задачи: <c:out value="${wf.taskBean.description}"/><br />-->
+                    Компания: ${wf.taskBean.externalCompany}. 
+                    Входящий номер письма: ${wf.taskBean.incomingNumber}.
+                    Исходящий номер: ${wf.taskBean.externalNumber}.
                     Отправитель: ${wf.taskBean.externalAssignee}<br />
-                    Задача создана для: <c:out value="${wf.receiver.lastName} ${wf.receiver.firstName} ${wf.receiver.middleName}"/>
-                    Дата начала задачи: <c:out value="${wf.taskBean.startDate}"/> Срок до: <c:out value="${wf.taskBean.startDate}"/>
-                    Состояние задачи:
-                    <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.
-                        <c:if test="${wf.workflowNote != ''}">
-                            ${wf.workflowNote}
-                        </c:if>
-                    </font><br />
+                    Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>
+                    Дата начала задачи: <c:out value="${wf.taskBean.startDate}"/> Срок до: <c:out value="${wf.taskBean.dueDate}"/><br />
                     <div class="content">
-                        <b><u>Резолюция к задаче: <c:out value="${wf.description}"/>.</u></b> Дата назначения задачи: <c:out value="${wf.assignDate}"/>.<br />
+                        Резолюция к задаче: <b><u><c:out value="${wf.description}"/></u></b>.
+                        Дата назначения задачи: <c:out value="${wf.assignDate}"/>.
+                        Состояние задачи:
+                        <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.
+                            <c:if test="${wf.workflowNote != ''}">
+                            ${wf.workflowNote}
+                            </c:if>
+                        </font><br />
                         Файлы, прикрепленные к задаче:
                         <c:forEach var = "taskFile" items="${wf.taskBean.filesSet}">
                             <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
                         </c:forEach>
                         <br />
+                        <a href="<c:url value="roadmap.htm?workflowID=${wf.uid}" />">Просмотреть маршрут задачи</a>
                         <a href="<c:url value="selectUsers.htm?workflowID=${wf.uid}" />">Передать задачу</a>
                         <a href="<c:url value="workflowManager.htm?workflowID=${wf.uid}" />">Управление задачей</a>
                     </div>
