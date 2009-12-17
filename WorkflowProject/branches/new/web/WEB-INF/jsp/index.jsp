@@ -49,16 +49,16 @@
                     <b>Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/></b>
                 </div>
                 <div>
-                    <!--Описание задачи: <c:out value="${wf.taskBean.description}"/><br />-->
                     Компания: ${wf.taskBean.externalCompany}. 
                     Входящий номер письма: ${wf.taskBean.incomingNumber}.
                     Исходящий номер: ${wf.taskBean.externalNumber}.
                     Отправитель: ${wf.taskBean.externalAssignee}<br />
-                    Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>
-                    Дата начала задачи: <c:out value="${wf.taskBean.startDate}"/> Срок до: <c:out value="${wf.taskBean.dueDate}"/><br />
+                    <b>Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/></b>
+                    Дата начала задачи: <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.taskBean.startDate}" />
+                    Срок до: <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.taskBean.dueDate}" /><br />
                     <div class="content">
-                        Резолюция к задаче: <b><u><c:out value="${wf.description}"/></u></b>.
-                        Дата назначения задачи: <c:out value="${wf.assignDate}"/>.
+                        Резолюция к задаче: <b><u><c:out value="${wf.description}"/></u></b>.<br />
+                        Дата назначения задачи: <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.assignDate}" />.
                         Состояние задачи:
                         <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.
                             <c:if test="${wf.workflowNote != ''}">

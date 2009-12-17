@@ -49,12 +49,14 @@ public class SearchResultController implements Controller {
                 //Find By Assignee
                 result = "searchResult";
                 taskBeans = taskManagerService.getTasksByExternalAssignee(searchTaskBean.getAssigneeName());
-                for (TaskBean b : taskBeans) {
-                    Long uid = b.getUid();
-                    if (workflowBeans == null) {
-                        workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
-                    } else {
-                        workflowBeans.addAll(workflowManagerService.getWorkflowsByTaskUid(uid));
+                if (taskBeans != null) {
+                    for (TaskBean b : taskBeans) {
+                        Long uid = b.getUid();
+                        if (workflowBeans == null) {
+                            workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                        } else {
+                            workflowBeans.addAll(workflowManagerService.getWorkflowsByTaskUid(uid));
+                        }
                     }
                 }
                 request.getSession().setAttribute("searchTaskBean", null);
@@ -63,12 +65,14 @@ public class SearchResultController implements Controller {
                 //Find By description
                 result = "searchResult";
                 taskBeans = taskManagerService.getTasksByDescription(searchTaskBean.getTaskDescription());
-                for (TaskBean b : taskBeans) {
-                    Long uid = b.getUid();
-                    if (workflowBeans == null) {
-                        workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
-                    } else {
-                        workflowBeans.addAll(workflowManagerService.getWorkflowsByTaskUid(uid));
+                if (taskBeans != null) {
+                    for (TaskBean b : taskBeans) {
+                        Long uid = b.getUid();
+                        if (workflowBeans == null) {
+                            workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                        } else {
+                            workflowBeans.addAll(workflowManagerService.getWorkflowsByTaskUid(uid));
+                        }
                     }
                 }
                 request.getSession().setAttribute("searchTaskBean", null);

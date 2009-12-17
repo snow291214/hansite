@@ -8,6 +8,11 @@ div.empty{
     font-size:small;
 }
 
+div.header.pink{
+    background:#FFCCCC;
+    color:black;
+}
+
 div.header.red{
     background:#C32300;
     color:white;
@@ -88,12 +93,22 @@ a.box:hover {color:white;text-decoration:underline;}
 
 div.w300
 {
-    width: 300px;
+    width: 280px;
     float: left;
-    margin-right: 30px;
-    margin-bottom: 30px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     position: relative;
     color:white;
+}
+
+div.pink .ctl, div.pink .cbl, div.pink .ctr, div.pink .cbr
+{
+    color:#f9b7e2;
+}
+
+div.pink div.box-inner
+{
+    background: #C32300;
 }
 
 div.red .ctl, div.red .cbl, div.red .ctr, div.red .cbr
