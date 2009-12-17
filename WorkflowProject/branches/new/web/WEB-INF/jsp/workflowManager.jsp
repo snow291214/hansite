@@ -29,14 +29,11 @@
         <table>
             <tr>
                 <td>Внутренний номер задачи:</td>
-                <spring:bind path="workflowManager.taskBean.internalNumber">
-                    <td><input type="text" name="${status.expression}" value="${status.value}" disabled="true"></td>
-                    <td><font color="red">${status.errorMessage}</font></td>
-                </spring:bind>
+                <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Состояние задачи:</td>
-                <spring:bind path="workflowManager.state.stateUid">
+                <spring:bind path="workflowManager.stateUid">
                     <td>
                         <select name="${status.expression}" style="width : 200">
                             <c:choose>

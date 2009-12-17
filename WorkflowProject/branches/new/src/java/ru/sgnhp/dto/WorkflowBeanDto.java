@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.TaskBean;
+import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
@@ -14,7 +15,6 @@ import ru.sgnhp.domain.WorkflowUserBean;
  *****
  */
 public class WorkflowBeanDto implements Serializable {
-
     private static final long serialVersionUID = 5L;
     private Long uid;
     private Long parentUid;
@@ -26,6 +26,23 @@ public class WorkflowBeanDto implements Serializable {
     private Date finishDate;
     private String workflowNote;
     private TaskBean taskBean;
+    private Long stateUid;
+
+    public WorkflowBeanDto(WorkflowBean workflowBean) {
+        this.uid = workflowBean.getUid();
+        this.parentUid = workflowBean.getParentUid();
+        this.assignee = null;
+        this.receiver = null;
+        this.description = workflowBean.getDescription();
+        this.stateBean = workflowBean.getState();
+        this.assignDate = workflowBean.getAssignDate();
+        this.finishDate = workflowBean.getFinishDate();
+        this.workflowNote = workflowBean.getWorkflowNote();
+        this.taskBean = workflowBean.getTaskBean();
+    }
+
+    public WorkflowBeanDto() {
+    }
 
     public Long getUid() {
         return uid;
@@ -105,5 +122,13 @@ public class WorkflowBeanDto implements Serializable {
 
     public void setTaskBean(TaskBean taskBean) {
         this.taskBean = taskBean;
+    }
+
+    public Long getStateUid() {
+        return stateUid;
+    }
+
+    public void setStateUid(Long stateUid) {
+        this.stateUid = stateUid;
     }
 }

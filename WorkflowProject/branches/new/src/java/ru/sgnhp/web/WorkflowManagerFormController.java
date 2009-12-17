@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.dto.WorkflowBeanDto;
+import ru.sgnhp.service.IStateManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
@@ -22,10 +24,12 @@ import ru.sgnhp.service.IWorkflowManagerService;
 public class WorkflowManagerFormController extends SimpleFormController {
 
     private IWorkflowManagerService workflowManagerService;
+    private IStateManagerService stateManagerService;
 
     @Override
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
-        workflowManagerService.updateWorkflow((WorkflowBean) command);
+        WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto)command;
+        workflowBeanDto = workflowManagerService.updateWorkflowState(workflowBeanDto,  stateManagerService.get(workflowBeanDto.getStateUid()));
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
@@ -34,7 +38,6 @@ public class WorkflowManagerFormController extends SimpleFormController {
         request.setAttribute("actionUrl", "workflowManager.htm");
         String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflowBean = getWorkflowManagerService().getWorkflowByUid(Long.parseLong(workflowUid));
-        //LinkedHashMap<Long, ArrayList<WorkflowUserBean>> roadmap = new LinkedHashMap<Long, ArrayList<WorkflowUserBean>>();
         ArrayList<WorkflowBean> roadmap = new ArrayList<WorkflowBean>();
         if (workflowBean.getParentUid() == -1) {
             roadmap.add(workflowBean);
@@ -46,7 +49,11 @@ public class WorkflowManagerFormController extends SimpleFormController {
         }
         request.setAttribute("roadmap", roadmap);
         request.setAttribute("workflowID", workflowUid);
-        return workflowBean;
+        WorkflowBeanDto workflowBeanDto = new WorkflowBeanDto();
+        workflowBeanDto.setUid(workflowBean.getUid());
+        workflowBeanDto.setStateUid(workflowBean.getState().getStateUid());
+        workflowBean = null;
+        return workflowBeanDto;
     }
 
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
@@ -55,5 +62,9 @@ public class WorkflowManagerFormController extends SimpleFormController {
 
     public IWorkflowManagerService getWorkflowManagerService() {
         return workflowManagerService;
+    }
+
+    public void setStateManagerService(IStateManagerService stateManagerService) {
+        this.stateManagerService = stateManagerService;
     }
 }

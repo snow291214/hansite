@@ -205,7 +205,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!-- Workflow Manager Form Controller -->
     <bean name="workflowManagerFormController" class="ru.sgnhp.web.WorkflowManagerFormController">
         <property name="commandName" value="workflowManager"/>
-        <property name="commandClass" value="ru.sgnhp.domain.WorkflowBean"/>
+        <property name="commandClass" value="ru.sgnhp.dto.WorkflowBeanDto"/>
         <property name="formView">
             <value>workflowManager</value>
         </property>
@@ -214,6 +214,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
         </property>
     </bean>
 

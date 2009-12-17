@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.DateUtils;
-import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.dto.WorkflowBeanDto;
@@ -28,8 +27,6 @@ public class AssignWorkflowFormController extends SimpleFormController {
     private IWorkflowManagerService workflowManagerService;
     private IUserManagerService userManagerService;
     private IStateManagerService stateManagerService;
-    private String oldDescription;
-    private String description;
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {

@@ -138,7 +138,9 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
     public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean){
         WorkflowBean workflowBean = this.get(beanDto.getUid());
         workflowBean.setState(stateBean);
+        workflowBean.setWorkflowNote(beanDto.getWorkflowNote());
         workflowBean = super.save(workflowBean);
+
         beanDto.setUid(workflowBean.getUid());
         beanDto.setParentUid(workflowBean.getParentUid());
         beanDto.setTaskBean(workflowBean.getTaskBean());
@@ -147,7 +149,7 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         beanDto.setAssignDate(workflowBean.getAssignDate());
         beanDto.setFinishDate(workflowBean.getFinishDate());
         beanDto.setStateBean(stateBean);
-        beanDto.setWorkflowNote("");
+
         return beanDto;
     }
 }
