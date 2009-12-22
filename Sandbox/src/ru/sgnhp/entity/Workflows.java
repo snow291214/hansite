@@ -35,7 +35,7 @@ public class Workflows implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Basic(optional = false)
     @Column(name = "ParentUid", nullable = false)
     private int parentUid;
@@ -66,11 +66,11 @@ public class Workflows implements Serializable {
     public Workflows() {
     }
 
-    public Workflows(Integer uid) {
+    public Workflows(Long uid) {
         this.uid = uid;
     }
 
-    public Workflows(Integer uid, int parentUid, int parentUserUid, int userUid, short state) {
+    public Workflows(Long uid, int parentUid, int parentUserUid, int userUid, short state) {
         this.uid = uid;
         this.parentUid = parentUid;
         this.parentUserUid = parentUserUid;
@@ -78,11 +78,11 @@ public class Workflows implements Serializable {
         this.state = state;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

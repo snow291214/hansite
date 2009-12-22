@@ -42,7 +42,7 @@ public class Tasks implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Column(name = "InternalNumber")
     private Integer internalNumber;
     @Column(name = "IncomingNumber")
@@ -68,15 +68,15 @@ public class Tasks implements Serializable {
     public Tasks() {
     }
 
-    public Tasks(Integer uid) {
+    public Tasks(Long uid) {
         this.uid = uid;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

@@ -14,12 +14,10 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.sgnhp.entity.Files;
-import ru.sgnhp.entity.Tasks;
-import ru.sgnhp.entity.Workflows;
-import ru.sgnhp.services.IFilesService;
-import ru.sgnhp.services.ITasksService;
-import ru.sgnhp.services.IWorkflowsService;
+import ru.sgnhp.entity.OutgoingFileBean;
+import ru.sgnhp.entity.OutgoingMailBean;
+import ru.sgnhp.services.IOutgoingFileService;
+import ru.sgnhp.services.IOutgoingMailService;
 
 /**
  *
@@ -49,59 +47,37 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/ru/sgnhp/applicationContext.xml");
-        ITasksService tasksService = (ITasksService) ctx.getBean("tasksService");
-        IFilesService filesService = (IFilesService) ctx.getBean("filesService");
-        IWorkflowsService workflowsService = (IWorkflowsService) ctx.getBean("workflowsService");
+        IOutgoingFileService fileService = (IOutgoingFileService) ctx.getBean("outgoingFileService");
+        IOutgoingMailService outgoingMailService = (IOutgoingMailService) ctx.getBean("outgoingMailService");
 
-        CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("d:\\temp\\doc1.csv"), "cp1251"));
+        CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("d:\\temp\\out.csv"), "cp1251"));
         //CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("/media/win_d/temp/doc1.csv"), "cp1251"));
         reader.setDelimiter(';');
-        int counter = 1;
         while (reader.readRecord()) {
 
-            Files file = new Files();
-            //boolean exists = (new File("/media/win_d/temp/in/" + reader.get(0) + ".pdf")).exists();
-            boolean exists = (new File("D:\\temp\\in\\" + reader.get(0) + ".pdf")).exists();
-            if (exists) {
-                file.setBlobField(getBytesFromFile(new File("D:\\temp\\in\\" + reader.get(0) + ".pdf")));
-                //file.setBlobField(getBytesFromFile(new File("/media/win_d/temp/in/" + reader.get(0) + ".pdf")));
-            }
-            file.setFileName(reader.get(0) + ".pdf");
-            //ArrayList<Files> files = new ArrayList<Files>();
-            //files.add(file);
-            
-            Tasks task = new Tasks();
-            task.setExternalCompany(reader.get(3));
-            task.setExternalAssignee(reader.get(4));
-            task.setInternalNumber(counter);
-            task.setIncomingNumber(Integer.valueOf(reader.get(0).trim()).intValue());
+            OutgoingMailBean outgoingMailBean = new OutgoingMailBean();
+            outgoingMailBean.setOutgoingNumber(Long.parseLong(reader.get(0)));
             DateFormat date = DateFormat.getDateInstance(DateFormat.SHORT);
-            task.setStartDate(date.parse(reader.get(1)));
-            if (!reader.get(5).equals("")) {
-                task.setDueDate(date.parse(reader.get(5)));
-            }else{
-                task.setDueDate(date.parse(reader.get(1)));
+            outgoingMailBean.setOutgoingDate(date.parse(reader.get(1)));
+            outgoingMailBean.setDescription(reader.get(2));
+            outgoingMailBean.setReceiverCompany(reader.get(3));
+            outgoingMailBean.setReceiverName(reader.get(4));
+            outgoingMailBean.setResponsibleName(reader.get(5));
+            if (!reader.get(6).equals("")) {
+                outgoingMailBean.setDueDate(date.parse(reader.get(6)));
             }
-            task.setDescription(reader.get(2));
-            task.getFilesSet().add(file);
-            file.setTaskUid(task);
-            tasksService.save(task);
-            filesService.save(file);
+            outgoingMailBean.setDocumentumNumber(reader.get(7));
+            outgoingMailService.save(outgoingMailBean);
 
-            Workflows workflows = new Workflows();
-            workflows.setState(Short.parseShort("3"));
-            workflows.setParentUid(-1);
-            workflows.setParentUserUid(79);
-            workflows.setUserUid(75);
-            workflows.setAssignDate(task.getStartDate());
-            workflows.setFinishDate(task.getDueDate());
-            workflows.setDescription(task.getDescription());
-            workflows.setTaskUid(task);
-            workflowsService.save(workflows);
-
-
-            counter++;
+            String path = "D:\\temp\\out\\" + reader.get(0) + ".pdf";
+            boolean exists = (new File(path)).exists();
+            if (exists) {
+                OutgoingFileBean outgoingFileBean = new OutgoingFileBean();
+                outgoingFileBean.setBlobField(getBytesFromFile(new File(path)));
+                outgoingFileBean.setFileName(reader.get(0) + ".pdf");
+                outgoingFileBean.setOutgoingMailBean(outgoingMailBean);
+                fileService.save(outgoingFileBean);
+            }
         }
-        reader.close();
     }
 }

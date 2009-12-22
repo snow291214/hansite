@@ -79,4 +79,22 @@
         </constructor-arg>
     </bean>
 
+    <bean id="outgoingFileService" class="ru.sgnhp.services.impl.OutgoingFileServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.entity.OutgoingFileBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="outgoingMailService" class="ru.sgnhp.services.impl.OutgoingMailServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.entity.OutgoingMailBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
 </beans>
