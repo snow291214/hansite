@@ -223,7 +223,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!-- Search Task Controller -->
     <bean name="searchTaskFormController" class="ru.sgnhp.web.SearchTaskFormController">
         <property name="commandName" value="searchTask"/>
-        <property name="commandClass" value="ru.sgnhp.domain.SearchTaskBean"/>
+        <property name="commandClass" value="ru.sgnhp.dto.SearchTaskDto"/>
         <property name="formView">
             <value>searchTask</value>
         </property>
@@ -316,7 +316,7 @@ Expression	 Meaning
             <ref bean="methodInvokingJobDetail"/>
         </property>
         <property name="cronExpression">
-            <value>0 0 8 ? * MON-FRI</value>
+            <value>0 00 8 ? * MON-FRI</value>
         </property>
     </bean>
 

@@ -2,7 +2,7 @@ package ru.sgnhp.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import ru.sgnhp.domain.SearchTaskBean;
+import ru.sgnhp.dto.SearchTaskDto;
 import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.dto.WorkflowBeanDto;
@@ -14,7 +14,7 @@ import ru.sgnhp.dto.WorkflowBeanDto;
  *
  *****
  */
-public interface IWorkflowManagerService extends IGenericService<WorkflowBean,Long>{
+public interface IWorkflowManagerService extends IGenericService<WorkflowBean, Long> {
 
     WorkflowBean assignTaskToUser(WorkflowBean _workflow);
 
@@ -34,12 +34,15 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean,Lo
 
     public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, Long workflowParentUid, ArrayList roadmap);
 
-    void taskReminder();
-
-    List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean);
+    List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskDto searchTaskBean);
 
     List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid);
 
     List<WorkflowBean> getWorkflowByParentUid(Long workflowUid);
-    
+
+    List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid);
+
+    void taskReminder();
+
+    void taskReport();
 }

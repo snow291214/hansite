@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-import ru.sgnhp.domain.SearchTaskBean;
+import ru.sgnhp.dto.SearchTaskDto;
 import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
@@ -28,7 +28,7 @@ public class SearchResultController implements Controller {
         List<WorkflowBean> workflowBeans = null;
         List<TaskBean> taskBeans = null;
         //WorkflowUserBean user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
-        SearchTaskBean searchTaskBean = (SearchTaskBean) request.getSession().getAttribute("searchTaskBean");
+        SearchTaskDto searchTaskBean = (SearchTaskDto) request.getSession().getAttribute("searchTaskBean");
         switch (searchTaskBean.getSearchType()) {
             case 0:
                 //Find By Internal Number

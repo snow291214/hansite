@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ru.sgnhp.domain;
 
 import java.io.Serializable;
@@ -19,10 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.ForeignKey;
-
-
 
 /*****
  *
@@ -32,35 +24,41 @@ import org.hibernate.annotations.ForeignKey;
  *****
  */
 @Entity
-@Table(name = "files", catalog = "workflowdb", schema = "", uniqueConstraints = {@UniqueConstraint(columnNames = {"Uid"})})
-@NamedQueries({
-    @NamedQuery(name = "FileBean.findAll", query = "SELECT f FROM FileBean f"),
-    @NamedQuery(name = "FileBean.findByUid", query = "SELECT f FROM FileBean f WHERE f.uid = :uid"),
-    @NamedQuery(name = "FileBean.findByFileName", query = "SELECT f FROM FileBean f WHERE f.fileName = :fileName")
-})
-public class FileBean implements Serializable {
-    private static final long serialVersionUID = 5L;
+@Table(name = "outgoingfiles", catalog = "workflowdb", schema = "")
+@NamedQueries({@NamedQuery(name = "OutgoingFileBean.findAll", query = "SELECT o FROM OutgoingFileBean o"),
+@NamedQuery(name = "OutgoingFileBean.findByUid", query = "SELECT o FROM OutgoingFileBean o WHERE o.uid = :uid"),
+@NamedQuery(name = "OutgoingFileBean.findByFileName", query = "SELECT o FROM OutgoingFileBean o WHERE o.fileName = :fileName")})
+public class OutgoingFileBean implements Serializable {
+
+    private static final long serialVersionUID = 6L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
     private Long uid;
-    @Column(name = "FileName", length = 100)
+    @Basic(optional = false)
+    @Column(name = "FileName", nullable = false, length = 100)
     private String fileName;
+    @Basic(optional = false)
     @Lob
-    @Basic(fetch=FetchType.LAZY)
     @Column(name = "BlobField", columnDefinition = "LONGBLOB")
     private byte[] blobField;
-    @ForeignKey(name="fk_tasks")
-    @JoinColumn(name = "TaskUid", referencedColumnName = "Uid")
+    @ForeignKey(name = "fk_outgoingmail")
+    @JoinColumn(name = "OutgoingMailUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private TaskBean tasks;
+    private OutgoingMailBean outgoingMailBean;
 
-    public FileBean() {
+    public OutgoingFileBean() {
     }
 
-    public FileBean(Long uid) {
+    public OutgoingFileBean(Long uid) {
         this.uid = uid;
+    }
+
+    public OutgoingFileBean(Long uid, String fileName, byte[] blobField) {
+        this.uid = uid;
+        this.fileName = fileName;
+        this.blobField = blobField;
     }
 
     public Long getUid() {
@@ -87,12 +85,12 @@ public class FileBean implements Serializable {
         this.blobField = blobField;
     }
 
-    public TaskBean getTaskUid() {
-        return tasks;
+    public OutgoingMailBean getOutgoingMailBean() {
+        return outgoingMailBean;
     }
 
-    public void setTaskUid(TaskBean taskUid) {
-        this.tasks = taskUid;
+    public void setOutgoingMailBean(OutgoingMailBean outgoingMailBean) {
+        this.outgoingMailBean = outgoingMailBean;
     }
 
     @Override
@@ -105,10 +103,10 @@ public class FileBean implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FileBean)) {
+        if (!(object instanceof OutgoingFileBean)) {
             return false;
         }
-        FileBean other = (FileBean) object;
+        OutgoingFileBean other = (OutgoingFileBean) object;
         if ((this.uid == null && other.uid != null) || (this.uid != null && !this.uid.equals(other.uid))) {
             return false;
         }
@@ -117,7 +115,6 @@ public class FileBean implements Serializable {
 
     @Override
     public String toString() {
-        return "ru.sgnhp.domain.Files[uid=" + uid + "]";
+        return "ru.sgnhp.domain.OutgoingFileBean[uid=" + uid + "]";
     }
-
 }

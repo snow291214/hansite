@@ -83,8 +83,8 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     public void testGetRecievedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowManagerService.getRecievedWorkflowsByUserUid(userUid);
         assertNotNull(workflowBeans);
-        assertEquals(1, workflowBeans.size());
-        assertEquals("Харрасов", workflowBeans.get(0).getAssignee().getLastName());
+        assertEquals(2, workflowBeans.size());
+        assertEquals("Фафанкина", workflowBeans.get(0).getAssignee().getLastName());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
         List<WorkflowBean> workflowBeans = workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.TRUE);
         assertNotNull(workflowBeans);
         assertEquals(null, workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.FALSE));
-        assertEquals(6, workflowBeans.size());
+        assertEquals(9, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getAssignee().getLastName());
     }
 
@@ -100,7 +100,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     public void testGetCompletedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowManagerService.getCompletedWorkflowsByUserUid(userUid);
         assertNotNull(workflowBeans);
-        assertEquals(8, workflowBeans.size());
+        assertEquals(12, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getReceiver().getLastName());
     }
 
@@ -108,6 +108,11 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     public void testGetWorkflowsByTaskUid() {
         Long uid = workflowManagerService.getWorkflowsByTaskUid(24L).get(0).getUid();
         assertEquals(workflowUid, uid);
+    }
+
+    @Test
+    public void testTaskReport(){
+        workflowManagerService.taskReport();
     }
 
     public void setTaskManagerService(ITaskManagerService taskManagerService) {

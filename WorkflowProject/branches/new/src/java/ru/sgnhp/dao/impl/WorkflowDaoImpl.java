@@ -42,10 +42,6 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         return list;
     }
 
-    public int getRecievedWorkflowsCountByUserUid(Long userUid) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public List<WorkflowBean> getAssignedWorkflowsByUserUid(Long userUid, Boolean completed) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("userUid", userUid);
@@ -61,10 +57,6 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         return list;
     }
 
-    public int getAssignedWorkflowsCountByUserUid(Long userUid) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("userUid", userUid);
@@ -73,10 +65,6 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
             return null;
         }
         return list;
-    }
-
-    public int getCompletedWorkflowsCountByUserUid(Long userUid) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid) {
@@ -151,5 +139,15 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         beanDto.setStateBean(stateBean);
 
         return beanDto;
+    }
+
+    public List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("parentUserUid", parentUserUid);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findAllUncompletedByParentUserUid", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
     }
 }

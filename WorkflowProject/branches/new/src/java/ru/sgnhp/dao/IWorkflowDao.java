@@ -25,15 +25,9 @@ public interface IWorkflowDao extends IGenericDao<WorkflowBean, Long> {
 
     List<WorkflowBean> getRecievedWorkflowsByUserUid(Long userUid);
 
-    //int getRecievedWorkflowsCountByUserUid(Long userUid);
-
     List<WorkflowBean> getAssignedWorkflowsByUserUid(Long userUid, Boolean completed);
 
-    //int getAssignedWorkflowsCountByUserUid(Long userUid);
-
     List<WorkflowBean> getCompletedWorkflowsByUserUid(Long userUid);
-
-    //int getCompletedWorkflowsCountByUserUid(Long userUid);
 
     List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid);
 
@@ -42,4 +36,6 @@ public interface IWorkflowDao extends IGenericDao<WorkflowBean, Long> {
     void updateWorkflow(WorkflowBean workflowBean);
 
     WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean);
+
+    List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid);
 }

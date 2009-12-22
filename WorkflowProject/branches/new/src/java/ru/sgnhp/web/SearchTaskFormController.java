@@ -7,13 +7,13 @@ import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.sgnhp.domain.SearchTaskBean;
+import ru.sgnhp.dto.SearchTaskDto;
 
 public class SearchTaskFormController extends SimpleFormController {
 
     @Override
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
-        SearchTaskBean searchTaskBean = (SearchTaskBean)command;
+        SearchTaskDto searchTaskBean = (SearchTaskDto)command;
         String searchType = request.getParameter("searchType");
         searchTaskBean.setSearchType(Integer.parseInt(searchType));
         request.getSession().setAttribute("searchTaskBean", command);
@@ -22,7 +22,7 @@ public class SearchTaskFormController extends SimpleFormController {
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
-        SearchTaskBean searchTaskBean = new SearchTaskBean();
+        SearchTaskDto searchTaskBean = new SearchTaskDto();
         return searchTaskBean;
     }
 }

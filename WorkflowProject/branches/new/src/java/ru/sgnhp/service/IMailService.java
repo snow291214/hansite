@@ -20,4 +20,6 @@ public interface IMailService {
     void sendmailRemind(WorkflowBean _workflow);
 
     void sendmailSheduler(ArrayList<WorkflowBean> wfs);
+
+    void sendmailReport(ArrayList<WorkflowBean> wfs);
 }

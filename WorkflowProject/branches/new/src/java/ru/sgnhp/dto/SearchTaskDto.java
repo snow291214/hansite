@@ -1,6 +1,6 @@
-package ru.sgnhp.domain;
+package ru.sgnhp.dto;
 
-public class SearchTaskBean {
+public class SearchTaskDto {
     private String taskInternalNumber;
     private String taskIncomingNumber;
     private String assigneeName;

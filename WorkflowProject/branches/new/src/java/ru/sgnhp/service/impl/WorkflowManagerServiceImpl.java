@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.sgnhp.DateUtils;
 import ru.sgnhp.dao.IGenericDao;
 import ru.sgnhp.dao.IWorkflowDao;
-import ru.sgnhp.domain.SearchTaskBean;
+import ru.sgnhp.dto.SearchTaskDto;
 import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
@@ -33,17 +33,6 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
 
     public WorkflowManagerServiceImpl(IGenericDao<WorkflowBean, Long> genericDao) {
         super(genericDao);
-    }
-
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public void taskReminder() {
-        List<WorkflowUserBean> users = userManagerService.getAll();
-        for (WorkflowUserBean user : users) {
-            List<WorkflowBean> workflows = this.getRecievedWorkflowsByUserUid(user.getUid());
-            if (!workflows.isEmpty()) {
-                mailService.sendmailSheduler((ArrayList) workflows);
-            }
-        }
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
@@ -133,7 +122,7 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskBean searchTaskBean) {
+    public List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskDto searchTaskBean) {
         return workflowDao.getWorkflowsByDescription(userUid, searchTaskBean.getTaskDescription());
     }
 
@@ -147,6 +136,10 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         return workflowDao.getRecievedWorkflows();
     }
 
+    public List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid) {
+        return workflowDao.getAllUncompletedByParentUserUid(parentUserUid);
+    }
+
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean) {
         if (stateBean.getStateUid() == 3) {
@@ -156,5 +149,48 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         WorkflowBean workflowBean = this.getWorkflowByUid(beanDto.getUid());
         mailService.sendmailChangeState(workflowBean);
         return beanDto;
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public void taskReminder() {
+        List<WorkflowUserBean> users = userManagerService.getAll();
+        for (WorkflowUserBean user : users) {
+            List<WorkflowBean> workflows = this.getRecievedWorkflowsByUserUid(user.getUid());
+            if (workflows != null) {
+                mailService.sendmailSheduler((ArrayList) workflows);
+            }
+        }
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public void taskReport() {
+        List<WorkflowBean> uncompletedWorkflows = this.getAllUncompletedByParentUserUid(75L);
+        ArrayList<WorkflowBean> roadmapsList = new ArrayList<WorkflowBean>();
+        for (WorkflowBean workflowBean : uncompletedWorkflows) {
+            ArrayList<WorkflowBean> roadmap = this.getWorkflowMembersByWorkflowUid(workflowBean.getUid(),
+                    workflowBean.getParentUid(), new ArrayList());
+            roadmapsList.addAll(roadmap);
+        }
+        if (roadmapsList.size() > 0) {
+            mailService.sendmailReport(roadmapsList);
+        }
+//        List<WorkflowUserBean> users = userManagerService.getAll();
+//        for (WorkflowUserBean user : users) {
+//            List<WorkflowBean> workflows = this.getAllUncompletedByParentUserUid(user.getUid());
+//            ArrayList<ArrayList<WorkflowBean>> workflowBeans = new ArrayList<ArrayList<WorkflowBean>>();
+//            if (workflows != null) {
+//                for (WorkflowBean workflowBean : workflows) {
+//                    ArrayList arrayList = this.getWorkflowMembersByWorkflowUid(workflowBean.getUid(), workflowBean.getParentUid(), new ArrayList());
+//                    if (arrayList == null) {
+//                        workflowBeans.add(arrayList);
+//                    } else {
+//                        workflowBeans.addAll(arrayList);
+//                    }
+//                }
+//            }
+//            if (workflowBeans.size() > 0) {
+//                mailService.sendmailReport(workflowBeans);
+//            }
+//        }
     }
 }
