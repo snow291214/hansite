@@ -22,5 +22,7 @@
     <mapping class="ru.sgnhp.entity.Tasks"/>
     <mapping class="ru.sgnhp.entity.Files"/>
     <mapping class="ru.sgnhp.entity.Workflows" />-->
+    <mapping class="ru.sgnhp.domain.OutgoingMailBean"/>
+    <mapping class="ru.sgnhp.domain.OutgoingFileBean"/>
   </session-factory>
 </hibernate-configuration>

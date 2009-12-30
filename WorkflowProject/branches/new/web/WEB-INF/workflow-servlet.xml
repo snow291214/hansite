@@ -34,6 +34,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="searchResult.htm">searchResultController</prop>
                 <prop key="ajax.htm">ajaxController</prop>
                 <prop key="roadmap.htm">roadmapController</prop>
+                <prop key="outgoingLetterWizard.htm">outgoingLetterController</prop>
             </props>
         </property>
     </bean>
@@ -253,6 +254,22 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean name="roadmapController" class="ru.sgnhp.web.RoadmapController">
         <property name="workflowManagerService">
             <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <bean name="outgoingLetterController" class="ru.sgnhp.web.OutgoingLetterController">
+        <property name="commandName">
+            <value>outgoingMailDto</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.dto.OutgoingMailDto</value>
+        </property>
+        <property name="pages">
+            <list>
+                <value>outgoingLetterRegister</value>
+                <value>outgoingFileRegister</value>
+                <value>redirect:index.htm</value>
+            </list>
         </property>
     </bean>
 

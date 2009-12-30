@@ -96,4 +96,17 @@
         <property name="uploadDao" ref="uploadDao"/>
     </bean>
     
+    <bean id="outgoingMailDao" class="ru.sgnhp.dao.impl.OutgoingMailDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="outgoingMailService" class="ru.sgnhp.service.impl.OutgoingMailServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.OutgoingMailBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="outgoingMailDao" ref="outgoingMailDao"/>
+    </bean>
 </beans>

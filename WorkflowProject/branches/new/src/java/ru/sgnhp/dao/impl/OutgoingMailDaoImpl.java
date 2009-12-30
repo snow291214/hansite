@@ -23,7 +23,7 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
     public OutgoingMailBean getByOutgoingNumber(Long outgoingNumber) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("outgoingNumber", outgoingNumber);
-        List<OutgoingMailBean> list = this.findByNamedQuery("WorkflowBean.findByOutgoingNumber", value);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByOutgoingNumber", value);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -33,7 +33,7 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
     public List<OutgoingMailBean> getByOutgoingDate(Date outgoingDate) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("outgoingDate", outgoingDate);
-        List<OutgoingMailBean> list = this.findByNamedQuery("WorkflowBean.findByOutgoingDate", value);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByOutgoingDate", value);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -43,7 +43,7 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
     public OutgoingMailBean getByDocumentumNumber(String documentumNumber) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("documentumNumber", documentumNumber);
-        List<OutgoingMailBean> list = this.findByNamedQuery("WorkflowBean.findByDocumentumNumber", value);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByDocumentumNumber", value);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -53,7 +53,7 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
     public List<OutgoingMailBean> getByReceiverCompany(String receiverCompany) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("receiverCompany", receiverCompany);
-        List<OutgoingMailBean> list = this.findByNamedQuery("WorkflowBean.findByReceiverCompany", value);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByReceiverCompany", value);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -63,7 +63,7 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
     public List<OutgoingMailBean> getByReceiverName(String receiverName) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("receiverName", receiverName);
-        List<OutgoingMailBean> list = this.findByNamedQuery("WorkflowBean.findByReceiverName", value);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByReceiverName", value);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -73,7 +73,7 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
     public List<OutgoingMailBean> getByResponsibleName(String responsibleName) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("responsibleName", responsibleName);
-        List<OutgoingMailBean> list = this.findByNamedQuery("WorkflowBean.findByResponsibleName", value);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByResponsibleName", value);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -83,7 +83,7 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
     public List<OutgoingMailBean> getByDueDate(Date dueDate) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("dueDate", dueDate);
-        List<OutgoingMailBean> list = this.findByNamedQuery("WorkflowBean.findByDueDate", value);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByDueDate", value);
         if (list == null || list.size() == 0) {
             return null;
         }

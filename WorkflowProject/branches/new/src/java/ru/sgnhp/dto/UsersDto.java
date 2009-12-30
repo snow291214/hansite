@@ -8,6 +8,7 @@ package ru.sgnhp.dto;
  *****
  */
 public class UsersDto {
+
     private String[] userUids;
 
     public String[] getUserUids() {
