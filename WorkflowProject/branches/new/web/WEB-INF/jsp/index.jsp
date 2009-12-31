@@ -1,4 +1,5 @@
 ﻿<%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <title>Система электронного документооборота ООО "Салаватгазонефтехимпроект"</title>
 </head>
 <body>
@@ -13,6 +14,9 @@
                 <a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> || 
                 <a href="<c:url value="logout.htm"/>">Завершить работу</a> || 
                 <a href="searchTask.htm">Поиск</a>
+                <sec:authorize ifAllGranted="ROLE_ADMIN">
+                    Admin
+                </sec:authorize>
             </td>
         </tr>
         <tr>
@@ -62,7 +66,7 @@
                         Состояние задачи:
                         <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.
                             <c:if test="${wf.workflowNote != ''}">
-                            ${wf.workflowNote}
+                                ${wf.workflowNote}
                             </c:if>
                         </font><br />
                         Файлы, прикрепленные к задаче:

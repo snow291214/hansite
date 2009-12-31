@@ -31,11 +31,11 @@ public class UserGroupBean implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "Uid", nullable = false)
-    private Long uid;
-    @Column(name = "Description", length = 20)
+    @Column(name = "Uid", nullable = false, length=4)
+    private Short uid;
+    @Column(name = "Description", length = 150)
     private String description;
-    @Column(name = "Name", length = 150)
+    @Column(name = "Name", length = 20)
     private String name;
 
     @OneToMany(mappedBy = "userGroupBean")
@@ -45,15 +45,15 @@ public class UserGroupBean implements Serializable {
     public UserGroupBean() {
     }
 
-    public UserGroupBean(Long uid) {
+    public UserGroupBean(Short uid) {
         this.uid = uid;
     }
 
-    public Long getUid() {
+    public Short getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(Short uid) {
         this.uid = uid;
     }
 

@@ -29,7 +29,7 @@ public class LdapAuthenticationProvider implements AuthenticationProvider {
         // Creating an LdapAuthenticationToken (rather than using the existing Authentication
         // object) allows us to add the already-created LDAP context for our app to use later.
         //final String currentUser = authentication.getName();
-        String userRole = userManagerService.getUserByLogin(authentication.getName()).getUserGroupBean().getName();
+        final String userRole = userManagerService.getUserByLogin(authentication.getName()).getUserGroupBean().getName();
         //LdapAuthenticationToken ldapAuth = new LdapAuthenticationToken(authentication, "ROLE_USER");
         LdapAuthenticationToken ldapAuth = new LdapAuthenticationToken(authentication, userRole);
         InitialLdapContext ldapContext = (InitialLdapContext) authAdapter.getObjectAttribute("ldapContext");
