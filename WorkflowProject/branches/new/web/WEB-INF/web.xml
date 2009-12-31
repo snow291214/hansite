@@ -3,8 +3,9 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            /WEB-INF/applicationContext.xml
-            /WEB-INF/hibernate-beans.xml
+            /WEB-INF/applicationContext.xml,
+            /WEB-INF/hibernate-beans.xml,
+            /WEB-INF/securityContext.xml
         </param-value>
     </context-param>
     <listener>
@@ -60,9 +61,9 @@
             <param-value>true</param-value>
         </init-param>
         <init-param>
-        <param-name>sessionFactoryBeanName</param-name>
-        <param-value>sessionFactory</param-value>
-    </init-param>
+            <param-name>sessionFactoryBeanName</param-name>
+            <param-value>sessionFactory</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>hibernateFilter</filter-name>
@@ -73,6 +74,23 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!-- Enables Spring Security -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>
+            org.springframework.web.filter.DelegatingFilterProxy
+        </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener>
+        <listener-class>org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+
+    <!--
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>ru.sgnhp.ldap.authentication.LDAPAuthenticationFilter</filter-class>
@@ -85,5 +103,5 @@
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
+    -->
 </web-app>

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import ru.sgnhp.domain.WorkflowBean;
@@ -22,8 +23,7 @@ public class IndexController implements Controller {
     private IWorkflowManagerService workflowManagerService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        WorkflowUserBean user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
-        String login = user.getLogin();
+        final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 
         //Cookie cookie =  new LongLivedCookie("sessionUid", request.getSession().getId());
         //response.addCookie(null);
@@ -36,7 +36,7 @@ public class IndexController implements Controller {
          */
         //Необходимо переписать
         int count = 0;
-        user = userManagerService.getUserByLogin(login);
+        WorkflowUserBean user = userManagerService.getUserByLogin(currentUser);
         if (user == null) {
             user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
             user = userManagerService.save(user);

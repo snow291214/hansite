@@ -19,5 +19,6 @@
     <mapping class="ru.sgnhp.domain.WorkflowUserBean"/>
     <mapping class="ru.sgnhp.domain.OutgoingFileBean"/>
     <mapping class="ru.sgnhp.domain.OutgoingMailBean"/>
+    <mapping class="ru.sgnhp.domain.UserGroupBean"/>
   </session-factory>
 </hibernate-configuration>

@@ -10,11 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -72,6 +75,11 @@ public class WorkflowUserBean implements Serializable {
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
     @OrderBy("uid desc")
     private Set<WorkflowBean> receivedWorkflows = new HashSet<WorkflowBean>();
+
+    @ForeignKey(name = "fk_groups_users")
+    @JoinColumn(name = "GroupUid", referencedColumnName = "Uid", nullable = false)
+    @ManyToOne(optional = false)
+    private UserGroupBean userGroupBean;
 
     public WorkflowUserBean() {
     }
@@ -180,5 +188,13 @@ public class WorkflowUserBean implements Serializable {
 
     public void setReceivedWorkflows(Set<WorkflowBean> receivedWorkflows) {
         this.receivedWorkflows = receivedWorkflows;
+    }
+
+    public UserGroupBean getUserGroupBean() {
+        return userGroupBean;
+    }
+
+    public void setUserGroupBean(UserGroupBean userGroupBean) {
+        this.userGroupBean = userGroupBean;
     }
 }

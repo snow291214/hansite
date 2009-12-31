@@ -47,7 +47,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <!--========================= Controllers ===============================-->
 
     <!-- Login Form Controller-->
-    <bean name="loginFormController" class="ru.sgnhp.web.LoginFormController" >
+    <bean name="loginFormController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="login" />
+    <!--<bean name="loginFormController" class="ru.sgnhp.web.LoginFormController" >
         <property name="sessionForm">
             <value>true</value>
         </property>
@@ -69,7 +72,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="authenticationDAO">
             <ref bean="authenticationDAO" />
         </property>
-    </bean>
+    </bean>-->
 
     <!-- Index Controller -->
     <bean name="indexController" class="ru.sgnhp.web.IndexController" >

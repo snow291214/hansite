@@ -1,37 +1,21 @@
 ﻿<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@ page import="org.springframework.security.ui.webapp.AuthenticationProcessingFilter" %>
+<%@ page import="org.springframework.security.ui.AbstractProcessingFilter" %>
+<%@ page import="org.springframework.security.AuthenticationException" %>
 <title>Вход в систему электронного документооборота</title>
 </head>
 <body>
-    <form name="Form1" method="post" action="${actionUrl}">
-        <table bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
-            <tr>
-                <td>Сетевое имя входа в Windows</td>
-                <spring:bind path="userLogin.login">
-                    <td><input type="text" name="${status.expression}" value="${status.value}"></td>
-                    <td><font color="red">${status.errorMessage}</font></td>
-                </spring:bind>
-            </tr>
-            <tr>
-                <td>Пароль:</td>
-                <spring:bind path="userLogin.password">
-                    <td><input type="password" name="${status.expression}" value="${status.value}"></td>
-                    <td><font color="red">${status.errorMessage}</font></td>
-                </spring:bind>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <input type="submit" align="right" value="Вход в систему">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <spring:hasBindErrors name="userLogin">
-                        <b>Возникли ошибки при регистрации</b>
-                    </spring:hasBindErrors>
-                </td>
-            </tr>
-        </table>
+    <form action="j_spring_security_check">
+        <label for="j_username">Username</label>
+        <input type="text" name="j_username" id="j_username" <c:if test="${not empty param.login_error}">value='<%= session.getAttribute(AuthenticationProcessingFilter.SPRING_SECURITY_LAST_USERNAME_KEY)%>'</c:if>/>
+        <br/>
+        <label for="j_password">Password</label>
+        <input type="password" name="j_password" id="j_password"/>
+        <br/>
+        <input type='checkbox' name='_spring_security_remember_me'/> Remember me on this computer.
+        <br/>
+        <input type="submit" value="Login"/>
     </form>
 </body>
 </html>
