@@ -1,5 +1,7 @@
-﻿<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <%@ page import="org.springframework.security.ui.webapp.AuthenticationProcessingFilter" %>
 <%@ page import="org.springframework.security.ui.AbstractProcessingFilter" %>
 <%@ page import="org.springframework.security.AuthenticationException" %>

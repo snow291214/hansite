@@ -46,12 +46,20 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public int getNewInternalNumber() {
-        return taskDao.getNewInternalNumber()+1;
+        int value = taskDao.getNewInternalNumber();
+        if (value == -1) {
+            value++;
+        }
+        return value + 1;
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public int getNewIncomingNumber() {
-        return taskDao.getNewIncomingNumber()+1;
+        int value = taskDao.getNewIncomingNumber();
+        if (value == -1) {
+            value++;
+        }
+        return value + 1;
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)

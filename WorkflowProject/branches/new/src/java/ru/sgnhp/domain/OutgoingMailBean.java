@@ -12,13 +12,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -32,15 +35,16 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "outgoingmail", catalog = "workflowdb", schema = "")
 @NamedQueries({@NamedQuery(name = "OutgoingMailBean.findAll", query = "SELECT o FROM OutgoingMailBean o"),
-@NamedQuery(name = "OutgoingMailBean.findByUid", query = "SELECT o FROM OutgoingMailBean o WHERE o.uid = :uid"),
-@NamedQuery(name = "OutgoingMailBean.findByOutgoingNumber", query = "SELECT o FROM OutgoingMailBean o WHERE o.outgoingNumber = :outgoingNumber"),
-@NamedQuery(name = "OutgoingMailBean.findByOutgoingDate", query = "SELECT o FROM OutgoingMailBean o WHERE o.outgoingDate = :outgoingDate"),
-@NamedQuery(name = "OutgoingMailBean.findByDocumentumNumber", query = "SELECT o FROM OutgoingMailBean o WHERE o.documentumNumber like :documentumNumber"),
-@NamedQuery(name = "OutgoingMailBean.findByReceiverCompany", query = "SELECT o FROM OutgoingMailBean o WHERE o.receiverCompany like :receiverCompany"),
-@NamedQuery(name = "OutgoingMailBean.findByReceiverName", query = "SELECT o FROM OutgoingMailBean o WHERE o.receiverName like :receiverName"),
-@NamedQuery(name = "OutgoingMailBean.findByResponsibleName", query = "SELECT o FROM OutgoingMailBean o WHERE o.responsibleName like :responsibleName"),
-@NamedQuery(name = "OutgoingMailBean.findByDueDate", query = "SELECT o FROM OutgoingMailBean o WHERE o.dueDate = :dueDate")})
+    @NamedQuery(name = "OutgoingMailBean.findByUid", query = "SELECT o FROM OutgoingMailBean o WHERE o.uid = :uid"),
+    @NamedQuery(name = "OutgoingMailBean.findByOutgoingNumber", query = "SELECT o FROM OutgoingMailBean o WHERE o.outgoingNumber = :outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByOutgoingDate", query = "SELECT o FROM OutgoingMailBean o WHERE o.outgoingDate = :outgoingDate"),
+    @NamedQuery(name = "OutgoingMailBean.findByDocumentumNumber", query = "SELECT o FROM OutgoingMailBean o WHERE o.documentumNumber like :documentumNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByReceiverCompany", query = "SELECT o FROM OutgoingMailBean o WHERE o.receiverCompany like :receiverCompany"),
+    @NamedQuery(name = "OutgoingMailBean.findByReceiverName", query = "SELECT o FROM OutgoingMailBean o WHERE o.receiverName like :receiverName"),
+    //@NamedQuery(name = "OutgoingMailBean.findByResponsibleName", query = "SELECT o FROM OutgoingMailBean o WHERE o.responsibleName like :responsibleName"),
+    @NamedQuery(name = "OutgoingMailBean.findByDueDate", query = "SELECT o FROM OutgoingMailBean o WHERE o.dueDate = :dueDate")})
 public class OutgoingMailBean implements Serializable {
+
     private static final long serialVersionUID = 7L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,12 +68,16 @@ public class OutgoingMailBean implements Serializable {
     private String receiverCompany;
     @Column(name = "ReceiverName", length = 150)
     private String receiverName;
-    @Column(name = "ResponsibleName", length = 50)
-    private String responsibleName;
+
+    @ForeignKey(name = "fk_mail_user")
+    @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false,
+    columnDefinition = "integer(11) unsigned not null")
+    @ManyToOne(optional = false)
+    private WorkflowUserBean workflowUserBean;
+
     @Column(name = "DueDate")
     @Temporal(TemporalType.DATE)
     private Date dueDate;
-
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "outgoingMailBean", fetch = FetchType.LAZY)
     private Set<OutgoingFileBean> outgoingFileBeanSet = new HashSet<OutgoingFileBean>();
@@ -144,14 +152,6 @@ public class OutgoingMailBean implements Serializable {
         this.receiverName = receiverName;
     }
 
-    public String getResponsibleName() {
-        return responsibleName;
-    }
-
-    public void setResponsibleName(String responsibleName) {
-        this.responsibleName = responsibleName;
-    }
-
     public Date getDueDate() {
         return dueDate;
     }
@@ -193,4 +193,11 @@ public class OutgoingMailBean implements Serializable {
         return "ru.sgnhp.domain.OutgoingMailBean[uid=" + uid + "]";
     }
 
+    public WorkflowUserBean getWorkflowUserBean() {
+        return workflowUserBean;
+    }
+
+    public void setWorkflowUserBean(WorkflowUserBean workflowUserBean) {
+        this.workflowUserBean = workflowUserBean;
+    }
 }

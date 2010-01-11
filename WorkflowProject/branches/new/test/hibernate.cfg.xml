@@ -18,11 +18,8 @@
     <mapping class="ru.sgnhp.domain.StateBean"/>
     <mapping class="ru.sgnhp.domain.WorkflowBean"/>
     <mapping class="ru.sgnhp.domain.WorkflowUserBean"/>
-    <!--<mapping class="ru.sgnhp.entity.Groups"/>
-    <mapping class="ru.sgnhp.entity.Tasks"/>
-    <mapping class="ru.sgnhp.entity.Files"/>
-    <mapping class="ru.sgnhp.entity.Workflows" />-->
     <mapping class="ru.sgnhp.domain.OutgoingMailBean"/>
     <mapping class="ru.sgnhp.domain.OutgoingFileBean"/>
+    <mapping class="ru.sgnhp.domain.UserGroupBean"/>
   </session-factory>
 </hibernate-configuration>

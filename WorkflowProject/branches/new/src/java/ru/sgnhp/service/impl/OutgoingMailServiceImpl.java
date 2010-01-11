@@ -62,4 +62,8 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
     public void setOutgoingMailDao(IOutgoingMailDao outgoingMailDao) {
         this.outgoingMailDao = outgoingMailDao;
     }
+
+    public Long getNewOutgoingNumber() {
+        return outgoingMailDao.getNewOutgoingNumber() + 1;
+    }
 }

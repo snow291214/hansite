@@ -89,4 +89,12 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
         }
         return list;
     }
+
+    public Long getNewOutgoingNumber() {
+        List list = getSession().createQuery("SELECT Max(m.outgoingNumber) FROM OutgoingMailBean m").list();
+        if (list.get(0) instanceof Long) {
+            return (Long) list.get(0);
+        }
+        return -1L;
+    }
 }

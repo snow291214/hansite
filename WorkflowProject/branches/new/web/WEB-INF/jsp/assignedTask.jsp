@@ -1,4 +1,4 @@
-﻿<%@ include file="/WEB-INF/jsp/include.jsp" %>
+﻿<%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <title>Система электронного документооборота ООО "Салаватгазонефтехимпроект"</title>
 </head>
 <body>
@@ -9,10 +9,7 @@
                    ${sessionScope.initiator.lastName}
                    ${sessionScope.initiator.firstName}
                    ${sessionScope.initiator.middleName}
-                   (${sessionScope.initiator.login}) || " />
-                <a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> ||
-                <a href="<c:url value="logout.htm"/>">Завершить работу</a> ||
-                <a href="searchTask.htm">Поиск</a>
+                   (${sessionScope.initiator.login})" />
             </td>
         </tr>
         <tr>
@@ -41,6 +38,9 @@
             </td>
         </tr>
     </table>
+    <div class="navigation">
+        <%@ include file="/WEB-INF/jsp/includes/navigation.jsp" %>
+    </div>
     <div class="empty">
         <c:forEach var="wf" items="${requestScope.assigned}">
             <div>

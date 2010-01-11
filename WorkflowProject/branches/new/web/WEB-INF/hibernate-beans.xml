@@ -109,4 +109,18 @@
         </constructor-arg>
         <property name="outgoingMailDao" ref="outgoingMailDao"/>
     </bean>
+
+    <bean id="outgoingFileDao" class="ru.sgnhp.dao.impl.OutgoingFileDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="outgoingFileService" class="ru.sgnhp.service.impl.OutgoingFileServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.OutgoingFileBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="outgoingFileDao" ref="outgoingFileDao"/>
+    </bean>
 </beans>

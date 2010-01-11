@@ -25,4 +25,6 @@ public interface IOutgoingMailService extends IGenericService<OutgoingMailBean, 
     List<OutgoingMailBean> getByResponsibleName(String responsibleName);
 
     List<OutgoingMailBean> getByDueDate(Date dueDate);
+
+    Long getNewOutgoingNumber();
 }

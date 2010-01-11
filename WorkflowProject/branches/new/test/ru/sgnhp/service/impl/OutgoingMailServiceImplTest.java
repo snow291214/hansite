@@ -59,6 +59,12 @@ public class OutgoingMailServiceImplTest extends AbstractTransactionalDataSource
         assertNotNull(outgoingMailService.getByDueDate(date));
     }
 
+    @Test
+    public void testGetNewOutgoingNumber(){
+        Long number = outgoingMailService.getNewOutgoingNumber();
+        assertEquals(number, (Long)730L);
+    }
+
     public void setOutgoingMailService(IOutgoingMailService outgoingMailService) {
         this.outgoingMailService = outgoingMailService;
     }

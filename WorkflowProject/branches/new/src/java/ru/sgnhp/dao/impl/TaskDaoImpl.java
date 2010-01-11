@@ -1,8 +1,10 @@
 package ru.sgnhp.dao.impl;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ru.sgnhp.DateUtils;
 import ru.sgnhp.dao.ITaskDao;
 import ru.sgnhp.domain.TaskBean;
 
@@ -70,6 +72,11 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
     }
 
     public int getNewInternalNumber() {
+//        Calendar today = Calendar.getInstance();
+//        int year = today.get(Calendar.YEAR);
+//        List list = getSession().createQuery(String.format("SELECT Max(t.internalNumber) " +
+//                "FROM TaskBean t where t.startDate BETWEEN '%1$s-01-01' AND '%1$s-12-31'", +
+//                year)).list();
         List list = getSession().createQuery("SELECT Max(t.internalNumber) FROM TaskBean t").list();
         if (list.get(0) instanceof Integer) {
             return (Integer) list.get(0);
@@ -78,7 +85,11 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
     }
 
     public int getNewIncomingNumber() {
-        List list = getSession().createQuery("SELECT Max(t.incomingNumber) FROM TaskBean t").list();
+        Calendar today = Calendar.getInstance();
+        int year = today.get(Calendar.YEAR);
+        List list = getSession().createQuery(String.format("SELECT Max(t.incomingNumber) " +
+                "FROM TaskBean t where t.startDate BETWEEN '%1$s-01-01' AND '%1$s-12-31'",
+                year)).list();
         if (list.get(0) instanceof Integer) {
             return (Integer) list.get(0);
         }

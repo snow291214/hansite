@@ -1,5 +1,5 @@
 ﻿<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <title>Работа с заданиями</title>
 <link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css?random=20051112" media="screen"></link>
 <script type="text/javascript" src="scripts/dhtmlgoodies_calendar.js?random=20090118"></script>

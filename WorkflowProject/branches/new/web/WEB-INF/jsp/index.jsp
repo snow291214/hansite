@@ -1,4 +1,6 @@
-﻿<%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <title>Система электронного документооборота ООО "Салаватгазонефтехимпроект"</title>
 </head>
@@ -10,13 +12,7 @@
                    ${sessionScope.initiator.lastName}
                    ${sessionScope.initiator.firstName}
                    ${sessionScope.initiator.middleName}
-                   (${sessionScope.initiator.login}) || " />
-                <a href="<c:url value="selectUsers.htm"/>">Создать задачу</a> || 
-                <a href="<c:url value="logout.htm"/>">Завершить работу</a> || 
-                <a href="searchTask.htm">Поиск</a>
-                <sec:authorize ifAllGranted="ROLE_ADMIN">
-                    Admin
-                </sec:authorize>
+                   (${sessionScope.initiator.login}) " />
             </td>
         </tr>
         <tr>
@@ -46,11 +42,14 @@
             </td>
         </tr>
     </table>
+    <div class="navigation">
+        <%@ include file="/WEB-INF/jsp/includes/navigation.jsp" %>
+    </div>
     <div class="empty">
         <c:forEach var="wf" items="${requestScope.workflows}">
             <div>
                 <div class="header red">
-                    <b>Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/></b>
+                    Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
                 </div>
                 <div>
                     Компания: ${wf.taskBean.externalCompany}. 

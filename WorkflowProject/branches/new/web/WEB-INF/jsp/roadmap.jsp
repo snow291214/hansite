@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <title>Маршрут</title>
 </head>
 <body>

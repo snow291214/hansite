@@ -35,6 +35,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="ajax.htm">ajaxController</prop>
                 <prop key="roadmap.htm">roadmapController</prop>
                 <prop key="outgoingLetterWizard.htm">outgoingLetterController</prop>
+                <prop key="outgoingLetterSearch.htm">outgoingLetterSearchFormController</prop>
             </props>
         </property>
     </bean>
@@ -50,30 +51,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean name="loginFormController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="login" />
-    <!--<bean name="loginFormController" class="ru.sgnhp.web.LoginFormController" >
-        <property name="sessionForm">
-            <value>true</value>
-        </property>
-        <property name="commandName">
-            <value>userLogin</value>
-        </property>
-        <property name="commandClass">
-            <value>ru.sgnhp.dto.UserLogin</value>
-        </property>
-        <property name="validator">
-            <ref bean="loginFormValidator"/>
-        </property>
-        <property name="formView">
-            <value>login</value>
-        </property>
-        <property name="successView">
-            <value>index.htm</value>
-        </property>
-        <property name="authenticationDAO">
-            <ref bean="authenticationDAO" />
-        </property>
-    </bean>-->
-
+          
     <!-- Index Controller -->
     <bean name="indexController" class="ru.sgnhp.web.IndexController" >
         <property name="userManagerService">
@@ -260,6 +238,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
+    <!-- Workflow Roadmap Controller -->
     <bean name="outgoingLetterController" class="ru.sgnhp.web.OutgoingLetterController">
         <property name="commandName">
             <value>outgoingMailDto</value>
@@ -274,8 +253,28 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <value>redirect:index.htm</value>
             </list>
         </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService"/>
+        </property>
+        <property name="outgoingFileService">
+            <ref bean="outgoingFileService"/>
+        </property>
     </bean>
 
+    <!-- Outgoing Letter Search Controller -->
+    <bean name="outgoingLetterSearchFormController" class="ru.sgnhp.web.OutgoingLetterSearchController">
+        <property name="commandName" value="outgoingLetterSearch"/>
+        <property name="commandClass" value="ru.sgnhp.dto.OutgoingLetterSearchDto"/>
+        <property name="formView">
+            <value>outgoingLetterSearch</value>
+        </property>
+        <property name="successView">
+            <value>searchResult.htm</value>
+        </property>
+    </bean>
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">

@@ -19,4 +19,6 @@ public interface IOutgoingMailDao extends IGenericDao<OutgoingMailBean, Long> {
     List<OutgoingMailBean> getByResponsibleName(String responsibleName);
 
     List<OutgoingMailBean> getByDueDate(Date dueDate);
+
+    Long getNewOutgoingNumber();
 }

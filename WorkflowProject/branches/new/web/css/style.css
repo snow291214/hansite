@@ -4,8 +4,17 @@ body{
 }
 
 div.empty{
-    clear:both;
+    width:85%;
     font-size:small;
+    float:right;
+}
+
+div.navigation{
+    width:10%;
+    font-size:small;
+    float:left;
+    border: 1px solid black;
+    padding:15px;
 }
 
 div.header.pink{

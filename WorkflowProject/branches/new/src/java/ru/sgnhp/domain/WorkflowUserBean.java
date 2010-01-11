@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
@@ -71,6 +72,7 @@ public class WorkflowUserBean implements Serializable {
     @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
     @OrderBy("uid desc")
     private Set<WorkflowBean> assignedWorkflows = new HashSet<WorkflowBean>();
+
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
     @OrderBy("uid desc")
@@ -80,6 +82,12 @@ public class WorkflowUserBean implements Serializable {
     @JoinColumn(name = "GroupUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false)
     private UserGroupBean userGroupBean;
+
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "workflowUserBean", fetch = FetchType.LAZY)
+    @OrderBy("uid desc")
+    private Set<OutgoingMailBean> outgoingMailBeans = new HashSet<OutgoingMailBean>();
+
 
     public WorkflowUserBean() {
     }
@@ -196,5 +204,13 @@ public class WorkflowUserBean implements Serializable {
 
     public void setUserGroupBean(UserGroupBean userGroupBean) {
         this.userGroupBean = userGroupBean;
+    }
+
+    public Set<OutgoingMailBean> getOutgoingMailBeans() {
+        return outgoingMailBeans;
+    }
+
+    public void setOutgoingMailBeans(Set<OutgoingMailBean> outgoingMailBeans) {
+        this.outgoingMailBeans = outgoingMailBeans;
     }
 }
