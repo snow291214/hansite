@@ -1,6 +1,7 @@
 package ru.sgnhp.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import ru.sgnhp.dto.SearchTaskDto;
 import ru.sgnhp.domain.StateBean;
@@ -41,6 +42,8 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean, L
     List<WorkflowBean> getWorkflowByParentUid(Long workflowUid);
 
     List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid);
+
+    List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Date startDate, Date finishDate);
 
     void taskReminder();
 

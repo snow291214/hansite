@@ -79,6 +79,13 @@ public class SearchResultController implements Controller {
 //                workflowBeans = workflowManagerService.getWorkflowsByDescription(user.getUid(), searchTaskBean);
 //                request.getSession().setAttribute("searchTaskBean", null);
                 break;
+            case 4:
+                //Find By Period Of Date
+                result = "searchResult";
+                WorkflowUserBean workflowUserBean = (WorkflowUserBean) request.getSession().getAttribute("initiator");
+                workflowBeans = workflowManagerService.getWorkflowsByPeriodOfDate(workflowUserBean.getUid(),
+                        searchTaskBean.getStartDate(), searchTaskBean.getFinishDate());
+                break;
         }
         return new ModelAndView(result, "workflowBeans", workflowBeans);
     }

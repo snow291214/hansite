@@ -2,6 +2,7 @@ package ru.sgnhp.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -136,6 +137,7 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         return workflowDao.getRecievedWorkflows();
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid) {
         return workflowDao.getAllUncompletedByParentUserUid(parentUserUid);
     }
@@ -192,5 +194,10 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
 //                mailService.sendmailReport(workflowBeans);
 //            }
 //        }
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Date startDate, Date finishDate) {
+        return workflowDao.getWorkflowsByPeriodOfDate(parentUserUid, startDate, finishDate);
     }
 }

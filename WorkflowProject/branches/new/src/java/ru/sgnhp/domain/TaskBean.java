@@ -41,7 +41,9 @@ import org.hibernate.annotations.OnDeleteAction;
     @NamedQuery(name = "TaskBean.findByExternalAssignee", query = "SELECT t FROM TaskBean t WHERE t.externalAssignee like :externalAssignee"),
     @NamedQuery(name = "TaskBean.findByStartDate", query = "SELECT t FROM TaskBean t WHERE t.startDate = :startDate"),
     @NamedQuery(name = "TaskBean.findByDueDate", query = "SELECT t FROM TaskBean t WHERE t.dueDate = :dueDate"),
-    @NamedQuery(name = "TaskBean.findByDescription", query = "SELECT t FROM TaskBean t WHERE t.description like :description")
+    @NamedQuery(name = "TaskBean.findByDescription", query = "SELECT t FROM TaskBean t WHERE t.description like :description"),
+    @NamedQuery(name = "TaskBean.findByPeriodOfDate", query = "SELECT t FROM TaskBean " +
+        "t WHERE t.startDate between :startDate and :finishDate")
 })
 public class TaskBean implements Serializable {
 

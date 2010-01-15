@@ -6,17 +6,26 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import ru.sgnhp.Translit;
-import ru.sgnhp.domain.FileBean;
-import ru.sgnhp.service.IUploadManagerService;
+import ru.sgnhp.domain.OutgoingFileBean;
+import ru.sgnhp.service.IOutgoingFileService;
 
-public class DownloadController implements Controller {
+/*****
+ *
+ * @author Alexey Khudyakov
+ * @company "Salavatgazoneftehimproekt" Ltd
+ *
+ *****
+ */
+public class DownloadOutgoingMailFilesController implements Controller {
 
-    private IUploadManagerService uploadManagerService;
+    private IOutgoingFileService outgoingFileService;
     static final private String CONTENT_TYPE_CHARSET = "charset=windows-1251";
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String fileUid = request.getParameter("fileID");
-        FileBean bean = uploadManagerService.get(Long.parseLong(fileUid));
+
+        OutgoingFileBean bean = outgoingFileService.get(Long.parseLong(fileUid));
+
         String fileType = bean.getFileName().substring(bean.getFileName().indexOf(".") + 1, bean.getFileName().length());
         if (fileType.trim().equalsIgnoreCase("txt")) {
             response.setContentType("text/plain" + "; " + CONTENT_TYPE_CHARSET);
@@ -35,9 +44,7 @@ public class DownloadController implements Controller {
         response.setHeader("Content-Disposition", "attachment; filename=\"" + translit.toTranslit(bean.getFileName()) + "\"");
         response.setHeader("cache-control", "must-revalidate");
 
-
         ServletOutputStream outputStream = response.getOutputStream();
-        //byte[] bs = bean .getBytes(1, (int) bean.getBlob().length());
         byte[] bs = bean.getBlobField();
         outputStream.write(bs);
         outputStream.flush();
@@ -45,7 +52,7 @@ public class DownloadController implements Controller {
         return null;
     }
 
-    public void setUploadManagerService(IUploadManagerService uploadManagerService) {
-        this.uploadManagerService = uploadManagerService;
+    public void setOutgoingFileService(IOutgoingFileService outgoingFileService) {
+        this.outgoingFileService = outgoingFileService;
     }
 }

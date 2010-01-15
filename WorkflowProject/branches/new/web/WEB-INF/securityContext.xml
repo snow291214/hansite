@@ -37,5 +37,4 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
         <property name="contextFactorySecond" ref="theSecondLdapServer" />
     </bean>
 
-
 </beans>

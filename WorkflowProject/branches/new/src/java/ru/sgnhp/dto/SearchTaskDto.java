@@ -1,10 +1,14 @@
 package ru.sgnhp.dto;
 
+import java.util.Date;
+
 public class SearchTaskDto {
     private String taskInternalNumber;
     private String taskIncomingNumber;
     private String assigneeName;
     private String taskDescription;
+    private Date startDate;
+    private Date finishDate;
     private int searchType;
 
     public String getTaskInternalNumber() {
@@ -45,5 +49,21 @@ public class SearchTaskDto {
 
     public void setSearchType(int searchType) {
         this.searchType = searchType;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
     }
 }

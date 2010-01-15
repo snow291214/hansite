@@ -123,7 +123,7 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         super.save(bean);
     }
 
-    public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean){
+    public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean) {
         WorkflowBean workflowBean = this.get(beanDto.getUid());
         workflowBean.setState(stateBean);
         workflowBean.setWorkflowNote(beanDto.getWorkflowNote());
@@ -145,6 +145,18 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("parentUserUid", parentUserUid);
         List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findAllUncompletedByParentUserUid", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
+
+    public List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Date startDate, Date finishDate) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("parentUserUid", parentUserUid);
+        value.put("startDate", startDate);
+        value.put("finishDate",finishDate);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByPeriodOfDate", value);
         if (list == null || list.size() == 0) {
             return null;
         }

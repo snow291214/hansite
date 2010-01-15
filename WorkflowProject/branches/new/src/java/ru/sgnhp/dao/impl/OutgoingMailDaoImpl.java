@@ -1,5 +1,6 @@
 package ru.sgnhp.dao.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,14 +21,24 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
         super(OutgoingMailBean.class);
     }
 
-    public OutgoingMailBean getByOutgoingNumber(Long outgoingNumber) {
+    public List<OutgoingMailBean> getByOutgoingNumber(Long outgoingNumber) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("outgoingNumber", outgoingNumber);
         List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByOutgoingNumber", value);
         if (list == null || list.size() == 0) {
             return null;
         }
-        return list.get(0);
+        return list;
+    }
+
+    public List<OutgoingMailBean> getByDescription(String description) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("description", description);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByDescription", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
     }
 
     public List<OutgoingMailBean> getByOutgoingDate(Date outgoingDate) {
@@ -40,14 +51,14 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
         return list;
     }
 
-    public OutgoingMailBean getByDocumentumNumber(String documentumNumber) {
+    public List<OutgoingMailBean> getByDocumentumNumber(String documentumNumber) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("documentumNumber", documentumNumber);
         List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByDocumentumNumber", value);
         if (list == null || list.size() == 0) {
             return null;
         }
-        return list.get(0);
+        return list;
     }
 
     public List<OutgoingMailBean> getByReceiverCompany(String receiverCompany) {
@@ -70,10 +81,10 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
         return list;
     }
 
-    public List<OutgoingMailBean> getByResponsibleName(String responsibleName) {
+    public List<OutgoingMailBean> getByResponsibleUid(Long responsibleUid) {
         Map<String, Object> value = new HashMap<String, Object>();
-        value.put("responsibleName", responsibleName);
-        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByResponsibleName", value);
+        value.put("responsibleUid", responsibleUid);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByResponsibleUid", value);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -83,7 +94,8 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
     public List<OutgoingMailBean> getByDueDate(Date dueDate) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("dueDate", dueDate);
-        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByDueDate", value);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByDueDate",
+                value);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -91,7 +103,11 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
     }
 
     public Long getNewOutgoingNumber() {
-        List list = getSession().createQuery("SELECT Max(m.outgoingNumber) FROM OutgoingMailBean m").list();
+        Calendar today = Calendar.getInstance();
+        int year = today.get(Calendar.YEAR);
+        List list = getSession().createQuery(String.format("SELECT Max(m.outgoingNumber) " +
+                "FROM OutgoingMailBean m where m.outgoingDate BETWEEN '%1$s-01-01' AND '%1$s-12-31'",
+                year)).list();
         if (list.get(0) instanceof Long) {
             return (Long) list.get(0);
         }

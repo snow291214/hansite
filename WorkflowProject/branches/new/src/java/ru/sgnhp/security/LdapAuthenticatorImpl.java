@@ -39,7 +39,7 @@ public class LdapAuthenticatorImpl implements LdapAuthenticator {
             principalPrefix = contextFactorySecond.getPrincipalPrefix();
         }
         String principal = principalPrefix + authentication.getName();
-        logger.info(String.format("User is authenticating. Username: %1$s Remote address: %2$s", principal, remoteIpAddress));
+        //logger.info(String.format("User is authenticating. Username: %1$s Remote address: %2$s", principal, remoteIpAddress));
         String password = "";
         if (authentication.getCredentials() != null) {
             password = authentication.getCredentials().toString();

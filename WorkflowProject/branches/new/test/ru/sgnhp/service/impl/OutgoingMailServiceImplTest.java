@@ -4,8 +4,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import org.junit.Test;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.service.IOutgoingMailService;
 import static org.junit.Assert.*;
 
@@ -33,6 +35,13 @@ public class OutgoingMailServiceImplTest extends AbstractTransactionalDataSource
     }
 
     @Test
+    public void testGetByDescription() {
+        List<OutgoingMailBean> outgoingMailBeans = outgoingMailService.getByDescription("Тест");
+        assertNotNull(outgoingMailBeans.get(0));
+        assertNotNull(outgoingMailBeans.get(0).getWorkflowUserBean());
+    }
+
+    @Test
     public void testGetByDocumentumNumber() {
         assertNotNull(outgoingMailService.getByDocumentumNumber("Вх-07-223"));
     }
@@ -49,7 +58,7 @@ public class OutgoingMailServiceImplTest extends AbstractTransactionalDataSource
 
     @Test
     public void testGetByResponsibleName() {
-        assertNotNull(outgoingMailService.getByResponsibleName("Худяков"));
+        assertNotNull(outgoingMailService.getByResponsibleUid(75L));
     }
 
     @Test
@@ -62,7 +71,7 @@ public class OutgoingMailServiceImplTest extends AbstractTransactionalDataSource
     @Test
     public void testGetNewOutgoingNumber(){
         Long number = outgoingMailService.getNewOutgoingNumber();
-        assertEquals(number, (Long)730L);
+        assertEquals(number, (Long)1L);
     }
 
     public void setOutgoingMailService(IOutgoingMailService outgoingMailService) {

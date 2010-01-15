@@ -20,6 +20,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="index.htm">indexController</prop>
                 <prop key="logout.htm">logoutController</prop>
                 <prop key="download.htm">downloadController</prop>
+                <prop key="getOutgoingFiles.htm">downloadOutgoingMailFilesController</prop>
                 <prop key="selectUsers.htm">selectUsersFormController</prop>
                 <prop key="registerTask.htm">newTaskFormController</prop>
                 <prop key="upload.htm">uploadController</prop>
@@ -35,7 +36,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="ajax.htm">ajaxController</prop>
                 <prop key="roadmap.htm">roadmapController</prop>
                 <prop key="outgoingLetterWizard.htm">outgoingLetterController</prop>
-                <prop key="outgoingLetterSearch.htm">outgoingLetterSearchFormController</prop>
+                <prop key="outgoingMailSearch.htm">outgoingMailSearchFormController</prop>
+                <prop key="outgoingMailSearchResult.htm">outgoingMailSearchResultController</prop>
             </props>
         </property>
     </bean>
@@ -76,6 +78,13 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean name="downloadController" class="ru.sgnhp.web.DownloadController">
         <property name="uploadManagerService">
             <ref bean="uploadManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Download Outgoing Mail Files Controller -->
+    <bean name="downloadOutgoingMailFilesController" class="ru.sgnhp.web.DownloadOutgoingMailFilesController">
+        <property name="outgoingFileService">
+            <ref bean="outgoingFileService"/>
         </property>
     </bean>
 
@@ -265,16 +274,29 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     </bean>
 
     <!-- Outgoing Letter Search Controller -->
-    <bean name="outgoingLetterSearchFormController" class="ru.sgnhp.web.OutgoingLetterSearchController">
-        <property name="commandName" value="outgoingLetterSearch"/>
-        <property name="commandClass" value="ru.sgnhp.dto.OutgoingLetterSearchDto"/>
+    <bean name="outgoingMailSearchFormController" class="ru.sgnhp.web.OutgoingMailSearchController">
+        <property name="commandName" value="outgoingMailSearch"/>
+        <property name="commandClass" value="ru.sgnhp.dto.OutgoingMailSearchDto"/>
         <property name="formView">
-            <value>outgoingLetterSearch</value>
+            <value>outgoingMailSearch</value>
         </property>
         <property name="successView">
-            <value>searchResult.htm</value>
+            <value>outgoingMailSearchResult.htm</value>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
         </property>
     </bean>
+
+
+
+    <!-- Outgoing Letter Search Controller -->
+    <bean name="outgoingMailSearchResultController" class="ru.sgnhp.web.OutgoingMailSearchResultController">
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService" />
+        </property>
+    </bean>
+
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">

@@ -7,7 +7,6 @@ import org.springframework.security.AuthenticationException;
 import org.springframework.security.providers.AuthenticationProvider;
 import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
 import org.springframework.security.providers.ldap.LdapAuthenticator;
-import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IUserManagerService;
 
 /*****
@@ -29,7 +28,10 @@ public class LdapAuthenticationProvider implements AuthenticationProvider {
         // Creating an LdapAuthenticationToken (rather than using the existing Authentication
         // object) allows us to add the already-created LDAP context for our app to use later.
         //final String currentUser = authentication.getName();
-        final String userRole = userManagerService.getUserByLogin(authentication.getName()).getUserGroupBean().getName();
+        String userRole = "ROLE_USER";
+        if (userManagerService.getUserByLogin(authentication.getName()) != null) {
+            userRole = userManagerService.getUserByLogin(authentication.getName()).getUserGroupBean().getName();
+        }
         //LdapAuthenticationToken ldapAuth = new LdapAuthenticationToken(authentication, "ROLE_USER");
         LdapAuthenticationToken ldapAuth = new LdapAuthenticationToken(authentication, userRole);
         InitialLdapContext ldapContext = (InitialLdapContext) authAdapter.getObjectAttribute("ldapContext");

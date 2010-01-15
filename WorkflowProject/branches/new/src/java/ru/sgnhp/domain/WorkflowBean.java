@@ -32,22 +32,42 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "WorkflowBean.findAll", query = "SELECT w FROM WorkflowBean w ORDER BY w.uid"),
     @NamedQuery(name = "WorkflowBean.findAllParentWorkflowsByParentUserUid",
     query = "SELECT w FROM WorkflowBean w Where w.parentUid = -1 And w.assignee.uid = :parentUserUid " +
-    "And w.stateBean.stateUid <> 3 ORDER BY w.uid"),
+        "And w.stateBean.stateUid <> 3 ORDER BY w.uid"),
     @NamedQuery(name = "WorkflowBean.findAllUncompletedByParentUserUid",
     query = "SELECT w FROM WorkflowBean w Where w.assignee.uid = :parentUserUid " +
-    "And w.stateBean.stateUid in (0,2) ORDER BY w.uid"),
-    @NamedQuery(name = "WorkflowBean.findByUid", query = "SELECT w FROM WorkflowBean w WHERE w.uid = :uid"),
-    @NamedQuery(name = "WorkflowBean.findByParentUid", query = "SELECT w FROM WorkflowBean w WHERE w.parentUid = :parentUid"),
-    @NamedQuery(name = "WorkflowBean.findByAssignDate", query = "SELECT w FROM WorkflowBean w WHERE w.assignDate = :assignDate"),
-    @NamedQuery(name = "WorkflowBean.findByFinishDate", query = "SELECT w FROM WorkflowBean w WHERE w.finishDate = :finishDate"),
-    @NamedQuery(name = "WorkflowBean.findRecievedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid in (0,2) order by w.uid desc"),
-    @NamedQuery(name = "WorkflowBean.findReceived", query = "SELECT w FROM WorkflowBean w WHERE w.stateBean.stateUid in (0,2) order by w.uid desc"),
-    @NamedQuery(name = "WorkflowBean.findAssignedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.assignee.uid = :userUid and w.stateBean.stateUid <> 3 order by w.uid desc"),
-    @NamedQuery(name = "WorkflowBean.findAssignedAndCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.assignee.uid = :userUid and w.stateBean.stateUid = 3  order by w.uid desc"),
-    @NamedQuery(name = "WorkflowBean.findCompletedByUserUid", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid = 3 order by w.uid desc"),
-    @NamedQuery(name = "WorkflowBean.findByDescription", query = "SELECT w FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.description like :description order by w.uid desc"),
-    @NamedQuery(name = "WorkflowBean.findByTaskUid", query = "SELECT w FROM WorkflowBean w WHERE w.taskBean.uid = :taskUid and w.parentUid = -1"),
-    @NamedQuery(name = "WorkflowBean.updateWorkflowState", query = "UPDATE WorkflowBean w SET w.stateBean = :stateBean WHERE w.uid = :uid")
+        "And w.stateBean.stateUid in (0,2) ORDER BY w.uid"),
+    @NamedQuery(name = "WorkflowBean.findByUid", query = "SELECT w FROM WorkflowBean " +
+        "w WHERE w.uid = :uid"),
+    @NamedQuery(name = "WorkflowBean.findByParentUid", query = "SELECT w FROM WorkflowBean " +
+        "w WHERE w.parentUid = :parentUid"),
+    @NamedQuery(name = "WorkflowBean.findByAssignDate", query = "SELECT w FROM " +
+        "WorkflowBean w WHERE w.assignDate = :assignDate"),
+    @NamedQuery(name = "WorkflowBean.findByFinishDate", query = "SELECT w FROM " +
+        "WorkflowBean w WHERE w.finishDate = :finishDate"),
+    @NamedQuery(name = "WorkflowBean.findByPeriodOfDate", query = "SELECT w FROM " +
+        "WorkflowBean w WHERE w.assignDate between :startDate and :finishDate and " +
+        "w.assignee.uid = :parentUserUid order by w.uid desc"),
+    @NamedQuery(name = "WorkflowBean.findRecievedByUserUid", query = "SELECT w " +
+        "FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid " +
+        "in (0,2) order by w.uid desc"),
+    @NamedQuery(name = "WorkflowBean.findReceived", query = "SELECT w FROM WorkflowBean " +
+        "w WHERE w.stateBean.stateUid in (0,2) order by w.uid desc"),
+    @NamedQuery(name = "WorkflowBean.findAssignedByUserUid", query = "SELECT w " +
+    "FROM WorkflowBean w WHERE w.assignee.uid = :userUid and w.stateBean.stateUid " +
+        "<> 3 order by w.uid desc"),
+    @NamedQuery(name = "WorkflowBean.findAssignedAndCompletedByUserUid", 
+    query = "SELECT w FROM WorkflowBean w WHERE w.assignee.uid = :userUid and " +
+        "w.stateBean.stateUid = 3  order by w.uid desc"),
+    @NamedQuery(name = "WorkflowBean.findCompletedByUserUid", query = "SELECT w " +
+    "FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid = 3 " +
+        "order by w.uid desc"),
+    @NamedQuery(name = "WorkflowBean.findByDescription", query = "SELECT w FROM " +
+        "WorkflowBean w WHERE w.receiver.uid = :userUid and w.description like " +
+        ":description order by w.uid desc"),
+    @NamedQuery(name = "WorkflowBean.findByTaskUid", query = "SELECT w FROM " +
+        "WorkflowBean w WHERE w.taskBean.uid = :taskUid and w.parentUid = -1"),
+    @NamedQuery(name = "WorkflowBean.updateWorkflowState", query = "UPDATE " +
+        "WorkflowBean w SET w.stateBean = :stateBean WHERE w.uid = :uid")
 })
 public class WorkflowBean implements Serializable {
 

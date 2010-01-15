@@ -10,10 +10,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.providers.ldap.LdapAuthenticationProvider;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.security.LdapAuthenticatorImpl;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
@@ -24,7 +26,7 @@ public class IndexController implements Controller {
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-
+        
         //Cookie cookie =  new LongLivedCookie("sessionUid", request.getSession().getId());
         //response.addCookie(null);
         //WorkflowUser user = userManagerService.getUserByLogin("ASU\\48han");
@@ -37,7 +39,7 @@ public class IndexController implements Controller {
         //Необходимо переписать
         int count = 0;
         WorkflowUserBean user = userManagerService.getUserByLogin(currentUser);
-        if (user == null) {
+        if (user == null) {          
             user = (WorkflowUserBean) request.getSession().getAttribute("initiator");
             user = userManagerService.save(user);
         }

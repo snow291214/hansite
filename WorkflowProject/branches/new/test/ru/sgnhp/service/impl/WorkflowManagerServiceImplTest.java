@@ -3,6 +3,7 @@ package ru.sgnhp.service.impl;
 import java.util.List;
 import org.junit.Test;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IMailService;
@@ -110,8 +111,15 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
         assertEquals(workflowUid, uid);
     }
 
+    public void testGetWorkflowsByDateOfPerod() {
+        List<WorkflowBean> workflowBeans =
+                workflowManagerService.getWorkflowsByPeriodOfDate(75L,
+                DateUtils.increaseDate(DateUtils.nowDate(), -3), DateUtils.nowDate());
+        assertNotNull(workflowBeans);
+    }
+
     @Test
-    public void testTaskReport(){
+    public void testTaskReport() {
         workflowManagerService.taskReport();
     }
 

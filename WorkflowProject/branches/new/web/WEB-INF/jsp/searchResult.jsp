@@ -29,6 +29,7 @@
                 </div>
             </div>
         </div>
+        <br />
     </c:forEach>
 </body>
 </html>

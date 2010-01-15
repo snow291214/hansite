@@ -25,8 +25,13 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public OutgoingMailBean getByOutgoingNumber(Long outgoingNumber) {
+    public List<OutgoingMailBean> getByOutgoingNumber(Long outgoingNumber) {
         return outgoingMailDao.getByOutgoingNumber(outgoingNumber);
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public List<OutgoingMailBean> getByDescription(String description) {
+        return outgoingMailDao.getByDescription("%" + description + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
@@ -35,7 +40,7 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public OutgoingMailBean getByDocumentumNumber(String documentumNumber) {
+    public List<OutgoingMailBean> getByDocumentumNumber(String documentumNumber) {
         return outgoingMailDao.getByDocumentumNumber("%" + documentumNumber + "%");
     }
 
@@ -50,8 +55,8 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public List<OutgoingMailBean> getByResponsibleName(String responsibleName) {
-        return outgoingMailDao.getByResponsibleName("%" + responsibleName + "%");
+    public List<OutgoingMailBean> getByResponsibleUid(Long responsibleUid) {
+        return outgoingMailDao.getByResponsibleUid(responsibleUid);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
@@ -64,6 +69,10 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
     }
 
     public Long getNewOutgoingNumber() {
-        return outgoingMailDao.getNewOutgoingNumber() + 1;
+        Long value = outgoingMailDao.getNewOutgoingNumber();
+        if (value == -1) {
+            value++;
+        }
+        return value + 1;
     }
 }

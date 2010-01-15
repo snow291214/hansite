@@ -20,7 +20,7 @@ public class OutgoingMailDto implements Serializable {
     private Date outgoingDate;
     private String receiverCompany;
     private String receiverName;
-    private int responsibleUid;
+    private Long responsibleUid;
     private Date dueDate;
 
     public Long getUid() {
@@ -87,11 +87,11 @@ public class OutgoingMailDto implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public int getResponsibleUid() {
+    public Long getResponsibleUid() {
         return responsibleUid;
     }
 
-    public void setResponsibleUid(int responsibleUid) {
+    public void setResponsibleUid(Long responsibleUid) {
         this.responsibleUid = responsibleUid;
     }
 }
