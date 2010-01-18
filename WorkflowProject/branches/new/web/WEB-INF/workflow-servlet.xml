@@ -21,6 +21,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="logout.htm">logoutController</prop>
                 <prop key="download.htm">downloadController</prop>
                 <prop key="getOutgoingFiles.htm">downloadOutgoingMailFilesController</prop>
+                <prop key="getWorkflowFiles.htm">downloadWorkflowFilesController</prop>
                 <prop key="selectUsers.htm">selectUsersFormController</prop>
                 <prop key="registerTask.htm">newTaskFormController</prop>
                 <prop key="upload.htm">uploadController</prop>
@@ -85,6 +86,12 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean name="downloadOutgoingMailFilesController" class="ru.sgnhp.web.DownloadOutgoingMailFilesController">
         <property name="outgoingFileService">
             <ref bean="outgoingFileService"/>
+        </property>
+    </bean>
+
+    <bean name="downloadWorkflowFilesController" class="ru.sgnhp.web.DownloadWorkflowFilesController">
+        <property name="workflowFileManagerService">
+            <ref bean="workflowFileManagerService"/>
         </property>
     </bean>
 
@@ -209,6 +216,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="stateManagerService">
             <ref bean="stateManagerService"/>
         </property>
+        <property name="workflowFileManagerService">
+            <ref bean="workflowFileManagerService"/>
+        </property>
     </bean>
 
     <!-- Search Task Controller -->
@@ -220,6 +230,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
         <property name="successView">
             <value>searchResult.htm</value>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
         </property>
     </bean>
 

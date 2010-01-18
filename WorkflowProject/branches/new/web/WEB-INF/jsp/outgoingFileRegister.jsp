@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Добавление файлов к задаче</title>
+<title>Добавление файлов к письму</title>
 <script language="javascript" type="text/javascript">
     uid = 1
     function createNewInput(){

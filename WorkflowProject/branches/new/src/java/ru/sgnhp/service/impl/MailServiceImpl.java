@@ -11,6 +11,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IMailService;
 
@@ -55,8 +56,10 @@ public class MailServiceImpl implements IMailService {
                     "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " + _workflow.getAssignee().getFirstName() +
                     " " + _workflow.getAssignee().getMiddleName() + " " +
                     _workflow.getAssignee().getLastName() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " + _workflow.getDescription() +
-                    "</p><a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачу</a>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " 
+                    + _workflow.getDescription() + "</p>" +
+                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID=" +
+                    _workflow.getUid().toString() + "\">Просмотреть задачу</a>" +
                     "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>" +
                     "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
@@ -97,6 +100,8 @@ public class MailServiceImpl implements IMailService {
                     _workflow.getState().getStateDescription() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Записка к смене статуса: " +
                     _workflow.getWorkflowNote() + "</p>" +
+                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/roadmap.htm?workflowID=" +
+                    _workflow.getUid().toString() + "\">Просмотреть задачу</a>" +
                     "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
@@ -225,15 +230,15 @@ public class MailServiceImpl implements IMailService {
                 tableBody += "<tr><td colspan=6>Тест!</td></tr>";
                 int counter = 1;
                 //for (WorkflowBean wf : workflowBeans) {
-                    tableBody += "<tr>" +
-                            "<td>" + counter + "</td>" +
-                            "<td>" + wf.getAssignee().getLastName() + "</td>" +
-                            "<td>" + wf.getReceiver().getLastName() + "</td>" +
-                            "<td>" + wf.getDescription() + "</td>" +
-                            "<td>" + wf.getState().getStateDescription() + "</td>" +
-                            "<td>" + wf.getWorkflowNote() + "</td>" +
-                            "</tr>";
-                    counter++;
+                tableBody += "<tr>" +
+                        "<td>" + counter + "</td>" +
+                        "<td>" + wf.getAssignee().getLastName() + "</td>" +
+                        "<td>" + wf.getReceiver().getLastName() + "</td>" +
+                        "<td>" + wf.getDescription() + "</td>" +
+                        "<td>" + wf.getState().getStateDescription() + "</td>" +
+                        "<td>" + wf.getWorkflowNote() + "</td>" +
+                        "</tr>";
+                counter++;
                 //}
             }
             htmlPart.setContent("<html><head><style type=\"text/css\"> " +
@@ -288,5 +293,38 @@ public class MailServiceImpl implements IMailService {
 
     public String getFromName() {
         return fromName;
+    }
+
+    public void sendmailOutgoing(OutgoingMailBean outgoingMailBean) {
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", mailHostName);
+        Session session = Session.getDefaultInstance(props, null);
+        MimeMessage message = new MimeMessage(session);
+        try {
+            InternetAddress address = new InternetAddress(fromAddress);
+            address.setPersonal(fromName, "utf-8");
+            message.setFrom(address);
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(outgoingMailBean.getWorkflowUserBean().getEmail()));
+            message.setSubject("Зарегистрировано и отправлено письмо: " +
+                    outgoingMailBean.getWorkflowUserBean().getLastName() +
+                    " ==> " + outgoingMailBean.getReceiverName(), "utf-8");
+
+            Multipart multipart = new MimeMultipart("related");
+            BodyPart htmlPart = new MimeBodyPart();
+
+            htmlPart.setContent("<html><body><h2>Исходящее письмо №" +
+                    outgoingMailBean.getOutgoingNumber().toString() + "</h2>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Тема письма: " +
+                    outgoingMailBean.getDescription() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Компания-получатель: " +
+                    outgoingMailBean.getReceiverCompany() + ". ФИО получателя: " + outgoingMailBean.getReceiverName() +
+                    "</body></html>", "text/html;charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

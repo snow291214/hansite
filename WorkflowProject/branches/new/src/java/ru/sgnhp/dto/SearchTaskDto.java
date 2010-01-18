@@ -10,6 +10,7 @@ public class SearchTaskDto {
     private Date startDate;
     private Date finishDate;
     private int searchType;
+    private Long receiverUid;
 
     public String getTaskInternalNumber() {
         return taskInternalNumber;
@@ -65,5 +66,13 @@ public class SearchTaskDto {
 
     public void setFinishDate(Date finishDate) {
         this.finishDate = finishDate;
+    }
+
+    public Long getReceiverUid() {
+        return receiverUid;
+    }
+
+    public void setReceiverUid(Long receiverUid) {
+        this.receiverUid = receiverUid;
     }
 }

@@ -84,16 +84,16 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     public void testGetRecievedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowManagerService.getRecievedWorkflowsByUserUid(userUid);
         assertNotNull(workflowBeans);
-        assertEquals(2, workflowBeans.size());
-        assertEquals("Фафанкина", workflowBeans.get(0).getAssignee().getLastName());
+        assertEquals(4, workflowBeans.size());
+        assertEquals("Худяков", workflowBeans.get(0).getAssignee().getLastName());
     }
 
     @Test
     public void testGetAssignedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.TRUE);
         assertNotNull(workflowBeans);
-        assertEquals(null, workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.FALSE));
-        assertEquals(9, workflowBeans.size());
+        assertNotNull(workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.FALSE));
+        assertEquals(12, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getAssignee().getLastName());
     }
 
@@ -101,7 +101,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     public void testGetCompletedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowManagerService.getCompletedWorkflowsByUserUid(userUid);
         assertNotNull(workflowBeans);
-        assertEquals(12, workflowBeans.size());
+        assertEquals(17, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getReceiver().getLastName());
     }
 
@@ -111,10 +111,10 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
         assertEquals(workflowUid, uid);
     }
 
-    public void testGetWorkflowsByDateOfPerod() {
+    public void testGetWorkflowsByPeriodOfDate() {
         List<WorkflowBean> workflowBeans =
-                workflowManagerService.getWorkflowsByPeriodOfDate(75L,
-                DateUtils.increaseDate(DateUtils.nowDate(), -3), DateUtils.nowDate());
+                workflowManagerService.getWorkflowsByPeriodOfDate(75L, 72L,
+                DateUtils.increaseDate(DateUtils.nowDate(), -30), DateUtils.nowDate());
         assertNotNull(workflowBeans);
     }
 

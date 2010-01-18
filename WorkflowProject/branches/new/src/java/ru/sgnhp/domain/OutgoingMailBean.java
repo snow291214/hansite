@@ -34,16 +34,16 @@ import org.hibernate.annotations.OnDeleteAction;
  */
 @Entity
 @Table(name = "outgoingmail", catalog = "workflowdb", schema = "")
-@NamedQueries({@NamedQuery(name = "OutgoingMailBean.findAll", query = "SELECT o FROM OutgoingMailBean o"),
-    @NamedQuery(name = "OutgoingMailBean.findByUid", query = "SELECT o FROM OutgoingMailBean o WHERE o.uid = :uid"),
-    @NamedQuery(name = "OutgoingMailBean.findByOutgoingNumber", query = "SELECT o FROM OutgoingMailBean o WHERE o.outgoingNumber = :outgoingNumber"),
-    @NamedQuery(name = "OutgoingMailBean.findByDescription", query = "SELECT o FROM OutgoingMailBean o WHERE o.description like :description"),
-    @NamedQuery(name = "OutgoingMailBean.findByOutgoingDate", query = "SELECT o FROM OutgoingMailBean o WHERE o.outgoingDate = :outgoingDate"),
-    @NamedQuery(name = "OutgoingMailBean.findByDocumentumNumber", query = "SELECT o FROM OutgoingMailBean o WHERE o.documentumNumber like :documentumNumber"),
-    @NamedQuery(name = "OutgoingMailBean.findByReceiverCompany", query = "SELECT o FROM OutgoingMailBean o WHERE o.receiverCompany like :receiverCompany"),
-    @NamedQuery(name = "OutgoingMailBean.findByReceiverName", query = "SELECT o FROM OutgoingMailBean o WHERE o.receiverName like :receiverName"),
-    @NamedQuery(name = "OutgoingMailBean.findByResponsibleUid", query = "SELECT o FROM OutgoingMailBean o WHERE o.workflowUserBean.uid = :responsibleUid"),
-    @NamedQuery(name = "OutgoingMailBean.findByDueDate", query = "SELECT o FROM OutgoingMailBean o WHERE o.dueDate = :dueDate")})
+@NamedQueries({@NamedQuery(name = "OutgoingMailBean.findAll", query = "SELECT o FROM OutgoingMailBean o order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByUid", query = "SELECT o FROM OutgoingMailBean o WHERE o.uid = :uid order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByOutgoingNumber", query = "SELECT o FROM OutgoingMailBean o WHERE o.outgoingNumber = :outgoingNumber order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByDescription", query = "SELECT o FROM OutgoingMailBean o WHERE o.description like :description order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByOutgoingDate", query = "SELECT o FROM OutgoingMailBean o WHERE o.outgoingDate = :outgoingDate order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByDocumentumNumber", query = "SELECT o FROM OutgoingMailBean o WHERE o.documentumNumber like :documentumNumber order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByReceiverCompany", query = "SELECT o FROM OutgoingMailBean o WHERE o.receiverCompany like :receiverCompany order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByReceiverName", query = "SELECT o FROM OutgoingMailBean o WHERE o.receiverName like :receiverName order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByResponsibleUid", query = "SELECT o FROM OutgoingMailBean o WHERE o.workflowUserBean.uid = :responsibleUid order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByDueDate", query = "SELECT o FROM OutgoingMailBean o WHERE o.dueDate = :dueDate order by o.outgoingDate desc, o.outgoingNumber")})
 public class OutgoingMailBean implements Serializable {
 
     private static final long serialVersionUID = 7L;
@@ -79,6 +79,7 @@ public class OutgoingMailBean implements Serializable {
     @Column(name = "DueDate")
     @Temporal(TemporalType.DATE)
     private Date dueDate;
+
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "outgoingMailBean", fetch = FetchType.LAZY)
     private Set<OutgoingFileBean> outgoingFileBeanSet = new HashSet<OutgoingFileBean>();

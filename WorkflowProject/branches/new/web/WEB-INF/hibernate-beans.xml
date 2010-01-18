@@ -74,6 +74,20 @@
         <property name="mailService" ref="mailServiceManager" />
     </bean>
 
+    <bean id="workflowFileDao" class="ru.sgnhp.dao.impl.WorkflowFileDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="workflowFileManagerService" class="ru.sgnhp.service.impl.WorkflowFileManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.WorkflowFileBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="workflowFileDao" ref="workflowFileDao"/>
+    </bean>
+
     <bean id="mailServiceManager" class="ru.sgnhp.service.impl.MailServiceImpl">
         <property name="mailHostName" value="${mail.mailHostName}"/>
         <property name="fromAddress" value="${mail.fromAddress}"/>

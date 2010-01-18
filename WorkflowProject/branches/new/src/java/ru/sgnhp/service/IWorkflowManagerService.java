@@ -43,7 +43,7 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean, L
 
     List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid);
 
-    List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Date startDate, Date finishDate);
+    List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate);
 
     void taskReminder();
 

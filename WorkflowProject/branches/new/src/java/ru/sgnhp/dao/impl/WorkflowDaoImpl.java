@@ -151,9 +151,10 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         return list;
     }
 
-    public List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Date startDate, Date finishDate) {
+    public List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("parentUserUid", parentUserUid);
+        value.put("userUid", userUid);
         value.put("startDate", startDate);
         value.put("finishDate",finishDate);
         List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByPeriodOfDate", value);

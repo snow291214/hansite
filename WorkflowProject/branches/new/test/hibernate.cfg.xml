@@ -17,6 +17,7 @@
     <mapping class="ru.sgnhp.domain.FileBean"/>
     <mapping class="ru.sgnhp.domain.StateBean"/>
     <mapping class="ru.sgnhp.domain.WorkflowBean"/>
+    <mapping class="ru.sgnhp.domain.WorkflowFileBean"/>
     <mapping class="ru.sgnhp.domain.WorkflowUserBean"/>
     <mapping class="ru.sgnhp.domain.OutgoingMailBean"/>
     <mapping class="ru.sgnhp.domain.OutgoingFileBean"/>

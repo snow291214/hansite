@@ -1,17 +1,23 @@
 package ru.sgnhp.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindException;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.domain.WorkflowFileBean;
 import ru.sgnhp.dto.WorkflowBeanDto;
 import ru.sgnhp.service.IStateManagerService;
+import ru.sgnhp.service.IWorkflowFileManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
 /*****
@@ -25,11 +31,25 @@ public class WorkflowManagerFormController extends SimpleFormController {
 
     private IWorkflowManagerService workflowManagerService;
     private IStateManagerService stateManagerService;
+    private IWorkflowFileManagerService workflowFileManagerService;
 
     @Override
-    public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
-        WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto)command;
-        workflowBeanDto = workflowManagerService.updateWorkflowState(workflowBeanDto,  stateManagerService.get(workflowBeanDto.getStateUid()));
+    public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) throws IOException {
+        WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto) command;
+        workflowBeanDto = workflowManagerService.updateWorkflowState(workflowBeanDto, stateManagerService.get(workflowBeanDto.getStateUid()));
+
+        WorkflowBean workflowBean = workflowManagerService.get(workflowBeanDto.getUid());
+        /* Сохраняем файлы */
+        final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+        final Map files = multiRequest.getFileMap();
+        for (Object file : files.values()) {
+            WorkflowFileBean bean = new WorkflowFileBean();
+            bean.setWorkflowBean(workflowBean);
+            bean.setFileName(((MultipartFile) file).getOriginalFilename());
+            bean.setBlobField(((MultipartFile) file).getBytes());
+            workflowFileManagerService.save(bean);
+        }
+
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
@@ -66,5 +86,9 @@ public class WorkflowManagerFormController extends SimpleFormController {
 
     public void setStateManagerService(IStateManagerService stateManagerService) {
         this.stateManagerService = stateManagerService;
+    }
+
+    public void setWorkflowFileManagerService(IWorkflowFileManagerService workflowFileManagerService) {
+        this.workflowFileManagerService = workflowFileManagerService;
     }
 }

@@ -1,30 +1,29 @@
-﻿<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-﻿<%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <title>Управление задачей</title>
+<script language="javascript" type="text/javascript">
+    uid = 1
+    function createNewInput(){
+        uid ++;
+        var input = document.createElement("input");
+        input.type = "file";
+        input.name = "files" + uid.toString();
+        input.id = "f"+uid.toString()
+        var elem = document.getElementById("container");
+        var p = document.createElement("p");
+        elem = elem.appendChild(p);
+        var newText = document.createTextNode("Имя файла: ");
+        elem.appendChild(newText);
+        elem.appendChild(input);
+    }
+</script>
 </head>
 
 <body>
-    <c:set var="counter" value="1" scope="page" />
-    <table>
-        <tr>
-            <td class="all">№</td>
-            <td class="all">WorkflowID</td>
-            <td class="all">От кого</td>
-            <td class="all">К кому</td>
-            <td class="all">Передано с резолюцией</td>
-        </tr>
-        <c:forEach var="workflow" items="${requestScope.roadmap}">
-            <tr>
-                <td class="all">${counter}</td>
-                <td class="all">${workflow.uid}</td>
-                <td class="all">${workflow.assignee.lastName} ${workflow.assignee.firstName} ${workflow.assignee.middleName}</td>
-                <td class="all">${workflow.receiver.lastName} ${workflow.receiver.firstName} ${workflow.receiver.middleName}</td>
-                <td class="all">${workflow.description}</td>
-            </tr>
-            <c:set var="counter" value="${counter+1}" scope="page" />
-        </c:forEach>
-    </table>
-    <form name="Form1" method="post" action="${actionUrl}">
+    <%@ include file="/WEB-INF/jsp/includes/roadmapInclude.jsp" %>
+    <form name="Form1" method="post" action="${actionUrl}" enctype="multipart/form-data">
         <input type="hidden" name="workflowID" value="${workflowID}">
         <table>
             <tr>
@@ -76,6 +75,11 @@
                 </spring:bind>
             </tr>
         </table>
+        Вы можете прикрепить файл к смене состояния задачи.
+        <div id="container" >
+            <p>Имя файла: <input type="file" name="files" id="f1"/></p>
+        </div>
+        <a href="#" onclick="createNewInput()">Прикрепить еще один файл...</a>
         <p><button type="button" onclick="javascript:history.back();"><< Назад</button><input type="submit" align="right" value="Сохранить"></p>
     </form>
 </body>

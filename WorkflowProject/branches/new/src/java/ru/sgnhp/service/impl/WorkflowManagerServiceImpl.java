@@ -197,7 +197,7 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Date startDate, Date finishDate) {
-        return workflowDao.getWorkflowsByPeriodOfDate(parentUserUid, startDate, finishDate);
+    public List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate) {
+        return workflowDao.getWorkflowsByPeriodOfDate(parentUserUid, userUid, startDate, finishDate);
     }
 }

@@ -62,7 +62,7 @@
                 <td>
             </tr>
             <tr>
-                <td><label for="byDate">Задачи поставленные вами за период</label></td>
+                <td><label for="byDate">Задачи, поставленные вами за период</label></td>
                 <td>
                     <input type="radio" name="searchType" id="byDate" value="4"/>
                 </td>
@@ -70,7 +70,7 @@
                     Период с:
                     <label for="byDate">
                         <spring:bind path="searchTask.startDate">
-                            <input type="text" name="${status.expression}" value="${status.value}" readonly>
+                            <input style="width:80px" type="text" name="${status.expression}" value="${status.value}" readonly>
                             <input type="button" value="Дата" onclick="displayCalendar(document.forms[0].startDate,'dd.mm.yyyy',this)">
                             <font color="red">${status.errorMessage}</font>
                         </spring:bind>
@@ -78,20 +78,26 @@
                     по:
                     <label for="byDate">
                         <spring:bind path="searchTask.finishDate">
-                            <input type="text" name="${status.expression}" value="${status.value}" readonly>
+                            <input style="width:80px" type="text" name="${status.expression}" value="${status.value}" readonly>
                             <input type="button" value="Дата" onclick="displayCalendar(document.forms[0].finishDate,'dd.mm.yyyy',this)">
                             <font color="red">${status.errorMessage}</font>
                         </spring:bind>
                     </label>
-                <td>
+                    пользователю:
+                    <label for="byDate">
+                        <select name="combobox">
+                            <c:forEach items="${requestScope.users}" var="user" varStatus="status">
+                                <option value="${user.uid}">${user.lastName} ${user.firstName} ${user.middleName}</option>
+                            </c:forEach>
+                        </select>
+                    </label>
+                </td>
             </tr>
             <tr>
-                <td>
+                <td colspan="3">
                     <input type="button" onclick="javascript:history.back();" value="Назад"/>
                     <input type="submit" value="Поиск" />
                 <td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
             </tr>
         </table>
     </form>

@@ -5,6 +5,7 @@
 package ru.sgnhp.service;
 
 import java.util.ArrayList;
+import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.domain.WorkflowBean;
 
 /**
@@ -22,4 +23,6 @@ public interface IMailService {
     void sendmailSheduler(ArrayList<WorkflowBean> wfs);
 
     void sendmailReport(ArrayList<WorkflowBean> wfs);
+
+    void sendmailOutgoing(OutgoingMailBean outgoingMailBean);
 }

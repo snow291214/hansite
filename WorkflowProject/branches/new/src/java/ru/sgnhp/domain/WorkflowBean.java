@@ -2,9 +2,13 @@ package ru.sgnhp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,11 +17,14 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /*****
  *
@@ -46,7 +53,7 @@ import org.hibernate.annotations.ForeignKey;
         "WorkflowBean w WHERE w.finishDate = :finishDate"),
     @NamedQuery(name = "WorkflowBean.findByPeriodOfDate", query = "SELECT w FROM " +
         "WorkflowBean w WHERE w.assignDate between :startDate and :finishDate and " +
-        "w.assignee.uid = :parentUserUid order by w.uid desc"),
+        "w.assignee.uid = :parentUserUid and w.receiver.uid = :userUid order by w.uid desc"),
     @NamedQuery(name = "WorkflowBean.findRecievedByUserUid", query = "SELECT w " +
         "FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid " +
         "in (0,2) order by w.uid desc"),
@@ -109,6 +116,10 @@ public class WorkflowBean implements Serializable {
     @JoinColumn(name = "TaskUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false)
     private TaskBean taskBean;
+
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowBean", fetch = FetchType.LAZY)
+    private Set<WorkflowFileBean> workflowFileBeanSet = new HashSet<WorkflowFileBean>();
 
     public WorkflowBean() {
     }
@@ -220,5 +231,13 @@ public class WorkflowBean implements Serializable {
 
     public void setTaskBean(TaskBean taskBean) {
         this.taskBean = taskBean;
+    }
+
+    public Set<WorkflowFileBean> getWorkflowFileBeanSet() {
+        return workflowFileBeanSet;
+    }
+
+    public void setWorkflowFileBeanSet(Set<WorkflowFileBean> workflowFileBeanSet) {
+        this.workflowFileBeanSet = workflowFileBeanSet;
     }
 }

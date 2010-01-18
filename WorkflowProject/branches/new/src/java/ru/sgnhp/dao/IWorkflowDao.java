@@ -39,5 +39,5 @@ public interface IWorkflowDao extends IGenericDao<WorkflowBean, Long> {
 
     List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid);
 
-    List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Date startDate, Date finishDate);
+    List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate);
 }
