@@ -260,7 +260,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
-    <!-- Workflow Roadmap Controller -->
+    <!-- Outgoing Letter Controller -->
     <bean name="outgoingLetterController" class="ru.sgnhp.web.OutgoingLetterController">
         <property name="commandName">
             <value>outgoingMailDto</value>
@@ -283,6 +283,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
         <property name="outgoingFileService">
             <ref bean="outgoingFileService"/>
+        </property>
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
         </property>
     </bean>
 
@@ -334,12 +337,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     </bean>
 
     <!--============================== Sheduling  ===========================-->
-
-    <bean id="methodInvokingJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="workflowManagerService"/>
-        <property name="targetMethod" value="taskReminder"/>
-    </bean>
-
  <!--
  Here are some full examples:
 
@@ -364,6 +361,10 @@ Expression	 Meaning
 0 0 12 1/5 * ?	 Fire at 12pm (noon) every 5 days every month, starting on the first day of the month.
 0 11 11 11 11 ?	 Fire every November 11th at 11:11am.
  -->
+    <bean id="methodInvokingJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="taskReminder"/>
+    </bean>
 
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail">
@@ -374,10 +375,26 @@ Expression	 Meaning
         </property>
     </bean>
 
+    <bean id="methodInvokingTaskReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="taskReport"/>
+    </bean>
+
+    <bean id="cronTriggerTaskReport" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingTaskReport"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 45 8 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
                 <ref bean="cronTrigger" />
+                <ref bean="cronTriggerTaskReport" />
             </list>
         </property>
     </bean>

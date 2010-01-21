@@ -21,6 +21,7 @@ import ru.sgnhp.domain.OutgoingFileBean;
 import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.dto.OutgoingMailDto;
+import ru.sgnhp.service.IMailService;
 import ru.sgnhp.service.IOutgoingFileService;
 import ru.sgnhp.service.IOutgoingMailService;
 import ru.sgnhp.service.IUserManagerService;
@@ -37,6 +38,7 @@ public class OutgoingLetterController extends AbstractWizardFormController {
     private IUserManagerService userManagerService;
     private IOutgoingMailService outgoingMailService;
     private IOutgoingFileService outgoingFileService;
+    private IMailService mailService;
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -102,7 +104,8 @@ public class OutgoingLetterController extends AbstractWizardFormController {
             outgoingFileBean.setOutgoingMailBean(outgoingMailBean);
             outgoingFileService.save(outgoingFileBean);
         }
-
+        /*Отправляем письмо*/
+        mailService.sendmailOutgoing(outgoingMailBean);
         return new ModelAndView(new RedirectView("index.htm"));
     }
 
@@ -116,5 +119,9 @@ public class OutgoingLetterController extends AbstractWizardFormController {
 
     public void setOutgoingFileService(IOutgoingFileService outgoingFileService) {
         this.outgoingFileService = outgoingFileService;
+    }
+
+    public void setMailService(IMailService mailService) {
+        this.mailService = mailService;
     }
 }

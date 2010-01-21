@@ -166,34 +166,13 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void taskReport() {
-        List<WorkflowBean> uncompletedWorkflows = this.getAllUncompletedByParentUserUid(75L);
-        ArrayList<WorkflowBean> roadmapsList = new ArrayList<WorkflowBean>();
-        for (WorkflowBean workflowBean : uncompletedWorkflows) {
-            ArrayList<WorkflowBean> roadmap = this.getWorkflowMembersByWorkflowUid(workflowBean.getUid(),
-                    workflowBean.getParentUid(), new ArrayList());
-            roadmapsList.addAll(roadmap);
+        List<WorkflowUserBean> users = userManagerService.getAll();
+        for (WorkflowUserBean user : users) {
+            List<WorkflowBean> uncompletedWorkflows = this.getAllUncompletedByParentUserUid(user.getUid());
+            if (uncompletedWorkflows != null) {
+                mailService.sendmailReport(uncompletedWorkflows);
+            }
         }
-        if (roadmapsList.size() > 0) {
-            mailService.sendmailReport(roadmapsList);
-        }
-//        List<WorkflowUserBean> users = userManagerService.getAll();
-//        for (WorkflowUserBean user : users) {
-//            List<WorkflowBean> workflows = this.getAllUncompletedByParentUserUid(user.getUid());
-//            ArrayList<ArrayList<WorkflowBean>> workflowBeans = new ArrayList<ArrayList<WorkflowBean>>();
-//            if (workflows != null) {
-//                for (WorkflowBean workflowBean : workflows) {
-//                    ArrayList arrayList = this.getWorkflowMembersByWorkflowUid(workflowBean.getUid(), workflowBean.getParentUid(), new ArrayList());
-//                    if (arrayList == null) {
-//                        workflowBeans.add(arrayList);
-//                    } else {
-//                        workflowBeans.addAll(arrayList);
-//                    }
-//                }
-//            }
-//            if (workflowBeans.size() > 0) {
-//                mailService.sendmailReport(workflowBeans);
-//            }
-//        }
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)

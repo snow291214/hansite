@@ -2,6 +2,7 @@ package ru.sgnhp.web;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,7 +72,13 @@ public class SearchResultController implements Controller {
                         if (workflowBeans == null) {
                             workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
                         } else {
-                            workflowBeans.addAll(workflowManagerService.getWorkflowsByTaskUid(uid));
+                            List<WorkflowBean> beans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                            if (beans != null) {
+                                workflowBeans.addAll(beans);
+                            } else {
+                                Logger logger = Logger.getLogger(this.getClass().getName());
+                                logger.info("Warning! Task without workflows has found!!! Task uid: " + uid.toString());
+                            }
                         }
                     }
                 }
