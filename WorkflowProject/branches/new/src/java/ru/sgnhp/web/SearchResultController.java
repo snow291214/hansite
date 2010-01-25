@@ -24,6 +24,10 @@ public class SearchResultController implements Controller {
         this.workflowManagerService = workflowManagerService;
     }
 
+//    private List<WorkflowBean> setWorkflowsList(List<TaskBean> taskBeans){
+//
+//    }
+
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String result = "index";
         List<WorkflowBean> workflowBeans = null;
@@ -34,15 +38,48 @@ public class SearchResultController implements Controller {
             case 0:
                 //Find By Internal Number
                 result = "searchResult";
+                taskBeans = taskManagerService.getTaskByInternalNumber(
+                        Integer.parseInt(searchTaskBean.getTaskInternalNumber()));
+                if (taskBeans != null) {
+                    for (TaskBean b : taskBeans) {
+                        Long uid = b.getUid();
+                        if (workflowBeans == null) {
+                            workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                        } else {
+                            List<WorkflowBean> beans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                            if (beans != null) {
+                                workflowBeans.addAll(beans);
+                            } else {
+                                Logger logger = Logger.getLogger(this.getClass().getName());
+                                logger.info("Warning! Task without workflows has found!!! Task uid: " + uid.toString());
+                            }
+                        }
+                    }
+                }
                 //workflowBeans = workflowManagerService.getWorkflowsByDescription(user.getUid(), searchTaskBean);
                 request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 1:
                 //Find By Incoming Number
                 result = "searchResult";
-                TaskBean taskBean = taskManagerService.getTaskByIncomingNumber(
+                taskBeans = taskManagerService.getTaskByIncomingNumber(
                         Integer.parseInt(searchTaskBean.getTaskIncomingNumber()));
-                workflowBeans = workflowManagerService.getWorkflowsByTaskUid(taskBean.getUid());
+                if (taskBeans != null) {
+                    for (TaskBean b : taskBeans) {
+                        Long uid = b.getUid();
+                        if (workflowBeans == null) {
+                            workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                        } else {
+                            List<WorkflowBean> beans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                            if (beans != null) {
+                                workflowBeans.addAll(beans);
+                            } else {
+                                Logger logger = Logger.getLogger(this.getClass().getName());
+                                logger.info("Warning! Task without workflows has found!!! Task uid: " + uid.toString());
+                            }
+                        }
+                    }
+                }
                 //workflowBeans = workflowManagerService.getWorkflowsByDescription(user.getUid(), searchTaskBean);
                 request.getSession().setAttribute("searchTaskBean", null);
                 break;
@@ -56,7 +93,13 @@ public class SearchResultController implements Controller {
                         if (workflowBeans == null) {
                             workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
                         } else {
-                            workflowBeans.addAll(workflowManagerService.getWorkflowsByTaskUid(uid));
+                            List<WorkflowBean> beans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                            if (beans != null) {
+                                workflowBeans.addAll(beans);
+                            } else {
+                                Logger logger = Logger.getLogger(this.getClass().getName());
+                                logger.info("Warning! Task without workflows has found!!! Task uid: " + uid.toString());
+                            }
                         }
                     }
                 }
@@ -93,6 +136,26 @@ public class SearchResultController implements Controller {
                 workflowBeans = workflowManagerService.getWorkflowsByPeriodOfDate(workflowUserBean.getUid(),
                         searchTaskBean.getReceiverUid(), searchTaskBean.getStartDate(),
                         searchTaskBean.getFinishDate());
+                break;
+            case 5:
+                result = "searchResult";
+                taskBeans = taskManagerService.getTaskByExternalNumber(searchTaskBean.getTaskExternalNumber());
+                if (taskBeans != null) {
+                    for (TaskBean b : taskBeans) {
+                        Long uid = b.getUid();
+                        if (workflowBeans == null) {
+                            workflowBeans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                        } else {
+                            List<WorkflowBean> beans = workflowManagerService.getWorkflowsByTaskUid(uid);
+                            if (beans != null) {
+                                workflowBeans.addAll(beans);
+                            } else {
+                                Logger logger = Logger.getLogger(this.getClass().getName());
+                                logger.info("Warning! Task without workflows has found!!! Task uid: " + uid.toString());
+                            }
+                        }
+                    }
+                }
                 break;
         }
         return new ModelAndView(result, "workflowBeans", workflowBeans);

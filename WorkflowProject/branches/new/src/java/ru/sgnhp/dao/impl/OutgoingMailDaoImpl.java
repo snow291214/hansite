@@ -113,4 +113,16 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
         }
         return -1L;
     }
+
+    public List<OutgoingMailBean> getByPeriodOfDate(Date outgoingDate, Date dueDate) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("outgoingDate", outgoingDate);
+        value.put("dueDate", dueDate);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByPeriodOfDate",
+                value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
 }

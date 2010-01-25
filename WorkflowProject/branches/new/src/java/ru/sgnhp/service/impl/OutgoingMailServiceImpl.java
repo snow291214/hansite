@@ -75,4 +75,8 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
         }
         return value + 1;
     }
+
+    public List<OutgoingMailBean> getByPeriodOfDate(Date outgoingDate, Date dueDate) {
+        return outgoingMailDao.getByPeriodOfDate(outgoingDate, dueDate);
+    }
 }

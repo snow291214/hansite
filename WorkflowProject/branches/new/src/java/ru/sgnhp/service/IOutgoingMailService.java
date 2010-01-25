@@ -18,6 +18,8 @@ public interface IOutgoingMailService extends IGenericService<OutgoingMailBean, 
 
     List<OutgoingMailBean> getByOutgoingDate(Date outgoingDate);
 
+    List<OutgoingMailBean> getByPeriodOfDate(Date outgoingDate, Date dueDate);
+
     List<OutgoingMailBean> getByDocumentumNumber(String documentumNumber);
 
     List<OutgoingMailBean> getByReceiverCompany(String receiverCompany);

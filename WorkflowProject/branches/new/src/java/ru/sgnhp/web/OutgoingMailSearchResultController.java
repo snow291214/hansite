@@ -58,6 +58,13 @@ public class OutgoingMailSearchResultController implements Controller {
                 outgoingMailBeans = outgoingMailService.getByResponsibleUid(outgoingMailSearchDto.getResponsibleUid());
                 request.getSession().setAttribute("searchTaskBean", null);
                 break;
+            case 6:
+                result = "outgoingSearchResult";
+                outgoingMailBeans = outgoingMailService.getByPeriodOfDate(
+                        outgoingMailSearchDto.getOutgoingDate(),
+                        outgoingMailSearchDto.getDueDate());
+                request.getSession().setAttribute("searchTaskBean", null);
+                break;
         }
         return new ModelAndView(result, "outgoingMailBeans", outgoingMailBeans);
     }

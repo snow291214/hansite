@@ -1,6 +1,18 @@
 ﻿<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <title>Выбор пользователей</title>
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript" >
+    function Enable() {
+        frm=document.forms[0]
+        frm.Button1.disabled=true;
+        for(var i=0; i < frm.checks.length; i++){
+            if(frm.checks[i].checked){
+                frm.Button1.disabled=false;
+                break;
+            }
+        }
+    }
+</SCRIPT>
 </head>
 
 <html>
@@ -17,14 +29,14 @@
                         <c:choose>
                             <c:when test="${b == true}">
                                 <tr bgcolor="#e2f1f9">
-                                <c:set var="b" scope="page" value="false" />
-                            </c:when>
-                            <c:otherwise>
+                                    <c:set var="b" scope="page" value="false" />
+                                </c:when>
+                                <c:otherwise>
                                 <tr>
                                     <c:set var="b" scope="page" value="true" />
                                 </c:otherwise>
                             </c:choose>
-                            <td><input TYPE="checkbox" name="checks" VALUE="${user.uid}"></td>
+                            <td><input TYPE="checkbox" name="checks" VALUE="${user.uid}" onClick="Enable();"></td>
                             <td><c:out value="${user.lastName}" /></td>
                             <td><c:out value="${user.firstName}" /></td>
                             <td><c:out value="${user.middleName}" /></td>
@@ -32,7 +44,7 @@
                     </c:forEach>
                 </table>
             </div>
-            <p><input type="submit" align="right" value="Продолжить >>"></p>
+            <p><input type="submit" disabled align="right" name="Button1" value="Продолжить >>"></p>
         </form>
     </body>
 </html>

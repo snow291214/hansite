@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.service.IOutgoingMailService;
 import static org.junit.Assert.*;
@@ -69,9 +70,16 @@ public class OutgoingMailServiceImplTest extends AbstractTransactionalDataSource
     }
 
     @Test
+    public void testGetByPeriodOfDate() throws ParseException {
+        Date outgoingDate = DateUtils.increaseDate(DateUtils.nowDate(), -30);
+        Date dueDate = DateUtils.nowDate();
+        assertNotNull(outgoingMailService.getByPeriodOfDate(outgoingDate, dueDate));
+    }
+
+    @Test
     public void testGetNewOutgoingNumber(){
         Long number = outgoingMailService.getNewOutgoingNumber();
-        assertEquals(number, (Long)1L);
+        assertEquals(number, (Long)44L);
     }
 
     public void setOutgoingMailService(IOutgoingMailService outgoingMailService) {

@@ -15,11 +15,9 @@
                 Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
             </div>
             <div>
-                <!--Описание задачи: <c:out value="${wf.taskBean.description}"/><br />-->
-                <!--Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/>-->
-                Дата начала задачи: <c:out value="${wf.taskBean.startDate}"/> Срок до: <c:out value="${wf.taskBean.startDate}"/><br />
+                Дата начала задачи: <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.taskBean.startDate}"/> Срок до: <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.taskBean.startDate}"/><br />
                 <div class="content">
-                    Резолюция к задаче: <c:out value="${wf.description}"/>. Дата назначения задачи: <c:out value="${wf.assignDate}"/>. <!--Состояние задачи: <font color="red"><b><c:out value="${wf.state}"/></b>.</font> --><br />
+                    Резолюция к задаче: <c:out value="${wf.description}"/>. Дата назначения задачи: <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.assignDate}"/>. <!--Состояние задачи: <font color="red"><b><c:out value="${wf.state}"/></b>.</font> --><br />
                     Файлы, прикрепленные к задаче:
                     <c:forEach var = "taskFile" items="${wf.taskBean.filesSet}">
                         <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>

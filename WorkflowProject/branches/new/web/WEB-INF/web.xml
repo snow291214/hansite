@@ -38,7 +38,7 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            480
         </session-timeout>
     </session-config>
     <welcome-file-list>
@@ -89,7 +89,6 @@
     <listener>
         <listener-class>org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
     </listener>
-
     <!--
     <filter>
         <filter-name>AuthenticationFilter</filter-name>

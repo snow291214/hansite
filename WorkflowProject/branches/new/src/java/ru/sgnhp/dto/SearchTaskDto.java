@@ -5,6 +5,7 @@ import java.util.Date;
 public class SearchTaskDto {
     private String taskInternalNumber;
     private String taskIncomingNumber;
+    private String taskExternalNumber;
     private String assigneeName;
     private String taskDescription;
     private Date startDate;
@@ -74,5 +75,13 @@ public class SearchTaskDto {
 
     public void setReceiverUid(Long receiverUid) {
         this.receiverUid = receiverUid;
+    }
+
+    public String getTaskExternalNumber() {
+        return taskExternalNumber;
+    }
+
+    public void setTaskExternalNumber(String taskExternalNumber) {
+        this.taskExternalNumber = taskExternalNumber;
     }
 }

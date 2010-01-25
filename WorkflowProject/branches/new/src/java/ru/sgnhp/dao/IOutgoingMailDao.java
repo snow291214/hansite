@@ -12,6 +12,10 @@ public interface IOutgoingMailDao extends IGenericDao<OutgoingMailBean, Long> {
 
     List<OutgoingMailBean> getByOutgoingDate(Date outgoingDate);
 
+    List<OutgoingMailBean> getByDueDate(Date dueDate);
+
+    List<OutgoingMailBean> getByPeriodOfDate(Date outgoingDate, Date dueDate);
+
     List<OutgoingMailBean> getByDocumentumNumber(String documentumNumber);
 
     List<OutgoingMailBean> getByReceiverCompany(String receiverCompany);
@@ -19,8 +23,6 @@ public interface IOutgoingMailDao extends IGenericDao<OutgoingMailBean, Long> {
     List<OutgoingMailBean> getByReceiverName(String receiverName);
 
     List<OutgoingMailBean> getByResponsibleUid(Long responsibleUid);
-
-    List<OutgoingMailBean> getByDueDate(Date dueDate);
 
     Long getNewOutgoingNumber();
 }

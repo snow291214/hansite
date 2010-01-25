@@ -9,7 +9,7 @@
     <form name="formSearch" method="post" action="searchTask.htm">
         <table border="0" cellspacing="0" cellpadding="5">
             <tr>
-                <td rowspan="5"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
+                <td rowspan="6"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
                 <td><label for="byInternalNumber">Поиск по внутреннему номеру задачи</label></td>
                 <td>
                     <input type="radio" name="searchType" id="byInternalNumber" value="0" />
@@ -36,16 +36,29 @@
                 </td>
             </tr>
             <tr>
+                <td><label for="byExternalNumber">Поиск по исходящему номеру (Documentum)</label></td>
+                <td>
+                    <input type="radio" name="searchType" id="byExternalNumber" value="5" />
+                </td>
+                <td>
+                    <label for="byExternalNumber">
+                        <spring:bind path="searchTask.taskExternalNumber">
+                            <input type="text" name="${status.expression}" value="${status.value}"/>
+                        </spring:bind>
+                    </label>
+                </td>
+            </tr>
+            <tr>
                 <td><label for="byAssigneeName">Отправитель (кто подписал письмо)</label></td>
                 <td>
                     <input type="radio" name="searchType" id="byAssigneeName" value="2" />
                 </td>
                 <td>
-                    <label for="byAssigneeName">
-                        <spring:bind path="searchTask.assigneeName">
+                    <spring:bind path="searchTask.assigneeName">
+                        <label for="byAssigneeName">
                             <input type="text" name="${status.expression}" value="${status.value}"/>
-                        </spring:bind>
-                    </label>
+                        </label>
+                    </spring:bind>
                 </td>
             </tr>
             <tr>
@@ -54,11 +67,11 @@
                     <input type="radio" name="searchType" id="byDescription" value="3" checked/>
                 </td>
                 <td>
-                    <label for="byDescription">
-                        <spring:bind path="searchTask.taskDescription">
+                    <spring:bind path="searchTask.taskDescription">
+                        <label for="byDescription">
                             <input type="text" name="${status.expression}" value="${status.value}"/>
-                        </spring:bind>
-                    </label>
+                        </label>
+                    </spring:bind>
                 <td>
             </tr>
             <tr>

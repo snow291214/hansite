@@ -83,6 +83,30 @@
                 </td>
             </tr>
             <tr>
+                <td><label for="byPeriodOfDate">По временному интервалу</label></td>
+                <td>
+                    <input type="radio" name="searchType" id="byPeriodOfDate" value="6" />
+                </td>
+                <td>
+                    Период с:
+                    <label for="byPeriodOfDate">
+                        <spring:bind path="outgoingMailSearch.outgoingDate">
+                            <input style="width:80px" type="text" name="${status.expression}" value="${status.value}" readonly>
+                            <input type="button" value="Дата" onclick="displayCalendar(document.forms[0].startDate,'dd.mm.yyyy',this)">
+                            <font color="red">${status.errorMessage}</font>
+                        </spring:bind>
+                    </label>
+                    по:
+                    <label for="byPeriodOfDate">
+                        <spring:bind path="outgoingMailSearch.dueDate">
+                            <input style="width:80px" type="text" name="${status.expression}" value="${status.value}" readonly>
+                            <input type="button" value="Дата" onclick="displayCalendar(document.forms[0].finishDate,'dd.mm.yyyy',this)">
+                            <font color="red">${status.errorMessage}</font>
+                        </spring:bind>
+                    </label>
+                </td>
+            </tr>
+            <tr>
                 <td>
                     <input type="button" onclick="javascript:history.back();" value="Назад"/>
                     <input type="submit" value="Поиск" />

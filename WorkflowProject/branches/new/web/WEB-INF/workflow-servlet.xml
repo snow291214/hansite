@@ -219,6 +219,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="workflowFileManagerService">
             <ref bean="workflowFileManagerService"/>
         </property>
+        <property name="validator">
+            <ref bean="workflowManagerFormValidator"/>
+        </property>
+
     </bean>
 
     <!-- Search Task Controller -->
@@ -326,7 +330,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
             <ref bean="authenticationDAO" />
         </property>
     </bean>
-    
+
+    <bean id="workflowManagerFormValidator" class="ru.sgnhp.web.validator.WorkflowManagerFormValidator" />
+
     <!--======================== Authentication =============================-->
     <bean id="authenticationDAO" class="ru.sgnhp.dao.impl.AuthenticationDaoImpl" />
 
