@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import org.junit.Test;
@@ -107,18 +108,33 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 
     @Test
     public void testGetNewInternalNumber() {
-        assertEquals(517, taskManagerService.getNewInternalNumber());
+        assertEquals(853, taskManagerService.getNewInternalNumber());
     }
 
     @Test
     public void testGetNewIncomingNumber() {
-        assertEquals(476, taskManagerService.getNewIncomingNumber());
+        assertEquals(95, taskManagerService.getNewIncomingNumber());
+    }
+
+    @Test
+    public void testGetByExternalCompany() {
+        assertNotNull(taskManagerService.getTaskByExternalCompany("Кедр"));
     }
 
     @Test
     public void testGetfiles() {
         TaskBean taskBean = taskManagerService.get(12L);
         assertNotNull(taskBean.getFilesSet());
+    }
+
+    @Test
+    public void testDailyReport() {
+        taskManagerService.dailyReport();
+    }
+
+    @Test
+    public void testGetAllIncomingMail() throws ParseException {
+        assertNotNull(taskManagerService.getAllIncomingMailByYear(2010));
     }
 
     @Override

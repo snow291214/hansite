@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.validation.BindException;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -79,9 +81,9 @@ public class OutgoingLetterController extends AbstractWizardFormController {
     protected ModelAndView processFinish(HttpServletRequest request,
             HttpServletResponse response, Object command, BindException errors) throws Exception {
         OutgoingMailDto outgoingMailDto = (OutgoingMailDto) command;
-        String responibleUid = (String)request.getSession().getAttribute("responsibleUid");
+        String responibleUid = (String) request.getSession().getAttribute("responsibleUid");
         WorkflowUserBean workflowUserBean = userManagerService.get(Long.parseLong(responibleUid));
-        
+
 //        Сохранение исходящего письма в БД
         OutgoingMailBean outgoingMailBean = new OutgoingMailBean();
         outgoingMailBean.setDescription(outgoingMailDto.getDescription());
@@ -107,6 +109,15 @@ public class OutgoingLetterController extends AbstractWizardFormController {
         /*Отправляем письмо*/
         mailService.sendmailOutgoing(outgoingMailBean);
         return new ModelAndView(new RedirectView("index.htm"));
+    }
+
+    @Override
+    protected void validatePage(Object command, Errors errors, int page) {
+        if (page == 0) {
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "OutgoingMailDto.description.empty");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "receiverCompany", "OutgoingMailDto.receiverCompany.empty");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "receiverName", "OutgoingMailDto.receiverName.empty");
+        }
     }
 
     public void setUserManagerService(IUserManagerService userManagerService) {

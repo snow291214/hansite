@@ -61,13 +61,13 @@ import org.hibernate.annotations.OnDeleteAction;
         "w WHERE w.stateBean.stateUid in (0,2) order by w.uid desc"),
     @NamedQuery(name = "WorkflowBean.findAssignedByUserUid", query = "SELECT w " +
     "FROM WorkflowBean w WHERE w.assignee.uid = :userUid and w.stateBean.stateUid " +
-        "<> 3 order by w.uid desc"),
+        "<> 3 order by w.assignDate desc, w.taskBean.internalNumber"),
     @NamedQuery(name = "WorkflowBean.findAssignedAndCompletedByUserUid", 
     query = "SELECT w FROM WorkflowBean w WHERE w.assignee.uid = :userUid and " +
-        "w.stateBean.stateUid = 3  order by w.uid desc"),
+        "w.stateBean.stateUid = 3 order by w.assignDate desc, w.taskBean.internalNumber"),
     @NamedQuery(name = "WorkflowBean.findCompletedByUserUid", query = "SELECT w " +
     "FROM WorkflowBean w WHERE w.receiver.uid = :userUid and w.stateBean.stateUid = 3 " +
-        "order by w.uid desc"),
+        "order by w.assignDate desc, w.taskBean.internalNumber"),
     @NamedQuery(name = "WorkflowBean.findByDescription", query = "SELECT w FROM " +
         "WorkflowBean w WHERE w.receiver.uid = :userUid and w.description like " +
         ":description order by w.uid desc"),

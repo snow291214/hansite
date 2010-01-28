@@ -60,6 +60,8 @@ public class MailServiceImpl implements IMailService {
                     " " + _workflow.getAssignee().getMiddleName() + " " +
                     _workflow.getAssignee().getLastName() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " + _workflow.getDescription() + "</p>" +
+                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/" +
+                    "\">Просмотреть все задачи</a> <br />" +
                     "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID=" +
                     _workflow.getUid().toString() + "\">Просмотреть задачу</a>" +
                     "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>" +
@@ -96,13 +98,17 @@ public class MailServiceImpl implements IMailService {
                     _workflow.getReceiver().getLastName() + " " +
                     _workflow.getReceiver().getFirstName() + " " +
                     _workflow.getReceiver().getMiddleName() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Описание задачи: " +
                     _workflow.getTaskBean().getDescription() + "</p>" +
+                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
+                    _workflow.getDescription() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " +
                     _workflow.getState().getStateDescription() + "</p>" +
                     "<p style=\"font-family:Arial;font-size:12px;\">Записка к смене статуса: " +
                     _workflow.getWorkflowNote() + "</p>" +
-                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/roadmap.htm?workflowID=" +
+                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/" +
+                    "\">Просмотреть все задачи</a> <br />" +
+                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID=" +
                     _workflow.getUid().toString() + "\">Просмотреть задачу</a>" +
                     "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);

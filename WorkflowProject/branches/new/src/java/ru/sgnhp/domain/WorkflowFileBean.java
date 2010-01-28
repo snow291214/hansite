@@ -35,7 +35,7 @@ public class WorkflowFileBean implements Serializable {
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
     private Long uid;
-    @Basic(optional = false)
+    @Basic(optional = false,fetch=FetchType.LAZY)
     @Lob
     @Column(name = "BlobField", nullable = false)
     private byte[] blobField;

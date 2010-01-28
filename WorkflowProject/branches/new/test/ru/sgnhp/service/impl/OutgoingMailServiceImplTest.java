@@ -12,10 +12,14 @@ import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.service.IOutgoingMailService;
 import static org.junit.Assert.*;
 
-/**
+/*****
  *
- * @author 48han
+ * @author Alexey Khudyakov
+ * @company "Salavatgazoneftehimproekt" Ltd
+ *
+ *****
  */
+
 public class OutgoingMailServiceImplTest extends AbstractTransactionalDataSourceSpringContextTests {
 
     private IOutgoingMailService outgoingMailService;
@@ -79,7 +83,17 @@ public class OutgoingMailServiceImplTest extends AbstractTransactionalDataSource
     @Test
     public void testGetNewOutgoingNumber(){
         Long number = outgoingMailService.getNewOutgoingNumber();
-        assertEquals(number, (Long)44L);
+        assertEquals(number, (Long)74L);
+    }
+
+    @Test
+    public void testGetAllIncomingMailByYear() throws ParseException{
+        assertNotNull(outgoingMailService.getAllOutgoingMailByYear(2010));
+    }
+
+    @Test
+    public void testDailyReport() throws ParseException{
+        outgoingMailService.dailyReport();
     }
 
     public void setOutgoingMailService(IOutgoingMailService outgoingMailService) {

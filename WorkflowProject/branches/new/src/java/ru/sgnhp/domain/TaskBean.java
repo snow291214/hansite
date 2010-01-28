@@ -33,12 +33,15 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "tasks", catalog = "workflowdb", schema = "", uniqueConstraints = {@UniqueConstraint(columnNames = {"Uid"})})
 @NamedQueries({
     @NamedQuery(name = "TaskBean.findAll", query = "SELECT t FROM TaskBean t"),
+    @NamedQuery(name = "TaskBean.findAllIncomingMailByYear", query = "SELECT t FROM TaskBean " +
+    "t where t.incomingNumber <> '' and t.startDate BETWEEN :startDate AND :finishDate " +
+            "order by t.incomingNumber, t.startDate"),
     @NamedQuery(name = "TaskBean.findByUid", query = "SELECT t FROM TaskBean t WHERE t.uid = :uid"),
     @NamedQuery(name = "TaskBean.findByInternalNumber", query = "SELECT t FROM TaskBean t WHERE t.internalNumber = :internalNumber"),
     @NamedQuery(name = "TaskBean.findByIncomingNumber", query = "SELECT t FROM TaskBean t WHERE t.incomingNumber = :incomingNumber"),
-    @NamedQuery(name = "TaskBean.findByExternalNumber", query = "SELECT t FROM TaskBean t WHERE t.externalNumber = :externalNumber"),
-    @NamedQuery(name = "TaskBean.findByExternalCompany", query = "SELECT t FROM TaskBean t WHERE t.externalCompany like :externalCompany"),
-    @NamedQuery(name = "TaskBean.findByExternalAssignee", query = "SELECT t FROM TaskBean t WHERE t.externalAssignee like :externalAssignee"),
+    @NamedQuery(name = "TaskBean.findByExternalNumber", query = "SELECT t FROM TaskBean t WHERE t.externalNumber like :externalNumber order by t.internalNumber desc"),
+    @NamedQuery(name = "TaskBean.findByExternalCompany", query = "SELECT t FROM TaskBean t WHERE t.externalCompany like :externalCompany order by t.internalNumber desc"),
+    @NamedQuery(name = "TaskBean.findByExternalAssignee", query = "SELECT t FROM TaskBean t WHERE t.externalAssignee like :externalAssignee order by t.internalNumber desc"),
     @NamedQuery(name = "TaskBean.findByStartDate", query = "SELECT t FROM TaskBean t WHERE t.startDate = :startDate"),
     @NamedQuery(name = "TaskBean.findByDueDate", query = "SELECT t FROM TaskBean t WHERE t.dueDate = :dueDate"),
     @NamedQuery(name = "TaskBean.findByDescription", query = "SELECT t FROM TaskBean t WHERE t.description like :description"),

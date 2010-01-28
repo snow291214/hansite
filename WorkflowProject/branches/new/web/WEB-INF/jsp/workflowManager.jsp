@@ -80,7 +80,10 @@
             <p>Имя файла: <input type="file" name="files" id="f1"/></p>
         </div>
         <a href="#" onclick="createNewInput()">Прикрепить еще один файл...</a>
-        <p><button type="button" onclick="javascript:history.back();"><< Назад</button><input type="submit" align="right" value="Сохранить"></p>
+        <p>
+            <button type="button" onclick="javascript:document.location.href='index.htm'">На главную</button>
+            <button type="button" onclick="javascript:history.back();"><< Назад</button><input type="submit" align="right" value="Сохранить">
+        </p>
     </form>
 </body>
 </html>

@@ -4,6 +4,7 @@ package ru.sgnhp.web;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -38,12 +39,16 @@ public class UploadController extends SimpleFormController {
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
+        /* Исправление непонятной и премерзкой ошибки */
+        final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+        WorkflowUserBean initiator = userManagerService.getUserByLogin(currentUser);
+
         /* Сохраняем задание */
         TaskBean task = (TaskBean) request.getSession().getAttribute("task");
         task = taskManagerService.save(task);
 
         /* Назначаем задание пользователям */
-        WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
+        //WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
         for (String uid : userUids) {
             WorkflowBean wf = new WorkflowBean();

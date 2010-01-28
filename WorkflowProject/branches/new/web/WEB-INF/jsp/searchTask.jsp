@@ -9,7 +9,7 @@
     <form name="formSearch" method="post" action="searchTask.htm">
         <table border="0" cellspacing="0" cellpadding="5">
             <tr>
-                <td rowspan="6"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
+                <td rowspan="7"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
                 <td><label for="byInternalNumber">Поиск по внутреннему номеру задачи</label></td>
                 <td>
                     <input type="radio" name="searchType" id="byInternalNumber" value="0" />
@@ -56,6 +56,19 @@
                 <td>
                     <spring:bind path="searchTask.assigneeName">
                         <label for="byAssigneeName">
+                            <input type="text" name="${status.expression}" value="${status.value}"/>
+                        </label>
+                    </spring:bind>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="byExternalCompany">Компания-отправитель</label></td>
+                <td>
+                    <input type="radio" name="searchType" id="byExternalCompany" value="6" />
+                </td>
+                <td>
+                    <spring:bind path="searchTask.externalCompany">
+                        <label for="byExternalCompany">
                             <input type="text" name="${status.expression}" value="${status.value}"/>
                         </label>
                     </spring:bind>

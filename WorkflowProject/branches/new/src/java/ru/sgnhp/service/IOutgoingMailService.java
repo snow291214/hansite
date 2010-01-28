@@ -1,5 +1,6 @@
 package ru.sgnhp.service;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import ru.sgnhp.domain.OutgoingMailBean;
@@ -31,4 +32,8 @@ public interface IOutgoingMailService extends IGenericService<OutgoingMailBean, 
     List<OutgoingMailBean> getByDueDate(Date dueDate);
 
     Long getNewOutgoingNumber();
+
+    List<OutgoingMailBean> getAllOutgoingMailByYear(Integer currentYear) throws ParseException;
+
+    void dailyReport();
 }

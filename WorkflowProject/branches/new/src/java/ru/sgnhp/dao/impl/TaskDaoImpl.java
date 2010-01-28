@@ -1,10 +1,12 @@
 package ru.sgnhp.dao.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import ru.sgnhp.DateUtils;
 import ru.sgnhp.dao.ITaskDao;
 import ru.sgnhp.domain.TaskBean;
 
@@ -21,34 +23,34 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         super(TaskBean.class);
     }
 
-    public TaskBean getTaskByInternalNumber(int number) {
+    public List<TaskBean> getTaskByInternalNumber(int number) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("internalNumber", number);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByInternalNumber", value);
         if (list == null || list.size() == 0) {
             return null;
         }
-        return list.get(0);
+        return list;
     }
 
-    public TaskBean getTaskByExternalNumber(String number) {
+    public List<TaskBean> getTaskByExternalNumber(String number) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("externalNumber", number);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByExternalNumber", value);
         if (list == null || list.size() == 0) {
             return null;
         }
-        return list.get(0);
+        return list;
     }
 
-    public TaskBean getTaskByIncomingNumber(int number) {
+    public List<TaskBean> getTaskByIncomingNumber(int number) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("incomingNumber", number);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByIncomingNumber", value);
         if (list == null || list.size() == 0) {
             return null;
         }
-        return list.get(0);
+        return list;
     }
 
     public List<TaskBean> getTasksByExternalAssignee(String externalAssignee) {
@@ -87,12 +89,36 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
     public int getNewIncomingNumber() {
         Calendar today = Calendar.getInstance();
         int year = today.get(Calendar.YEAR);
-        List list = getSession().createQuery(String.format("SELECT Max(t.incomingNumber) " +
-                "FROM TaskBean t where t.startDate BETWEEN '%1$s-01-01' AND '%1$s-12-31'",
+        List list = getSession().createQuery(String.format("SELECT Max(t.incomingNumber) "
+                + "FROM TaskBean t where t.startDate BETWEEN '%1$s-01-01' AND '%1$s-12-31'",
                 year)).list();
         if (list.get(0) instanceof Integer) {
             return (Integer) list.get(0);
         }
         return -1;
+    }
+
+    public List<TaskBean> getTaskByExternalCompany(String externalCompany) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("externalCompany", externalCompany);
+        List<TaskBean> list = this.findByNamedQuery("TaskBean.findByExternalCompany", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
+
+    public List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException {
+        Map<String, Object> value = new HashMap<String, Object>();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date startDate = simpleDateFormat.parse("01.01."+currentYear.toString());
+        Date finishDate = simpleDateFormat.parse("31.12."+currentYear.toString());
+        value.put("startDate", startDate);
+        value.put("finishDate", finishDate);
+        List<TaskBean> list = this.findByNamedQuery("TaskBean.findAllIncomingMailByYear", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
     }
 }

@@ -1,5 +1,6 @@
 package ru.sgnhp.service;
 
+import java.text.ParseException;
 import java.util.List;
 import ru.sgnhp.domain.TaskBean;
 
@@ -10,19 +11,25 @@ import ru.sgnhp.domain.TaskBean;
  *
  *****
  */
-public interface ITaskManagerService extends IGenericService<TaskBean, Long>{
+public interface ITaskManagerService extends IGenericService<TaskBean, Long> {
 
-    TaskBean getTaskByInternalNumber(int number);
+    List<TaskBean> getAllIncomingMailByYear(Integer currentYear)  throws ParseException;
 
-    TaskBean getTaskByExternalNumber(String number);
+    List<TaskBean> getTaskByInternalNumber(int number);
 
-    TaskBean getTaskByIncomingNumber(int number);
+    List<TaskBean> getTaskByIncomingNumber(int number);
+
+    List<TaskBean> getTaskByExternalNumber(String number);
 
     List<TaskBean> getTasksByExternalAssignee(String externalAssignee);
+
+    List<TaskBean> getTaskByExternalCompany(String externalCompany);
 
     int getNewInternalNumber();
 
     int getNewIncomingNumber();
 
     List<TaskBean> getTasksByDescription(String description);
+
+    void dailyReport();
 }

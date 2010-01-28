@@ -1,5 +1,7 @@
 package ru.sgnhp.dao.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -119,6 +121,21 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
         value.put("outgoingDate", outgoingDate);
         value.put("dueDate", dueDate);
         List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByPeriodOfDate",
+                value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
+
+    public List<OutgoingMailBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException {
+        Map<String, Object> value = new HashMap<String, Object>();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date startDate = simpleDateFormat.parse("01.01."+currentYear.toString());
+        Date finishDate = simpleDateFormat.parse("31.12."+currentYear.toString());
+        value.put("startDate", startDate);
+        value.put("finishDate", finishDate);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findAllOutgoingByYear",
                 value);
         if (list == null || list.size() == 0) {
             return null;

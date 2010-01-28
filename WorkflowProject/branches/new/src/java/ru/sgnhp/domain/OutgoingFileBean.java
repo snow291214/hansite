@@ -39,7 +39,7 @@ public class OutgoingFileBean implements Serializable {
     @Basic(optional = false)
     @Column(name = "FileName", nullable = false, length = 100)
     private String fileName;
-    @Basic(optional = false)
+    @Basic(optional = false, fetch=FetchType.LAZY)
     @Lob
     @Column(name = "BlobField", columnDefinition = "LONGBLOB")
     private byte[] blobField;

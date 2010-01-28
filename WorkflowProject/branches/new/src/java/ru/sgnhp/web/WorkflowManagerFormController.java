@@ -43,13 +43,15 @@ public class WorkflowManagerFormController extends SimpleFormController {
         final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
         final Map files = multiRequest.getFileMap();
         for (Object file : files.values()) {
-            WorkflowFileBean bean = new WorkflowFileBean();
-            bean.setWorkflowBean(workflowBean);
-            bean.setFileName(((MultipartFile) file).getOriginalFilename());
-            bean.setBlobField(((MultipartFile) file).getBytes());
-            workflowFileManagerService.save(bean);
+            String fileName = ((MultipartFile) file).getOriginalFilename();
+            if (!fileName.equals("")) {
+                WorkflowFileBean bean = new WorkflowFileBean();
+                bean.setWorkflowBean(workflowBean);
+                bean.setFileName(fileName);
+                bean.setBlobField(((MultipartFile) file).getBytes());
+                workflowFileManagerService.save(bean);
+            }
         }
-
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
 

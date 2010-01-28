@@ -7,6 +7,7 @@ public class SearchTaskDto {
     private String taskIncomingNumber;
     private String taskExternalNumber;
     private String assigneeName;
+    private String externalCompany;
     private String taskDescription;
     private Date startDate;
     private Date finishDate;
@@ -83,5 +84,13 @@ public class SearchTaskDto {
 
     public void setTaskExternalNumber(String taskExternalNumber) {
         this.taskExternalNumber = taskExternalNumber;
+    }
+
+    public String getExternalCompany() {
+        return externalCompany;
+    }
+
+    public void setExternalCompany(String externalCompany) {
+        this.externalCompany = externalCompany;
     }
 }

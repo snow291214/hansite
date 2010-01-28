@@ -395,12 +395,41 @@ Expression	 Meaning
         </property>
     </bean>
 
+    <bean id="methodInvokingDailyIncoming" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="taskManagerService"/>
+        <property name="targetMethod" value="dailyReport"/>
+    </bean>
+
+    <bean id="cronTriggerDailyIncoming" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingDailyIncoming"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 00 18 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <bean id="methodInvokingDailyOutgoing" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="outgoingMailService"/>
+        <property name="targetMethod" value="dailyReport"/>
+    </bean>
+
+    <bean id="cronTriggerDailyOutgoing" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingDailyOutgoing"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 00 18 ? * MON-FRI</value>
+        </property>
+    </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
                 <ref bean="cronTrigger" />
                 <ref bean="cronTriggerTaskReport" />
+                <ref bean="cronTriggerDailyIncoming" />
+                <ref bean="cronTriggerDailyOutgoing" />
             </list>
         </property>
     </bean>
