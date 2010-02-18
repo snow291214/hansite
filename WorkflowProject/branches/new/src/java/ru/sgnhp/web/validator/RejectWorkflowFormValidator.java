@@ -3,25 +3,23 @@ package ru.sgnhp.web.validator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import ru.sgnhp.dto.WorkflowBeanDto;
+import ru.sgnhp.dto.RejectWorkflowDto;
 
 /*****
  *
  * @author Alexey Khudyakov
  * @company "Salavatgazoneftehimproekt" Ltd
+ * Created on: 16.02.2010
  *
  *****
  */
-public class WorkflowManagerFormValidator implements Validator {
+public class RejectWorkflowFormValidator implements Validator {
 
     public boolean supports(Class clazz) {
-        return clazz.equals(WorkflowBeanDto.class);
+        return clazz.equals(RejectWorkflowDto.class);
     }
 
     public void validate(Object commandClass, Errors errors) {
-        WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto) commandClass;
-        if(workflowBeanDto.getStateUid() == 5){
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "workflowNote", "workflow.workflowNote.empty");
-        }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "rejectWorkflow.description.empty");
     }
 }

@@ -72,14 +72,14 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         return workflowDao.getWorkflowByParentUid(workflowUid);
     }
 
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-    public void updateWorkflow(WorkflowBean _workflow) {
-        if (_workflow.getState().getStateUid() == 3) {
-            _workflow.setFinishDate(DateUtils.nowDate());
-        }
-        workflowDao.updateWorkflow(_workflow);
-        mailService.sendmailChangeState(_workflow);
-    }
+//    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+//    public void updateWorkflow(WorkflowBean _workflow) {
+//        if (_workflow.getState().getStateUid() == 3) {
+//            _workflow.setFinishDate(DateUtils.nowDate());
+//        }
+//        workflowDao.updateWorkflow(_workflow);
+//        mailService.sendmailChangeState(_workflow);
+//    }
 
     public void setUserManagerService(IUserManagerService userManagerService) {
         WorkflowManagerServiceImpl.userManagerService = userManagerService;
@@ -144,9 +144,10 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean) {
-        if (stateBean.getStateUid() == 3) {
-            beanDto.setFinishDate(DateUtils.nowDate());
-        }
+//        if ((stateBean.getStateUid() == 3) || (stateBean.getStateUid() == 5)) {
+//            beanDto.setFinishDate(DateUtils.nowDate());
+//        }
+        beanDto.setFinishDate(DateUtils.nowDate());
         beanDto = workflowDao.updateWorkflowState(beanDto, stateBean);
         WorkflowBean workflowBean = this.getWorkflowByUid(beanDto.getUid());
         mailService.sendmailChangeState(workflowBean);
@@ -178,5 +179,9 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate) {
         return workflowDao.getWorkflowsByPeriodOfDate(parentUserUid, userUid, startDate, finishDate);
+    }
+
+    public List<WorkflowBean> getWorkflowsByUserUidAndStateUids(Long userUid, Long[] stateUids) {
+        return workflowDao.getWorkflowsByUserUidAndStateUids(userUid, stateUids);
     }
 }

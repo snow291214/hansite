@@ -53,11 +53,11 @@
                             </c:choose>
 
                             <c:choose>
-                                <c:when test="${status.value eq 3}">
-                                    <option value="3" selected>Завершена</option>
+                                <c:when test="${status.value eq 5}">
+                                    <option value="5" selected>Сохранить для проверки</option>
                                 </c:when>
                                 <c:otherwise>
-                                    <option value="3">Завершена</option>
+                                    <option value="5">Сохранить для проверки</option>
                                 </c:otherwise>
                             </c:choose>
                         </select>

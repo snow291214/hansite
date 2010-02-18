@@ -21,6 +21,8 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean, L
 
     WorkflowBean getWorkflowByUid(Long workflowUid);
 
+    List<WorkflowBean> getWorkflowsByUserUidAndStateUids(Long userUid, Long[] stateUids);
+
     List<WorkflowBean> getRecievedWorkflowsByUserUid(Long uid);
 
     List<WorkflowBean> getRecievedWorkflows();
@@ -29,7 +31,7 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean, L
 
     List<WorkflowBean> getCompletedWorkflowsByUserUid(Long parentUid);
 
-    void updateWorkflow(WorkflowBean _workflow);
+//    void updateWorkflow(WorkflowBean _workflow);
 
     WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean);
 

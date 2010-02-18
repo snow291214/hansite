@@ -55,27 +55,15 @@
                             Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
                         </div>
                         <div>
-                            Компания: ${wf.taskBean.externalCompany}.
+                            Компания: <b>${wf.taskBean.externalCompany}</b>.
+                            Отправитель: <b>${wf.taskBean.externalAssignee}</b>
                             Входящий номер письма: <b>${wf.taskBean.incomingNumber}</b>.
-                            Исходящий номер: ${wf.taskBean.externalNumber}.
-                            Отправитель: ${wf.taskBean.externalAssignee}<br />
-                            <b>Задачу назначил: <c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/></b>
-                            Дата начала задачи: <b><fmt:formatDate pattern="dd.MM.yyyy" value="${wf.taskBean.startDate}" /></b>
-                            Срок до: <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.taskBean.dueDate}" /><br />
+                            Исходящий номер: <b>${wf.taskBean.externalNumber}</b>.<br />
+                            Задачу назначил: <b><c:out value="${wf.assignee.lastName} ${wf.assignee.firstName} ${wf.assignee.middleName}"/></b>.
+                            Резолюция к задаче: <b><u><c:out value="${wf.description}"/></u></b>.
+                            <br/><br/>
                             <div class="content">
-                                Резолюция к задаче: <b><u><c:out value="${wf.description}"/></u></b>.<br />
-                                Дата назначения задачи: <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.assignDate}" />.
-                                Состояние задачи:
-                                <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.
-                                    <c:if test="${wf.workflowNote != ''}">
-                                        ${wf.workflowNote}
-                                    </c:if>
-                                </font><br />
-                                Файлы, прикрепленные к задаче:
-                                <c:forEach var = "taskFile" items="${wf.taskBean.filesSet}">
-                                    <a href="<c:url value="download.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
-                                </c:forEach>
-                                <br />
+                                <%@ include file="/WEB-INF/jsp/includes/contentInclude.jsp" %>
                                 <a href="<c:url value="roadmap.htm?workflowID=${wf.uid}" />">Просмотреть маршрут задачи</a>
                                 <a href="<c:url value="selectUsers.htm?workflowID=${wf.uid}" />">Передать задачу</a>
                                 <a href="<c:url value="workflowManager.htm?workflowID=${wf.uid}" />">Управление задачей</a>

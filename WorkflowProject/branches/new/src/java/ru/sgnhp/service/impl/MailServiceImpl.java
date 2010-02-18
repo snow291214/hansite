@@ -45,27 +45,27 @@ public class MailServiceImpl implements IMailService {
             message.setFrom(address);
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(_workflow.getReceiver().getEmail()));
-            message.setSubject("Была создана новая задача: " +
-                    "[" + _workflow.getTaskBean().getInternalNumber() + "] " +
-                    _workflow.getAssignee().getLastName() +
-                    " == > " +
-                    _workflow.getReceiver().getLastName(), "utf-8");
+            message.setSubject("Была создана новая задача: "
+                    + "[" + _workflow.getTaskBean().getInternalNumber() + "] "
+                    + _workflow.getAssignee().getLastName()
+                    + " == > "
+                    + _workflow.getReceiver().getLastName(), "utf-8");
 
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
 
-            htmlPart.setContent("<html><body><h2>Задача № " +
-                    _workflow.getTaskBean().getInternalNumber() + "</h2>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " + _workflow.getAssignee().getFirstName() +
-                    " " + _workflow.getAssignee().getMiddleName() + " " +
-                    _workflow.getAssignee().getLastName() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " + _workflow.getDescription() + "</p>" +
-                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/" +
-                    "\">Просмотреть все задачи</a> <br />" +
-                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID=" +
-                    _workflow.getUid().toString() + "\">Просмотреть задачу</a>" +
-                    "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>" +
-                    "</body></html>", "text/html;charset=utf-8");
+            htmlPart.setContent("<html><body><h2>Задача № "
+                    + _workflow.getTaskBean().getInternalNumber() + "</h2>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " + _workflow.getAssignee().getFirstName()
+                    + " " + _workflow.getAssignee().getMiddleName() + " "
+                    + _workflow.getAssignee().getLastName() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " + _workflow.getDescription() + "</p>"
+                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/"
+                    + "\">Просмотреть все задачи</a> <br />"
+                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID="
+                    + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
+                    + "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"
+                    + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);
@@ -83,34 +83,47 @@ public class MailServiceImpl implements IMailService {
             InternetAddress address = new InternetAddress(fromAddress);
             address.setPersonal(fromName, "utf-8");
             message.setFrom(address);
-            message.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress(_workflow.getAssignee().getEmail()));
-            message.setSubject("Изменение статуса задачи", "utf-8");
+
+            /* Тупое решение, но тем не менее */
+            if (_workflow.getState().getStateUid() == 3L) {
+                message.addRecipient(Message.RecipientType.TO,
+                        new InternetAddress(_workflow.getReceiver().getEmail()));
+            } else {
+                message.addRecipient(Message.RecipientType.TO,
+                        new InternetAddress(_workflow.getAssignee().getEmail()));
+            }
+
+            message.setSubject("Изменение статуса задачи на '"
+                    + _workflow.getState().getStateDescription() + "': "
+                    + "[" + _workflow.getTaskBean().getInternalNumber() + "] "
+                    + _workflow.getAssignee().getLastName()
+                    + " == > "
+                    + _workflow.getReceiver().getLastName(), "utf-8");
 
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
 
-            htmlPart.setContent("<html><body>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Изменение статуса у назначенной Вами задачи № " +
-                    _workflow.getTaskBean().getInternalNumber() + " (" +
-                    _workflow.getTaskBean().getDescription() + ")</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Получатель задачи: " +
-                    _workflow.getReceiver().getLastName() + " " +
-                    _workflow.getReceiver().getFirstName() + " " +
-                    _workflow.getReceiver().getMiddleName() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Описание задачи: " +
-                    _workflow.getTaskBean().getDescription() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
-                    _workflow.getDescription() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " +
-                    _workflow.getState().getStateDescription() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Записка к смене статуса: " +
-                    _workflow.getWorkflowNote() + "</p>" +
-                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/" +
-                    "\">Просмотреть все задачи</a> <br />" +
-                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID=" +
-                    _workflow.getUid().toString() + "\">Просмотреть задачу</a>" +
-                    "</body></html>", "text/html;charset=utf-8");
+            htmlPart.setContent("<html><body>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Изменение статуса у назначенной Вами задачи № "
+                    + _workflow.getTaskBean().getInternalNumber() + " ("
+                    + _workflow.getTaskBean().getDescription() + ")</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Получатель задачи: "
+                    + _workflow.getReceiver().getLastName() + " "
+                    + _workflow.getReceiver().getFirstName() + " "
+                    + _workflow.getReceiver().getMiddleName() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Описание задачи: "
+                    + _workflow.getTaskBean().getDescription() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: "
+                    + _workflow.getDescription() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: "
+                    + _workflow.getState().getStateDescription() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Записка к смене статуса: "
+                    + _workflow.getWorkflowNote() + "</p>"
+                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/"
+                    + "\">Просмотреть все задачи</a> <br />"
+                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID="
+                    + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
+                    + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);
@@ -135,17 +148,17 @@ public class MailServiceImpl implements IMailService {
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
 
-            htmlPart.setContent("<html><body>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Прошу предоставить отчет о состоянии задачи № " +
-                    _workflow.getTaskBean().getInternalNumber() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " +
-                    _workflow.getAssignee().getLastName() + " " +
-                    _workflow.getAssignee().getFirstName() + " " +
-                    _workflow.getAssignee().getMiddleName() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " +
-                    _workflow.getDescription() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: " +
-                    _workflow.getState().getStateDescription() + "</p></body></html>",
+            htmlPart.setContent("<html><body>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Прошу предоставить отчет о состоянии задачи № "
+                    + _workflow.getTaskBean().getInternalNumber() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: "
+                    + _workflow.getAssignee().getLastName() + " "
+                    + _workflow.getAssignee().getFirstName() + " "
+                    + _workflow.getAssignee().getMiddleName() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: "
+                    + _workflow.getDescription() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Текущий статус задачи: "
+                    + _workflow.getState().getStateDescription() + "</p></body></html>",
                     "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
@@ -174,39 +187,39 @@ public class MailServiceImpl implements IMailService {
             String tableBody = "";
 
             for (WorkflowBean wf : wfs) {
-                tableBody += "<tr>" +
-                        "<td>" + wf.getTaskBean().getInternalNumber() + "</td>" +
-                        "<td>" + wf.getTaskBean().getDescription() + "</td>" +
-                        "<td>" + wf.getTaskBean().getStartDate() + "</td>" +
-                        "<td>" + wf.getTaskBean().getDueDate() + "</td>" +
-                        "<td>" + wf.getAssignee().getLastName() + " " +
-                        wf.getAssignee().getFirstName() + " " +
-                        wf.getAssignee().getMiddleName() + "</td>" +
-                        "<td>" + wf.getDescription() + "</td>" +
-                        "</tr>";
+                tableBody += "<tr>"
+                        + "<td>" + wf.getTaskBean().getInternalNumber() + "</td>"
+                        + "<td>" + wf.getTaskBean().getDescription() + "</td>"
+                        + "<td>" + wf.getTaskBean().getStartDate() + "</td>"
+                        + "<td>" + wf.getTaskBean().getDueDate() + "</td>"
+                        + "<td>" + wf.getAssignee().getLastName() + " "
+                        + wf.getAssignee().getFirstName() + " "
+                        + wf.getAssignee().getMiddleName() + "</td>"
+                        + "<td>" + wf.getDescription() + "</td>"
+                        + "</tr>";
             }
-            htmlPart.setContent("<html><head><style type=\"text/css\"> " +
-                    "body {font-family:Arial;font-size:small;}" +
-                    "table {font-family:Arial; font-size:8pt;border-collapse:collapse}" +
-                    "td {border: 1px solid #000000;}" +
-                    "</style></style></head><body>" +
-                    "<p>" +
-                    "Вам были назначены следующие задания:" +
-                    "</p>" +
-                    "<table width=100%>" +
-                    "<tr align=center>" +
-                    "<td width=10%>Номер задачи</td>" +
-                    "<td width=30%>Описание задачи</td>" +
-                    "<td width=10%>Дата начала</td>" +
-                    "<td width=10%>Срок до</td>" +
-                    "<td width=20%>Задачу поставил</td>" +
-                    "<td width=20%>Резолюция к задаче</td>" +
-                    "</tr>" +
-                    tableBody +
-                    "</table>" +
-                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачи</a>" +
-                    "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>" +
-                    "</body></html>", "text/html;charset=utf-8");
+            htmlPart.setContent("<html><head><style type=\"text/css\"> "
+                    + "body {font-family:Arial;font-size:small;}"
+                    + "table {font-family:Arial; font-size:8pt;border-collapse:collapse}"
+                    + "td {border: 1px solid #000000;}"
+                    + "</style></style></head><body>"
+                    + "<p>"
+                    + "Вам были назначены следующие задания:"
+                    + "</p>"
+                    + "<table width=100%>"
+                    + "<tr align=center>"
+                    + "<td width=10%>Номер задачи</td>"
+                    + "<td width=30%>Описание задачи</td>"
+                    + "<td width=10%>Дата начала</td>"
+                    + "<td width=10%>Срок до</td>"
+                    + "<td width=20%>Задачу поставил</td>"
+                    + "<td width=20%>Резолюция к задаче</td>"
+                    + "</tr>"
+                    + tableBody
+                    + "</table>"
+                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачи</a>"
+                    + "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"
+                    + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);
@@ -233,53 +246,53 @@ public class MailServiceImpl implements IMailService {
             String tableBody = "";
             int counter = 1;
             for (WorkflowBean wf : wfs) {
-                tableBody += "<tr>" +
-                        "<td>" + counter + "</td>" +
-                        "<td>" + wf.getTaskBean().getDescription() + "</td>" +
-                        "<td>" +
-                        wf.getAssignee().getLastName() + " " +
-                        wf.getAssignee().getFirstName() + " " +
-                        wf.getAssignee().getMiddleName() +
-                        "</td>" +
-                        "<td>" +
-                        wf.getReceiver().getLastName() + " " +
-                        wf.getReceiver().getFirstName() + " " +
-                        wf.getReceiver().getMiddleName() + " " +
-                        "</td>" +
-                        "<td>" + wf.getDescription() + "</td>" +
-                        "<td>" + wf.getState().getStateDescription() + "</td>" +
-                        "<td>" + wf.getWorkflowNote() + "</td>" +
-                        "<td><a href=\"http://sgnhp.snos.ru:8080/Workflow/roadmap.htm?workflowID=" +
-                        wf.getUid() + "\">"+wf.getUid() +"</a></td>" +
-                        "</tr>";
+                tableBody += "<tr>"
+                        + "<td>" + counter + "</td>"
+                        + "<td>" + wf.getTaskBean().getDescription() + "</td>"
+                        + "<td>"
+                        + wf.getAssignee().getLastName() + " "
+                        + wf.getAssignee().getFirstName() + " "
+                        + wf.getAssignee().getMiddleName()
+                        + "</td>"
+                        + "<td>"
+                        + wf.getReceiver().getLastName() + " "
+                        + wf.getReceiver().getFirstName() + " "
+                        + wf.getReceiver().getMiddleName() + " "
+                        + "</td>"
+                        + "<td>" + wf.getDescription() + "</td>"
+                        + "<td>" + wf.getState().getStateDescription() + "</td>"
+                        + "<td>" + wf.getWorkflowNote() + "</td>"
+                        + "<td><a href=\"http://sgnhp.snos.ru:8080/Workflow/roadmap.htm?workflowID="
+                        + wf.getUid() + "\">" + wf.getUid() + "</a></td>"
+                        + "</tr>";
                 counter++;
             }
-            htmlPart.setContent("<html><head><style type=\"text/css\"> " +
-                    "body {font-family:Arial;font-size:small;}" +
-                    "table {font-family:Arial; font-size:8pt;border-collapse:collapse}" +
-                    "td {border: 1px solid #000000;}" +
-                    "</style></style></head><body>" +
-                    "<p> Уважаемый (ая) коллега!</p>" +
-                    "<p>" +
-                    "Вами были назначены задания, но они еще не выполнены исполнителями." +
-                    "</p>" +
-                    "<table width=100%>" +
-                    "<tr align=center>" +
-                    "<td width=10%>Номер п/п</td>" +
-                    "<td width=20%>Текст задачи</td>" +
-                    "<td width=20%>Задачу назначил</td>" +
-                    "<td width=20%>Задачу получил</td>" +
-                    "<td width=30%>Резолюция к задаче</td>" +
-                    "<td width=5%>Состояние задачи</td>" +
-                    "<td width=10%>Записка к задаче</td>" +
-                    "<td width=5%>Ссылка на задачу</td>" +
-                    "</tr>" +
-                    tableBody +
-                    "</table>" +
-                    "<br />"+
-                    "<a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачи</a>" +
-                    "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>" +
-                    "</body></html>", "text/html;charset=utf-8");
+            htmlPart.setContent("<html><head><style type=\"text/css\"> "
+                    + "body {font-family:Arial;font-size:small;}"
+                    + "table {font-family:Arial; font-size:8pt;border-collapse:collapse}"
+                    + "td {border: 1px solid #000000;}"
+                    + "</style></style></head><body>"
+                    + "<p> Уважаемый (ая) коллега!</p>"
+                    + "<p>"
+                    + "Вами были назначены задания, но они еще не выполнены исполнителями."
+                    + "</p>"
+                    + "<table width=100%>"
+                    + "<tr align=center>"
+                    + "<td width=10%>Номер п/п</td>"
+                    + "<td width=20%>Текст задачи</td>"
+                    + "<td width=20%>Задачу назначил</td>"
+                    + "<td width=20%>Задачу получил</td>"
+                    + "<td width=30%>Резолюция к задаче</td>"
+                    + "<td width=5%>Состояние задачи</td>"
+                    + "<td width=10%>Записка к задаче</td>"
+                    + "<td width=5%>Ссылка на задачу</td>"
+                    + "</tr>"
+                    + tableBody
+                    + "</table>"
+                    + "<br />"
+                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачи</a>"
+                    + "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"
+                    + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);
@@ -323,20 +336,20 @@ public class MailServiceImpl implements IMailService {
             message.setFrom(address);
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(outgoingMailBean.getWorkflowUserBean().getEmail()));
-            message.setSubject("Зарегистрировано и отправлено письмо: " +
-                    outgoingMailBean.getWorkflowUserBean().getLastName() +
-                    " ==> " + outgoingMailBean.getReceiverName(), "utf-8");
+            message.setSubject("Зарегистрировано и отправлено письмо: "
+                    + outgoingMailBean.getWorkflowUserBean().getLastName()
+                    + " ==> " + outgoingMailBean.getReceiverName(), "utf-8");
 
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
 
-            htmlPart.setContent("<html><body><h2>Исходящее письмо №" +
-                    outgoingMailBean.getOutgoingNumber().toString() + "</h2>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Тема письма: " +
-                    outgoingMailBean.getDescription() + "</p>" +
-                    "<p style=\"font-family:Arial;font-size:12px;\">Компания-получатель: " +
-                    outgoingMailBean.getReceiverCompany() + ". ФИО получателя: " + outgoingMailBean.getReceiverName() +
-                    "</body></html>", "text/html;charset=utf-8");
+            htmlPart.setContent("<html><body><h2>Исходящее письмо №"
+                    + outgoingMailBean.getOutgoingNumber().toString() + "</h2>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Тема письма: "
+                    + outgoingMailBean.getDescription() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Компания-получатель: "
+                    + outgoingMailBean.getReceiverCompany() + ". ФИО получателя: " + outgoingMailBean.getReceiverName()
+                    + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
             Transport.send(message);

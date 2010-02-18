@@ -1,7 +1,10 @@
-﻿<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <title>Работа с заданиями</title>
-<link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css?random=20051112" media="screen"></link>
+<link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css?random=20051112" media="screen"/>
 <script type="text/javascript" src="scripts/dhtmlgoodies_calendar.js?random=20090118"></script>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ajax.js" ></script>
@@ -30,11 +33,14 @@
                 </spring:bind>
             </tr>
             <tr>
-                <td><input type="checkbox" id="incoming" onclick="requestdata()" />Входящее письмо</td>
-                    <spring:bind path="registerTask.incomingNumber">
-                    <td><input type="text" id="incomingNumber" name="${status.expression}" value="${status.value}" readonly /></td>
-                    <td><font color="red">${status.errorMessage}</font></td>
-                </spring:bind>
+                <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG">
+                    <td><input type="checkbox" id="incoming" onclick="requestdata()" />Входящее письмо</td>
+                        <spring:bind path="registerTask.incomingNumber">
+                        <td><input type="text" id="incomingNumber" name="${status.expression}" value="${status.value}" readonly /></td>
+                        <td><font color="red">${status.errorMessage}</font>
+                        </spring:bind>
+                    </td>
+                </sec:authorize>
             </tr>
             <tr>
                 <td>Исходящий номер:</td>

@@ -117,16 +117,16 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         return list;
     }
 
-    public void updateWorkflow(WorkflowBean workflowBean) {
-        WorkflowBean bean = this.get(workflowBean.getUid());
-        bean.setState(workflowBean.getState());
-        super.save(bean);
-    }
-
+//    public void updateWorkflow(WorkflowBean workflowBean) {
+//        WorkflowBean bean = this.get(workflowBean.getUid());
+//        bean.setState(workflowBean.getState());
+//        super.save(bean);
+//    }
     public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean) {
         WorkflowBean workflowBean = this.get(beanDto.getUid());
         workflowBean.setState(stateBean);
         workflowBean.setWorkflowNote(beanDto.getWorkflowNote());
+        workflowBean.setFinishDate(beanDto.getFinishDate());
         workflowBean = super.save(workflowBean);
 
         beanDto.setUid(workflowBean.getUid());
@@ -156,8 +156,19 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         value.put("parentUserUid", parentUserUid);
         value.put("userUid", userUid);
         value.put("startDate", startDate);
-        value.put("finishDate",finishDate);
+        value.put("finishDate", finishDate);
         List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByPeriodOfDate", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
+
+    public List<WorkflowBean> getWorkflowsByUserUidAndStateUids(Long userUid, Long[] stateUids) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("userUid", userUid);
+        value.put("stateUids", stateUids);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByUserUidAndStateUids", value);
         if (list == null || list.size() == 0) {
             return null;
         }

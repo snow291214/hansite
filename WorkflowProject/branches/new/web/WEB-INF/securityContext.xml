@@ -17,13 +17,19 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <bean id="theFirstLdapServer" class="ru.sgnhp.security.SgnhpSpringSecurityContextSource">
         <constructor-arg value="ldap://10.1.32.1:389/" />
         <property name="principalPrefix" value="ASU\" />
-        <property name="networkPattern" value="10." />
+        <property name="networkPattern" value="10.16.13." />
     </bean>
 
     <bean id="theSecondLdapServer" class="ru.sgnhp.security.SgnhpSpringSecurityContextSource">
         <constructor-arg value="ldap://192.168.2.40:389/" />
         <property name="principalPrefix" value="DOSNOS\" />
         <property name="networkPattern" value="192." />
+    </bean>
+
+    <bean id="theThirdLdapServer" class="ru.sgnhp.security.SgnhpSpringSecurityContextSource">
+        <constructor-arg value="ldap://192.168.2.40:389/" />
+        <property name="principalPrefix" value="DOSNOS\" />
+        <property name="networkPattern" value="10.16.161." />
     </bean>
 
     <bean id="ldapAuthenticationProvider" class="ru.sgnhp.security.LdapAuthenticationProvider">
@@ -35,6 +41,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <bean id="ldapAuthenticator" class="ru.sgnhp.security.LdapAuthenticatorImpl">
         <property name="contextFactoryFirst" ref="theFirstLdapServer" />
         <property name="contextFactorySecond" ref="theSecondLdapServer" />
+        <property name="contextFactoryThird" ref="theThirdLdapServer" />
     </bean>
 
 </beans>

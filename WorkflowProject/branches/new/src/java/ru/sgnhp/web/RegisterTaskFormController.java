@@ -7,13 +7,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.DateUtils;
-import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
@@ -27,10 +27,10 @@ import ru.sgnhp.service.IWorkflowManagerService;
  * @author Alexey Khudyakov
  * @company "Salavatgazoneftehimproekt" Ltd
  *
- * Отличие от CreateAssignWorkflowFormController в  том, что здесь первичный
+ * Отличие от AssignWorkflowFormController в  том, что здесь первичный
  * ввод задачи.
  * Заполняются атрибуты, потом сохраняется задача, потом создается воркфлоу.
- * CreateAssignWorkflowFormController делает то же самое, только можно указать
+ * AssignWorkflowFormController делает то же самое, только можно указать
  * резолюцию.
  * 
  *****
@@ -47,7 +47,7 @@ public class RegisterTaskFormController extends SimpleFormController {
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         CustomDateEditor editor = new CustomDateEditor(df, false);
         binder.registerCustomEditor(Date.class, editor);
-        super.initBinder(request,binder);
+        super.initBinder(request, binder);
     }
 
     @Override
@@ -59,7 +59,11 @@ public class RegisterTaskFormController extends SimpleFormController {
             this.setSuccessView("upload.htm");
         } else {
             task = taskManagerService.save(task);
-            WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
+            
+            /* Исправление непонятной и премерзкой ошибки */
+            final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+            WorkflowUserBean initiator = userManagerService.getUserByLogin(currentUser);
+
             String[] userUids = (String[]) request.getSession().getAttribute("checks");
 
             //Refactoring is needed here.

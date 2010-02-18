@@ -1,41 +1,41 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-
-
 <c:set var="counter" value="1" scope="page" />
 <c:set var="show" value="false" scope="page" />
-<table>
+<table class="workflowManager">
     <tr>
-        <td class="all">№</td>
-        <td class="all">WorkflowID</td>
-        <td class="all">От кого</td>
-        <td class="all">К кому</td>
-        <td class="all">Прикрепленные файлы задачи</td>
-        <td class="all">Передано с резолюцией</td>
-        <td class="all">Состояние</td>
-        <td class="all">Записка к смене состояния</td>
-        <td class="all">Прикрепленные файлы пользователя</td>
+        <td>№</td>
+        <td>WorkflowID</td>
+        <td>От кого</td>
+        <td>К кому</td>
+        <td>Прикрепленные файлы задачи</td>
+        <td>Передано с резолюцией</td>
+        <td>Состояние</td>
+        <td>Дата смены состояния</td>
+        <td>Записка к смене состояния</td>
+        <td>Прикрепленные файлы пользователя</td>
     </tr>
     <c:forEach var="workflow" items="${requestScope.roadmap}">
         <tr>
-            <td class="all">${counter}</td>
-            <td class="all">${workflow.uid}</td>
-            <td class="all">${workflow.assignee.lastName} ${workflow.assignee.firstName} ${workflow.assignee.middleName}</td>
-            <td class="all">${workflow.receiver.lastName} ${workflow.receiver.firstName} ${workflow.receiver.middleName}</td>
-            <td class="all">
+            <td>${counter}</td>
+            <td>${workflow.uid}</td>
+            <td>${workflow.assignee.lastName} ${workflow.assignee.firstName} ${workflow.assignee.middleName}</td>
+            <td>${workflow.receiver.lastName} ${workflow.receiver.firstName} ${workflow.receiver.middleName}</td>
+            <td>
                 <c:if test="${show == 'false'}">
                     <c:forEach var = "taskFile" items="${workflow.taskBean.filesSet}">
-                        <a href="download.htm?fileID=${taskFile.uid}">${taskFile.fileName}</a><br />
+                        <a href="download.htm?fileID=${taskFile.uid}">${taskFile.fileName}</a> 
                      </c:forEach>
                      <c:set var="show" value="true" scope="page" />
                 </c:if>
             </td>
-            <td class="all">${workflow.description}</td>
-            <td class="all">${workflow.state.stateDescription}</td>
-            <td class="all">&nbsp;${workflow.workflowNote}</td>
-            <td class="all">
+            <td>${workflow.description}</td>
+            <td>${workflow.state.stateDescription}</td>
+            <td>${workflow.finishDate}</td>
+            <td>&nbsp;${workflow.workflowNote}</td>
+            <td>
                 <c:forEach var="workflowFile" items="${workflow.workflowFileBeanSet}">
-                    <a href="getWorkflowFiles.htm?fileID=${workflowFile.uid}">${workflowFile.fileName}</a><br />
+                    <a href="getWorkflowFiles.htm?fileID=${workflowFile.uid}">${workflowFile.fileName}</a> 
                 </c:forEach>
             </td>
         </tr>

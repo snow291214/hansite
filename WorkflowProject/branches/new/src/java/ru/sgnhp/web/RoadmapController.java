@@ -27,11 +27,11 @@ public class RoadmapController implements Controller {
         WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
         ArrayList<WorkflowBean> roadmap = new ArrayList<WorkflowBean>();
         //if (workflowBean.getParentUid() == -1) {
-            //roadmap.add(workflowBean);
+        //roadmap.add(workflowBean);
         //} else {
-            roadmap.add(workflowBean);
-            roadmap = this.workflowManagerService.getWorkflowMembersByWorkflowUid(workflowBean.getUid(), workflowBean.getParentUid(), roadmap);
-            Collections.reverse(roadmap);
+        roadmap.add(workflowBean);
+        roadmap = this.workflowManagerService.getWorkflowMembersByWorkflowUid(workflowBean.getUid(), workflowBean.getParentUid(), roadmap);
+        Collections.reverse(roadmap);
         //}
         return new ModelAndView("roadmap", "roadmap", roadmap);
     }

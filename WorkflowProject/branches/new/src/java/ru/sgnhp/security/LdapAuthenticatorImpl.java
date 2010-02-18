@@ -21,22 +21,27 @@ public class LdapAuthenticatorImpl implements LdapAuthenticator {
     private SgnhpSpringSecurityContextSource contextFactory;
     private SgnhpSpringSecurityContextSource contextFactoryFirst;
     private SgnhpSpringSecurityContextSource contextFactorySecond;
+    private SgnhpSpringSecurityContextSource contextFactoryThird;
     private String principalPrefix = "";
 
     public DirContextOperations authenticate(Authentication authentication) {
 
         // Grab the username and password out of the authentication object.
         String remoteIpAddress = ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress();
-        Logger logger = Logger.getLogger(this.getClass().getName());
+//        Logger logger = Logger.getLogger(this.getClass().getName());
 
-        if ((remoteIpAddress.startsWith(contextFactoryFirst.getNetworkPattern())) ||
-                (remoteIpAddress.startsWith("0:"))) {
+        if ((remoteIpAddress.startsWith(contextFactoryFirst.getNetworkPattern()))
+                || (remoteIpAddress.startsWith("0:"))) {
             contextFactory = contextFactoryFirst;
             principalPrefix = contextFactoryFirst.getPrincipalPrefix();
         }
         if (remoteIpAddress.startsWith(contextFactorySecond.getNetworkPattern())) {
             contextFactory = contextFactorySecond;
             principalPrefix = contextFactorySecond.getPrincipalPrefix();
+        }
+        if (remoteIpAddress.startsWith(contextFactoryThird.getNetworkPattern())) {
+            contextFactory = contextFactoryThird;
+            principalPrefix = contextFactoryThird.getPrincipalPrefix();
         }
         String principal = principalPrefix + authentication.getName();
         //logger.info(String.format("User is authenticating. Username: %1$s Remote address: %2$s", principal, remoteIpAddress));
@@ -117,5 +122,9 @@ public class LdapAuthenticatorImpl implements LdapAuthenticator {
 
     public void setContextFactorySecond(SgnhpSpringSecurityContextSource contextFactorySecond) {
         this.contextFactorySecond = contextFactorySecond;
+    }
+
+    public void setContextFactoryThird(SgnhpSpringSecurityContextSource contextFactoryThird) {
+        this.contextFactoryThird = contextFactoryThird;
     }
 }

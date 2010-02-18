@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <spring:hasBindErrors name="userLogin">
+                    <spring:hasBindErrors name="assignWorkflow">
                         <b>Возникли ошибки при регистрации</b>
                     </spring:hasBindErrors>
                 </td>

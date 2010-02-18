@@ -39,6 +39,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="outgoingLetterWizard.htm">outgoingLetterController</prop>
                 <prop key="outgoingMailSearch.htm">outgoingMailSearchFormController</prop>
                 <prop key="outgoingMailSearchResult.htm">outgoingMailSearchResultController</prop>
+                <prop key="tasksForReview.htm">tasksForReviewController</prop>
+                <prop key="rejectWorkflow.htm">rejectWorkflowFormController</prop>
+                <prop key="approveWorkflow.htm">approveWorkflowController</prop>
             </props>
         </property>
     </bean>
@@ -54,7 +57,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean name="loginFormController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="login" />
-          
+
     <!-- Index Controller -->
     <bean name="indexController" class="ru.sgnhp.web.IndexController" >
         <property name="userManagerService">
@@ -308,8 +311,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
-
-
     <!-- Outgoing Letter Search Controller -->
     <bean name="outgoingMailSearchResultController" class="ru.sgnhp.web.OutgoingMailSearchResultController">
         <property name="outgoingMailService">
@@ -317,6 +318,53 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
+    <!-- Reject Workflow Form Controller 16.02.2010-->
+    <bean name="rejectWorkflowFormController" class="ru.sgnhp.web.RejectWorkflowFormController">
+        <property name="commandName" value="rejectWorkflow"/>
+        <property name="commandClass" value="ru.sgnhp.dto.RejectWorkflowDto"/>
+        <property name="formView">
+            <value>rejectWorkflow</value>
+        </property>
+        <property name="successView">
+            <value>tasksForReview.htm</value>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="validator">
+            <ref bean="rejectWorkflowFormValidator"/>
+        </property>
+    </bean>
+
+    <!-- Tasks For Review Controller Controller 15.02.2010 -->
+    <bean name="tasksForReviewController" class="ru.sgnhp.web.TasksForReviewController" >
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+    
+    <!-- Approve Workflow Controller 17.02.2010 -->
+    <bean name="approveWorkflowController" class="ru.sgnhp.web.ApproveWorkflowController" >
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+    </bean>
+    
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">
@@ -332,6 +380,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     </bean>
 
     <bean id="workflowManagerFormValidator" class="ru.sgnhp.web.validator.WorkflowManagerFormValidator" />
+
+    <bean id="rejectWorkflowFormValidator" class="ru.sgnhp.web.validator.RejectWorkflowFormValidator" />
 
     <!--======================== Authentication =============================-->
     <bean id="authenticationDAO" class="ru.sgnhp.dao.impl.AuthenticationDaoImpl" />

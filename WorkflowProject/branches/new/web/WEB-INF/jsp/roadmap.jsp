@@ -5,6 +5,7 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/jsp/includes/roadmapInclude.jsp" %>
+    <br />
     <form>
         <button type="button" onclick="javascript:document.location.href='index.htm'">На главную</button>
         <button type="button" onclick="javascript:history.back();">Назад</button>

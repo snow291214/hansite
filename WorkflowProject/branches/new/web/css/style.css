@@ -1,6 +1,6 @@
 body{
-    font-family:Arial;
-    font-size:medium;
+    font-family:arial;
+    font-size:14px;
 }
 
 div.empty{
@@ -187,12 +187,28 @@ a.button:active span {
 
 table.workflowManager {
     font-family:arial;
-    font-size:10pt;
+    border-width: 1px;
+    border-color: black;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+table.workflowManager td{
+    font-size:8pt;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: white;
+    padding: 5px;
 }
 
 td.all{
-    border: 1px solid #000000;
     font-size:8pt;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: white;
+    padding: 5px;
 }
 
 td.bottom{
