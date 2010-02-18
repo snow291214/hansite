@@ -1,7 +1,5 @@
 package ru.sgnhp.service.impl;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -355,6 +353,79 @@ public class MailServiceImpl implements IMailService {
             Transport.send(message);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void tasksForReviewReport(List<WorkflowBean> wfs) {
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", mailHostName);
+        Session session = Session.getDefaultInstance(props, null);
+        MimeMessage message = new MimeMessage(session);
+        try {
+            InternetAddress address = new InternetAddress(fromAddress);
+            address.setPersonal(fromName, "utf-8");
+            message.setFrom(address);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(wfs.get(0).getAssignee().getEmail()));
+            message.setSubject("Отчет о задачах, ожидающих Вашей проверки.", "utf-8");
+
+            Multipart multipart = new MimeMultipart("related");
+            BodyPart htmlPart = new MimeBodyPart();
+
+            String tableBody = "";
+            int counter = 1;
+            for (WorkflowBean wf : wfs) {
+                tableBody += "<tr>"
+                        + "<td>" + counter + "</td>"
+                        + "<td>" + wf.getTaskBean().getDescription() + "</td>"
+                        + "<td>"
+                        + wf.getAssignee().getLastName() + " "
+                        + wf.getAssignee().getFirstName() + " "
+                        + wf.getAssignee().getMiddleName()
+                        + "</td>"
+                        + "<td>"
+                        + wf.getReceiver().getLastName() + " "
+                        + wf.getReceiver().getFirstName() + " "
+                        + wf.getReceiver().getMiddleName() + " "
+                        + "</td>"
+                        + "<td>" + wf.getDescription() + "</td>"
+                        + "<td>" + wf.getState().getStateDescription() + "</td>"
+                        + "<td>" + wf.getWorkflowNote() + "</td>"
+                        + "<td><a href=\"http://sgnhp.snos.ru:8080/Workflow/roadmap.htm?workflowID="
+                        + wf.getUid() + "\">" + wf.getUid() + "</a></td>"
+                        + "</tr>";
+                counter++;
+            }
+            htmlPart.setContent("<html><head><style type=\"text/css\"> "
+                    + "body {font-family:Arial;font-size:small;}"
+                    + "table {font-family:Arial; font-size:8pt;border-collapse:collapse}"
+                    + "td {border: 1px solid #000000;}"
+                    + "</style></style></head><body>"
+                    + "<p> Уважаемый (ая) коллега!</p>"
+                    + "<p>"
+                    + "Исполнители сохранили для Вашей проверки нижеследующие задачи."
+                    + "</p>"
+                    + "<table width=100%>"
+                    + "<tr align=center>"
+                    + "<td width=10%>Номер п/п</td>"
+                    + "<td width=20%>Текст задачи</td>"
+                    + "<td width=20%>Задачу назначил</td>"
+                    + "<td width=20%>Задачу получил</td>"
+                    + "<td width=30%>Резолюция к задаче</td>"
+                    + "<td width=5%>Состояние задачи</td>"
+                    + "<td width=10%>Записка к задаче</td>"
+                    + "<td width=5%>Ссылка на задачу</td>"
+                    + "</tr>"
+                    + tableBody
+                    + "</table>"
+                    + "<br />"
+                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/tasksForReview.htm\">Просмотреть и проверить выполненные задачи</a>"
+                    + "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"
+                    + "</body></html>", "text/html;charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (Exception e) {
+            System.err.println(e);
         }
     }
 }

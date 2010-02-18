@@ -417,6 +417,8 @@ Expression	 Meaning
 0 0 12 1/5 * ?	 Fire at 12pm (noon) every 5 days every month, starting on the first day of the month.
 0 11 11 11 11 ?	 Fire every November 11th at 11:11am.
  -->
+
+    <!--Напомнинание о невыполненных задачах-->
     <bean id="methodInvokingJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="workflowManagerService"/>
         <property name="targetMethod" value="taskReminder"/>
@@ -430,7 +432,8 @@ Expression	 Meaning
             <value>0 00 8 ? * MON-FRI</value>
         </property>
     </bean>
-
+    
+    <!--Отчет о назначенных, но невыполненных задачах-->
     <bean id="methodInvokingTaskReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="workflowManagerService"/>
         <property name="targetMethod" value="taskReport"/>
@@ -441,10 +444,26 @@ Expression	 Meaning
             <ref bean="methodInvokingTaskReport"/>
         </property>
         <property name="cronExpression">
-            <value>0 45 8 ? * MON-FRI</value>
+            <value>0 15 8 ? * MON-FRI</value>
         </property>
     </bean>
 
+    <!--Отчет о задачах, ожидаемых проверки-->
+    <bean id="methodInvokingTasksForReviewReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="tasksForReviewReport"/>
+    </bean>
+
+    <bean id="cronTriggerTasksForReviewReport" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingTasksForReviewReport"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 30 8 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <!--Бэкап входящих-исходящих-->
     <bean id="methodInvokingDailyIncoming" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="taskManagerService"/>
         <property name="targetMethod" value="dailyReport"/>
@@ -472,7 +491,7 @@ Expression	 Meaning
             <value>0 00 18 ? * MON-FRI</value>
         </property>
     </bean>
-
+    <!--Бэкап входящих-исходящих-->
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
@@ -480,6 +499,7 @@ Expression	 Meaning
                 <ref bean="cronTriggerTaskReport" />
                 <ref bean="cronTriggerDailyIncoming" />
                 <ref bean="cronTriggerDailyOutgoing" />
+                <ref bean="cronTriggerTasksForReviewReport" />
             </list>
         </property>
     </bean>

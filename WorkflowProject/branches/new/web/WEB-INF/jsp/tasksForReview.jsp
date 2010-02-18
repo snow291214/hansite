@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <title>Задачи, ожидающие проверки и завершения</title>
 </head>
 <body>
@@ -7,6 +8,11 @@
         <a href="<c:url value="index.htm" />">На главную</a>
     </div>
     <br>
+    <c:if test="${fn:length(requestScope.workflowBeans) == 0}">
+        <p>
+            Нет задач, ожидающих завершения. <a href="index.htm">Перейти на главную страницу.</a>
+        </p>
+    </c:if>
     <c:forEach var="wf" items="${requestScope.workflowBeans}">
         <div style="margin-bottom: 10px;">
             <div class="header green">

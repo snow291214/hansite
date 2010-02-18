@@ -50,4 +50,6 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean, L
     void taskReminder();
 
     void taskReport();
+
+    void tasksForReviewReport();
 }

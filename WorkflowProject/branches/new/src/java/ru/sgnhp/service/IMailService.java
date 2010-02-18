@@ -26,4 +26,6 @@ public interface IMailService {
     void sendmailReport(List<WorkflowBean> wfs);
 
     void sendmailOutgoing(OutgoingMailBean outgoingMailBean);
+
+    void tasksForReviewReport(List<WorkflowBean> wfs);
 }

@@ -181,7 +181,20 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         return workflowDao.getWorkflowsByPeriodOfDate(parentUserUid, userUid, startDate, finishDate);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<WorkflowBean> getWorkflowsByUserUidAndStateUids(Long userUid, Long[] stateUids) {
         return workflowDao.getWorkflowsByUserUidAndStateUids(userUid, stateUids);
+    }
+    
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public void tasksForReviewReport() {
+        List<WorkflowUserBean> users = userManagerService.getAll();
+        Long[] stateUids = {5L};
+        for (WorkflowUserBean user : users) {
+            List<WorkflowBean> uncompletedWorkflows = this.getWorkflowsByUserUidAndStateUids(user.getUid(), stateUids);
+            if (uncompletedWorkflows != null) {
+                mailService.tasksForReviewReport(uncompletedWorkflows);
+            }
+        }
     }
 }
