@@ -30,6 +30,9 @@ public class LdapAuthenticatorImpl implements LdapAuthenticator {
         String remoteIpAddress = ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress();
 //        Logger logger = Logger.getLogger(this.getClass().getName());
 
+        contextFactory = contextFactoryFirst;
+        principalPrefix = contextFactoryFirst.getPrincipalPrefix();
+
         if ((remoteIpAddress.startsWith(contextFactoryFirst.getNetworkPattern()))
                 || (remoteIpAddress.startsWith("0:"))) {
             contextFactory = contextFactoryFirst;
@@ -43,6 +46,10 @@ public class LdapAuthenticatorImpl implements LdapAuthenticator {
             contextFactory = contextFactoryThird;
             principalPrefix = contextFactoryThird.getPrincipalPrefix();
         }
+//        if (contextFactory == null) {
+//            contextFactory = contextFactoryFirst;
+//            principalPrefix = contextFactoryFirst.getPrincipalPrefix();
+//        }
         String principal = principalPrefix + authentication.getName();
         //logger.info(String.format("User is authenticating. Username: %1$s Remote address: %2$s", principal, remoteIpAddress));
         String password = "";

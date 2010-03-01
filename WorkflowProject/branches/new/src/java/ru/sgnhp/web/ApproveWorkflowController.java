@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IMailService;
@@ -38,7 +39,7 @@ public class ApproveWorkflowController implements Controller {
                 + initiator.getMiddleName());
         workflowManagerService.save(workflowBean);
         mailService.sendmailChangeState(workflowBean);
-        return new ModelAndView("tasksForReview");
+        return new ModelAndView(new RedirectView("tasksForReview.htm"));
     }
 
     public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {

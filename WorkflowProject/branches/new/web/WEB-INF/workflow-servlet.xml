@@ -491,7 +491,7 @@ Expression	 Meaning
             <value>0 00 18 ? * MON-FRI</value>
         </property>
     </bean>
-    <!--Бэкап входящих-исходящих-->
+
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>

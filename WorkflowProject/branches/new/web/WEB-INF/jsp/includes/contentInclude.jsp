@@ -15,7 +15,7 @@
     <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.taskBean.startDate}"/>
 </td>
 <td>
-<fmt:formatDate pattern="dd.MM.yyyy" value="${wf.taskBean.startDate}"/>
+<fmt:formatDate pattern="dd.MM.yyyy" value="${wf.taskBean.dueDate}"/>
 </td>
 <td>
 <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.assignDate}"/>
