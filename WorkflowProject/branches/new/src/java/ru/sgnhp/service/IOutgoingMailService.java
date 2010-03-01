@@ -31,6 +31,8 @@ public interface IOutgoingMailService extends IGenericService<OutgoingMailBean, 
 
     List<OutgoingMailBean> getByDueDate(Date dueDate);
 
+    List<OutgoingMailBean> getByPrimaveraUid(String primaveraUid);
+
     Long getNewOutgoingNumber();
 
     List<OutgoingMailBean> getAllOutgoingMailByYear(Integer currentYear) throws ParseException;

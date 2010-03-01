@@ -83,7 +83,7 @@ public class OutgoingMailServiceImplTest extends AbstractTransactionalDataSource
     @Test
     public void testGetNewOutgoingNumber(){
         Long number = outgoingMailService.getNewOutgoingNumber();
-        assertEquals(number, (Long)74L);
+        assertEquals(number, (Long)77L);
     }
 
     @Test
@@ -94,6 +94,11 @@ public class OutgoingMailServiceImplTest extends AbstractTransactionalDataSource
     @Test
     public void testDailyReport() throws ParseException{
         outgoingMailService.dailyReport();
+    }
+
+    @Test
+    public void testGetByPrimaveraUid(){
+        assertNotNull(outgoingMailService.getByPrimaveraUid("W-AAA000TEST"));
     }
 
     public void setOutgoingMailService(IOutgoingMailService outgoingMailService) {

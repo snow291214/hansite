@@ -142,4 +142,15 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
         }
         return list;
     }
+
+    public List<OutgoingMailBean> getByPrimaveraUid(String primaveraUid) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("primaveraUid", primaveraUid);
+        List<OutgoingMailBean> list = this.findByNamedQuery("OutgoingMailBean.findByPrimaveraUid",
+                value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
 }

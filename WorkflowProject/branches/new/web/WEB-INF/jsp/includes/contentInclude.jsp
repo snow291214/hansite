@@ -5,7 +5,8 @@
         <td width="10%">Дата начала задачи</td>
         <td width="10%">Срок до</td>
         <td width="10%">Дата назначения исполнителю</td>
-        <td width="25%">Состояние задачи</td>
+        <td width="15%">Состояние задачи</td>
+        <td width="10%">Идентификатор СКП "Primavera"</td>
         <td width="15%">Файлы, прикрепленные к задаче</td>
         <td width="15%">Записка к смене состояния</td>
         <td width="15%">Прикрепленные файлы пользователя</td>
@@ -22,6 +23,9 @@
 </td>
 <td>
     <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.</font>
+</td>
+<td>
+    <c:out value="${wf.taskBean.primaveraUid}"/>
 </td>
 <td>
 <c:forEach var = "taskFile" items="${wf.taskBean.filesSet}">

@@ -45,6 +45,8 @@ import org.hibernate.annotations.OnDeleteAction;
     @NamedQuery(name = "OutgoingMailBean.findByOutgoingNumber", 
     query = "SELECT o FROM OutgoingMailBean o WHERE o.outgoingNumber = :outgoingNumber " +
     "order by o.outgoingDate desc, o.outgoingNumber"),
+    @NamedQuery(name = "OutgoingMailBean.findByPrimaveraUid", 
+    query = "SELECT o FROM OutgoingMailBean o WHERE o.primaveraUid = :primaveraUid "),
     @NamedQuery(name = "OutgoingMailBean.findByDescription", query = "SELECT o " +
     "FROM OutgoingMailBean o WHERE o.description like :description order by " +
     "o.outgoingDate desc, o.outgoingNumber"),
@@ -82,6 +84,8 @@ public class OutgoingMailBean implements Serializable {
     private Long outgoingNumber;
     @Column(name = "DocumentumNumber", length = 50)
     private String documentumNumber;
+    @Column(name = "PrimaveraUid", length = 150)
+    private String primaveraUid;
     @Basic(optional = false)
     @Lob
     @Column(name = "Description", nullable = false, length = 65535)
@@ -223,5 +227,13 @@ public class OutgoingMailBean implements Serializable {
 
     public void setWorkflowUserBean(WorkflowUserBean workflowUserBean) {
         this.workflowUserBean = workflowUserBean;
+    }
+
+    public String getPrimaveraUid() {
+        return primaveraUid;
+    }
+
+    public void setPrimaveraUid(String primaveraUid) {
+        this.primaveraUid = primaveraUid;
     }
 }

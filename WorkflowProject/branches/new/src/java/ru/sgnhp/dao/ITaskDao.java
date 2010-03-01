@@ -25,6 +25,8 @@ public interface ITaskDao extends IGenericDao<TaskBean, Long>{
 
     List<TaskBean> getTasksByExternalAssignee(String externalAssignee);
 
+    List<TaskBean> getTaskByPrimaveraUid(String primaveraUid);
+
     int getNewInternalNumber();
 
     int getNewIncomingNumber();

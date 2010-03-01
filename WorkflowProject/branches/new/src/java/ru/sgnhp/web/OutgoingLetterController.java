@@ -94,6 +94,7 @@ public class OutgoingLetterController extends AbstractWizardFormController {
         outgoingMailBean.setReceiverCompany(outgoingMailDto.getReceiverCompany());
         outgoingMailBean.setReceiverName(outgoingMailDto.getReceiverName());
         outgoingMailBean.setWorkflowUserBean(workflowUserBean);
+        outgoingMailBean.setPrimaveraUid(outgoingMailDto.getPrimaveraUid());
         outgoingMailBean = outgoingMailService.save(outgoingMailBean);
 
         /* Сохраняем прикрепленные файлы */

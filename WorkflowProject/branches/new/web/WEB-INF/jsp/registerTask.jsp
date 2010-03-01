@@ -50,6 +50,13 @@
                 </spring:bind>
             </tr>
             <tr>
+                <td>Идентификатор работы в СКП "Primavera":</td>
+                <spring:bind path="registerTask.primaveraUid">
+                    <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
+                    <td><font color="red">${status.errorMessage}</font></td>
+                </spring:bind>
+            </tr>
+            <tr>
                 <td>Компания:</td>
                 <spring:bind path="registerTask.externalCompany">
                     <td><input type="text" name="${status.expression}" value="${status.value}"></td>

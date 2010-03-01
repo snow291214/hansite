@@ -13,6 +13,7 @@ public class SearchTaskDto {
     private Date finishDate;
     private int searchType;
     private Long receiverUid;
+    private String primaveraUid;
 
     public String getTaskInternalNumber() {
         return taskInternalNumber;
@@ -92,5 +93,13 @@ public class SearchTaskDto {
 
     public void setExternalCompany(String externalCompany) {
         this.externalCompany = externalCompany;
+    }
+
+    public String getPrimaveraUid() {
+        return primaveraUid;
+    }
+
+    public void setPrimaveraUid(String primaveraUid) {
+        this.primaveraUid = primaveraUid;
     }
 }

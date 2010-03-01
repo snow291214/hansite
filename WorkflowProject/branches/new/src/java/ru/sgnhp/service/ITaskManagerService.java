@@ -25,6 +25,8 @@ public interface ITaskManagerService extends IGenericService<TaskBean, Long> {
 
     List<TaskBean> getTaskByExternalCompany(String externalCompany);
 
+    List<TaskBean> getTaskByPrimaveraUid(String primaveraUid);
+
     int getNewInternalNumber();
 
     int getNewIncomingNumber();

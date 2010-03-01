@@ -25,6 +25,8 @@ public interface IOutgoingMailDao extends IGenericDao<OutgoingMailBean, Long> {
 
     List<OutgoingMailBean> getByResponsibleUid(Long responsibleUid);
 
+    List<OutgoingMailBean> getByPrimaveraUid(String primaveraUid);
+
     Long getNewOutgoingNumber();
 
     List<OutgoingMailBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException;

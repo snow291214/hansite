@@ -25,6 +25,13 @@
                 </spring:bind>
             </tr>
             <tr>
+                <td>Идентификатор в СКП "Primavera"</td>
+                <spring:bind path="outgoingMailDto.primaveraUid">
+                    <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
+                    <td><font color="red">${status.errorMessage}</font></td>
+                </spring:bind>
+            </tr>
+            <tr>
                 <td>Краткое описание:</td>
                 <spring:bind path="outgoingMailDto.description">
                     <td>

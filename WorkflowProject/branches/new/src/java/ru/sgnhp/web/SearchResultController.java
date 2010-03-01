@@ -99,6 +99,11 @@ public class SearchResultController implements Controller {
                 taskBeans = taskManagerService.getTaskByExternalCompany(searchTaskBean.getExternalCompany());
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
                 break;
+            case 7:
+                result = "searchResult";
+                taskBeans = taskManagerService.getTaskByPrimaveraUid(searchTaskBean.getPrimaveraUid());
+                workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
+                break;
         }
         return new ModelAndView(result, "workflowBeans", workflowBeans);
     }

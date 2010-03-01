@@ -17,16 +17,30 @@
                 Исходящий номер: ${omb.outgoingNumber}. ${omb.description}
             </div>
             <div class="content">
-                Компания-получатель: ${omb.receiverCompany}.
-                Имя получателя: ${omb.receiverName}. Ответственный от СГНХП:
-                ${omb.workflowUserBean.lastName} ${omb.workflowUserBean.firstName} ${omb.workflowUserBean.middleName}<br />
-                Зарегистрировано: <fmt:formatDate pattern="dd.MM.yyyy" value="${omb.outgoingDate}" />.
-                Ожидаемая дата ответа: <fmt:formatDate pattern="dd.MM.yyyy" value="${omb.dueDate}" />
-                Номер в "Documentum": ${omb.documentumNumber}<br />
-                Файлы, прикрепленные к письму:
-                <c:forEach var = "taskFile" items="${omb.outgoingFileBeanSet}">
-                    <a href="<c:url value="getOutgoingFiles.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
-                </c:forEach>
+                Компания-получатель: <b>${omb.receiverCompany}.</b>
+                Имя получателя: <b>${omb.receiverName}.</b>
+                <table class="workflowManager">
+                    <tr>
+                        <td width="20%">Ответственный от СГНХП</td>
+                        <td width="10%">Зарегистрировано</td>
+                        <td width="15%">Ожидаемая дата ответа</td>
+                        <td width="15%">Номер в "Documentum"</td>
+                        <td width="20%">Идентификатор Primavera ID</td>
+                        <td width="20%">Файлы, прикрепленные к письму:</td>
+                    </tr>
+                    <tr>
+                        <td>${omb.workflowUserBean.lastName} ${omb.workflowUserBean.firstName} ${omb.workflowUserBean.middleName}</td>
+                        <td><fmt:formatDate pattern="dd.MM.yyyy" value="${omb.outgoingDate}" /></td>
+                        <td><fmt:formatDate pattern="dd.MM.yyyy" value="${omb.dueDate}" /></td>
+                        <td>${omb.documentumNumber}</td>
+                        <td>${omb.primaveraUid}</td>
+                        <td>
+                            <c:forEach var = "taskFile" items="${omb.outgoingFileBeanSet}">
+                                <a href="<c:url value="getOutgoingFiles.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>
+                            </c:forEach>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <br />

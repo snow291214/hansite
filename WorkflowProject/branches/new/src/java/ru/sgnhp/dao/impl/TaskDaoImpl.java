@@ -121,4 +121,14 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         }
         return list;
     }
+
+    public List<TaskBean> getTaskByPrimaveraUid(String primaveraUid) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("primaveraUid", primaveraUid);
+        List<TaskBean> list = this.findByNamedQuery("TaskBean.findByPrimaveraUid", value);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list;
+    }
 }

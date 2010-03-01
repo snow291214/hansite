@@ -108,7 +108,7 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 
     @Test
     public void testGetNewInternalNumber() {
-        assertEquals(853, taskManagerService.getNewInternalNumber());
+        assertEquals(856, taskManagerService.getNewInternalNumber());
     }
 
     @Test
@@ -128,9 +128,14 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
     }
 
     @Test
-    public void testDailyReport() {
-        taskManagerService.dailyReport();
+    public void testGetByPrimaveraUid(){
+        assertNotNull(taskManagerService.getTaskByPrimaveraUid("W-AAA000TEST"));
     }
+
+//    @Test
+//    public void testDailyReport() {
+//        taskManagerService.dailyReport();
+//    }
 
     @Test
     public void testGetAllIncomingMail() throws ParseException {

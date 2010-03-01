@@ -32,12 +32,24 @@
                 </td>
             </tr>
             <tr>
-                <td><label for="byOutgoingNumber">Поиск по номеру в "Documentum"</label></td>
+                <td><label for="byDocumentumNumber">Поиск по номеру в "Documentum"</label></td>
                 <td>
                     <input type="radio" name="searchType" id="byDocumentumNumber" value="2" />
                 </td>
                 <td><label for="byDocumentumNumber">
                         <spring:bind path="outgoingMailSearch.documentumNumber">
+                            <input type="text" name="${status.expression}" value="${status.value}"/>
+                        </spring:bind>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="byPrimaveraId">Поиск по идентификатору Primavera ID</label></td>
+                <td>
+                    <input type="radio" name="searchType" id="byPrimaveraId" value="7" />
+                </td>
+                <td><label for="byPrimaveraId">
+                        <spring:bind path="outgoingMailSearch.primaveraUid">
                             <input type="text" name="${status.expression}" value="${status.value}"/>
                         </spring:bind>
                     </label>

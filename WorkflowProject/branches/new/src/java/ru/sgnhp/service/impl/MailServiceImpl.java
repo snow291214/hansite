@@ -54,10 +54,15 @@ public class MailServiceImpl implements IMailService {
 
             htmlPart.setContent("<html><body><h2>Задача № "
                     + _workflow.getTaskBean().getInternalNumber() + "</h2>"
-                    + "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: " + _workflow.getAssignee().getFirstName()
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: "
+                    + _workflow.getAssignee().getFirstName()
                     + " " + _workflow.getAssignee().getMiddleName() + " "
                     + _workflow.getAssignee().getLastName() + "</p>"
-                    + "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " + _workflow.getDescription() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: " 
+                    + _workflow.getDescription() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">" +
+                    "Идентификатор работы в СКП 'Primavera': "
+                    + _workflow.getTaskBean().getPrimaveraUid() + "</p>"
                     + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/"
                     + "\">Просмотреть все задачи</a> <br />"
                     + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID="

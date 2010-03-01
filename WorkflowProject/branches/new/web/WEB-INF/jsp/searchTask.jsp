@@ -9,7 +9,7 @@
     <form name="formSearch" method="post" action="searchTask.htm">
         <table border="0" cellspacing="0" cellpadding="5">
             <tr>
-                <td rowspan="7"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
+                <td rowspan="8"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
                 <td><label for="byInternalNumber">Поиск по внутреннему номеру задачи</label></td>
                 <td>
                     <input type="radio" name="searchType" id="byInternalNumber" value="0" />
@@ -43,6 +43,19 @@
                 <td>
                     <label for="byExternalNumber">
                         <spring:bind path="searchTask.taskExternalNumber">
+                            <input type="text" name="${status.expression}" value="${status.value}"/>
+                        </spring:bind>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="byPrimaveraId">Поиск идентификатору Primavera ID</label></td>
+                <td>
+                    <input type="radio" name="searchType" id="byPrimaveraId" value="7" />
+                </td>
+                <td>
+                    <label for="byPrimaveraId">
+                        <spring:bind path="searchTask.primaveraUid">
                             <input type="text" name="${status.expression}" value="${status.value}"/>
                         </spring:bind>
                     </label>

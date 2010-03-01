@@ -129,4 +129,9 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
             e.printStackTrace();
         }
     }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public List<OutgoingMailBean> getByPrimaveraUid(String primaveraUid) {
+        return outgoingMailDao.getByPrimaveraUid(primaveraUid);
+    }
 }

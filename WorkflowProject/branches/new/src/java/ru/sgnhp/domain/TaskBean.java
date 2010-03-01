@@ -37,14 +37,24 @@ import org.hibernate.annotations.OnDeleteAction;
     "t where t.incomingNumber <> '' and t.startDate BETWEEN :startDate AND :finishDate " +
             "order by t.incomingNumber, t.startDate"),
     @NamedQuery(name = "TaskBean.findByUid", query = "SELECT t FROM TaskBean t WHERE t.uid = :uid"),
-    @NamedQuery(name = "TaskBean.findByInternalNumber", query = "SELECT t FROM TaskBean t WHERE t.internalNumber = :internalNumber"),
-    @NamedQuery(name = "TaskBean.findByIncomingNumber", query = "SELECT t FROM TaskBean t WHERE t.incomingNumber = :incomingNumber"),
-    @NamedQuery(name = "TaskBean.findByExternalNumber", query = "SELECT t FROM TaskBean t WHERE t.externalNumber like :externalNumber order by t.internalNumber desc"),
-    @NamedQuery(name = "TaskBean.findByExternalCompany", query = "SELECT t FROM TaskBean t WHERE t.externalCompany like :externalCompany order by t.internalNumber desc"),
-    @NamedQuery(name = "TaskBean.findByExternalAssignee", query = "SELECT t FROM TaskBean t WHERE t.externalAssignee like :externalAssignee order by t.internalNumber desc"),
-    @NamedQuery(name = "TaskBean.findByStartDate", query = "SELECT t FROM TaskBean t WHERE t.startDate = :startDate"),
-    @NamedQuery(name = "TaskBean.findByDueDate", query = "SELECT t FROM TaskBean t WHERE t.dueDate = :dueDate"),
-    @NamedQuery(name = "TaskBean.findByDescription", query = "SELECT t FROM TaskBean t WHERE t.description like :description"),
+    @NamedQuery(name = "TaskBean.findByPrimaveraUid", query = "SELECT t FROM " +
+    "TaskBean t WHERE t.primaveraUid = :primaveraUid"),
+    @NamedQuery(name = "TaskBean.findByInternalNumber", query = "SELECT t FROM " +
+    "TaskBean t WHERE t.internalNumber = :internalNumber"),
+    @NamedQuery(name = "TaskBean.findByIncomingNumber", query = "SELECT t FROM " +
+    "TaskBean t WHERE t.incomingNumber = :incomingNumber"),
+    @NamedQuery(name = "TaskBean.findByExternalNumber", query = "SELECT t FROM " +
+    "TaskBean t WHERE t.externalNumber like :externalNumber order by t.internalNumber desc"),
+    @NamedQuery(name = "TaskBean.findByExternalCompany", query = "SELECT t FROM " +
+    "TaskBean t WHERE t.externalCompany like :externalCompany order by t.internalNumber desc"),
+    @NamedQuery(name = "TaskBean.findByExternalAssignee", query = "SELECT t FROM " +
+    "TaskBean t WHERE t.externalAssignee like :externalAssignee order by t.internalNumber desc"),
+    @NamedQuery(name = "TaskBean.findByStartDate", query = "SELECT t FROM " +
+    "TaskBean t WHERE t.startDate = :startDate"),
+    @NamedQuery(name = "TaskBean.findByDueDate", query = "SELECT t FROM " +
+    "TaskBean t WHERE t.dueDate = :dueDate"),
+    @NamedQuery(name = "TaskBean.findByDescription", query = "SELECT t FROM " +
+    "TaskBean t WHERE t.description like :description"),
     @NamedQuery(name = "TaskBean.findByPeriodOfDate", query = "SELECT t FROM TaskBean " +
         "t WHERE t.startDate between :startDate and :finishDate")
 })
@@ -75,6 +85,8 @@ public class TaskBean implements Serializable {
     @Column(name = "DueDate")
     @Temporal(TemporalType.DATE)
     private Date dueDate;
+    @Column(name = "PrimaveraUid", length = 150)
+    private String primaveraUid;
 
     @OneToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -190,5 +202,13 @@ public class TaskBean implements Serializable {
     @Override
     public String toString() {
         return "ru.sgnhp.domain.TaskBean[uid=" + uid + "]";
+    }
+
+    public String getPrimaveraUid() {
+        return primaveraUid;
+    }
+
+    public void setPrimaveraUid(String primaveraUid) {
+        this.primaveraUid = primaveraUid;
     }
 }

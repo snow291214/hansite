@@ -120,4 +120,9 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
     public List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException {
         return taskDao.getAllIncomingMailByYear(currentYear);
     }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public List<TaskBean> getTaskByPrimaveraUid(String primaveraUid) {
+        return taskDao.getTaskByPrimaveraUid(primaveraUid);
+    }
 }

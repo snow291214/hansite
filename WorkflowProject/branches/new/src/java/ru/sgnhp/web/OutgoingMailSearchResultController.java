@@ -65,6 +65,11 @@ public class OutgoingMailSearchResultController implements Controller {
                         outgoingMailSearchDto.getDueDate());
                 request.getSession().setAttribute("searchTaskBean", null);
                 break;
+            case 7:
+                result = "outgoingSearchResult";
+                outgoingMailBeans = outgoingMailService.getByPrimaveraUid(outgoingMailSearchDto.getPrimaveraUid());
+                request.getSession().setAttribute("searchTaskBean", null);
+                break;
         }
         return new ModelAndView(result, "outgoingMailBeans", outgoingMailBeans);
     }

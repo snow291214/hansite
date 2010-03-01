@@ -16,6 +16,7 @@ public class OutgoingMailDto implements Serializable {
     private Long uid;
     private Long outgoingNumber;
     private String documentumNumber;
+    private String primaveraUid;
     private String description;
     private Date outgoingDate;
     private String receiverCompany;
@@ -93,5 +94,13 @@ public class OutgoingMailDto implements Serializable {
 
     public void setResponsibleUid(Long responsibleUid) {
         this.responsibleUid = responsibleUid;
+    }
+
+    public String getPrimaveraUid() {
+        return primaveraUid;
+    }
+
+    public void setPrimaveraUid(String primaveraUid) {
+        this.primaveraUid = primaveraUid;
     }
 }
