@@ -144,12 +144,12 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean) {
-//        if ((stateBean.getStateUid() == 3) || (stateBean.getStateUid() == 5)) {
-//            beanDto.setFinishDate(DateUtils.nowDate());
-//        }
         beanDto.setFinishDate(DateUtils.nowDate());
         beanDto = workflowDao.updateWorkflowState(beanDto, stateBean);
         WorkflowBean workflowBean = this.getWorkflowByUid(beanDto.getUid());
+//        if ((stateBean.getStateUid() == 3) || (stateBean.getStateUid() == 5)) {
+//            beanDto.setFinishDate(DateUtils.nowDate());
+//        }
         mailService.sendmailChangeState(workflowBean);
         return beanDto;
     }

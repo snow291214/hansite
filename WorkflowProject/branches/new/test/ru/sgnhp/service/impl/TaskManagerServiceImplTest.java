@@ -108,12 +108,12 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 
     @Test
     public void testGetNewInternalNumber() {
-        assertEquals(856, taskManagerService.getNewInternalNumber());
+        assertEquals(1212, taskManagerService.getNewInternalNumber());
     }
 
     @Test
     public void testGetNewIncomingNumber() {
-        assertEquals(95, taskManagerService.getNewIncomingNumber());
+        assertEquals(354, taskManagerService.getNewIncomingNumber());
     }
 
     @Test
@@ -129,7 +129,7 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 
     @Test
     public void testGetByPrimaveraUid(){
-        assertNotNull(taskManagerService.getTaskByPrimaveraUid("W-AAA000TEST"));
+        assertNotNull(taskManagerService.getTaskByPrimaveraUid("W-0001"));
     }
 
 //    @Test

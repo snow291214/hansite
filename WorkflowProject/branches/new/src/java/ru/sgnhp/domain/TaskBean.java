@@ -30,33 +30,34 @@ import org.hibernate.annotations.OnDeleteAction;
  *****
  */
 @Entity
-@Table(name = "tasks", catalog = "workflowdb", schema = "", uniqueConstraints = {@UniqueConstraint(columnNames = {"Uid"})})
+@Table(name = "tasks", catalog = "workflowdb", schema = "", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"Uid"})})
 @NamedQueries({
     @NamedQuery(name = "TaskBean.findAll", query = "SELECT t FROM TaskBean t"),
-    @NamedQuery(name = "TaskBean.findAllIncomingMailByYear", query = "SELECT t FROM TaskBean " +
-    "t where t.incomingNumber <> '' and t.startDate BETWEEN :startDate AND :finishDate " +
-            "order by t.incomingNumber, t.startDate"),
+    @NamedQuery(name = "TaskBean.findAllIncomingMailByYear", query = "SELECT t FROM TaskBean "
+    + "t where t.incomingNumber <> '' and t.startDate BETWEEN :startDate AND :finishDate "
+    + "order by t.incomingNumber, t.startDate"),
     @NamedQuery(name = "TaskBean.findByUid", query = "SELECT t FROM TaskBean t WHERE t.uid = :uid"),
-    @NamedQuery(name = "TaskBean.findByPrimaveraUid", query = "SELECT t FROM " +
-    "TaskBean t WHERE t.primaveraUid = :primaveraUid"),
-    @NamedQuery(name = "TaskBean.findByInternalNumber", query = "SELECT t FROM " +
-    "TaskBean t WHERE t.internalNumber = :internalNumber"),
-    @NamedQuery(name = "TaskBean.findByIncomingNumber", query = "SELECT t FROM " +
-    "TaskBean t WHERE t.incomingNumber = :incomingNumber"),
-    @NamedQuery(name = "TaskBean.findByExternalNumber", query = "SELECT t FROM " +
-    "TaskBean t WHERE t.externalNumber like :externalNumber order by t.internalNumber desc"),
-    @NamedQuery(name = "TaskBean.findByExternalCompany", query = "SELECT t FROM " +
-    "TaskBean t WHERE t.externalCompany like :externalCompany order by t.internalNumber desc"),
-    @NamedQuery(name = "TaskBean.findByExternalAssignee", query = "SELECT t FROM " +
-    "TaskBean t WHERE t.externalAssignee like :externalAssignee order by t.internalNumber desc"),
-    @NamedQuery(name = "TaskBean.findByStartDate", query = "SELECT t FROM " +
-    "TaskBean t WHERE t.startDate = :startDate"),
-    @NamedQuery(name = "TaskBean.findByDueDate", query = "SELECT t FROM " +
-    "TaskBean t WHERE t.dueDate = :dueDate"),
-    @NamedQuery(name = "TaskBean.findByDescription", query = "SELECT t FROM " +
-    "TaskBean t WHERE t.description like :description"),
-    @NamedQuery(name = "TaskBean.findByPeriodOfDate", query = "SELECT t FROM TaskBean " +
-        "t WHERE t.startDate between :startDate and :finishDate")
+    @NamedQuery(name = "TaskBean.findByPrimaveraUid", query = "SELECT t FROM "
+    + "TaskBean t WHERE t.primaveraUid = :primaveraUid order by t.startDate"),
+    @NamedQuery(name = "TaskBean.findByInternalNumber", query = "SELECT t FROM "
+    + "TaskBean t WHERE t.internalNumber = :internalNumber"),
+    @NamedQuery(name = "TaskBean.findByIncomingNumber", query = "SELECT t FROM "
+    + "TaskBean t WHERE t.incomingNumber = :incomingNumber"),
+    @NamedQuery(name = "TaskBean.findByExternalNumber", query = "SELECT t FROM "
+    + "TaskBean t WHERE t.externalNumber like :externalNumber order by t.internalNumber desc"),
+    @NamedQuery(name = "TaskBean.findByExternalCompany", query = "SELECT t FROM "
+    + "TaskBean t WHERE t.externalCompany like :externalCompany order by t.internalNumber desc"),
+    @NamedQuery(name = "TaskBean.findByExternalAssignee", query = "SELECT t FROM "
+    + "TaskBean t WHERE t.externalAssignee like :externalAssignee order by t.internalNumber desc"),
+    @NamedQuery(name = "TaskBean.findByStartDate", query = "SELECT t FROM "
+    + "TaskBean t WHERE t.startDate = :startDate"),
+    @NamedQuery(name = "TaskBean.findByDueDate", query = "SELECT t FROM "
+    + "TaskBean t WHERE t.dueDate = :dueDate"),
+    @NamedQuery(name = "TaskBean.findByDescription", query = "SELECT t FROM "
+    + "TaskBean t WHERE t.description like :description"),
+    @NamedQuery(name = "TaskBean.findByPeriodOfDate", query = "SELECT t FROM TaskBean "
+    + "t WHERE t.startDate between :startDate and :finishDate")
 })
 public class TaskBean implements Serializable {
 
@@ -87,10 +88,13 @@ public class TaskBean implements Serializable {
     private Date dueDate;
     @Column(name = "PrimaveraUid", length = 150)
     private String primaveraUid;
-
     @OneToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FileBean> filesSet = new HashSet<FileBean>();
+
+    @OneToMany(mappedBy = "taskBean", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<WorkflowBean> workflowsSet = new HashSet<WorkflowBean>();
 
     public TaskBean() {
     }
@@ -211,4 +215,13 @@ public class TaskBean implements Serializable {
     public void setPrimaveraUid(String primaveraUid) {
         this.primaveraUid = primaveraUid;
     }
+
+    public Set<WorkflowBean> getWorkflowsSet() {
+        return workflowsSet;
+    }
+
+    public void setWorkflowsSet(Set<WorkflowBean> workflowsSet) {
+        this.workflowsSet = workflowsSet;
+    }
+
 }

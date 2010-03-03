@@ -1,7 +1,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
-<title>Поиск задачи</title>
+<link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css?random=20051112" media="screen"/>
+<script type="text/javascript" src="scripts/dhtmlgoodies_calendar.js?random=20090118"></script>
+<title>Поиск исходящего письма</title>
 </head>
 <body>
     <!--<form name="formSearch" method="post" action="outgoingMailSearch.htm">-->
@@ -104,7 +106,7 @@
                     <label for="byPeriodOfDate">
                         <spring:bind path="outgoingMailSearch.outgoingDate">
                             <input style="width:80px" type="text" name="${status.expression}" value="${status.value}" readonly>
-                            <input type="button" value="Дата" onclick="displayCalendar(document.forms[0].startDate,'dd.mm.yyyy',this)">
+                            <input type="button" value="Дата" onclick="displayCalendar(document.forms[0].outgoingDate,'dd.mm.yyyy',this)">
                             <font color="red">${status.errorMessage}</font>
                         </spring:bind>
                     </label>
@@ -112,7 +114,7 @@
                     <label for="byPeriodOfDate">
                         <spring:bind path="outgoingMailSearch.dueDate">
                             <input style="width:80px" type="text" name="${status.expression}" value="${status.value}" readonly>
-                            <input type="button" value="Дата" onclick="displayCalendar(document.forms[0].finishDate,'dd.mm.yyyy',this)">
+                            <input type="button" value="Дата" onclick="displayCalendar(document.forms[0].dueDate,'dd.mm.yyyy',this)">
                             <font color="red">${status.errorMessage}</font>
                         </spring:bind>
                     </label>

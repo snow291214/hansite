@@ -42,6 +42,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="tasksForReview.htm">tasksForReviewController</prop>
                 <prop key="rejectWorkflow.htm">rejectWorkflowFormController</prop>
                 <prop key="approveWorkflow.htm">approveWorkflowController</prop>
+                <prop key="primaveraReport.htm">documentsByPrimaveraID</prop>
             </props>
         </property>
     </bean>
@@ -364,7 +365,17 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
             <ref bean="userManagerService"/>
         </property>
     </bean>
-    
+
+    <!-- Documents By Primavera ID Controller 03.03.2010-->
+    <bean name="documentsByPrimaveraID" class="ru.sgnhp.web.DocumentsByPrimaveraId" >
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService" />
+        </property>
+    </bean>
+
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">
@@ -372,19 +383,19 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
             <ref bean="taskManagerService"/>
         </property>
     </bean>
-
+    <!--
     <bean id="loginFormValidator" class="ru.sgnhp.web.validator.LoginFormValidator">
         <property name="authenticationDAO">
             <ref bean="authenticationDAO" />
         </property>
     </bean>
-
+    -->
     <bean id="workflowManagerFormValidator" class="ru.sgnhp.web.validator.WorkflowManagerFormValidator" />
 
     <bean id="rejectWorkflowFormValidator" class="ru.sgnhp.web.validator.RejectWorkflowFormValidator" />
 
     <!--======================== Authentication =============================-->
-    <bean id="authenticationDAO" class="ru.sgnhp.dao.impl.AuthenticationDaoImpl" />
+    <!--<bean id="authenticationDAO" class="ru.sgnhp.dao.impl.AuthenticationDaoImpl" />-->
 
     <!--============================== File Upload ==========================-->
     <!-- MultipartResolver for parsing file uploads, implementation for Commons FileUpload -->

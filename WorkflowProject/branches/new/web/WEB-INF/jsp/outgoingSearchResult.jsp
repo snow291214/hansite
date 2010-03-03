@@ -33,7 +33,7 @@
                         <td><fmt:formatDate pattern="dd.MM.yyyy" value="${omb.outgoingDate}" /></td>
                         <td><fmt:formatDate pattern="dd.MM.yyyy" value="${omb.dueDate}" /></td>
                         <td>${omb.documentumNumber}</td>
-                        <td>${omb.primaveraUid}</td>
+                        <td><a href="primaveraReport.htm?primaveraUid=${omb.primaveraUid}">${omb.primaveraUid}</a></td>
                         <td>
                             <c:forEach var = "taskFile" items="${omb.outgoingFileBeanSet}">
                                 <a href="<c:url value="getOutgoingFiles.htm?fileID=${taskFile.uid}" />">${taskFile.fileName}</a>

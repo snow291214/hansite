@@ -1,6 +1,7 @@
 package ru.sgnhp.dao;
 
 import java.util.List;
+import org.springframework.security.userdetails.UserDetails;
 import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
@@ -17,4 +18,6 @@ public interface IUserDao extends IGenericDao<WorkflowUserBean,Long>{
     WorkflowUserBean getByEmail(String email);
 
     List<WorkflowUserBean> getAll();
+
+    public UserDetails loadUserByUsername(String username);
 }

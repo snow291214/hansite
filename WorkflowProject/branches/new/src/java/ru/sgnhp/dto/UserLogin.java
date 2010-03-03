@@ -1,5 +1,9 @@
 package ru.sgnhp.dto;
 
+import java.io.Serializable;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.userdetails.UserDetails;
+
 /*****
  *
  * @author Alexey Khudyakov
@@ -7,19 +11,23 @@ package ru.sgnhp.dto;
  *
  *****
  */
-public class UserLogin {
-    private String login;
-    private String password;
-    private String domain;
-    private String host;
-    private String dn;
+public class UserLogin implements Serializable, UserDetails {
 
-    public String getLogin() {
-        return login;
+    private static final long serialVersionUID = 3832626162173359411L;
+    private String username;
+    private String password;
+    private GrantedAuthority[] authorities;
+    private boolean enabled;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -30,27 +38,43 @@ public class UserLogin {
         this.password = password;
     }
 
-    public String getDomain() {
-        return domain;
+    public GrantedAuthority[] getAuthorities() {
+        return authorities;
     }
 
-    public void setDomain(String domain) {
-        this.domain = domain;
+    public void setAuthorities(GrantedAuthority[] authorities) {
+        this.setAuthorities(authorities);
     }
 
-    public String getHost() {
-        return host;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    public String getDn() {
-        return dn;
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
     }
 
-    public void setDn(String dn) {
-        this.dn = dn;
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
     }
 }

@@ -1,9 +1,12 @@
 package ru.sgnhp.security;
 
 import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.InitialLdapContext;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.Authentication;
 import org.springframework.security.AuthenticationException;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
 import org.springframework.security.providers.AuthenticationProvider;
 import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
 import org.springframework.security.providers.ldap.LdapAuthenticator;
@@ -34,6 +37,8 @@ public class LdapAuthenticationProvider implements AuthenticationProvider {
         }
         //LdapAuthenticationToken ldapAuth = new LdapAuthenticationToken(authentication, "ROLE_USER");
         LdapAuthenticationToken ldapAuth = new LdapAuthenticationToken(authentication, userRole);
+        GrantedAuthority authority = new GrantedAuthorityImpl("USER_ROLE");
+        ldapAuth.addAuthority(authority);
         InitialLdapContext ldapContext = (InitialLdapContext) authAdapter.getObjectAttribute("ldapContext");
         if (ldapContext != null) {
             ldapAuth.setContext(ldapContext);

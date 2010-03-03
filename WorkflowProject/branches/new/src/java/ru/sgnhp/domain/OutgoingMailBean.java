@@ -49,7 +49,7 @@ import org.hibernate.annotations.OnDeleteAction;
     query = "SELECT o FROM OutgoingMailBean o WHERE o.primaveraUid = :primaveraUid "),
     @NamedQuery(name = "OutgoingMailBean.findByDescription", query = "SELECT o " +
     "FROM OutgoingMailBean o WHERE o.description like :description order by " +
-    "o.outgoingDate desc, o.outgoingNumber"),
+    "o.outgoingDate, o.outgoingNumber"),
     @NamedQuery(name = "OutgoingMailBean.findByOutgoingDate", query = "SELECT o " +
     "FROM OutgoingMailBean o WHERE o.outgoingDate = :outgoingDate order by " +
     "o.outgoingDate desc, o.outgoingNumber"),

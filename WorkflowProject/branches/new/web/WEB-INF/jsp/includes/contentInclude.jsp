@@ -25,7 +25,7 @@
     <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.</font>
 </td>
 <td>
-    <c:out value="${wf.taskBean.primaveraUid}"/>
+    <a href="primaveraReport.htm?primaveraUid=${wf.taskBean.primaveraUid}">${wf.taskBean.primaveraUid}</a>
 </td>
 <td>
 <c:forEach var = "taskFile" items="${wf.taskBean.filesSet}">
