@@ -174,4 +174,15 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
         }
         return list;
     }
+
+    public boolean isTaskAssignedToUser(Long taskUid, Long userUid) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("userUid", userUid);
+        value.put("taskUid", taskUid);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findByTaskUidAndUserUid", value);
+        if (list == null || list.size() == 0) {
+            return false;
+        }
+        return true;
+    }
 }

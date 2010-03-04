@@ -6,7 +6,7 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
-http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
@@ -43,6 +43,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="rejectWorkflow.htm">rejectWorkflowFormController</prop>
                 <prop key="approveWorkflow.htm">approveWorkflowController</prop>
                 <prop key="primaveraReport.htm">documentsByPrimaveraID</prop>
+                <prop key="skippedUsers.htm">skippedUsersController</prop>
             </props>
         </property>
     </bean>
@@ -202,6 +203,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="stateManagerService">
             <ref bean="stateManagerService"/>
         </property>
+        <property name="validator">
+            <ref bean="assignWorkflowFormValidator"/>
+        </property>
     </bean>
 
     <!-- Workflow Manager Form Controller -->
@@ -226,7 +230,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <property name="validator">
             <ref bean="workflowManagerFormValidator"/>
         </property>
-
     </bean>
 
     <!-- Search Task Controller -->
@@ -349,7 +352,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
             <ref bean="workflowManagerService"/>
         </property>
     </bean>
-    
+
     <!-- Approve Workflow Controller 17.02.2010 -->
     <bean name="approveWorkflowController" class="ru.sgnhp.web.ApproveWorkflowController" >
         <property name="workflowManagerService">
@@ -376,6 +379,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
     </bean>
 
+    <!-- Skipped Users Controller 04.03.2010-->
+    <bean name="skippedUsersController" class="ru.sgnhp.web.SkippedUsersController" />
+
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">
@@ -393,6 +399,15 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean id="workflowManagerFormValidator" class="ru.sgnhp.web.validator.WorkflowManagerFormValidator" />
 
     <bean id="rejectWorkflowFormValidator" class="ru.sgnhp.web.validator.RejectWorkflowFormValidator" />
+
+    <bean id="assignWorkflowFormValidator" class="ru.sgnhp.web.validator.AssignWorkflowFormValidator">
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService" />
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+    </bean>
 
     <!--======================== Authentication =============================-->
     <!--<bean id="authenticationDAO" class="ru.sgnhp.dao.impl.AuthenticationDaoImpl" />-->
@@ -443,7 +458,7 @@ Expression	 Meaning
             <value>0 00 8 ? * MON-FRI</value>
         </property>
     </bean>
-    
+
     <!--Отчет о назначенных, но невыполненных задачах-->
     <bean id="methodInvokingTaskReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="workflowManagerService"/>

@@ -75,6 +75,8 @@ import org.hibernate.annotations.OnDeleteAction;
         "WorkflowBean w WHERE w.taskBean.uid = :taskUid and w.parentUid = -1"),
     @NamedQuery(name = "WorkflowBean.findByUserUidAndStateUids", query = "SELECT w FROM " +
         "WorkflowBean w WHERE w.assignee.uid = :userUid and w.stateBean.stateUid in (:stateUids)"),
+    @NamedQuery(name = "WorkflowBean.findByTaskUidAndUserUid", query = "SELECT w FROM " +
+        "WorkflowBean w WHERE w.taskBean.uid = :taskUid and w.receiver.uid = :userUid"),
     @NamedQuery(name = "WorkflowBean.updateWorkflowState", query = "UPDATE " +
         "WorkflowBean w SET w.stateBean = :stateBean WHERE w.uid = :uid")
 })

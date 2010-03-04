@@ -105,7 +105,7 @@ public class WorkflowDaoImplTest extends AbstractTransactionalDataSourceSpringCo
     public void testGetCompletedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowDao.getCompletedWorkflowsByUserUid(userUid);
         //assertNotNull(workflowBeans);
-        assertEquals(27, workflowBeans.size());
+        assertEquals(31, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getReceiver().getLastName());
     }
 
@@ -155,6 +155,12 @@ public class WorkflowDaoImplTest extends AbstractTransactionalDataSourceSpringCo
     @Test
     public void testGetRecievedWorkflows(){
         assertNotNull(workflowDao.getRecievedWorkflows());
+    }
+
+    @Test
+    public void testGetByTaskUidAndUserUid(){
+        Long taskUid = 1068L;
+        assertEquals(false, this.workflowDao.isTaskAssignedToUser(taskUid, 101L));
     }
 
     @Override

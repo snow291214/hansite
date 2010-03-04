@@ -42,4 +42,6 @@ public interface IWorkflowDao extends IGenericDao<WorkflowBean, Long> {
     List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid);
 
     List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate);
+
+    boolean isTaskAssignedToUser(Long taskUid, Long userUid);
 }

@@ -1,5 +1,7 @@
 package ru.sgnhp.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,11 +32,11 @@ public class AssignWorkflowFormController extends SimpleFormController {
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
-        WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto)command;
+        WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto) command;
         WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
         workflowBeanDto = workflowManagerService.updateWorkflowState(workflowBeanDto, stateManagerService.get(1L));
-
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
+        workflowBeanDto.setUserUids(userUids);
         for (String uid : userUids) {
             WorkflowBean workflowBean = new WorkflowBean();
             workflowBean.setParentUid(workflowBeanDto.getUid());
@@ -47,6 +49,8 @@ public class AssignWorkflowFormController extends SimpleFormController {
             workflowBean.setWorkflowNote("");
             workflowManagerService.assignTaskToUser(workflowBean);
         }
+        request.getSession().setAttribute("checks", null);
+        request.getSession().setAttribute("workflowID", null);
         return new ModelAndView(new RedirectView(getSuccessView()));
     }
 
@@ -58,6 +62,8 @@ public class AssignWorkflowFormController extends SimpleFormController {
         //workflow.setDescription(null);
         WorkflowBeanDto workflowBeanDto = new WorkflowBeanDto();
         workflowBeanDto.setUid(Long.parseLong(workflowUid));
+        String[] userUids = (String[]) request.getSession().getAttribute("checks");
+        workflowBeanDto.setUserUids(userUids);
         return workflowBeanDto;
     }
 

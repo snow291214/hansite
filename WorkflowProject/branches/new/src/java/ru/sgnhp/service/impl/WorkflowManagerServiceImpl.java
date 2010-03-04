@@ -197,4 +197,9 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
             }
         }
     }
+    
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public boolean isTaskAssignedToUser(Long taskUid, Long userUid) {
+        return workflowDao.isTaskAssignedToUser(taskUid, userUid);
+    }
 }

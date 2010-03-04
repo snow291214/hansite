@@ -12,6 +12,10 @@
             }
         }
     }
+
+    function goToUrl(){
+        window.location = "index.htm";
+    }
 </SCRIPT>
 </head>
 
@@ -44,7 +48,7 @@
                     </c:forEach>
                 </table>
             </div>
-            <p><input type="submit" disabled align="right" name="Button1" value="Продолжить >>"></p>
+            <p><button type="button" onclick="goToUrl()">Назад</button> || <input type="submit" disabled align="right" name="Button1" value="Продолжить >>"></p>
         </form>
     </body>
 </html>

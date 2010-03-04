@@ -1,6 +1,11 @@
 ﻿<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <title>Назначить задание коллегам</title>
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript" >
+    function goToUrl(uid){
+        window.location.href = "skippedUsers.htm?workflowID="+uid;
+    }
+</SCRIPT>
 </head>
 <body>
     <form name="Form1" method="post" action="${actionUrl}">
@@ -16,6 +21,8 @@
             </tr>
             <tr>
                 <td colspan="3">
+                    <button type="button" onclick="goToUrl(${sessionScope.workflowID})">Назад</button>
+                    <!--<button type="button" onclick="javascript:history.back(-2);">Назад</button>-->
                     <input type="submit" align="right" value="Сохранить">
                 </td>
             </tr>

@@ -43,6 +43,7 @@ public class SelectUsersFormController extends AbstractController {
             if (workflowUid == null) {
                 return new ModelAndView(new RedirectView("registerTask.htm"));
             }else{
+                request.getSession().setAttribute("workflowID", workflowUid);
                 return new ModelAndView(new RedirectView("assignTask.htm"), "workflowID", workflowUid);
             }
         } else {
