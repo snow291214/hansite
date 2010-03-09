@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:s="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+
+    <s:http>
+        <s:intercept-url pattern="/authentication.htm" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <s:intercept-url pattern="/*.htm" access="IS_AUTHENTICATED_REMEMBERED"/>
+        <s:form-login login-page="/authentication.htm" />
+        <!--<s:remember-me data-source-ref="dataSource" />-->
+        <s:anonymous/>
+        <s:logout/>
+    </s:http>
+
+    <bean id="theFirstLdapServer" class="ru.sgnhp.security.SgnhpSpringSecurityContextSource">
+        <constructor-arg value="ldap://10.1.32.1:389/" />
+        <property name="principalPrefix" value="ASU\" />
+        <property name="networkPattern" value="10.16.13." />
+    </bean>
+
+    <bean id="theSecondLdapServer" class="ru.sgnhp.security.SgnhpSpringSecurityContextSource">
+        <constructor-arg value="ldap://192.168.2.40:389/" />
+        <property name="principalPrefix" value="DOSNOS\" />
+        <property name="networkPattern" value="192." />
+    </bean>
+
+    <bean id="theThirdLdapServer" class="ru.sgnhp.security.SgnhpSpringSecurityContextSource">
+        <constructor-arg value="ldap://192.168.2.40:389/" />
+        <property name="principalPrefix" value="DOSNOS\" />
+        <property name="networkPattern" value="10.16.161." />
+    </bean>
+
+    <bean id="ldapAuthenticationProvider" class="ru.sgnhp.security.LdapAuthenticationProvider">
+        <s:custom-authentication-provider />
+        <property name="authenticator" ref="ldapAuthenticator" />
+        <property name="userManagerService" ref="userManagerService" />
+    </bean>
+
+    <bean id="ldapAuthenticator" class="ru.sgnhp.security.LdapAuthenticatorImpl">
+        <property name="contextFactoryFirst" ref="theFirstLdapServer" />
+        <property name="contextFactorySecond" ref="theSecondLdapServer" />
+        <property name="contextFactoryThird" ref="theThirdLdapServer" />
+    </bean>
+<!--
+    <s:authentication-manager alias="authenticationManager" />
+
+    <bean id="rememberMeFilter" class="org.springframework.security.ui.rememberme.RememberMeProcessingFilter">
+        <property name="rememberMeServices" ref="rememberMeServices" />
+        <property name="authenticationManager" ref="authenticationManager" />
+    </bean>
+
+    <bean id="rememberMeServices" class="org.springframework.security.ui.rememberme.PersistentTokenBasedRememberMeServices">
+        <property name="userDetailsService" ref="userDao"/>
+        <property name="key" value="spring"/>
+        <property name="tokenRepository" ref="jdbcTokenRepository" />
+        <property name="alwaysRemember" value="true" />
+    </bean>
+
+    <bean id="rememberMeAuthenticationProvider" class="org.springframework.security.providers.rememberme.RememberMeAuthenticationProvider">
+        <s:custom-authentication-provider />
+        <property name="key" value="springRocks"/>
+    </bean>
+
+    <bean id="jdbcTokenRepository" class="org.springframework.security.ui.rememberme.JdbcTokenRepositoryImpl">
+        <property name="createTableOnStartup" value="false" />
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+-->
+</beans>
