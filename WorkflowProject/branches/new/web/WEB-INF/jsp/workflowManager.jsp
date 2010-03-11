@@ -1,6 +1,7 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <title>Управление задачей</title>
 <script language="javascript" type="text/javascript">
@@ -60,6 +61,16 @@
                                     <option value="5">Сохранить для проверки</option>
                                 </c:otherwise>
                             </c:choose>
+                            <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_TOP">
+                                <c:choose>
+                                    <c:when test="${status.value eq 3}">
+                                        <option value="3" selected>Принято к сведению</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="3">Принято к сведению</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </sec:authorize>
                         </select>
                     </td>
                     <td><font color="red">${status.errorMessage}</font></td>

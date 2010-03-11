@@ -36,7 +36,11 @@ public class WorkflowManagerFormController extends SimpleFormController {
     @Override
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) throws IOException {
         WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto) command;
-        workflowBeanDto = workflowManagerService.updateWorkflowState(workflowBeanDto, stateManagerService.get(workflowBeanDto.getStateUid()));
+        Long stateUid = workflowBeanDto.getStateUid();
+        if(stateUid == 3L){
+            workflowBeanDto.setWorkflowNote("Принято к сведению");
+        }
+        workflowBeanDto = workflowManagerService.updateWorkflowState(workflowBeanDto, stateManagerService.get(stateUid));
 
         WorkflowBean workflowBean = workflowManagerService.get(workflowBeanDto.getUid());
         /* Сохраняем файлы */

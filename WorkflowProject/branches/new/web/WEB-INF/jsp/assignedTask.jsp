@@ -66,6 +66,12 @@
                                 <%@ include file="/WEB-INF/jsp/includes/contentInclude.jsp" %>
                                 <a href="<c:url value="executionRequest.htm?workflowID=${wf.uid}" />">Запросить отчет</a>
                                 <a href="<c:url value="roadmap.htm?workflowID=${wf.uid}" />">Просмотреть маршрут задачи</a>
+                                <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG,ROLE_TOP">
+                                    <a href="<c:url value="selectUsers.htm?workflowID=${wf.uid}" />">Передать задачу</a>
+                                </sec:authorize>
+                                <sec:authorize ifAnyGranted="ROLE_ADMIN">
+                                    <a href="<c:url value="deleteTask.htm?workflowID=${wf.uid}" />">Удалить задачу и ее маршруты</a>
+                                </sec:authorize>
                             </div>
                         </div>
                     </div>
