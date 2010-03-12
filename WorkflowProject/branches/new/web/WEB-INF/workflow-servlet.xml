@@ -318,11 +318,6 @@
         </property>
     </bean>
 
-    <!-- Incoming Mail Report Controller-->
-    <bean name="incomingMailReportController"
-          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="incomingMailReport" />
-
     <!-- Outgoing Letter Search Controller -->
     <bean name="outgoingMailSearchFormController" class="ru.sgnhp.web.OutgoingMailSearchController">
         <property name="commandName" value="outgoingMailSearch"/>
@@ -404,6 +399,16 @@
 
     <!-- Skipped Users Controller 04.03.2010-->
     <bean name="skippedUsersController" class="ru.sgnhp.web.SkippedUsersController" />
+
+    <!-- Incoming Mail Report Controller 12.03.2010-->
+    <bean name="incomingMailReportController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="incomingMailReport" />
+
+    <!-- Outgoing Mail Report Controller 12.03.2010-->
+    <bean name="outgoingMailReportController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="outgoingMailReport" />
 
     <!--========================== Validators ===============================-->
 

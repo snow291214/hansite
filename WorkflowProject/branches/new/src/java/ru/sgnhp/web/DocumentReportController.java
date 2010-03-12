@@ -38,8 +38,12 @@ public class DocumentReportController extends SimpleFormController {
         String view = "documentReports";
         switch(documentReportDto.getReportType()){
             case 0:
-                model = taskManagerService.getAllIncomingMailByYear(documentReportDto.getReportYear());
                 view = "incomingMailReport";
+                model = taskManagerService.getAllIncomingMailByYear(documentReportDto.getReportYear());
+                break;
+            case 1:
+                view = "outgoingMailReport";
+                model = outgoingMailService.getAllOutgoingMailByYear(documentReportDto.getReportYear());
                 break;
         }
 

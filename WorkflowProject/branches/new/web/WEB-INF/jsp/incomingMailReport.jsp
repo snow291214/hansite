@@ -58,7 +58,7 @@
                     </c:forEach>
                 </TD>
             </TR>
-    </c:forEach>
-</TABLE>
+        </c:forEach>
+    </TABLE>
 </body>
 </html>
