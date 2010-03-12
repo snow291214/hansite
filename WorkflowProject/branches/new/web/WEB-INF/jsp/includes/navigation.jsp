@@ -10,7 +10,10 @@
         <a href="<c:url value="outgoingLetterWizard.htm"/>">Зарегистрировать исходящее письмо</a><br />
     </p>
 </sec:authorize>
-<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG,ROLE_BOSS,ROLE_TOP">
+<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG,ROLE_TOP">
     <a href="outgoingMailSearch.htm">Поиск в исходящих</a><br />
+    <p>
+        <a href="documentReports.htm">Журналы документов</a><br />
+    </p>
 </sec:authorize>
-<p><a href="<c:url value="logout.htm"/>">Завершить работу</a></p>
+<p><a href="logout.htm">Завершить работу</a></p>

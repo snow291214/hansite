@@ -44,6 +44,8 @@
                 <prop key="approveWorkflow.htm">approveWorkflowController</prop>
                 <prop key="primaveraReport.htm">documentsByPrimaveraID</prop>
                 <prop key="skippedUsers.htm">skippedUsersController</prop>
+                <prop key="documentReports.htm">documentReportController</prop>
+                <prop key="incomingMailReport.htm">incomingMailReportController</prop>
             </props>
         </property>
     </bean>
@@ -299,6 +301,27 @@
             <ref bean="mailServiceManager"/>
         </property>
     </bean>
+
+    <!--Document Report Form Controller 11.03.2010-->
+    <bean name="documentReportController" class="ru.sgnhp.web.DocumentReportController">
+        <property name="commandName">
+            <value>documentReportDto</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.dto.DocumentReportDto</value>
+        </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService"/>
+        </property>
+    </bean>
+
+    <!-- Incoming Mail Report Controller-->
+    <bean name="incomingMailReportController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="incomingMailReport" />
 
     <!-- Outgoing Letter Search Controller -->
     <bean name="outgoingMailSearchFormController" class="ru.sgnhp.web.OutgoingMailSearchController">

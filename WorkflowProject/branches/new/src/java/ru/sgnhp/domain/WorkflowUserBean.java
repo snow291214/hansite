@@ -69,12 +69,11 @@ public class WorkflowUserBean implements Serializable {
     private String sessionUid;
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
-    @OrderBy("uid desc")
+
     private Set<WorkflowBean> assignedWorkflows = new HashSet<WorkflowBean>();
 
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
-    @OrderBy("uid desc")
     private Set<WorkflowBean> receivedWorkflows = new HashSet<WorkflowBean>();
 
     @ForeignKey(name = "fk_groups_users")

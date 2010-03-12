@@ -57,7 +57,7 @@ public class SearchResultController implements Controller {
                 taskBeans = taskManagerService.getTaskByInternalNumber(
                         Integer.parseInt(searchTaskBean.getTaskInternalNumber()));
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
-                request.getSession().setAttribute("searchTaskBean", null);
+                //request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 1:
                 //Find By Incoming Number
@@ -65,21 +65,21 @@ public class SearchResultController implements Controller {
                 taskBeans = taskManagerService.getTaskByIncomingNumber(
                         Integer.parseInt(searchTaskBean.getTaskIncomingNumber()));
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
-                request.getSession().setAttribute("searchTaskBean", null);
+                //request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 2:
                 //Find By Assignee
                 result = "searchResult";
                 taskBeans = taskManagerService.getTasksByExternalAssignee(searchTaskBean.getAssigneeName());
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
-                request.getSession().setAttribute("searchTaskBean", null);
+                //request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 3:
                 //Find By description
                 result = "searchResult";
                 taskBeans = taskManagerService.getTasksByDescription(searchTaskBean.getTaskDescription());
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
-                request.getSession().setAttribute("searchTaskBean", null);
+                //request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 4:
                 //Find By Period Of Date
