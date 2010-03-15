@@ -4,6 +4,10 @@
 <title>Журнал входящей корреспонденции</title>
 </head>
 <body>
+    <p>
+        <a href="index.htm">На главную</a> ||
+        <a href="documentReports.htm">Журналы документов</a>
+    </p>
     <H1>Журнал входящей корреспонденции</H1>
     <TABLE WIDTH=100% BORDER=1 CELLSPACING=0>
         <TR>
@@ -60,5 +64,9 @@
             </TR>
         </c:forEach>
     </TABLE>
+    <p>
+        <a href="index.htm">На главную</a> ||
+        <a href="documentReports.htm">Журналы документов</a>
+    </p>
 </body>
 </html>
