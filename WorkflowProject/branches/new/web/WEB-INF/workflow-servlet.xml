@@ -49,6 +49,7 @@
                 <prop key="skippedUsers.htm">skippedUsersController</prop>
                 <prop key="documentReports.htm">documentReportController</prop>
                 <prop key="incomingMailReport.htm">incomingMailReportController</prop>
+                <prop key="documentRegisterWizard.htm">newOrderFormController</prop>
             </props>
         </property>
     </bean>
@@ -267,6 +268,9 @@
         <property name="taskManagerService">
             <ref bean="taskManagerService"/>
         </property>
+        <property name="documentService">
+            <ref bean="documentService"/>
+        </property>
     </bean>
 
     <!-- Workflow Roadmap Controller -->
@@ -412,6 +416,36 @@
     <bean name="outgoingMailReportController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="outgoingMailReport" />
+
+    <!-- Outgoing Letter Controller -->
+    <bean name="newOrderFormController" class="ru.sgnhp.web.NewOrderFormController">
+        <property name="commandName">
+            <value>documentDto</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.dto.DocumentDto</value>
+        </property>
+        <property name="pages">
+            <list>
+                <value>documentTypeChoice</value>
+                <value>orderRegister</value>
+                <value>orderFileRegister</value>
+                <value>redirect:index.htm</value>
+            </list>
+        </property>
+        <property name="documentService">
+            <ref bean="documentService"/>
+        </property>
+        <property name="documentTypeService">
+            <ref bean="documentTypeService"/>
+        </property>
+        <property name="documentFileService">
+            <ref bean="documentFileService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+    </bean>
 
     <!--========================== Validators ===============================-->
 

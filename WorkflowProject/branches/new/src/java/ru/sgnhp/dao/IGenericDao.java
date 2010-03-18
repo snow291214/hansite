@@ -1,18 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ru.sgnhp.dao;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author 48han
- */
 public interface IGenericDao <T, PK extends Serializable>{
 
     /**

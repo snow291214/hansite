@@ -7,7 +7,8 @@
 </sec:authorize>
 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG">
     <p>
-        <a href="<c:url value="outgoingLetterWizard.htm"/>">Зарегистрировать исходящее письмо</a><br />
+        <a href="outgoingLetterWizard.htm">Зарегистрировать исходящее письмо</a><br />
+        <a href="documentRegisterWizard.htm">Зарегистрировать распорядительный документ</a>
     </p>
 </sec:authorize>
 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG,ROLE_TOP">

@@ -21,5 +21,8 @@
     <mapping class="ru.sgnhp.domain.OutgoingFileBean"/>
     <mapping class="ru.sgnhp.domain.OutgoingMailBean"/>
     <mapping class="ru.sgnhp.domain.UserGroupBean"/>
+    <mapping class="ru.sgnhp.domain.DocumentBean"/>
+    <mapping class="ru.sgnhp.domain.DocumentTypeBean"/>
+    <mapping class="ru.sgnhp.domain.DocumentFileBean"/>
   </session-factory>
 </hibernate-configuration>

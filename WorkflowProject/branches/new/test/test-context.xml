@@ -150,4 +150,16 @@
         <property name="outgoingMailDao" ref="outgoingMailDao"/>
     </bean>
 
+    <bean id="documentDao" class="ru.sgnhp.dao.impl.DocumentDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="documentTypeDao" class="ru.sgnhp.dao.impl.DocumentTypeDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="documentFileDao" class="ru.sgnhp.dao.impl.DocumentFileDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
 </beans>

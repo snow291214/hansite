@@ -34,8 +34,9 @@ public class ApproveWorkflowController implements Controller {
         String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
         workflowBean.setState(stateManagerService.get(3L));
-        workflowBean.setWorkflowNote("Выполнение подтверждаю. "
-                + initiator.getLastName() + " " + initiator.getFirstName()+" "
+        workflowBean.setWorkflowNote(workflowBean.getWorkflowNote()
+                + ". Выполнение подтверждаю. <br />"
+                + initiator.getLastName() + " " + initiator.getFirstName() + " "
                 + initiator.getMiddleName());
         workflowManagerService.save(workflowBean);
         mailService.sendmailChangeState(workflowBean);
