@@ -36,7 +36,7 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         super(genericDao);
     }
 
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public WorkflowBean assignTaskToUser(WorkflowBean wf) {
         wf = workflowDao.save(wf);
         mailService.sendmailAssign(wf);

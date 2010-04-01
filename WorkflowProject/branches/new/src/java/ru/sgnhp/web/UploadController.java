@@ -47,6 +47,17 @@ public class UploadController extends SimpleFormController {
         TaskBean task = (TaskBean) request.getSession().getAttribute("task");
         task = taskManagerService.save(task);
 
+        /* Сохраняем файлы */
+        final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+        final Map files = multiRequest.getFileMap();
+        for (Object file : files.values()) {
+            FileBean bean = new FileBean();
+            bean.setTaskUid(task);
+            bean.setFileName(((MultipartFile) file).getOriginalFilename());
+            bean.setBlobField(((MultipartFile) file).getBytes());
+            uploadManagerService.save(bean);
+        }
+
         /* Назначаем задание пользователям */
         //WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
@@ -62,16 +73,6 @@ public class UploadController extends SimpleFormController {
             workflowManagerService.assignTaskToUser(wf);
         }
 
-        /* Сохраняем файлы */
-        final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-        final Map files = multiRequest.getFileMap();
-        for (Object file : files.values()) {
-            FileBean bean = new FileBean();
-            bean.setTaskUid(task);
-            bean.setFileName(((MultipartFile) file).getOriginalFilename());
-            bean.setBlobField(((MultipartFile) file).getBytes());
-            uploadManagerService.save(bean);
-        }
         request.getSession().setAttribute("task", null);
         request.getSession().setAttribute("checks", null);
         return new ModelAndView(new RedirectView(getSuccessView()), getCommandName(), command);

@@ -1,7 +1,5 @@
 package ru.sgnhp.web;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,9 +55,6 @@ public class AssignWorkflowFormController extends SimpleFormController {
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         String workflowUid = request.getParameter("workflowID");
-        //WorkflowBean workflow = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));
-        //oldDescription = workflow.getDescription();
-        //workflow.setDescription(null);
         WorkflowBeanDto workflowBeanDto = new WorkflowBeanDto();
         workflowBeanDto.setUid(Long.parseLong(workflowUid));
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
