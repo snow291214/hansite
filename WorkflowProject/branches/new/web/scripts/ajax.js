@@ -62,8 +62,6 @@ function processReqChange() {
             var tb = document.getElementById("incomingNumber");
             
             tb.setAttribute("value", message[0].firstChild.nodeValue);
-            //alert(message[0].firstChild.nodeValue);
-            //tb.value = message[0].textContent;
         } else {
             alert("Не удалось получить данные:\n" + req.statusText);
         }

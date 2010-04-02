@@ -1,7 +1,9 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<a href="index.htm">Главная страница</a><br />
 <a href="<c:url value="selectUsers.htm" />">Создать задачу</a><br />
 <a href="tasksForReview.htm">Задачи, ожидающие проверки</a><br />
+<a href="primaveraReportWizard.htm">Текущие работы в Primavera</a><br />
 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG,ROLE_BOSS,ROLE_TOP">
     <a href="searchTask.htm">Поиск задачи</a><br />
 </sec:authorize>

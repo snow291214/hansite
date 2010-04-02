@@ -2,14 +2,11 @@ package ru.sgnhp.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-import ru.sgnhp.domain.OutgoingMailBean;
-import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.service.IOutgoingMailService;
 import ru.sgnhp.service.ITaskManagerService;
 

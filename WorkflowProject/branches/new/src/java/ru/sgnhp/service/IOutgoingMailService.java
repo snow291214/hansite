@@ -38,4 +38,6 @@ public interface IOutgoingMailService extends IGenericService<OutgoingMailBean, 
     List<OutgoingMailBean> getAllOutgoingMailByYear(Integer currentYear) throws ParseException;
 
     void dailyReport();
+
+    List<String> getAllOutgoingMailWithPrimaveraUid();
 }

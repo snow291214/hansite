@@ -44,7 +44,6 @@ public class OutgoingLetterController extends AbstractWizardFormController {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        //int current = this.getCurrentPage(request);
         List<WorkflowUserBean> users = userManagerService.getAll();
         request.setAttribute("users", users);
         if (request.getParameter("combobox") != null) {

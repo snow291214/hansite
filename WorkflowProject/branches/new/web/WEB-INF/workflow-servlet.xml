@@ -50,6 +50,7 @@
                 <prop key="documentReports.htm">documentReportController</prop>
                 <prop key="incomingMailReport.htm">incomingMailReportController</prop>
                 <prop key="documentRegisterWizard.htm">newOrderFormController</prop>
+                <prop key="primaveraReportWizard.htm">primaveraReportController</prop>
             </props>
         </property>
     </bean>
@@ -417,21 +418,20 @@
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="outgoingMailReport" />
 
-    <!-- Outgoing Letter Controller -->
+    <!-- New Order Form Controller -->
     <bean name="newOrderFormController" class="ru.sgnhp.web.NewOrderFormController">
+        <property name="pages">
+            <list>
+                <value>orderRegister</value>
+                <value>orderFileRegister</value>
+                <value>redirect:index.htm</value>
+            </list>
+        </property>
         <property name="commandName">
             <value>documentDto</value>
         </property>
         <property name="commandClass">
             <value>ru.sgnhp.dto.DocumentDto</value>
-        </property>
-        <property name="pages">
-            <list>
-                <value>documentTypeChoice</value>
-                <value>orderRegister</value>
-                <value>orderFileRegister</value>
-                <value>redirect:index.htm</value>
-            </list>
         </property>
         <property name="documentService">
             <ref bean="documentService"/>
@@ -447,6 +447,15 @@
         </property>
     </bean>
 
+    <!-- Documents By Primavera ID Controller 03.03.2010-->
+    <bean name="primaveraReportController" class="ru.sgnhp.web.PrimaveraReportController" >
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService" />
+        </property>
+    </bean>
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">

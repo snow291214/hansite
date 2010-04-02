@@ -32,4 +32,6 @@ public interface ITaskDao extends IGenericDao<TaskBean, Long>{
     int getNewIncomingNumber();
 
     List<TaskBean> getTasksByDescription(String description);
+
+    List<String> getAllTasksWithPrimaveraUid();
 }

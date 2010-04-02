@@ -123,6 +123,11 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<TaskBean> getTaskByPrimaveraUid(String primaveraUid) {
-        return taskDao.getTaskByPrimaveraUid(primaveraUid);
+        return taskDao.getTaskByPrimaveraUid("%" + primaveraUid + "%");
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public List<String> getAllTasksWithPrimaveraUid() {
+        return taskDao.getAllTasksWithPrimaveraUid();
     }
 }

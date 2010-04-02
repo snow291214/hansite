@@ -73,18 +73,23 @@ public class TaskDaoImplTest extends AbstractTransactionalDataSourceSpringContex
 
     @Test
     public void testGetNewInternalNumber() {
-        assertEquals(516, taskDao.getNewInternalNumber());
+        assertEquals(1333, taskDao.getNewInternalNumber());
     }
 
     @Test
     public void testGetNewIncomingNumber() {
-        assertEquals(475, taskDao.getNewIncomingNumber());
+        assertEquals(444, taskDao.getNewIncomingNumber());
     }
 
     @Test
     public void testGetfiles() {
         TaskBean taskBean = taskDao.get(12L);
         assertNotNull(taskBean.getFilesSet());
+    }
+
+    @Test
+    public void testGetPrimaveraUid() {
+        assertNotNull(taskDao.getAllTasksWithPrimaveraUid());
     }
 
     public void setTaskDao(ITaskDao taskDao) {

@@ -13,7 +13,7 @@ import ru.sgnhp.domain.TaskBean;
  */
 public interface ITaskManagerService extends IGenericService<TaskBean, Long> {
 
-    List<TaskBean> getAllIncomingMailByYear(Integer currentYear)  throws ParseException;
+    List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException;
 
     List<TaskBean> getTaskByInternalNumber(int number);
 
@@ -34,4 +34,6 @@ public interface ITaskManagerService extends IGenericService<TaskBean, Long> {
     List<TaskBean> getTasksByDescription(String description);
 
     void dailyReport();
+
+    List<String> getAllTasksWithPrimaveraUid();
 }

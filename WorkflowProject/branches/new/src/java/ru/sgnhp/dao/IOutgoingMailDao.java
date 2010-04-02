@@ -30,4 +30,6 @@ public interface IOutgoingMailDao extends IGenericDao<OutgoingMailBean, Long> {
     Long getNewOutgoingNumber();
 
     List<OutgoingMailBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException;
+
+    List<String> getAllOutgoingMailWithPrimaveraUid();
 }

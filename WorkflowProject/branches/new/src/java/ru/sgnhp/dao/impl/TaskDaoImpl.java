@@ -2,6 +2,7 @@ package ru.sgnhp.dao.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -129,6 +130,11 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         if (list == null || list.size() == 0) {
             return null;
         }
+        return list;
+    }
+
+    public List<String> getAllTasksWithPrimaveraUid() {
+        List list = getSession().createQuery("SELECT distinct t.primaveraUid FROM TaskBean t WHERE t.primaveraUid <> ''").list();
         return list;
     }
 }

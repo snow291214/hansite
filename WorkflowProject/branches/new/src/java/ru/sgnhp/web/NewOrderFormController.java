@@ -2,7 +2,6 @@ package ru.sgnhp.web;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -37,37 +36,22 @@ public class NewOrderFormController extends AbstractWizardFormController {
     private IUserManagerService userManagerService;
 
     @Override
-    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
-        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        CustomDateEditor editor = new CustomDateEditor(df, false);
-        binder.registerCustomEditor(Date.class, editor);
-        super.initBinder(request, binder);
-    }
-
-    @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         List<WorkflowUserBean> users = userManagerService.getAll();
         request.setAttribute("users", users);
-        String documentType = request.getParameter("documentType");
-        if (documentType != null) {
-            ((DocumentDto)this.getCommand(request)).setDocumentTypeUid(Long.parseLong(documentType));
-        }
-        if (request.getParameter("combobox") != null) {
-            request.getSession().setAttribute("userUid", request.getParameter("combobox"));
-        }
-        return super.handleRequest(request, response);
-    }
-
-    @Override
-    protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         DocumentDto documentDto = new DocumentDto();
+        documentDto.setDocumentTypeUid(0L);
+        documentDto.setDescription("!!!");
         documentDto.setDocumentDate(DateUtils.nowDate());
         return documentDto;
     }
 
     @Override
-    protected ModelAndView processFinish(HttpServletRequest request, HttpServletResponse response, Object o, BindException be) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        CustomDateEditor editor = new CustomDateEditor(df, false);
+        binder.registerCustomEditor(Date.class, editor);
+        super.initBinder(request, binder);
     }
 
     @Override
@@ -77,16 +61,37 @@ public class NewOrderFormController extends AbstractWizardFormController {
         return new ModelAndView(new RedirectView("index.htm"));
     }
 
+    @Override
+    protected ModelAndView processFinish(HttpServletRequest hsr, HttpServletResponse hsr1, Object o, BindException be) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public IDocumentService getDocumentService() {
+        return documentService;
+    }
+
     public void setDocumentService(IDocumentService documentService) {
         this.documentService = documentService;
+    }
+
+    public IDocumentTypeService getDocumentTypeService() {
+        return documentTypeService;
     }
 
     public void setDocumentTypeService(IDocumentTypeService documentTypeService) {
         this.documentTypeService = documentTypeService;
     }
 
+    public IDocumentFileService getDocumentFileService() {
+        return documentFileService;
+    }
+
     public void setDocumentFileService(IDocumentFileService documentFileService) {
         this.documentFileService = documentFileService;
+    }
+
+    public IUserManagerService getUserManagerService() {
+        return userManagerService;
     }
 
     public void setUserManagerService(IUserManagerService userManagerService) {

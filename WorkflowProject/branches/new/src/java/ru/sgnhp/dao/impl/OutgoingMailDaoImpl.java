@@ -153,4 +153,10 @@ public class OutgoingMailDaoImpl extends GenericDaoHibernate<OutgoingMailBean, L
         }
         return list;
     }
+
+    public List<String> getAllOutgoingMailWithPrimaveraUid() {
+        List list = getSession().createQuery("SELECT distinct m.primaveraUid " +
+                "FROM OutgoingMailBean m where m.primaveraUid <>''").list();
+        return list;
+    }
 }
