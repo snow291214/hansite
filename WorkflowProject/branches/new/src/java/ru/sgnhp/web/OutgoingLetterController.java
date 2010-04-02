@@ -44,8 +44,6 @@ public class OutgoingLetterController extends AbstractWizardFormController {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<WorkflowUserBean> users = userManagerService.getAll();
-        request.setAttribute("users", users);
         if (request.getParameter("combobox") != null) {
             request.getSession().setAttribute("responsibleUid", request.getParameter("combobox"));
         }
@@ -62,6 +60,8 @@ public class OutgoingLetterController extends AbstractWizardFormController {
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
+        List<WorkflowUserBean> users = userManagerService.getAll();
+        request.setAttribute("users", users);
         OutgoingMailDto outgoingMailDto = new OutgoingMailDto();
         outgoingMailDto.setOutgoingNumber(outgoingMailService.getNewOutgoingNumber());
         outgoingMailDto.setOutgoingDate(DateUtils.nowDate());
@@ -108,6 +108,7 @@ public class OutgoingLetterController extends AbstractWizardFormController {
         }
         /*Отправляем письмо*/
         mailService.sendmailOutgoing(outgoingMailBean);
+        request.getSession().setAttribute("responsibleUid", null);
         return new ModelAndView(new RedirectView("index.htm"));
     }
 

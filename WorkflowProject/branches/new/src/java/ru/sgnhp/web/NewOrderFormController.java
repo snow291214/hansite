@@ -4,21 +4,27 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractWizardFormController;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.DateUtils;
+import ru.sgnhp.domain.DocumentBean;
+import ru.sgnhp.domain.DocumentFileBean;
 import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.dto.DocumentDto;
 import ru.sgnhp.service.IDocumentFileService;
 import ru.sgnhp.service.IDocumentService;
 import ru.sgnhp.service.IDocumentTypeService;
+import ru.sgnhp.service.IMailService;
 import ru.sgnhp.service.IUserManagerService;
 
 /*****
@@ -34,6 +40,7 @@ public class NewOrderFormController extends AbstractWizardFormController {
     private IDocumentTypeService documentTypeService;
     private IDocumentFileService documentFileService;
     private IUserManagerService userManagerService;
+    private IMailService mailService;
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
@@ -41,7 +48,6 @@ public class NewOrderFormController extends AbstractWizardFormController {
         request.setAttribute("users", users);
         DocumentDto documentDto = new DocumentDto();
         documentDto.setDocumentTypeUid(0L);
-        documentDto.setDescription("!!!");
         documentDto.setDocumentDate(DateUtils.nowDate());
         return documentDto;
     }
@@ -62,8 +68,42 @@ public class NewOrderFormController extends AbstractWizardFormController {
     }
 
     @Override
-    protected ModelAndView processFinish(HttpServletRequest hsr, HttpServletResponse hsr1, Object o, BindException be) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (request.getParameter("combobox") != null) {
+            request.getSession().setAttribute("responsibleUid", request.getParameter("combobox"));
+        }
+        return super.handleRequest(request, response);
+    }
+
+    @Override
+    protected ModelAndView processFinish(HttpServletRequest request, HttpServletResponse response, Object command, BindException be) throws Exception {
+        DocumentDto documentDto = (DocumentDto) command;
+        String responibleUid = (String) request.getSession().getAttribute("responsibleUid");
+        WorkflowUserBean workflowUserBean = userManagerService.get(Long.parseLong(responibleUid));
+
+        /*Сохранение распорядительного документа в БД*/
+        DocumentBean documentBean = new DocumentBean();
+        documentBean.setDescription(documentDto.getDescription());
+        documentBean.setDocumentDate(documentDto.getDocumentDate());
+        documentBean.setDocumentNumber(documentDto.getDocumentNumber());
+        documentBean.setDocumentTypeBean(documentTypeService.get(documentDto.getDocumentTypeUid()));
+        documentBean.setWorkflowUserBean(workflowUserBean);
+        documentBean = documentService.save(documentBean);
+
+        /*Сохранение файлов в БД*/
+        final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+        final Map files = multiRequest.getFileMap();
+        for (Object file : files.values()) {
+            DocumentFileBean documentFileBean = new DocumentFileBean();
+            documentFileBean.setBlobField(((MultipartFile) file).getBytes());
+            documentFileBean.setFileName(((MultipartFile) file).getOriginalFilename());
+            documentFileBean.setDocumentBean(documentBean);
+            documentFileService.save(documentFileBean);
+        }
+        /*Отправляем письмо*/
+        mailService.sendmailOrder(documentBean);
+        request.getSession().setAttribute("responsibleUid", null);
+        return new ModelAndView(new RedirectView("index.htm"));
     }
 
     public IDocumentService getDocumentService() {
@@ -96,5 +136,13 @@ public class NewOrderFormController extends AbstractWizardFormController {
 
     public void setUserManagerService(IUserManagerService userManagerService) {
         this.userManagerService = userManagerService;
+    }
+
+    public IMailService getMailService() {
+        return mailService;
+    }
+
+    public void setMailService(IMailService mailService) {
+        this.mailService = mailService;
     }
 }

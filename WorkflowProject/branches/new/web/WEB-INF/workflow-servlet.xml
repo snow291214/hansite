@@ -445,6 +445,9 @@
         <property name="userManagerService">
             <ref bean="userManagerService"/>
         </property>
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
     </bean>
 
     <!-- Documents By Primavera ID Controller 03.03.2010-->

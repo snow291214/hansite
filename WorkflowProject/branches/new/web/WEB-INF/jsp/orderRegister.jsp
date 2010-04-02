@@ -83,10 +83,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Резолюция:</td>
+                    <td>Тема распорядительного документа</td>
                     <spring:bind path="documentDto.description">
                         <td>
-                            <textarea rows="8" cols="23" name="<c:out value="${status.expression}"/>">${status.value}</textarea>
+                            <textarea rows="8" cols="28" name="<c:out value="${status.expression}"/>">${status.value}</textarea>
                         </td>
                         <td><font color="red">${status.errorMessage}</font></td>
                     </spring:bind>

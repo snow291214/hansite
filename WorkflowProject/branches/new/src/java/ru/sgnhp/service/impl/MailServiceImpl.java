@@ -12,6 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import ru.sgnhp.domain.DocumentBean;
 import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IMailService;
@@ -441,6 +442,36 @@ public class MailServiceImpl implements IMailService {
             Transport.send(message);
         } catch (Exception e) {
             System.err.println(e);
+        }
+    }
+
+    public void sendmailOrder(DocumentBean documentBean) {
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", mailHostName);
+        Session session = Session.getDefaultInstance(props, null);
+        MimeMessage message = new MimeMessage(session);
+        try {
+            InternetAddress address = new InternetAddress(fromAddress);
+            address.setPersonal(fromName, "utf-8");
+            message.setFrom(address);
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(documentBean.getWorkflowUserBean().getEmail()));
+            message.setSubject("Зарегистрирован распорядительный документ", "utf-8");
+
+            Multipart multipart = new MimeMultipart("related");
+            BodyPart htmlPart = new MimeBodyPart();
+
+            htmlPart.setContent("<html><body><h2>Зарегистрирован(о) "
+                    + documentBean.getDocumentTypeBean().getDescription() + " №"
+                    + documentBean.getDocumentNumber() + "</h2>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Тема распорядительного документа: "
+                    + documentBean.getDescription() + "</p>"
+                    + "</body></html>", "text/html;charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

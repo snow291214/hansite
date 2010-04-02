@@ -6,6 +6,7 @@ package ru.sgnhp.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import ru.sgnhp.domain.DocumentBean;
 import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.domain.WorkflowBean;
 
@@ -28,4 +29,6 @@ public interface IMailService {
     void sendmailOutgoing(OutgoingMailBean outgoingMailBean);
 
     void tasksForReviewReport(List<WorkflowBean> wfs);
+
+    void sendmailOrder(DocumentBean documentBean);
 }
