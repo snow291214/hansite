@@ -129,7 +129,7 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 
     @Test
     public void testGetByPrimaveraUid(){
-        assertNotNull(taskManagerService.getTaskByPrimaveraUid("W-0001"));
+        assertNotNull(taskManagerService.getTaskByPrimaveraUid("32"));
     }
 
 //    @Test

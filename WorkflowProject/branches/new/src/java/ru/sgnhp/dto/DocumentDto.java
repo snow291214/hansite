@@ -12,7 +12,7 @@ import java.util.Date;
 public class DocumentDto {
 
     private Long uid;
-    private int documentNumber;
+    private int incomingNumber;
     private Date documentDate;
     private String description;
     private Long documentTypeUid;
@@ -26,13 +26,7 @@ public class DocumentDto {
         this.uid = uid;
     }
 
-    public int getDocumentNumber() {
-        return documentNumber;
-    }
 
-    public void setDocumentNumber(int documentNumber) {
-        this.documentNumber = documentNumber;
-    }
 
     public Date getDocumentDate() {
         return documentDate;
@@ -64,5 +58,13 @@ public class DocumentDto {
 
     public void setWorkflowUserUid(Long workflowUserUid) {
         this.workflowUserUid = workflowUserUid;
+    }
+
+    public int getIncomingNumber() {
+        return incomingNumber;
+    }
+
+    public void setIncomingNumber(int incomingNumber) {
+        this.incomingNumber = incomingNumber;
     }
 }

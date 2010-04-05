@@ -1,5 +1,7 @@
 package ru.sgnhp.web.validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -28,7 +30,15 @@ public class RegisterTaskFormValidator implements Validator{
         return clazz.equals(TaskBean.class);
     }
 
-    public void validate(Object arg0, Errors errors) {
+    public void validate(Object object, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "task.description.empty");
+//        TaskBean taskBean = (TaskBean)object;
+//        if(!taskBean.getPrimaveraUid().equals("")){
+//            Pattern pattern = Pattern.compile("(^\\d{1,3}-\\d{1,2}-[A-z А-я]{2}\\d{4})|(^\\d{1,3}-\\d{1,2}-\\d{1,4})");
+//            Matcher matcher = pattern.matcher(taskBean.getPrimaveraUid());
+//            if(!matcher.find()){
+//                errors.rejectValue("primaveraUid", "task.primaveraID.templateMismatch", "");
+//            }
+//        }
     }
 }

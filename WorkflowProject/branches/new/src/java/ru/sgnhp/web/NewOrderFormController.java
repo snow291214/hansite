@@ -85,7 +85,7 @@ public class NewOrderFormController extends AbstractWizardFormController {
         DocumentBean documentBean = new DocumentBean();
         documentBean.setDescription(documentDto.getDescription());
         documentBean.setDocumentDate(documentDto.getDocumentDate());
-        documentBean.setDocumentNumber(documentDto.getDocumentNumber());
+        documentBean.setDocumentNumber(documentDto.getIncomingNumber());
         documentBean.setDocumentTypeBean(documentTypeService.get(documentDto.getDocumentTypeUid()));
         documentBean.setWorkflowUserBean(workflowUserBean);
         documentBean = documentService.save(documentBean);

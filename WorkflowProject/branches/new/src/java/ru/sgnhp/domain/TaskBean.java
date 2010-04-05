@@ -39,7 +39,7 @@ import org.hibernate.annotations.OnDeleteAction;
     + "order by t.incomingNumber, t.startDate"),
     @NamedQuery(name = "TaskBean.findByUid", query = "SELECT t FROM TaskBean t WHERE t.uid = :uid"),
     @NamedQuery(name = "TaskBean.findByPrimaveraUid", query = "SELECT t FROM "
-    + "TaskBean t WHERE t.primaveraUid = :primaveraUid order by t.startDate"),
+    + "TaskBean t WHERE t.primaveraUid like :primaveraUid order by t.startDate"),
     @NamedQuery(name = "TaskBean.getAllTasksWithPrimaveraUid", query = "SELECT distinct t.primaveraUid FROM TaskBean t WHERE t.primaveraUid <> ''"),
     @NamedQuery(name = "TaskBean.findByInternalNumber", query = "SELECT t FROM "
     + "TaskBean t WHERE t.internalNumber = :internalNumber"),

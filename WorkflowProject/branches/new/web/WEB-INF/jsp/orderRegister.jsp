@@ -57,8 +57,8 @@
                 </tr>
                 <tr>
                     <td>Номер документа:</td>
-                    <spring:bind path="documentDto.documentNumber">
-                        <td><input type="text" name="${status.expression}" id="incomingNumber" value="${status.value}" disabled /></td>
+                    <spring:bind path="documentDto.incomingNumber">
+                        <td><input type="text" name="${status.expression}" id="incomingNumber" value="${status.value}"  /></td>
                         <td><font color="red">${status.errorMessage}</font></td>
                     </spring:bind>
                 </tr>

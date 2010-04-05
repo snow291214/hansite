@@ -9,7 +9,7 @@
         <%@ include file="/WEB-INF/jsp/includes/navigation.jsp" %>
     </div>
     <div class="empty">
-        <form name="formSearch" method="post" action="">
+        <form name="formSearch" method="post" action="documentRegisterWizard.htm">
             <table>
                 <tr>
                     <td>Тип документа</td>
