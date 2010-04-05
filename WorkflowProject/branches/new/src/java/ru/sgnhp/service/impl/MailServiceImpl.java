@@ -3,6 +3,7 @@ package ru.sgnhp.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -455,7 +456,7 @@ public class MailServiceImpl implements IMailService {
             address.setPersonal(fromName, "utf-8");
             message.setFrom(address);
             message.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress(documentBean.getWorkflowUserBean().getEmail()));
+                    new InternetAddress(documentBean.getContactPerson().getEmail()));
             message.setSubject("Зарегистрирован распорядительный документ", "utf-8");
 
             Multipart multipart = new MimeMultipart("related");

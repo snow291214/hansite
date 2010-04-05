@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ru.sgnhp.domain;
 
 import java.io.Serializable;
@@ -26,6 +21,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /*****
  *
@@ -68,10 +65,15 @@ public class DocumentBean implements Serializable {
     @JoinColumn(name = "DocumentTypeUid", referencedColumnName = "Uid",  nullable = false, columnDefinition = "INTEGER(11)")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DocumentTypeBean documentTypeBean;
-    @ForeignKey(name = "fk_documents_users")
-    @JoinColumn(name = "UserUid", referencedColumnName = "Uid",  nullable = false, columnDefinition = "INTEGER(11) UNSIGNED")
+    @ForeignKey(name = "fk_documents_contact_users")
+    @JoinColumn(name = "ContactUserUid", referencedColumnName = "Uid",  nullable = false, columnDefinition = "INTEGER(11) UNSIGNED")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private WorkflowUserBean workflowUserBean;
+    private WorkflowUserBean contactPerson;
+    @ForeignKey(name = "fk_documents_control_users")
+    @JoinColumn(name = "ControlUserUid", referencedColumnName = "Uid",  nullable = false, columnDefinition = "INTEGER(11) UNSIGNED")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private WorkflowUserBean controlPerson;
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentBean", fetch = FetchType.LAZY)
     private Set<DocumentFileBean> documentFileBeanSet;
 
@@ -162,12 +164,21 @@ public class DocumentBean implements Serializable {
         this.documentTypeBean = documentTypeBean;
     }
 
-    public WorkflowUserBean getWorkflowUserBean() {
-        return workflowUserBean;
+    public WorkflowUserBean getContactPerson() {
+        return contactPerson;
     }
 
-    public void setWorkflowUserBean(WorkflowUserBean workflowUserBean) {
-        this.workflowUserBean = workflowUserBean;
+    public void setContactPerson(WorkflowUserBean contactPerson) {
+        this.contactPerson = contactPerson;
     }
+
+    public WorkflowUserBean getControlPerson() {
+        return controlPerson;
+    }
+
+    public void setControlPerson(WorkflowUserBean controlPerson) {
+        this.controlPerson = controlPerson;
+    }
+
 
 }

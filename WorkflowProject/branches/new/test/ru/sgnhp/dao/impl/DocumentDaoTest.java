@@ -42,7 +42,8 @@ public class DocumentDaoTest extends AbstractTransactionalDataSourceSpringContex
         Set<DocumentFileBean> fileBeans = new LinkedHashSet<DocumentFileBean>();
 
         documentBean.setDocumentFileBeanSet(fileBeans);
-        documentBean.setWorkflowUserBean(userDao.get(72L));
+        documentBean.setContactPerson(userDao.get(72L));
+        documentBean.setControlPerson(userDao.get(72L));
 
         assertNotNull(documentDao.save(documentBean));
     }

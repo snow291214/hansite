@@ -69,8 +69,9 @@ public class NewOrderFormController extends AbstractWizardFormController {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (request.getParameter("combobox") != null) {
-            request.getSession().setAttribute("responsibleUid", request.getParameter("combobox"));
+        if (request.getParameter("contactPerson") != null) {
+            request.getSession().setAttribute("contactPersonUid", request.getParameter("contactPerson"));
+            request.getSession().setAttribute("controlPersonUid", request.getParameter("controlPerson"));
         }
         return super.handleRequest(request, response);
     }
@@ -78,8 +79,10 @@ public class NewOrderFormController extends AbstractWizardFormController {
     @Override
     protected ModelAndView processFinish(HttpServletRequest request, HttpServletResponse response, Object command, BindException be) throws Exception {
         DocumentDto documentDto = (DocumentDto) command;
-        String responibleUid = (String) request.getSession().getAttribute("responsibleUid");
-        WorkflowUserBean workflowUserBean = userManagerService.get(Long.parseLong(responibleUid));
+        String responibleUid = (String) request.getSession().getAttribute("contactPersonUid");
+        String controlPersonUid = (String) request.getSession().getAttribute("controlPersonUid");
+        WorkflowUserBean contactUserBean = userManagerService.get(Long.parseLong(responibleUid));
+        WorkflowUserBean controlUserBean = userManagerService.get(Long.parseLong(controlPersonUid));
 
         /*Сохранение распорядительного документа в БД*/
         DocumentBean documentBean = new DocumentBean();
@@ -87,7 +90,8 @@ public class NewOrderFormController extends AbstractWizardFormController {
         documentBean.setDocumentDate(documentDto.getDocumentDate());
         documentBean.setDocumentNumber(documentDto.getIncomingNumber());
         documentBean.setDocumentTypeBean(documentTypeService.get(documentDto.getDocumentTypeUid()));
-        documentBean.setWorkflowUserBean(workflowUserBean);
+        documentBean.setContactPerson(contactUserBean);
+        documentBean.setControlPerson(controlUserBean);
         documentBean = documentService.save(documentBean);
 
         /*Сохранение файлов в БД*/

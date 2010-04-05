@@ -58,7 +58,7 @@
                 <tr>
                     <td>Номер документа:</td>
                     <spring:bind path="documentDto.incomingNumber">
-                        <td><input type="text" name="${status.expression}" id="incomingNumber" value="${status.value}"  /></td>
+                        <td><input type="text" name="${status.expression}" id="incomingNumber" value="${status.value}" readonly /></td>
                         <td><font color="red">${status.errorMessage}</font></td>
                     </spring:bind>
                 </tr>
@@ -75,7 +75,17 @@
                 <tr>
                     <td>Готовил:</td>
                     <td>
-                        <select name="combobox">
+                        <select name="contactPerson">
+                            <c:forEach items="${requestScope.users}" var="user" varStatus="status">
+                                <option value="${user.uid}">${user.lastName} ${user.firstName} ${user.middleName}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Контроль над исполнением возложить на:</td>
+                    <td>
+                        <select name="controlPerson">
                             <c:forEach items="${requestScope.users}" var="user" varStatus="status">
                                 <option value="${user.uid}">${user.lastName} ${user.firstName} ${user.middleName}</option>
                             </c:forEach>
