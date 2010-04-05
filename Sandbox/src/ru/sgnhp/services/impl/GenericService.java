@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sgnhp.services.impl;
 
 import java.io.Serializable;
@@ -72,8 +68,8 @@ public class GenericService<T, PK extends Serializable> implements IGenericServi
      */
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void save(T object) {
-        genericDao.save(object);
+    public T save(T object) {
+        return genericDao.save(object);
     }
 
     /**

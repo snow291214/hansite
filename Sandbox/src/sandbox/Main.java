@@ -14,10 +14,12 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.sgnhp.entity.OutgoingFileBean;
-import ru.sgnhp.entity.OutgoingMailBean;
-import ru.sgnhp.services.IOutgoingFileService;
-import ru.sgnhp.services.IOutgoingMailService;
+import ru.sgnhp.entity.DocumentBean;
+import ru.sgnhp.entity.DocumentFileBean;
+import ru.sgnhp.services.IDocumentFileService;
+import ru.sgnhp.services.IDocumentService;
+import ru.sgnhp.services.IDocumentTypeService;
+import ru.sgnhp.services.IUserManagerService;
 
 /**
  *
@@ -47,37 +49,37 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/ru/sgnhp/applicationContext.xml");
-        IOutgoingFileService fileService = (IOutgoingFileService) ctx.getBean("outgoingFileService");
-        IOutgoingMailService outgoingMailService = (IOutgoingMailService) ctx.getBean("outgoingMailService");
+        
+        String typeAndYear = "P2010";
+        Long documentType = 2L;
 
-        CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("d:\\temp\\out.csv"), "cp1251"));
-        //CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("/media/win_d/temp/doc1.csv"), "cp1251"));
+        IDocumentService documentService = (IDocumentService) ctx.getBean("documentService");
+        IDocumentFileService documentFileService = (IDocumentFileService) ctx.getBean("documentFileService");
+        IDocumentTypeService documentTypeService = (IDocumentTypeService) ctx.getBean("documentTypeService");
+        IUserManagerService userManagerService = (IUserManagerService) ctx.getBean("userManagerService");
+
+        CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream("c:\\temp\\"+typeAndYear+".csv"), "cp1251"));
         reader.setDelimiter(';');
         while (reader.readRecord()) {
-
-            OutgoingMailBean outgoingMailBean = new OutgoingMailBean();
-            outgoingMailBean.setOutgoingNumber(Long.parseLong(reader.get(0)));
+            DocumentBean documentBean = new DocumentBean();
             DateFormat date = DateFormat.getDateInstance(DateFormat.SHORT);
-            outgoingMailBean.setOutgoingDate(date.parse(reader.get(1)));
-            outgoingMailBean.setDescription(reader.get(2));
-            outgoingMailBean.setReceiverCompany(reader.get(3));
-            outgoingMailBean.setReceiverName(reader.get(4));
-            outgoingMailBean.setResponsibleName(reader.get(5));
-            if (!reader.get(6).equals("")) {
-                outgoingMailBean.setDueDate(date.parse(reader.get(6)));
-            }
-            outgoingMailBean.setDocumentumNumber(reader.get(7));
-            outgoingMailService.save(outgoingMailBean);
-
-            String path = "D:\\temp\\out\\" + reader.get(0) + ".pdf";
+            documentBean.setDocumentNumber(Integer.parseInt(reader.get(0)));
+            documentBean.setDocumentDate(date.parse(reader.get(1)));
+            documentBean.setDescription(reader.get(2));
+            documentBean.setDocumentTypeBean(documentTypeService.get(documentType));
+            documentBean.setContactPerson(userManagerService.get(Long.parseLong(reader.get(3))));
+            documentBean.setControlPerson(userManagerService.get(Long.parseLong(reader.get(4))));
+            documentBean = documentService.save(documentBean);
+            String path = "C:\\temp\\"+typeAndYear+"\\" + reader.get(0) + ".pdf";
             boolean exists = (new File(path)).exists();
             if (exists) {
-                OutgoingFileBean outgoingFileBean = new OutgoingFileBean();
-                outgoingFileBean.setBlobField(getBytesFromFile(new File(path)));
-                outgoingFileBean.setFileName(reader.get(0) + ".pdf");
-                outgoingFileBean.setOutgoingMailBean(outgoingMailBean);
-                fileService.save(outgoingFileBean);
+                DocumentFileBean documentFileBean = new DocumentFileBean();
+                documentFileBean.setBlobField(getBytesFromFile(new File(path)));
+                documentFileBean.setFileName(reader.get(0) + ".pdf");
+                documentFileBean.setDocumentBean(documentBean);
+                documentFileService.save(documentFileBean);
             }
+            System.out.println(documentBean.getDocumentNumber());
         }
     }
 }

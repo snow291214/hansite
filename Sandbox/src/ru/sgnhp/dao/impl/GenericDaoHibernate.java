@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sgnhp.dao.impl;
 
 import java.io.Serializable;
@@ -17,9 +13,12 @@ import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ru.sgnhp.dao.IGenericDao;
 
-/**
+/*****
  *
- * @author alexey
+ * @author Alexey Khudyakov
+ * @company "Salavatgazoneftehimproekt" Ltd
+ *
+ *****
  */
 public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDaoSupport implements IGenericDao<T, PK> {
 
@@ -82,8 +81,8 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public void save(T object) {
-        super.getHibernateTemplate().saveOrUpdate(object);
+    public T save(T object) {
+        return (T) super.getHibernateTemplate().merge(object);
     }
 
     /**
@@ -115,4 +114,3 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
                 values);
     }
 }
-

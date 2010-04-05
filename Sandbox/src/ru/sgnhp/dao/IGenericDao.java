@@ -1,18 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.sgnhp.dao;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author alexey
- */
-public interface IGenericDao<T, PK extends Serializable> {
+public interface IGenericDao <T, PK extends Serializable>{
 
     /**
      * Generic method used to get all objects of a particular type. This
@@ -45,8 +37,8 @@ public interface IGenericDao<T, PK extends Serializable> {
      * @return the persisted object
      */
     //T save(T object);
-    void save(T object);
-
+    T save(T object);
+    
     /**
      * Generic method to delete an object based on class and id
      * @param id the identifier (primary key) of the object to remove
@@ -68,6 +60,11 @@ public interface IGenericDao<T, PK extends Serializable> {
      * @return a list of the records found
      */
     List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams);
+
+    /**
+     * Find a list of records by using a named query
+     * @param queryName query name of the named query
+     * @param queryParams a map of the query names and the values
+     * @return a list of the records found
+     */
 }
-
-

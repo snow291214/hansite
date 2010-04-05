@@ -35,7 +35,7 @@ public interface IGenericService<T, PK extends Serializable> {
      * @param object the object to save
      * @return the updated object
      */
-   void save(T object);
+   T save(T object);
 
     /**
      * Generic method to delete an object based on class and id
