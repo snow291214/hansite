@@ -154,8 +154,28 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean id="documentService" class="ru.sgnhp.service.impl.DocumentServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.DocumentBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="documentDao" ref="documentDao"/>
+    </bean>
+
     <bean id="documentTypeDao" class="ru.sgnhp.dao.impl.DocumentTypeDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="documentTypeService" class="ru.sgnhp.service.impl.DocumentTypeServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.DocumentTypeBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="documentTypeDao" ref="documentTypeDao"/>
     </bean>
 
     <bean id="documentFileDao" class="ru.sgnhp.dao.impl.DocumentFileDaoImpl">

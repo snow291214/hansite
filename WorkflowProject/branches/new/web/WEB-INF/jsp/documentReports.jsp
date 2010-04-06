@@ -71,6 +71,18 @@
                         <input type="radio" name="reportType" id="outgoingMail" value="1"/>
                     </td>
                 </tr>
+                <tr>
+                    <td><label for="order">Журнал приказов</label></td>
+                    <td>
+                        <input type="radio" name="reportType" id="order" value="2"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="order2">Журнал распоряжений</label></td>
+                    <td>
+                        <input type="radio" name="reportType" id="order2" value="3"/>
+                    </td>
+                </tr>
             </table>
             <input type="button" onclick="javascript:history.back();" value="Назад"/>
             <input type="submit" value="Сформировать" />

@@ -1,5 +1,7 @@
 package ru.sgnhp.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,7 +39,15 @@ public class DocumentServiceImpl extends GenericServiceImpl<DocumentBean, Long> 
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public int getNewDocumentNumber(int currentYear, Long documentTypeUid) {
-        return  documentDao.getNewDocumentNumber(currentYear, documentTypeUid);
+        return documentDao.getNewDocumentNumber(currentYear, documentTypeUid);
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public List<DocumentBean> getAllDocumentsByYear(Integer currentYear, DocumentTypeBean documentTypeBean) throws ParseException{
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date startDate = simpleDateFormat.parse("01.01." + currentYear.toString());
+        Date finishDate = simpleDateFormat.parse("31.12." + currentYear.toString());
+        return this.findByDocumentDate(startDate, finishDate, documentTypeBean);
     }
 
     public void setDocumentDao(IDocumentDao documentDao) {

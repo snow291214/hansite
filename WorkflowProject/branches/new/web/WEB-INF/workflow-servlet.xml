@@ -25,6 +25,7 @@
                 <prop key="download.htm">downloadController</prop>
                 <prop key="getOutgoingFiles.htm">downloadOutgoingMailFilesController</prop>
                 <prop key="getWorkflowFiles.htm">downloadWorkflowFilesController</prop>
+                <prop key="getDocumentFiles.htm">downloadDocumentFilesController</prop>
                 <prop key="selectUsers.htm">selectUsersFormController</prop>
                 <prop key="registerTask.htm">newTaskFormController</prop>
                 <prop key="upload.htm">uploadController</prop>
@@ -325,6 +326,12 @@
         <property name="outgoingMailService">
             <ref bean="outgoingMailService"/>
         </property>
+        <property name="documentService">
+            <ref bean="documentService"/>
+        </property>
+        <property name="documentTypeService">
+            <ref bean="documentTypeService"/>
+        </property>
     </bean>
 
     <!-- Outgoing Letter Search Controller -->
@@ -461,6 +468,7 @@
         </property>
     </bean>
 
+    <!-- Extra Description Form Controller Controller 06.04.2010-->
     <bean name="extraDescription" class="ru.sgnhp.web.forms.ExtraDescriptionFormController">
         <property name="commandName" value="workflowManager"/>
         <property name="commandClass" value="ru.sgnhp.dto.WorkflowBeanDto" />
@@ -481,6 +489,12 @@
         </property>
     </bean>
 
+    <!-- Download Document Files Controller 06.04.2010-->
+    <bean name="downloadDocumentFilesController" class="ru.sgnhp.web.DownloadDocumentController">
+        <property name="documentFileService">
+            <ref bean="documentFileService"/>
+        </property>
+    </bean>
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">
