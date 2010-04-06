@@ -52,7 +52,7 @@
                 <pg:item>
                     <div style="margin-bottom: 10px;">
                         <div class="header red">
-                            Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
+                            Задача № <c:out value="${wf.taskBean.internalNumber}"/>. ${wf.taskBean.description}
                         </div>
                         <div>
                             Компания: <b>${wf.taskBean.externalCompany}</b>.
@@ -67,6 +67,9 @@
                                 <a href="<c:url value="roadmap.htm?workflowID=${wf.uid}" />">Просмотреть маршрут задачи</a>
                                 <a href="<c:url value="selectUsers.htm?workflowID=${wf.uid}" />">Передать задачу</a>
                                 <a href="<c:url value="workflowManager.htm?workflowID=${wf.uid}" />">Управление задачей</a>
+                                <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG,ROLE_TOP">
+                                    <a href="<c:url value="extraDescription.htm?workflowID=${wf.uid}" />">Добавить резолюцию</a>
+                                </sec:authorize>
                             </div>
                         </div>
                     </div>
