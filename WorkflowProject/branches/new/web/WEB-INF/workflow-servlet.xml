@@ -13,9 +13,19 @@
 
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
+    <!--
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
           p:location="/WEB-INF/classes/mail.properties"/>
+    -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/classes/mail.properties</value>
+                <value>/WEB-INF/classes/general.properties</value>
+            </list>
+        </property>
+    </bean>
 
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
@@ -431,6 +441,7 @@
         <property name="pages">
             <list>
                 <value>orderRegister</value>
+                <value>selectReceiversOfOrder</value>
                 <value>orderFileRegister</value>
                 <value>redirect:index.htm</value>
             </list>
@@ -453,8 +464,22 @@
         <property name="userManagerService">
             <ref bean="userManagerService"/>
         </property>
+        <!--
         <property name="mailService">
             <ref bean="mailServiceManager"/>
+        </property>
+        -->
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="serverName">
+            <value>${general.applicationPath}</value>
         </property>
     </bean>
 
