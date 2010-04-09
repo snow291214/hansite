@@ -5,11 +5,16 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
-    <bean id="propertyConfigurer"  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="/ru/sgnhp/jdbc.properties" />
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/ru/sgnhp/jdbc.properties</value>
+            </list>
+        </property>
     </bean>
+
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="user" value="${jdbc.username}"/>
@@ -49,6 +54,8 @@
         </property>
     </bean>
 
+    <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" />
+
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="/ru/sgnhp/hibernate.cfg.xml" />
@@ -58,7 +65,20 @@
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
             </props>
         </property>
+        <property name="lobHandler" ref="lobHandler" />
     </bean>
+
+<bean id="transactionProxyFactoryBean" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+  <property name="transactionManager" ref="txManager"/>
+  <property name="target" ref="taskManagerService"/>
+  <property name="transactionAttributes">
+    <props>
+      <prop key="get*">PROPAGATION_REQUIRED,-MyCheckedException</prop>
+      <prop key="update*">PROPAGATION_REQUIRED</prop>
+      <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+    </props>
+  </property>
+</bean>
 
     <tx:annotation-driven transaction-manager="txManager" />
 
@@ -66,48 +86,30 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <!--<bean id="groupsDAO" class="ru.sgnhp.dao.impl.GroupsDao">
+    <bean id="taskDao" class="ru.sgnhp.dao.impl.TaskDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean id="tasksService" class="ru.sgnhp.services.impl.GenericService">
+    <bean id="taskManagerService" class="ru.sgnhp.services.impl.TaskManagerServiceImpl">
         <constructor-arg>
             <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
-                <constructor-arg value="ru.sgnhp.entity.Groups"/>
+                <constructor-arg value="ru.sgnhp.entity.TaskBean"/>
                 <property name="sessionFactory" ref="sessionFactory"/>
             </bean>
         </constructor-arg>
-    </bean>-->
+    </bean>
 
-    <bean id="tasksDao" class="ru.sgnhp.dao.impl.TasksDao">
+    <bean id="uploadManagerService" class="ru.sgnhp.services.impl.UploadManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.entity.FileBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="uploadDao" class="ru.sgnhp.dao.impl.UploadDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="tasksService" class="ru.sgnhp.services.impl.TasksService">
-        <constructor-arg>
-            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
-                <constructor-arg value="ru.sgnhp.entity.Tasks"/>
-                <property name="sessionFactory" ref="sessionFactory"/>
-            </bean>
-        </constructor-arg>
-    </bean>
-
-    <bean id="filesService" class="ru.sgnhp.services.impl.FilesService">
-        <constructor-arg>
-            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
-                <constructor-arg value="ru.sgnhp.entity.Files"/>
-                <property name="sessionFactory" ref="sessionFactory"/>
-            </bean>
-        </constructor-arg>
-    </bean>
-
-    <bean id="workflowsService" class="ru.sgnhp.services.impl.WorkflowsService">
-        <constructor-arg>
-            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
-                <constructor-arg value="ru.sgnhp.entity.Workflows"/>
-                <property name="sessionFactory" ref="sessionFactory"/>
-            </bean>
-        </constructor-arg>
     </bean>
 
     <bean id="outgoingFileService" class="ru.sgnhp.services.impl.OutgoingFileServiceImpl">

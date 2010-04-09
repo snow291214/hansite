@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.SessionFactory;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ru.sgnhp.dao.IGenericDao;
@@ -27,6 +28,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
      */
     protected final Log log = LogFactory.getLog(getClass());
     private Class<T> persistentClass;
+    private SessionFactory sessionFactory;
 
     /**
      * Constructor that takes in a class to see which type of entity to persist

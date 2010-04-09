@@ -5,8 +5,8 @@
         <property name="hibernate.cache.use_second_level_cache">true</property>
         <property name="hibernate.cache.use_query_cache">false</property>
         <property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
-        <property name="hibernate.transaction.flush_before_completion">true</property>
-        <property name="hibernate.transaction.auto_close_session">true</property>
+        <property name="hibernate.transaction.flush_before_completion">false</property>
+        <property name="hibernate.transaction.auto_close_session">false</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">false</property>
         <property name="hibernate.format_sql">false</property>
