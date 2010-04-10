@@ -8,10 +8,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sgnhp.dao.IGenericDao;
 import ru.sgnhp.dao.ITaskDao;
+import ru.sgnhp.dao.impl.TaskDaoImpl;
 import ru.sgnhp.entity.TaskBean;
 import ru.sgnhp.services.ITaskManagerService;
 
@@ -33,27 +35,27 @@ public class TaskManagerServiceImpl extends GenericService<TaskBean, Long> imple
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<TaskBean> getTaskByInternalNumber(int number) {
-        return taskDao.getTaskByInternalNumber(number);
+        return getTaskDao().getTaskByInternalNumber(number);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<TaskBean> getTaskByExternalNumber(String number) {
-        return taskDao.getTaskByExternalNumber("%" + number + "%");
+        return getTaskDao().getTaskByExternalNumber("%" + number + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<TaskBean> getTaskByIncomingNumber(int number) {
-        return taskDao.getTaskByIncomingNumber(number);
+        return getTaskDao().getTaskByIncomingNumber(number);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<TaskBean> getTasksByExternalAssignee(String externalAssignee) {
-        return taskDao.getTasksByExternalAssignee("%" + externalAssignee + "%");
+        return getTaskDao().getTasksByExternalAssignee("%" + externalAssignee + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public int getNewInternalNumber() {
-        int value = taskDao.getNewInternalNumber();
+        int value = getTaskDao().getNewInternalNumber();
         if (value == -1) {
             value++;
         }
@@ -62,7 +64,7 @@ public class TaskManagerServiceImpl extends GenericService<TaskBean, Long> imple
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public int getNewIncomingNumber() {
-        int value = taskDao.getNewIncomingNumber();
+        int value = getTaskDao().getNewIncomingNumber();
         if (value == -1) {
             value++;
         }
@@ -71,7 +73,7 @@ public class TaskManagerServiceImpl extends GenericService<TaskBean, Long> imple
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<TaskBean> getTasksByDescription(String description) {
-        return taskDao.getTasksByDescription("%" + description + "%");
+        return getTaskDao().getTasksByDescription("%" + description + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
@@ -81,7 +83,7 @@ public class TaskManagerServiceImpl extends GenericService<TaskBean, Long> imple
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<TaskBean> getTaskByExternalCompany(String externalCompany) {
-        return taskDao.getTaskByExternalCompany("%" + externalCompany + "%");
+        return getTaskDao().getTaskByExternalCompany("%" + externalCompany + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
@@ -118,16 +120,24 @@ public class TaskManagerServiceImpl extends GenericService<TaskBean, Long> imple
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException {
-        return taskDao.getAllIncomingMailByYear(currentYear);
+        return getTaskDao().getAllIncomingMailByYear(currentYear);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<TaskBean> getTaskByPrimaveraUid(String primaveraUid) {
-        return taskDao.getTaskByPrimaveraUid("%" + primaveraUid + "%");
+        return getTaskDao().getTaskByPrimaveraUid("%" + primaveraUid + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<String> getAllTasksWithPrimaveraUid() {
-        return taskDao.getAllTasksWithPrimaveraUid();
+        return getTaskDao().getAllTasksWithPrimaveraUid();
     }
+
+    /**
+     * @return the taskDao
+     */
+    public ITaskDao getTaskDao() {
+        return taskDao;
+    }
+
 }

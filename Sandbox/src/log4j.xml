@@ -30,7 +30,7 @@
     </appender>
 
     <category name="org.hibernate" additivity="false">
-        <priority value="trace"/>
+        <priority value="WARN"/>
         <appender-ref ref="CONSOLE-WARN"/>
         <appender-ref ref="CONSOLE-DEBUG"/>
     </category>

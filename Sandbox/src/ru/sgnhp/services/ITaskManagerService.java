@@ -2,6 +2,7 @@ package ru.sgnhp.services;
 
 import java.text.ParseException;
 import java.util.List;
+import org.hibernate.SessionFactory;
 import ru.sgnhp.entity.TaskBean;
 
 /*****
@@ -36,4 +37,5 @@ public interface ITaskManagerService extends IGenericService<TaskBean, Long> {
     void dailyReport();
 
     List<String> getAllTasksWithPrimaveraUid();
+
 }

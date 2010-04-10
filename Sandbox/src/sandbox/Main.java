@@ -8,6 +8,7 @@ import com.csvreader.CsvReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,10 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import org.hibernate.SessionFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.sgnhp.dao.ITaskDao;
 import ru.sgnhp.entity.DocumentBean;
 import ru.sgnhp.entity.DocumentFileBean;
+import ru.sgnhp.entity.FileBean;
 import ru.sgnhp.entity.TaskBean;
 import ru.sgnhp.services.IDocumentFileService;
 import ru.sgnhp.services.IDocumentService;
@@ -37,7 +39,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    static byte[] getBytesFromFile(File file) throws FileNotFoundException, IOException {
+    byte[] getBytesFromFile(File file) throws FileNotFoundException, IOException {
         InputStream is = new FileInputStream(file);
         byte[] bytes = new byte[(int) file.length()];
         int offset = 0;
@@ -56,6 +58,11 @@ public class Main {
 
     private static String getYearFromDate(Date date) {
         SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy");
+        return simpleDateformat.format(date);
+    }
+
+    private static String getMonthFromDate(Date date) {
+        SimpleDateFormat simpleDateformat = new SimpleDateFormat("MM");
         return simpleDateformat.format(date);
     }
 
@@ -94,13 +101,16 @@ public class Main {
     }
 
     static void makeRepository(ClassPathXmlApplicationContext ctx, String repositoryPath) throws FileNotFoundException, IOException {
-        //ITaskManagerService taskManagerService = (ITaskManagerService) ctx.getBean("taskManagerService");
-        ITaskDao taskDao = (ITaskDao)ctx.getBean("taskDao");
+        ITaskManagerService taskManagerService = (ITaskManagerService) ctx.getBean("taskManagerService");
+        SessionFactory sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");
+        //ITaskDao taskDao = (ITaskDao)ctx.getBean("taskDao");
         //IUploadManagerService uploadManagerService = (IUploadManagerService)ctx.getBean("uploadManagerService");
-        List<TaskBean> taskBeans = taskDao.getAll();
+        //List<TaskBean> taskBeans = taskManagerService.getAll();
+        List<TaskBean> taskBeans = sessionFactory.openSession().getNamedQuery("TaskBean.findAll").list();
         SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
         for (TaskBean taskBean : taskBeans) {
             String path = repositoryPath + "\\" + getYearFromDate(taskBean.getStartDate())
+                    + "\\" + getMonthFromDate(taskBean.getStartDate())
                     + "\\" + fmt.format(taskBean.getStartDate()) + "\\"
                     + taskBean.getUid().toString();
             File directory = new File(path);
@@ -110,12 +120,20 @@ public class Main {
             }
 
             Set fileBeans = taskBean.getFilesSet();
-            System.out.write(fileBeans.size());
-            //for (Object fileBean : fileBeans) {
-                //FileOutputStream fos = new FileOutputStream(path + "\\" + fileBean.getFileName());
-                //fos.write(fileBean.getBlobField());
-                //fos.close();
-            //}
+            for (Object fileBean : fileBeans) {
+                String filename = "";
+                if (!((FileBean) fileBean).getFileName().contains(".")) {
+                    filename = ((FileBean) fileBean).getFileName() + ".pdf";
+                } else {
+                    filename = ((FileBean) fileBean).getFileName();
+                }
+                FileOutputStream fos = new FileOutputStream(path + "\\" + filename);
+                if (((FileBean) fileBean).getBlobField() != null) {
+                    fos.write(((FileBean) fileBean).getBlobField());
+                }
+                fos.close();
+                ((FileBean)fileBean).setBlobField(null);
+            }
         }
     }
 

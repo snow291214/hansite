@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -89,7 +91,8 @@ public class TaskBean implements Serializable {
     private Date dueDate;
     @Column(name = "PrimaveraUid", length = 150)
     private String primaveraUid;
-    @OneToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tasks",cascade=javax.persistence.CascadeType.ALL, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.LOCK)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FileBean> filesSet = new HashSet<FileBean>();
     @OneToMany(mappedBy = "taskBean", fetch = FetchType.LAZY)
