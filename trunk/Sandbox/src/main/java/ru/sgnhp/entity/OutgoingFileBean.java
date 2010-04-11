@@ -27,6 +27,7 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "outgoingfiles", catalog = "workflowdb", schema = "")
 @NamedQueries({@NamedQuery(name = "OutgoingFileBean.findAll", query = "SELECT o FROM OutgoingFileBean o"),
 @NamedQuery(name = "OutgoingFileBean.findByUid", query = "SELECT o FROM OutgoingFileBean o WHERE o.uid = :uid"),
+@NamedQuery(name = "OutgoingFileBean.findByOutgoingMail", query = "SELECT o FROM OutgoingFileBean o WHERE o.outgoingMailBean = :outgoingMailBean"),
 @NamedQuery(name = "OutgoingFileBean.findByFileName", query = "SELECT o FROM OutgoingFileBean o WHERE o.fileName = :fileName")})
 public class OutgoingFileBean implements Serializable {
 
@@ -39,6 +40,8 @@ public class OutgoingFileBean implements Serializable {
     @Basic(optional = false)
     @Column(name = "FileName", nullable = false, length = 100)
     private String fileName;
+    @Column(name = "FilePath", length = 255, nullable=false)
+    private String filePath;
     @Basic(optional = false)
     @Lob
     @Column(name = "BlobField", columnDefinition = "LONGBLOB")
@@ -116,5 +119,13 @@ public class OutgoingFileBean implements Serializable {
     @Override
     public String toString() {
         return "ru.sgnhp.domain.OutgoingFileBean[uid=" + uid + "]";
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

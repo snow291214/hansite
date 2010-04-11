@@ -14,15 +14,15 @@
             </list>
         </property>
     </bean>
-
+<!--
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}" />
         <property name="url" value="${jdbc.url}" />
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
     </bean>
+-->
 
-    <!--
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="user" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
@@ -60,53 +60,6 @@
             <value>${jdbc.testConnectionOnCheckin}</value>
         </property>
     </bean>
-
-
-    <bean id="genericDao" class="ru.sgnhp.dao.impl.GenericDaoHibernate">
-        <constructor-arg value="ru.sgnhp.entity.TaskBean"/>
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="genericService" class="ru.sgnhp.services.impl.GenericService">
-        <constructor-arg>
-            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
-                <constructor-arg value="ru.sgnhp.entity.TaskBean"/>
-                <property name="sessionFactory" ref="sessionFactory"/>
-            </bean>
-        </constructor-arg>
-    </bean>
-
-    <bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
-        <property name="sessionFactory">
-            <ref bean="sessionFactory"/>
-        </property>
-    </bean>
-
-
-    <bean id="taskManager" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="target"><ref bean="taskManagerService"/></property>
-        <property name="proxyInterfaces">
-            <value>ru.sgnhp.services.ITaskManagerService</value>
-        </property>
-        <property name="interceptorNames">
-            <list>
-                <value>hibernateInterceptor</value>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="genericManager" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="target"><ref bean="genericService"/></property>
-        <property name="proxyInterfaces">
-            <value>ru.sgnhp.services.IGenericService</value>
-        </property>
-        <property name="interceptorNames">
-            <list>
-                <value>hibernateInterceptor</value>
-            </list>
-        </property>
-    </bean>
-    -->
 
     <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" />
 
@@ -156,6 +109,10 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean id="outgoingFileDao" class="ru.sgnhp.dao.impl.OutgoingFileDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <bean id="outgoingFileService" class="ru.sgnhp.services.impl.OutgoingFileServiceImpl">
         <constructor-arg>
             <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
@@ -163,6 +120,11 @@
                 <property name="sessionFactory" ref="sessionFactory"/>
             </bean>
         </constructor-arg>
+        <property name="outgoingFileDao" ref="outgoingFileDao" />
+    </bean>
+
+    <bean id="outgoingMailDao" class="ru.sgnhp.dao.impl.OutgoingMailDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
     <bean id="outgoingMailService" class="ru.sgnhp.services.impl.OutgoingMailServiceImpl">

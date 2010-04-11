@@ -44,7 +44,7 @@
     </category>
 
     <root>
-        <priority value="WARN"/>
+        <priority value="INFO"/>
         <appender-ref ref="CONSOLE-WARN"/>
         <appender-ref ref="CONSOLE-DEBUG"/>
         <appender-ref ref="LOG-FILE-APPENDER"/>
