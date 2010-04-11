@@ -36,6 +36,6 @@ public class UploadManagerServiceImpl extends GenericService<FileBean, Long> imp
 
     @Override
     public List<FileBean> getFilesByTaskUid(TaskBean taskBean) {
-        return uploadDao.getFilesByTaskUid(taskBean);
+        return uploadDao.getFilesByTask(taskBean);
     }
 }

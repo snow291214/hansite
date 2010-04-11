@@ -21,7 +21,7 @@ public class UploadDaoImpl extends GenericDaoHibernate<FileBean, Long> implement
     }
 
     @Override
-    public List<FileBean> getFilesByTaskUid(TaskBean taskBean) {
+    public List<FileBean> getFilesByTask(TaskBean taskBean) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("tasks", taskBean);
         List<FileBean> list = this.findByNamedQuery("FileBean.findByTask", value);

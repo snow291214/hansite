@@ -41,8 +41,10 @@ public class FileBean implements Serializable {
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
     private Long uid;
-    @Column(name = "FileName", length = 100)
+    @Column(name = "FileName", length = 100, nullable=false)
     private String fileName;
+    @Column(name = "FilePath", length = 255, nullable=false)
+    private String filePath;
     @Lob
     @Basic(fetch=FetchType.LAZY)
     @Column(name = "BlobField", columnDefinition = "LONGBLOB")
@@ -114,6 +116,14 @@ public class FileBean implements Serializable {
     @Override
     public String toString() {
         return "ru.sgnhp.domain.Files[uid=" + uid + "]";
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
 }

@@ -15,5 +15,5 @@ public interface IUploadDao extends IGenericDao<FileBean, Long> {
 
     //List<FileBean> getFileBeansByTaskUid(Long taskUid);
     //FileUploadBean getFileUploadBeanByUid(Long fileUploadBeanUid);
-    public List<FileBean> getFilesByTaskUid(TaskBean taskBean);
+    public List<FileBean> getFilesByTask(TaskBean taskBean);
 }
