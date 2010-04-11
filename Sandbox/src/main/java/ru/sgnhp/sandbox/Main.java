@@ -65,7 +65,7 @@ public class Main {
                     fos.write(fileBean.getBlobField());//1645
                     fos.close();
                 }
-                fileBean.setFilePath(path);
+                fileBean.setFilePath(path + "\\" + filename);
                 uploadManagerService.save(fileBean);
             }
         }
@@ -107,7 +107,7 @@ public class Main {
                     fos.write(fileBean.getBlobField());//1645
                     fos.close();
                 }
-                fileBean.setFilePath(path);
+                fileBean.setFilePath(path + "\\" + filename);
                 outgoingFileService.save(fileBean);
             }
 
