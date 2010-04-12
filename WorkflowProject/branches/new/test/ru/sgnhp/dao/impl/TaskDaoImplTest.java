@@ -58,7 +58,7 @@ public class TaskDaoImplTest extends AbstractTransactionalDataSourceSpringContex
 
     @Test
     public void testGetTaskByIncomingNumber() {
-        assertNotNull(taskDao.getTaskByIncomingNumber(1));
+        assertNotNull(taskDao.getTaskByIncomingNumber(619));
     }
 
     @Test
@@ -73,12 +73,12 @@ public class TaskDaoImplTest extends AbstractTransactionalDataSourceSpringContex
 
     @Test
     public void testGetNewInternalNumber() {
-        assertEquals(1333, taskDao.getNewInternalNumber());
+        assertEquals(1604, taskDao.getNewInternalNumber());
     }
 
     @Test
     public void testGetNewIncomingNumber() {
-        assertEquals(444, taskDao.getNewIncomingNumber());
+        assertEquals(665, taskDao.getNewIncomingNumber());
     }
 
     @Test

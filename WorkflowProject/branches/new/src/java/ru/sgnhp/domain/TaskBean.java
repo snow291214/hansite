@@ -96,7 +96,7 @@ public class TaskBean implements Serializable {
     @OneToMany(mappedBy = "taskBean", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<WorkflowBean> workflowsSet = new HashSet<WorkflowBean>();
-
+    
     public TaskBean() {
     }
 
@@ -224,5 +224,4 @@ public class TaskBean implements Serializable {
     public void setWorkflowsSet(Set<WorkflowBean> workflowsSet) {
         this.workflowsSet = workflowsSet;
     }
-
 }

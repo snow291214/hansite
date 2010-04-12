@@ -3,6 +3,7 @@ package ru.sgnhp.web;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
@@ -31,7 +32,10 @@ public class AssignWorkflowFormController extends SimpleFormController {
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto) command;
-        WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");
+        
+        final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+        WorkflowUserBean initiator = userManagerService.getUserByLogin(currentUser);
+
         workflowBeanDto = workflowManagerService.updateWorkflowState(workflowBeanDto, stateManagerService.get(1L));
         String[] userUids = (String[]) request.getSession().getAttribute("checks");
         workflowBeanDto.setUserUids(userUids);

@@ -17,9 +17,7 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
 import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.domain.TaskBean;
-import ru.sgnhp.service.IStateManagerService;
 import ru.sgnhp.service.ITaskManagerService;
-import ru.sgnhp.service.IWorkflowManagerService;
 
 /**
  *
@@ -42,8 +40,9 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
         taskBean.setDueDate(DateUtils.increaseDate(DateUtils.nowDate(), 3));
         taskBean.setExternalAssignee("EA");
         taskBean.setExternalCompany("EC");
+        taskBean = taskManagerService.save(taskBean);
 
-        File file = new File("D:\\temp\\doc.csv");
+        File file = new File("c:\\temp\\log4j.properties");
         InputStream is = new FileInputStream(file);
         // Get the size of the file
         long length = file.length();
@@ -93,7 +92,7 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 
     @Test
     public void testGetTaskByIncomingNumber() {
-        assertNotNull(taskManagerService.getTaskByIncomingNumber(1));
+        assertNotNull(taskManagerService.getTaskByIncomingNumber(619));
     }
 
     @Test
@@ -108,12 +107,12 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 
     @Test
     public void testGetNewInternalNumber() {
-        assertEquals(1212, taskManagerService.getNewInternalNumber());
+        assertEquals(1605, taskManagerService.getNewInternalNumber());
     }
 
     @Test
     public void testGetNewIncomingNumber() {
-        assertEquals(354, taskManagerService.getNewIncomingNumber());
+        assertEquals(666, taskManagerService.getNewIncomingNumber());
     }
 
     @Test
@@ -128,7 +127,7 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
     }
 
     @Test
-    public void testGetByPrimaveraUid(){
+    public void testGetByPrimaveraUid() {
         assertNotNull(taskManagerService.getTaskByPrimaveraUid("32"));
     }
 
@@ -136,7 +135,6 @@ public class TaskManagerServiceImplTest extends AbstractTransactionalDataSourceS
 //    public void testDailyReport() {
 //        taskManagerService.dailyReport();
 //    }
-
     @Test
     public void testGetAllIncomingMail() throws ParseException {
         assertNotNull(taskManagerService.getAllIncomingMailByYear(2010));

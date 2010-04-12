@@ -17,6 +17,8 @@
         </property>
     </bean>
 
+    <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" />
+
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="user" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
@@ -64,6 +66,7 @@
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
             </props>
         </property>
+        <property name="lobHandler" ref="lobHandler" />
     </bean>
 
     <tx:annotation-driven transaction-manager="txManager" />
@@ -180,6 +183,20 @@
 
     <bean id="documentFileDao" class="ru.sgnhp.dao.impl.DocumentFileDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="fileBeanBlobDao" class="ru.sgnhp.dao.impl.FileBeanBlobDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="fileBeanBlobManagerService" class="ru.sgnhp.service.impl.FileBeanBlobManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.DocumentTypeBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="fileBeanBlobDao" ref="fileBeanBlobDao"/>
     </bean>
 
 </beans>

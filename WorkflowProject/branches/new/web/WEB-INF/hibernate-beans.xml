@@ -179,5 +179,19 @@
         </constructor-arg>
         <property name="documentFileDao" ref="documentFileDao" />
     </bean>
+    <!--
+    <bean id="fileBeanBlobDao" class="ru.sgnhp.dao.impl.FileBeanBlobDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 
+    <bean id="fileBeanBlobManagerService" class="ru.sgnhp.service.impl.FileBeanBlobManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.DocumentTypeBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="fileBeanBlobDao" ref="fileBeanBlobDao"/>
+    </bean>
+    -->
 </beans>
