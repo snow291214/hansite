@@ -37,9 +37,13 @@ public class Main {
         List<TaskBean> taskBeans = taskManagerService.getAll();
         SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
         for (TaskBean taskBean : taskBeans) {
-            String path = "\\" + getYearFromDate(taskBean.getStartDate())
-                    + "\\" + getMonthFromDate(taskBean.getStartDate())
-                    + "\\" + fmt.format(taskBean.getStartDate()) + "\\"
+//            String path = "\\" + getYearFromDate(taskBean.getStartDate())
+//                    + "\\" + getMonthFromDate(taskBean.getStartDate())
+//                    + "\\" + fmt.format(taskBean.getStartDate()) + "\\"
+//                    + taskBean.getUid().toString();
+            String path = "/TaskFiles/" + getYearFromDate(taskBean.getStartDate())
+                    + "/" + getMonthFromDate(taskBean.getStartDate())
+                    + "/" + fmt.format(taskBean.getStartDate()) + "/"
                     + taskBean.getUid().toString();
             List<FileBean> fileBeans = uploadManagerService.getFilesByTaskUid(taskBean);
             if (fileBeans == null) {
@@ -61,14 +65,15 @@ public class Main {
                     filename = fileBean.getFileName();
                 }
                 if (fileBean.getBlobField() != null) {
-                    FileOutputStream fos = new FileOutputStream(repositoryPath + path + "\\" + filename);
+                    FileOutputStream fos = new FileOutputStream(repositoryPath + path + "/" + filename);
                     fos.write(fileBean.getBlobField());//1645
                     fos.close();
                 }
-                fileBean.setFilePath(path + "\\" + filename);
+                fileBean.setFilePath(path + "/" + filename);
                 uploadManagerService.save(fileBean);
             }
         }
+        taskBeans = null;
     }
 
     private static void makeOutgoingMailRepository(ClassPathXmlApplicationContext ctx, String repositoryPath) throws FileNotFoundException, IOException {
@@ -78,11 +83,15 @@ public class Main {
         List<OutgoingMailBean> outgoingMailBeans = outgoingMailService.getAll();
         Logger logger = Logger.getRootLogger();
         for (OutgoingMailBean outgoingMailBean : outgoingMailBeans) {
-            String path = "\\" + getYearFromDate(outgoingMailBean.getOutgoingDate())
-                    + "\\" + getMonthFromDate(outgoingMailBean.getOutgoingDate())
-                    + "\\" + fmt.format(outgoingMailBean.getOutgoingDate()) + "\\"
+//            String path = "\\" + getYearFromDate(outgoingMailBean.getOutgoingDate())
+//                    + "\\" + getMonthFromDate(outgoingMailBean.getOutgoingDate())
+//                    + "\\" + fmt.format(outgoingMailBean.getOutgoingDate()) + "\\"
+//                    + outgoingMailBean.getUid().toString();
+            String path = "/OutgoingMailFiles/" + getYearFromDate(outgoingMailBean.getOutgoingDate())
+                    + "/" + getMonthFromDate(outgoingMailBean.getOutgoingDate())
+                    + "/" + fmt.format(outgoingMailBean.getOutgoingDate()) + "/"
                     + outgoingMailBean.getUid().toString();
-
+            
             List<OutgoingFileBean> fileBeans = outgoingFileService.getFilesByOutgoingMail(outgoingMailBean);
             if (fileBeans == null) {
                 continue;
@@ -103,20 +112,20 @@ public class Main {
                     filename = fileBean.getFileName();
                 }
                 if (fileBean.getBlobField() != null) {
-                    FileOutputStream fos = new FileOutputStream(repositoryPath + path + "\\" + filename);
+                    FileOutputStream fos = new FileOutputStream(repositoryPath + path + "/" + filename);
                     fos.write(fileBean.getBlobField());//1645
                     fos.close();
                 }
-                fileBean.setFilePath(path + "\\" + filename);
+                fileBean.setFilePath(path + "/" + filename);
                 outgoingFileService.save(fileBean);
             }
-
         }
+        outgoingMailBeans = null;
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        //makeTaskRepository(ctx, "d:\\temp\\repository\\tasks");
-        makeOutgoingMailRepository(ctx, "d:\\temp\\repository\\outgoingMail");
+        makeTaskRepository(ctx, "/home/alexey/repository");
+        makeOutgoingMailRepository(ctx, "/home/alexey/repository");
     }
 }
