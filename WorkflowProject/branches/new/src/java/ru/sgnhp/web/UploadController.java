@@ -54,7 +54,6 @@ public class UploadController extends SimpleFormController {
             FileBean bean = new FileBean();
             bean.setTaskUid(task);
             bean.setFileName(((MultipartFile) file).getOriginalFilename());
-
             bean.setBlobField(((MultipartFile) file).getBytes());
             uploadManagerService.save(bean);
         }

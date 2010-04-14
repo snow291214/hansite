@@ -101,9 +101,9 @@ public class OutgoingLetterController extends AbstractWizardFormController {
         final Map files = multiRequest.getFileMap();
         for (Object file : files.values()) {
             OutgoingFileBean outgoingFileBean = new OutgoingFileBean();
-            outgoingFileBean.setBlobField(((MultipartFile) file).getBytes());
-            outgoingFileBean.setFileName(((MultipartFile) file).getOriginalFilename());
             outgoingFileBean.setOutgoingMailBean(outgoingMailBean);
+            outgoingFileBean.setFileName(((MultipartFile) file).getOriginalFilename());
+            outgoingFileBean.setBlobField(((MultipartFile) file).getBytes());
             outgoingFileService.save(outgoingFileBean);
         }
         /*Отправляем письмо*/

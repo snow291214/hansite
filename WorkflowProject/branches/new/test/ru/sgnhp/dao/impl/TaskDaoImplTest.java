@@ -4,6 +4,7 @@
  */
 package ru.sgnhp.dao.impl;
 
+import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class TaskDaoImplTest extends AbstractTransactionalDataSourceSpringContex
     }
 
     @Test
-    public void testSaveTask() {
+    public void testSaveTask() throws IOException {
         TaskBean taskBean = new TaskBean();
         taskBean.setInternalNumber(101);
         taskBean.setIncomingNumber(102);
