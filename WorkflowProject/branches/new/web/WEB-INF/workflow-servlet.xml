@@ -63,6 +63,7 @@
                 <prop key="documentRegisterWizard.htm">newOrderFormController</prop>
                 <prop key="primaveraReportWizard.htm">primaveraReportController</prop>
                 <prop key="extraDescription.htm">extraDescription</prop>
+                <prop key="approveAndAssignWorkflow.htm">approveAndAssignWorkflow</prop>
             </props>
         </property>
     </bean>
@@ -441,7 +442,7 @@
         <property name="pages">
             <list>
                 <value>orderRegister</value>
-                <value>selectReceiversOfOrder</value>
+                <value>selectOrderReceivers</value>
                 <value>orderFileRegister</value>
                 <value>redirect:index.htm</value>
             </list>
@@ -518,6 +519,34 @@
     <bean name="downloadDocumentFilesController" class="ru.sgnhp.web.DownloadDocumentController">
         <property name="documentFileService">
             <ref bean="documentFileService"/>
+        </property>
+    </bean>
+
+    <!--Approve And Assign Workflow 14.04.2010-->
+    <bean name="approveAndAssignWorkflow" class="ru.sgnhp.web.forms.ApproveAndAssignWorkflowController">
+        <property name="pages">
+            <list>
+                <value>selectWorkflowReceivers</value>
+                <value>reassignWorkflow</value>
+                <value>redirect:index.htm</value>
+            </list>
+        </property>
+        <property name="commandName" value="workflowManager"/>
+        <property name="commandClass" value="ru.sgnhp.dto.WorkflowBeanDto" />
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
+        <property name="serverName">
+            <value>${general.applicationPath}</value>
         </property>
     </bean>
     <!--========================== Validators ===============================-->

@@ -39,7 +39,8 @@
                         <a href="<c:url value="index.htm" />">На главную</a>
                         <a href="<c:url value="roadmap.htm?workflowID=${wf.uid}" />">Просмотреть маршрут задачи</a> ||
                         <a href="<c:url value="rejectWorkflow.htm?workflowID=${wf.uid}" />">Вернуть в работу</a> ||
-                        <a href="<c:url value="approveWorkflow.htm?workflowID=${wf.uid}" />">Завершить задачу</a>
+                        <a href="<c:url value="approveWorkflow.htm?workflowID=${wf.uid}" />">Завершить задачу</a> || 
+                        <a href="<c:url value="approveAndAssignWorkflow.htm?workflowID=${wf.uid}" />">Подтвердить выполнение и передать другому пользователю</a>
                     </p>
                 </div>
             </div>

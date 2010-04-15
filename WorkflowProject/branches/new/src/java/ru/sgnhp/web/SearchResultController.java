@@ -46,14 +46,13 @@ public class SearchResultController implements Controller {
     }
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String result = "index";
+        String result = "searchResult";
         List<WorkflowBean> workflowBeans = null;
         List<TaskBean> taskBeans = null;
         SearchTaskDto searchTaskBean = (SearchTaskDto) request.getSession().getAttribute("searchTaskBean");
         switch (searchTaskBean.getSearchType()) {
             case 0:
                 //Find By Internal Number
-                result = "searchResult";
                 taskBeans = taskManagerService.getTaskByInternalNumber(
                         Integer.parseInt(searchTaskBean.getTaskInternalNumber()));
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
@@ -61,7 +60,6 @@ public class SearchResultController implements Controller {
                 break;
             case 1:
                 //Find By Incoming Number
-                result = "searchResult";
                 taskBeans = taskManagerService.getTaskByIncomingNumber(
                         Integer.parseInt(searchTaskBean.getTaskIncomingNumber()));
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
@@ -69,40 +67,37 @@ public class SearchResultController implements Controller {
                 break;
             case 2:
                 //Find By Assignee
-                result = "searchResult";
                 taskBeans = taskManagerService.getTasksByExternalAssignee(searchTaskBean.getAssigneeName());
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
                 //request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 3:
                 //Find By description
-                result = "searchResult";
                 taskBeans = taskManagerService.getTasksByDescription(searchTaskBean.getTaskDescription());
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
                 //request.getSession().setAttribute("searchTaskBean", null);
                 break;
             case 4:
                 //Find By Period Of Date
-                result = "searchResult";
                 WorkflowUserBean workflowUserBean = (WorkflowUserBean) request.getSession().getAttribute("initiator");
                 workflowBeans = workflowManagerService.getWorkflowsByPeriodOfDate(workflowUserBean.getUid(),
                         searchTaskBean.getReceiverUid(), searchTaskBean.getStartDate(),
                         searchTaskBean.getFinishDate());
                 break;
             case 5:
-                result = "searchResult";
                 taskBeans = taskManagerService.getTaskByExternalNumber(searchTaskBean.getTaskExternalNumber());
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
                 break;
             case 6:
-                result = "searchResult";
                 taskBeans = taskManagerService.getTaskByExternalCompany(searchTaskBean.getExternalCompany());
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
                 break;
             case 7:
-                result = "searchResult";
                 taskBeans = taskManagerService.getTaskByPrimaveraUid(searchTaskBean.getPrimaveraUid());
                 workflowBeans = this.setWorkflowsToListOfTasks(taskBeans);
+                break;
+            default:
+                result = "searchResult";
                 break;
         }
         return new ModelAndView(result, "workflowBeans", workflowBeans);

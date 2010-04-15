@@ -15,7 +15,7 @@
             <pg:item>
                 <div style="margin-bottom: 10px;">
                     <div class="header green">
-                        Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
+                        Задача № <c:out value="${wf.taskBean.internalNumber}"/>. ${wf.taskBean.description}"
                     </div>
                     <div>
                         Компания: <b>${wf.taskBean.externalCompany}</b>.
