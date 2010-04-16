@@ -16,6 +16,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.sgnhp.domain.DocumentBean;
 import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.domain.OutgoingMailBean;
@@ -39,6 +41,7 @@ public class MailServiceImpl implements IMailService {
 //    private IUserManagerService userManagerService;
 //    private IStateManagerService stateManagerService;
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void sendmailAssign(WorkflowBean _workflow) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -70,7 +73,7 @@ public class MailServiceImpl implements IMailService {
                     + "<p style=\"font-family:Arial;font-size:12px;\">"
                     + "Идентификатор работы в СКП 'Primavera': "
                     + _workflow.getTaskBean().getPrimaveraUid() + "</p>"
-                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/"
+                    + "<a href=\""+ this.applicationPath
                     + "\">Просмотреть все задачи</a> <br />"
                     + "<a href=\"" + this.applicationPath + "workflowManager.htm?workflowID="
                     + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
@@ -94,6 +97,7 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void sendmailChangeState(WorkflowBean _workflow) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -152,6 +156,7 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void sendmailRemind(WorkflowBean _workflow) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -188,6 +193,7 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void sendmailSheduler(ArrayList<WorkflowBean> wfs) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -248,6 +254,7 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void sendmailReport(List<WorkflowBean> wfs) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -345,6 +352,7 @@ public class MailServiceImpl implements IMailService {
         return fromName;
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void sendmailOutgoing(OutgoingMailBean outgoingMailBean) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -378,6 +386,7 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void tasksForReviewReport(List<WorkflowBean> wfs) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -451,6 +460,7 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void sendmailOrder(DocumentBean documentBean) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);

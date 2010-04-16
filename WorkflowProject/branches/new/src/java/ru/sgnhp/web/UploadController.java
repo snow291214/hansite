@@ -1,6 +1,5 @@
 package ru.sgnhp.web;
 
-
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,7 +54,7 @@ public class UploadController extends SimpleFormController {
             bean.setTaskUid(task);
             bean.setFileName(((MultipartFile) file).getOriginalFilename());
             bean.setBlobField(((MultipartFile) file).getBytes());
-            uploadManagerService.save(bean);
+            bean = uploadManagerService.save(bean);
         }
 
         /* Назначаем задание пользователям */
@@ -70,7 +69,7 @@ public class UploadController extends SimpleFormController {
             wf.setDescription(task.getDescription());
             wf.setState(stateManagerService.get(0L));
             wf.setAssignDate(task.getStartDate());
-            workflowManagerService.assignTaskToUser(wf);
+            wf = workflowManagerService.assignTaskToUser(wf);
         }
 
         request.getSession().setAttribute("task", null);
