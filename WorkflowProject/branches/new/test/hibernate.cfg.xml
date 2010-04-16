@@ -15,7 +15,6 @@
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
     <mapping class="ru.sgnhp.domain.TaskBean"/>
     <mapping class="ru.sgnhp.domain.FileBean"/>
-    <mapping class="ru.sgnhp.domain.FileBeanBlob"/>
     <mapping class="ru.sgnhp.domain.StateBean"/>
     <mapping class="ru.sgnhp.domain.WorkflowBean"/>
     <mapping class="ru.sgnhp.domain.WorkflowFileBean"/>

@@ -8,8 +8,10 @@ package ru.sgnhp.service.impl;
 import org.junit.Test;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import ru.sgnhp.domain.OutgoingMailBean;
+import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IMailService;
 import ru.sgnhp.service.IOutgoingMailService;
+import ru.sgnhp.service.IWorkflowManagerService;
 
 /**
  *
@@ -19,14 +21,21 @@ public class MailServiceImplTest extends AbstractTransactionalDataSourceSpringCo
 
     private IMailService mailService;
     private IOutgoingMailService outgoingMailService;
+    private IWorkflowManagerService workflowManagerService;
 
     public MailServiceImplTest() {
     }
 
+//    @Test
+//    public void testSendmailOutgoing() {
+//        OutgoingMailBean outgoingMailBean = outgoingMailService.get(13L);
+//        mailService.sendmailOutgoing(outgoingMailBean);
+//    }
+
     @Test
-    public void testSendmailOutgoing() {
-        OutgoingMailBean outgoingMailBean = outgoingMailService.get(13L);
-        mailService.sendmailOutgoing(outgoingMailBean);
+    public void testAttach(){
+        WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(3726L);
+        mailService.sendmailAssign(workflowBean);
     }
 
     public void setMailService(IMailService mailService) {
@@ -40,6 +49,14 @@ public class MailServiceImplTest extends AbstractTransactionalDataSourceSpringCo
 
     public void setOutgoingMailService(IOutgoingMailService outgoingMailService) {
         this.outgoingMailService = outgoingMailService;
+    }
+
+    public IWorkflowManagerService getWorkflowManagerService() {
+        return workflowManagerService;
+    }
+
+    public void setWorkflowManagerService(IWorkflowManagerService workflowManagerService) {
+        this.workflowManagerService = workflowManagerService;
     }
 
 }

@@ -83,7 +83,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     @Test
     public void testGetRecievedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowManagerService.getRecievedWorkflowsByUserUid(userUid);
-        assertNull(workflowBeans);
+        assertNotNull(workflowBeans);
         //assertNotNull(workflowBeans);
         //assertEquals(4, workflowBeans.size());
         //assertEquals("Худяков", workflowBeans.get(0).getAssignee().getLastName());
@@ -94,7 +94,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
         List<WorkflowBean> workflowBeans = workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.TRUE);
         assertNotNull(workflowBeans);
         assertNotNull(workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.FALSE));
-        assertEquals(21, workflowBeans.size());
+        assertEquals(28, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getAssignee().getLastName());
     }
 
@@ -102,7 +102,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     public void testGetCompletedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowManagerService.getCompletedWorkflowsByUserUid(userUid);
         assertNotNull(workflowBeans);
-        assertEquals(27, workflowBeans.size());
+        assertEquals(48, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getReceiver().getLastName());
     }
 
@@ -115,7 +115,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     public void testGetWorkflowsByPeriodOfDate() {
         List<WorkflowBean> workflowBeans =
                 workflowManagerService.getWorkflowsByPeriodOfDate(75L, 72L,
-                DateUtils.increaseDate(DateUtils.nowDate(), -30), DateUtils.nowDate());
+                DateUtils.increaseDate(DateUtils.nowDate(), -60), DateUtils.nowDate());
         assertNotNull(workflowBeans);
     }
 

@@ -13,6 +13,7 @@
             <list>
                 <value>classpath:jdbc.properties</value>
                 <value>classpath:mail.properties</value>
+                <value>classpath:general.properties</value>
             </list>
         </property>
     </bean>
@@ -137,6 +138,7 @@
         <property name="mailHostName" value="${mail.mailHostName}"/>
         <property name="fromAddress" value="${mail.fromAddress}"/>
         <property name="fromName" value="${mail.fromName}" />
+        <property name="applicationPath" value="${general.applicationPath}" />
     </bean>
 
     <bean id="outgoingMailDao" class="ru.sgnhp.dao.impl.OutgoingMailDaoImpl">
@@ -184,19 +186,4 @@
     <bean id="documentFileDao" class="ru.sgnhp.dao.impl.DocumentFileDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-
-    <bean id="fileBeanBlobDao" class="ru.sgnhp.dao.impl.FileBeanBlobDaoImpl">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="fileBeanBlobManagerService" class="ru.sgnhp.service.impl.FileBeanBlobManagerServiceImpl">
-        <constructor-arg>
-            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
-                <constructor-arg value="ru.sgnhp.domain.DocumentTypeBean"/>
-                <property name="sessionFactory" ref="sessionFactory"/>
-            </bean>
-        </constructor-arg>
-        <property name="fileBeanBlobDao" ref="fileBeanBlobDao"/>
-    </bean>
-
 </beans>

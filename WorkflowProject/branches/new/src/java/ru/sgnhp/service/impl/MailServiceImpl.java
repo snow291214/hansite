@@ -1,9 +1,12 @@
 package ru.sgnhp.service.impl;
 
+import com.sun.istack.internal.ByteArrayDataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.mail.Address;
+import java.util.Set;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -14,6 +17,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import ru.sgnhp.domain.DocumentBean;
+import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IMailService;
@@ -30,6 +34,7 @@ public class MailServiceImpl implements IMailService {
     private String mailHostName;
     private String fromAddress;
     private String fromName;
+    private String applicationPath;
 //    private IWorkflowManagerService workflowManagerService;
 //    private IUserManagerService userManagerService;
 //    private IStateManagerService stateManagerService;
@@ -67,21 +72,21 @@ public class MailServiceImpl implements IMailService {
                     + _workflow.getTaskBean().getPrimaveraUid() + "</p>"
                     + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/"
                     + "\">Просмотреть все задачи</a> <br />"
-                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID="
+                    + "<a href=\"" + this.applicationPath + "workflowManager.htm?workflowID="
                     + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
                     + "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
 
-//            // Part two is attachment
-//            htmlPart = new MimeBodyPart();
-//            Set<FileBean> fileBeans = _workflow.getTaskBean().getFilesSet();
-//            for(FileBean fileBean : fileBeans){
-//                DataSource dataSource = new ByteArrayDataSource(fileBean.getBlobField(), "application/x-any");
-//                htmlPart.setDataHandler(new DataHandler(dataSource));
-//                htmlPart.setFileName(fileBean.getFileName());
-//                multipart.addBodyPart(htmlPart);
-//            }
+            // Part two is attachment
+            htmlPart = new MimeBodyPart();
+            Set<FileBean> fileBeans = _workflow.getTaskBean().getFilesSet();
+            for (FileBean fileBean : fileBeans) {
+                DataSource dataSource = new ByteArrayDataSource(fileBean.getBlobField(), "application/x-any");
+                htmlPart.setDataHandler(new DataHandler(dataSource));
+                htmlPart.setFileName(fileBean.getFileName());
+                multipart.addBodyPart(htmlPart);
+            }
             message.setContent(multipart);
             Transport.send(message);
         } catch (Exception e) {
@@ -474,5 +479,13 @@ public class MailServiceImpl implements IMailService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getApplicationPath() {
+        return applicationPath;
+    }
+
+    public void setApplicationPath(String applicationPath) {
+        this.applicationPath = applicationPath;
     }
 }

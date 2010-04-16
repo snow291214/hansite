@@ -12,6 +12,7 @@
             <list>
                 <value>/WEB-INF/classes/jdbc.properties</value>
                 <value>/WEB-INF/classes/mail.properties</value>
+                <value>/WEB-INF/classes/general.properties</value>
             </list>
         </property>
     </bean>
@@ -92,6 +93,7 @@
         <property name="mailHostName" value="${mail.mailHostName}"/>
         <property name="fromAddress" value="${mail.fromAddress}"/>
         <property name="fromName" value="${mail.fromName}" />
+        <property name="applicationPath" value="${general.applicationPath}" />
     </bean>
 
     <!--Upload DAO-->
