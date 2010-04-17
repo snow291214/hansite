@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springmodules.org/schema/ehcache
+       http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd">
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+
+    <!--
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="/WEB-INF/classes/mail.properties"/>
+    -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/classes/mail.properties</value>
+                <value>/WEB-INF/classes/general.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="index.htm">indexController</prop>
+                <prop key="logout.htm">logoutController</prop>
+                <prop key="download.htm">downloadController</prop>
+                <prop key="getOutgoingFiles.htm">downloadOutgoingMailFilesController</prop>
+                <prop key="getWorkflowFiles.htm">downloadWorkflowFilesController</prop>
+                <prop key="getDocumentFiles.htm">downloadDocumentFilesController</prop>
+                <prop key="selectUsers.htm">selectUsersFormController</prop>
+                <prop key="registerTask.htm">newTaskFormController</prop>
+                <prop key="upload.htm">uploadController</prop>
+                <prop key="success.htm">successController</prop>
+                <prop key="authentication.htm">loginFormController</prop>
+                <prop key="assignedTask.htm">assignedTaskViewController</prop>
+                <prop key="completedTask.htm">completedTaskController</prop>
+                <prop key="assignTask.htm">assingTaskFormController</prop>
+                <prop key="workflowManager.htm">workflowManagerFormController</prop>
+                <prop key="executionRequest.htm">executionRequestController</prop>
+                <prop key="searchTask.htm">searchTaskFormController</prop>
+                <prop key="searchResult.htm">searchResultController</prop>
+                <prop key="ajax.htm">ajaxController</prop>
+                <prop key="roadmap.htm">roadmapController</prop>
+                <prop key="outgoingLetterWizard.htm">outgoingLetterController</prop>
+                <prop key="outgoingMailSearch.htm">outgoingMailSearchFormController</prop>
+                <prop key="outgoingMailSearchResult.htm">outgoingMailSearchResultController</prop>
+                <prop key="tasksForReview.htm">tasksForReviewController</prop>
+                <prop key="rejectWorkflow.htm">rejectWorkflowFormController</prop>
+                <prop key="approveWorkflow.htm">approveWorkflowController</prop>
+                <prop key="primaveraReport.htm">documentsByPrimaveraID</prop>
+                <prop key="skippedUsers.htm">skippedUsersController</prop>
+                <prop key="documentReports.htm">documentReportController</prop>
+                <prop key="incomingMailReport.htm">incomingMailReportController</prop>
+                <prop key="documentRegisterWizard.htm">newOrderFormController</prop>
+                <prop key="primaveraReportWizard.htm">primaveraReportController</prop>
+                <prop key="extraDescription.htm">extraDescription</prop>
+                <prop key="approveAndAssignWorkflow.htm">approveAndAssignWorkflow</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp" />
+
+    <!--========================= Controllers ===============================-->
+
+    <!-- Login Form Controller-->
+    <bean name="loginFormController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="login" />
+
+    <!-- Index Controller -->
+    <bean name="indexController" class="ru.sgnhp.web.IndexController" >
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Execution Request Controller -->
+    <bean name="executionRequestController" class="ru.sgnhp.web.ExecutionRequestController">
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Download Controller -->
+    <bean name="downloadController" class="ru.sgnhp.web.DownloadController">
+        <property name="uploadManagerService">
+            <ref bean="uploadManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Download Outgoing Mail Files Controller -->
+    <bean name="downloadOutgoingMailFilesController" class="ru.sgnhp.web.DownloadOutgoingMailFilesController">
+        <property name="outgoingFileService">
+            <ref bean="outgoingFileService"/>
+        </property>
+    </bean>
+
+    <bean name="downloadWorkflowFilesController" class="ru.sgnhp.web.DownloadWorkflowFilesController">
+        <property name="workflowFileManagerService">
+            <ref bean="workflowFileManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Logout Controller -->
+    <bean name="logoutController" class="ru.sgnhp.web.LogoutController" />
+
+    <!-- Register Task Form Controller-->
+    <bean name="newTaskFormController" class="ru.sgnhp.web.RegisterTaskFormController" >
+        <property name="sessionForm">
+            <value>true</value>
+        </property>
+        <property name="commandName">
+            <value>registerTask</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.domain.TaskBean</value>
+        </property>
+        <property name="validator">
+            <ref bean="registerTaskFormValidator"/>
+        </property>
+        <property name="formView">
+            <value>registerTask</value>
+        </property>
+        <property name="successView">
+            <value>upload.htm</value>
+        </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Select Users Form Controller-->
+    <bean name="selectUsersFormController" class="ru.sgnhp.web.SelectUsersFormController" >
+        <property name="userManagerService">
+            <ref bean="userManagerService" />
+        </property>
+    </bean>
+
+    <!-- Upload Controller-->
+    <bean name="uploadController" class="ru.sgnhp.web.UploadController" >
+        <property name="commandName" value="fileUpload"/>
+        <property name="commandClass" value="ru.sgnhp.domain.FileBean"/>
+        <property name="formView" value="upload" />
+        <property name="successView" value="index.htm" />
+        <property name="uploadManagerService">
+            <ref bean="uploadManagerService"/>
+        </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Success Controller-->
+    <bean id="successController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" p:viewName="success" />
+
+    <!--Assigned Task Controller-->
+    <bean name="assignedTaskViewController" class="ru.sgnhp.web.AssignedTaskViewController" >
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!--Completed Task Controller-->
+    <bean name="completedTaskController" class="ru.sgnhp.web.CompletedTaskController" >
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Assign Task Form Controller -->
+    <bean name="assingTaskFormController" class="ru.sgnhp.web.AssignWorkflowFormController">
+        <property name="commandName" value="assignWorkflow"/>
+        <property name="commandClass" value="ru.sgnhp.dto.WorkflowBeanDto"/>
+        <property name="formView">
+            <value>assignWorkflow</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="validator">
+            <ref bean="assignWorkflowFormValidator"/>
+        </property>
+    </bean>
+
+    <!-- Workflow Manager Form Controller -->
+    <bean name="workflowManagerFormController" class="ru.sgnhp.web.WorkflowManagerFormController">
+        <property name="commandName" value="workflowManager"/>
+        <property name="commandClass" value="ru.sgnhp.dto.WorkflowBeanDto"/>
+        <property name="formView">
+            <value>workflowManager</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="workflowFileManagerService">
+            <ref bean="workflowFileManagerService"/>
+        </property>
+        <property name="validator">
+            <ref bean="workflowManagerFormValidator"/>
+        </property>
+    </bean>
+
+    <!-- Search Task Controller -->
+    <bean name="searchTaskFormController" class="ru.sgnhp.web.SearchTaskFormController">
+        <property name="commandName" value="searchTask"/>
+        <property name="commandClass" value="ru.sgnhp.dto.SearchTaskDto"/>
+        <property name="formView">
+            <value>searchTask</value>
+        </property>
+        <property name="successView">
+            <value>searchResult.htm</value>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Search Result Controller -->
+    <bean name="searchResultController" class="ru.sgnhp.web.SearchResultController">
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Ajax Controller -->
+    <bean name="ajaxController" class="ru.sgnhp.web.AjaxController">
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="documentService">
+            <ref bean="documentService"/>
+        </property>
+    </bean>
+
+    <!-- Workflow Roadmap Controller -->
+    <bean name="roadmapController" class="ru.sgnhp.web.RoadmapController">
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Outgoing Letter Controller -->
+    <bean name="outgoingLetterController" class="ru.sgnhp.web.OutgoingLetterController">
+        <property name="commandName">
+            <value>outgoingMailDto</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.dto.OutgoingMailDto</value>
+        </property>
+        <property name="pages">
+            <list>
+                <value>outgoingLetterRegister</value>
+                <value>outgoingFileRegister</value>
+                <value>redirect:index.htm</value>
+            </list>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService"/>
+        </property>
+        <property name="outgoingFileService">
+            <ref bean="outgoingFileService"/>
+        </property>
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
+    </bean>
+
+    <!--Document Report Form Controller 11.03.2010-->
+    <bean name="documentReportController" class="ru.sgnhp.web.DocumentReportController">
+        <property name="commandName">
+            <value>documentReportDto</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.dto.DocumentReportDto</value>
+        </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService"/>
+        </property>
+        <property name="documentService">
+            <ref bean="documentService"/>
+        </property>
+        <property name="documentTypeService">
+            <ref bean="documentTypeService"/>
+        </property>
+    </bean>
+
+    <!-- Outgoing Letter Search Controller -->
+    <bean name="outgoingMailSearchFormController" class="ru.sgnhp.web.OutgoingMailSearchController">
+        <property name="commandName" value="outgoingMailSearch"/>
+        <property name="commandClass" value="ru.sgnhp.dto.OutgoingMailSearchDto"/>
+        <property name="formView">
+            <value>outgoingMailSearch</value>
+        </property>
+        <property name="successView">
+            <value>outgoingMailSearchResult.htm</value>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Outgoing Letter Search Controller -->
+    <bean name="outgoingMailSearchResultController" class="ru.sgnhp.web.OutgoingMailSearchResultController">
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService" />
+        </property>
+    </bean>
+
+    <!-- Reject Workflow Form Controller 16.02.2010-->
+    <bean name="rejectWorkflowFormController" class="ru.sgnhp.web.RejectWorkflowFormController">
+        <property name="commandName" value="rejectWorkflow"/>
+        <property name="commandClass" value="ru.sgnhp.dto.RejectWorkflowDto"/>
+        <property name="formView">
+            <value>rejectWorkflow</value>
+        </property>
+        <property name="successView">
+            <value>tasksForReview.htm</value>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="validator">
+            <ref bean="rejectWorkflowFormValidator"/>
+        </property>
+    </bean>
+
+    <!-- Tasks For Review Controller Controller 15.02.2010 -->
+    <bean name="tasksForReviewController" class="ru.sgnhp.web.TasksForReviewController" >
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Approve Workflow Controller 17.02.2010 -->
+    <bean name="approveWorkflowController" class="ru.sgnhp.web.ApproveWorkflowController" >
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+    </bean>
+
+    <!-- Documents By Primavera ID Controller 03.03.2010-->
+    <bean name="documentsByPrimaveraID" class="ru.sgnhp.web.DocumentsByPrimaveraId" >
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService" />
+        </property>
+    </bean>
+
+    <!-- Skipped Users Controller 04.03.2010-->
+    <bean name="skippedUsersController" class="ru.sgnhp.web.SkippedUsersController" />
+
+    <!-- Incoming Mail Report Controller 12.03.2010-->
+    <bean name="incomingMailReportController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="incomingMailReport" />
+
+    <!-- Outgoing Mail Report Controller 12.03.2010-->
+    <bean name="outgoingMailReportController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="outgoingMailReport" />
+
+    <!-- New Order Form Controller -->
+    <bean name="newOrderFormController" class="ru.sgnhp.web.NewOrderFormController">
+        <property name="pages">
+            <list>
+                <value>orderRegister</value>
+                <value>selectOrderReceivers</value>
+                <value>orderFileRegister</value>
+                <value>redirect:index.htm</value>
+            </list>
+        </property>
+        <property name="commandName">
+            <value>documentDto</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.dto.DocumentDto</value>
+        </property>
+        <property name="documentService">
+            <ref bean="documentService"/>
+        </property>
+        <property name="documentTypeService">
+            <ref bean="documentTypeService"/>
+        </property>
+        <property name="documentFileService">
+            <ref bean="documentFileService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <!--
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
+        -->
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="serverName">
+            <value>${general.applicationPath}</value>
+        </property>
+    </bean>
+
+    <!-- Documents By Primavera ID Controller 03.03.2010-->
+    <bean name="primaveraReportController" class="ru.sgnhp.web.PrimaveraReportController" >
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="outgoingMailService">
+            <ref bean="outgoingMailService" />
+        </property>
+    </bean>
+
+    <!-- Extra Description Form Controller Controller 06.04.2010-->
+    <bean name="extraDescription" class="ru.sgnhp.web.forms.ExtraDescriptionFormController">
+        <property name="commandName" value="workflowManager"/>
+        <property name="commandClass" value="ru.sgnhp.dto.WorkflowBeanDto" />
+        <property name="formView">
+            <value>extraDescription</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="validator">
+            <ref bean="extraDescriptionFormValidator"/>
+        </property>
+    </bean>
+
+    <!-- Download Document Files Controller 06.04.2010-->
+    <bean name="downloadDocumentFilesController" class="ru.sgnhp.web.DownloadDocumentController">
+        <property name="documentFileService">
+            <ref bean="documentFileService"/>
+        </property>
+    </bean>
+
+    <!--Approve And Assign Workflow 14.04.2010-->
+    <bean name="approveAndAssignWorkflow" class="ru.sgnhp.web.forms.ApproveAndAssignWorkflowController">
+        <property name="pages">
+            <list>
+                <value>selectWorkflowReceivers</value>
+                <value>reassignWorkflow</value>
+                <value>redirect:index.htm</value>
+            </list>
+        </property>
+        <property name="commandName" value="workflowManager"/>
+        <property name="commandClass" value="ru.sgnhp.dto.WorkflowBeanDto" />
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="mailService">
+            <ref bean="mailServiceManager"/>
+        </property>
+        <property name="serverName">
+            <value>${general.applicationPath}</value>
+        </property>
+    </bean>
+    <!--========================== Validators ===============================-->
+
+    <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+    <!--
+    <bean id="loginFormValidator" class="ru.sgnhp.web.validator.LoginFormValidator">
+        <property name="authenticationDAO">
+            <ref bean="authenticationDAO" />
+        </property>
+    </bean>
+    -->
+    <bean id="workflowManagerFormValidator" class="ru.sgnhp.web.validator.WorkflowManagerFormValidator" />
+
+    <bean id="extraDescriptionFormValidator" class="ru.sgnhp.web.validator.ExtraDescriptionFormValidator" />
+
+    <bean id="rejectWorkflowFormValidator" class="ru.sgnhp.web.validator.RejectWorkflowFormValidator" />
+
+    <bean id="assignWorkflowFormValidator" class="ru.sgnhp.web.validator.AssignWorkflowFormValidator">
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService" />
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+    </bean>
+
+    <!--======================== Authentication =============================-->
+    <!--<bean id="authenticationDAO" class="ru.sgnhp.dao.impl.AuthenticationDaoImpl" />-->
+
+    <!--============================== File Upload ==========================-->
+    <!-- MultipartResolver for parsing file uploads, implementation for Commons FileUpload -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1024000000"/>
+    </bean>
+
+    <!--============================== Sheduling  ===========================-->
+ <!--
+ Here are some full examples:
+
+Expression	 Meaning
+0 0 12 * * ?	 Fire at 12pm (noon) every day
+0 15 10 ? * *	 Fire at 10:15am every day
+0 15 10 * * ?	 Fire at 10:15am every day
+0 15 10 * * ? *	 Fire at 10:15am every day
+0 15 10 * * ? 2005	 Fire at 10:15am every day during the year 2005
+0 * 14 * * ?	 Fire every minute starting at 2pm and ending at 2:59pm, every day
+0 0/5 14 * * ?	 Fire every 5 minutes starting at 2pm and ending at 2:55pm, every day
+0 0/5 14,18 * * ?	 Fire every 5 minutes starting at 2pm and ending at 2:55pm, AND fire every 5 minutes starting at 6pm and ending at 6:55pm, every day
+0 0-5 14 * * ?	 Fire every minute starting at 2pm and ending at 2:05pm, every day
+0 10,44 14 ? 3 WED	 Fire at 2:10pm and at 2:44pm every Wednesday in the month of March.
+0 15 10 ? * MON-FRI	 Fire at 10:15am every Monday, Tuesday, Wednesday, Thursday and Friday
+0 15 10 15 * ?	 Fire at 10:15am on the 15th day of every month
+0 15 10 L * ?	 Fire at 10:15am on the last day of every month
+0 15 10 ? * 6L	 Fire at 10:15am on the last Friday of every month
+0 15 10 ? * 6L	 Fire at 10:15am on the last Friday of every month
+0 15 10 ? * 6L 2002-2005	 Fire at 10:15am on every last friday of every month during the years 2002, 2003, 2004 and 2005
+0 15 10 ? * 6#3	 Fire at 10:15am on the third Friday of every month
+0 0 12 1/5 * ?	 Fire at 12pm (noon) every 5 days every month, starting on the first day of the month.
+0 11 11 11 11 ?	 Fire every November 11th at 11:11am.
+ -->
+
+    <!--Напомнинание о невыполненных задачах-->
+    <bean id="methodInvokingJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="taskReminder"/>
+    </bean>
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 00 8 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <!--Отчет о назначенных, но невыполненных задачах-->
+    <bean id="methodInvokingTaskReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="taskReport"/>
+    </bean>
+
+    <bean id="cronTriggerTaskReport" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingTaskReport"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 15 8 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <!--Отчет о задачах, ожидаемых проверки-->
+    <bean id="methodInvokingTasksForReviewReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="tasksForReviewReport"/>
+    </bean>
+
+    <bean id="cronTriggerTasksForReviewReport" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingTasksForReviewReport"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 30 8 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <!--Бэкап входящих-исходящих-->
+    <bean id="methodInvokingDailyIncoming" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="taskManagerService"/>
+        <property name="targetMethod" value="dailyReport"/>
+    </bean>
+
+    <bean id="cronTriggerDailyIncoming" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingDailyIncoming"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 00 18 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <bean id="methodInvokingDailyOutgoing" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="outgoingMailService"/>
+        <property name="targetMethod" value="dailyReport"/>
+    </bean>
+
+    <bean id="cronTriggerDailyOutgoing" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingDailyOutgoing"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 00 18 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger" />
+                <ref bean="cronTriggerTaskReport" />
+                <ref bean="cronTriggerDailyIncoming" />
+                <ref bean="cronTriggerDailyOutgoing" />
+                <ref bean="cronTriggerTasksForReviewReport" />
+            </list>
+        </property>
+    </bean>
+
+    <!--===============================Ehcache config========================
+    <ehcache:config configLocation="classpath:ehcache.xml" />
+    -->
+</beans>

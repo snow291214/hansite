@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.cache.use_second_level_cache">true</property>
+    <property name="hibernate.cache.use_query_cache">false</property>
+    <property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property>
+    <property name="hibernate.transaction.flush_before_completion">true</property>
+    <property name="hibernate.transaction.auto_close_session">false</property>
+    <property name="hibernate.connection.release_mode">auto</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.show_sql">false</property>
+    <property name="hibernate.format_sql">false</property>
+    <property name="hibernate.use_sql_comments">false</property>
+    <property name="hibernate.connection.charSet">true</property>
+    <mapping class="ru.sgnhp.domain.TaskBean"/>
+    <mapping class="ru.sgnhp.domain.FileBean"/>
+    <mapping class="ru.sgnhp.domain.StateBean"/>
+    <mapping class="ru.sgnhp.domain.WorkflowBean"/>
+    <mapping class="ru.sgnhp.domain.WorkflowFileBean"/>
+    <mapping class="ru.sgnhp.domain.WorkflowUserBean"/>
+    <mapping class="ru.sgnhp.domain.OutgoingFileBean"/>
+    <mapping class="ru.sgnhp.domain.OutgoingMailBean"/>
+    <mapping class="ru.sgnhp.domain.UserGroupBean"/>
+    <mapping class="ru.sgnhp.domain.DocumentBean"/>
+    <mapping class="ru.sgnhp.domain.DocumentTypeBean"/>
+    <mapping class="ru.sgnhp.domain.DocumentFileBean"/>
+  </session-factory>
+</hibernate-configuration>
