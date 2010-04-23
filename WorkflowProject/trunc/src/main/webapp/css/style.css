@@ -1,0 +1,224 @@
+body{
+    font-family:arial;
+    font-size:14px;
+}
+
+div.empty{
+    width:85%;
+    font-size:small;
+    float:right;
+}
+
+div.navigation{
+    width:11%;
+    font-size:small;
+    float:left;
+    border: 1px solid black;
+    padding:15px;
+}
+
+div.header.pink{
+    background:#FFCCCC;
+    color:black;
+}
+
+div.header.red{
+    background:#C32300;
+    color:white;
+}
+
+div.header.blue{
+    background:#5d6ffb;
+    color:white;
+}
+
+div.header.green{
+    background:#5a9802;
+    color:white;
+}
+
+div.content{
+    margin-left:30px;
+}
+
+.checklistbox {
+    overflow: -moz-scrollbars-vertical !important;
+    overflow: auto;
+    border-top: 1px solid silver;
+    border-left: 1px solid silver;
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    background-color: white;
+    padding: 10px;
+    height: 400px;
+    width: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    text-align: left;
+}
+
+div.w60
+{
+    width: 60%;
+}
+
+em b
+{
+    position:absolute;
+    font:150px Arial;
+    line-height:40px;
+    font-weight:normal;
+}
+
+.ctl, .cbl, .ctr, .cbr
+{
+    z-index:11;
+    width:20px;
+    height:20px;
+    overflow:hidden;
+    position:absolute;
+    background:#fff;
+
+}
+
+.ctl {top:0; left:0px;}
+.cbl {bottom:0; left:0px;}
+.ctr {top:0; right:0px;}
+.cbr {bottom:0; right:0px;}
+
+.ctl b {left:-8px;}
+.ctr b {left:-25px;}
+.cbl b {left:-8px; top:-17px;}
+.cbr b {left:-25px; top:-17px;}
+
+div.box-inner
+{
+    padding: 20px;
+}
+
+a.box:link {color:white;text-decoration:none;}
+a.box:visited {color:white;text-decoration:none;}
+a.box:hover {color:white;text-decoration:underline;}
+
+div.w300
+{
+    width: 280px;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    color:white;
+}
+
+div.pink .ctl, div.pink .cbl, div.pink .ctr, div.pink .cbr
+{
+    color:#f9b7e2;
+}
+
+div.pink div.box-inner
+{
+    background: #C32300;
+}
+
+div.red .ctl, div.red .cbl, div.red .ctr, div.red .cbr
+{
+    color:#C32300;
+}
+
+div.red div.box-inner
+{
+    background: #C32300;
+}
+
+div.green .ctl, div.green .cbl, div.green .ctr, div.green .cbr
+{
+    color:#5a9802;
+}
+
+div.green div.box-inner
+{
+    background: #5a9802;
+}
+
+div.blue .ctl, div.blue .cbl, div.blue .ctr, div.blue .cbr
+{
+    color:#5d6ffb;
+}
+
+div.blue div.box-inner
+{
+    background: #5d6ffb;
+}
+
+.clear { /* generic container (i.e. div) for floating buttons */
+         overflow: hidden;
+         width: 100%;
+}
+
+a.button {
+    background: transparent url('/images/bg_button_a.gif') no-repeat scroll top right;
+    color: #444;
+    display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+    height: 24px;
+    margin-right: 6px;
+    padding-right: 18px; /* sliding doors padding */
+    text-decoration: none;
+}
+
+a.button span {
+    background: transparent url('/images/bg_button_span.gif') no-repeat;
+    display: block;
+    line-height: 14px;
+    padding: 5px 0 5px 18px;
+}
+
+a.button:active {
+    background-position: bottom right;
+    color: #000;
+    outline: none; /* hide dotted outline in Firefox */
+}
+
+a.button:active span {
+    background-position: bottom left;
+    padding: 6px 0 4px 18px; /* push text down 1px */
+}
+
+table.workflowManager {
+    font-family:arial;
+    border-width: 1px;
+    border-color: black;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+table.workflowManager td{
+    font-size:8pt;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: white;
+    padding: 5px;
+}
+
+td.all{
+    font-size:8pt;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: white;
+    padding: 5px;
+}
+
+td.bottom{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #000000;
+}
+
+td.left{
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #000000;
+}

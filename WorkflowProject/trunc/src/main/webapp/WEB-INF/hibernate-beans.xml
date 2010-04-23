@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <bean id="propertyConfigurer"  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/classes/jdbc.properties</value>
+                <value>/WEB-INF/classes/mail.properties</value>
+                <value>/WEB-INF/classes/general.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="taskDao" class="ru.sgnhp.dao.impl.TaskDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="taskManagerService" class="ru.sgnhp.service.impl.TaskManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.TaskBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="taskDao" ref="taskDao"/>
+    </bean>
+
+    <bean id="stateDao" class="ru.sgnhp.dao.impl.StateDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="stateManagerService" class="ru.sgnhp.service.impl.StateManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.StateBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="stateDao" ref="stateDao"/>
+    </bean>
+
+    <bean id="userDao" class="ru.sgnhp.dao.impl.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="userManagerService" class="ru.sgnhp.service.impl.UserManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.WorkflowUserBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="workflowDao" class="ru.sgnhp.dao.impl.WorkflowDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="workflowManagerService" class="ru.sgnhp.service.impl.WorkflowManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.WorkflowBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="workflowDao" ref="workflowDao"/>
+        <property name="userManagerService" ref="userManagerService"/>
+        <property name="mailService" ref="mailServiceManager" />
+    </bean>
+
+    <bean id="workflowFileDao" class="ru.sgnhp.dao.impl.WorkflowFileDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="workflowFileManagerService" class="ru.sgnhp.service.impl.WorkflowFileManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.WorkflowFileBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="workflowFileDao" ref="workflowFileDao"/>
+    </bean>
+
+    <bean id="mailServiceManager" class="ru.sgnhp.service.impl.MailServiceImpl">
+        <property name="mailHostName" value="${mail.mailHostName}"/>
+        <property name="fromAddress" value="${mail.fromAddress}"/>
+        <property name="fromName" value="${mail.fromName}" />
+        <property name="applicationPath" value="${general.applicationPath}" />
+    </bean>
+
+    <!--Upload DAO-->
+    <bean id="uploadDao" class="ru.sgnhp.dao.impl.UploadDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <!--Upload Manager service target bean-->
+    <bean id="uploadManagerService" class="ru.sgnhp.service.impl.UploadManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.FileBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="uploadDao" ref="uploadDao"/>
+    </bean>
+    
+    <bean id="outgoingMailDao" class="ru.sgnhp.dao.impl.OutgoingMailDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="outgoingMailService" class="ru.sgnhp.service.impl.OutgoingMailServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.OutgoingMailBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="outgoingMailDao" ref="outgoingMailDao"/>
+    </bean>
+
+    <bean id="outgoingFileDao" class="ru.sgnhp.dao.impl.OutgoingFileDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="outgoingFileService" class="ru.sgnhp.service.impl.OutgoingFileServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.OutgoingFileBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="outgoingFileDao" ref="outgoingFileDao"/>
+    </bean>
+
+    <bean id="documentDao" class="ru.sgnhp.dao.impl.DocumentDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="documentService" class="ru.sgnhp.service.impl.DocumentServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.DocumentBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="documentDao" ref="documentDao" />
+    </bean>
+
+    <bean id="documentTypeDao" class="ru.sgnhp.dao.impl.DocumentTypeDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="documentTypeService" class="ru.sgnhp.service.impl.DocumentTypeServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.DocumentTypeBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="documentTypeDao" ref="documentTypeDao" />
+    </bean>
+
+    <bean id="documentFileDao" class="ru.sgnhp.dao.impl.DocumentFileDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="documentFileService" class="ru.sgnhp.service.impl.DocumentFileServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.DocumentFileBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="documentFileDao" ref="documentFileDao" />
+    </bean>
+    <!--
+    <bean id="fileBeanBlobDao" class="ru.sgnhp.dao.impl.FileBeanBlobDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="fileBeanBlobManagerService" class="ru.sgnhp.service.impl.FileBeanBlobManagerServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.DocumentTypeBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="fileBeanBlobDao" ref="fileBeanBlobDao"/>
+    </bean>
+    -->
+</beans>
