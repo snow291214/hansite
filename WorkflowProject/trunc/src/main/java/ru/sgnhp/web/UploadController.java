@@ -50,11 +50,14 @@ public class UploadController extends SimpleFormController {
         final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
         final Map files = multiRequest.getFileMap();
         for (Object file : files.values()) {
-            FileBean bean = new FileBean();
-            bean.setTaskUid(task);
-            bean.setFileName(((MultipartFile) file).getOriginalFilename());
-            bean.setBlobField(((MultipartFile) file).getBytes());
-            bean = uploadManagerService.save(bean);
+            String fileName = ((MultipartFile) file).getOriginalFilename();
+            if (!fileName.equals("")) {
+                FileBean bean = new FileBean();
+                bean.setTaskUid(task);
+                bean.setFileName(((MultipartFile) file).getOriginalFilename());
+                bean.setBlobField(((MultipartFile) file).getBytes());
+                bean = uploadManagerService.save(bean);
+            }
         }
 
         /* Назначаем задание пользователям */

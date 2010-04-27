@@ -28,6 +28,7 @@ public class WorkflowBeanDto implements Serializable {
     private TaskBean taskBean;
     private Long stateUid;
     private String[] userUids;
+    private String pageNumber;
 
     public WorkflowBeanDto(WorkflowBean workflowBean) {
         this.uid = workflowBean.getUid();
@@ -139,5 +140,13 @@ public class WorkflowBeanDto implements Serializable {
 
     public void setUserUids(String[] userUids) {
         this.userUids = userUids;
+    }
+
+    public String getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(String pageNumber) {
+        this.pageNumber = pageNumber;
     }
 }

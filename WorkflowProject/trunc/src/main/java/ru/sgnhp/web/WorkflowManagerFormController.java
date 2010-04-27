@@ -3,6 +3,7 @@ package ru.sgnhp.web;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,7 @@ public class WorkflowManagerFormController extends SimpleFormController {
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) throws IOException {
         WorkflowBeanDto workflowBeanDto = (WorkflowBeanDto) command;
         Long stateUid = workflowBeanDto.getStateUid();
-        if(stateUid == 3L){
+        if (stateUid == 3L) {
             workflowBeanDto.setWorkflowNote("Принято к сведению");
         }
         workflowBeanDto = workflowManagerService.updateWorkflowState(workflowBeanDto, stateManagerService.get(stateUid));
@@ -56,13 +57,16 @@ public class WorkflowManagerFormController extends SimpleFormController {
                 workflowFileManagerService.save(bean);
             }
         }
-        return new ModelAndView(new RedirectView(getSuccessView()));
+        Map<String, String> model = new HashMap<String, String>();
+        model.put("pageNum", workflowBeanDto.getPageNumber());
+        return new ModelAndView(new RedirectView(getSuccessView()), model);
     }
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
         request.setAttribute("actionUrl", "workflowManager.htm");
         String workflowUid = request.getParameter("workflowID");
+        String pageNumber = request.getParameter("pageNum");
         WorkflowBean workflowBean = getWorkflowManagerService().getWorkflowByUid(Long.parseLong(workflowUid));
         ArrayList<WorkflowBean> roadmap = new ArrayList<WorkflowBean>();
         if (workflowBean.getParentUid() == -1) {
@@ -75,9 +79,11 @@ public class WorkflowManagerFormController extends SimpleFormController {
         }
         request.setAttribute("roadmap", roadmap);
         request.setAttribute("workflowID", workflowUid);
+        request.setAttribute("pageNum", pageNumber);
         WorkflowBeanDto workflowBeanDto = new WorkflowBeanDto();
         workflowBeanDto.setUid(workflowBean.getUid());
         workflowBeanDto.setStateUid(workflowBean.getState().getStateUid());
+        workflowBeanDto.setPageNumber(pageNumber);
         workflowBean = null;
         return workflowBeanDto;
     }

@@ -26,6 +26,7 @@
     <%@ include file="/WEB-INF/jsp/includes/roadmapInclude.jsp" %>
     <form name="Form1" method="post" action="${actionUrl}" enctype="multipart/form-data">
         <input type="hidden" name="workflowID" value="${workflowID}">
+        <input type="hidden" name="pageNum" value="${pageNum}">
         <table>
             <tr>
                 <td>Внутренний номер задачи:</td>
@@ -35,7 +36,7 @@
                 <td>Состояние задачи:</td>
                 <spring:bind path="workflowManager.stateUid">
                     <td>
-                        <select name="${status.expression}" style="width : 200">
+                        <select name="${status.expression}" style="width : 200px">
                             <c:choose>
                                 <c:when test="${status.value eq 0}">
                                     <option value="0" selected>Не начата</option>
