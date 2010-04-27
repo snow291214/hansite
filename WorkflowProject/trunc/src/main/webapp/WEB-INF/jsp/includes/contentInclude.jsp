@@ -23,7 +23,7 @@
 <fmt:formatDate pattern="dd.MM.yyyy" value="${wf.assignDate}"/>
 </td>
 <td>
-    <font color="red"><b><c:out value="${wf.state.stateDescription}"/></b>.</font>
+    <font color="red"><b><c:out value="${wf.state.stateDescription}" escapeXml="false"/></b>.</font>
 </td>
 <td>
     <a href="primaveraReport.htm?primaveraUid=${wf.taskBean.primaveraUid}">${wf.taskBean.primaveraUid}</a>

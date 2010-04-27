@@ -23,7 +23,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label for="byIncomingNumber">Поиск по входящему номеру</label></td>
+                <td><label for="byIncomingNumber">Поиск по входящему номеру письма</label></td>
                 <td>
                     <input type="radio" name="searchType" id="byIncomingNumber" value="1" />
                 </td>

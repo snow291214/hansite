@@ -60,7 +60,7 @@
                             Входящий номер письма: <b>${wf.taskBean.incomingNumber}</b>.
                             Исходящий номер: <b>${wf.taskBean.externalNumber}</b>.<br />
                             Задача создана для: <b><c:out value="${wf.receiver.lastName} ${wf.receiver.firstName} ${wf.receiver.middleName}"/></b>
-                            Резолюция к задаче: <b><u><c:out value="${wf.description}"/>.</u></b>
+                            Резолюция к задаче: <b><u><c:out value="${wf.description}" escapeXml="false"/>.</u></b>
                             <br/><br/>
                             <div class="content">
                                 <%@ include file="/WEB-INF/jsp/includes/contentInclude.jsp" %>
