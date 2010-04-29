@@ -1,6 +1,7 @@
 package ru.sgnhp.service;
 
 import java.util.List;
+import org.springframework.security.userdetails.UserDetails;
 import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
@@ -16,5 +17,8 @@ public interface IUserManagerService extends IGenericService<WorkflowUserBean, L
 
     WorkflowUserBean getUserByEmail(String email);
 
+    @Override
     List<WorkflowUserBean> getAll();
+
+    public UserDetails loadUserByUsername(String username);
 }

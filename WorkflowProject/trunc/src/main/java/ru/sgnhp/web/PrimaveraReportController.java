@@ -24,11 +24,12 @@ public class PrimaveraReportController implements Controller {
     private ITaskManagerService taskManagerService;
     private IOutgoingMailService outgoingMailService;
 
+    @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String primaveraUid = request.getParameter("combobox");
         if (primaveraUid == null) {
             ArrayList<String> primaveraUids = new ArrayList<String>();
-            List<String> taskBeans = taskManagerService.getAllTasksWithPrimaveraUid();
+            List<String> taskBeans = taskManagerService.getDistinctPrimaveraIDS();
             primaveraUids.addAll(taskBeans);
             List<String> outgoingMails = outgoingMailService.getAllOutgoingMailWithPrimaveraUid();
             primaveraUids.addAll(outgoingMails);

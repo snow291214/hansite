@@ -20,5 +20,5 @@ public interface IUserDao extends IGenericDao<WorkflowUserBean,Long>{
     @Override
     List<WorkflowUserBean> getAll();
 
-    public UserDetails loadUserByUsername(String username);
+    UserDetails loadUserByUsername(String username);
 }

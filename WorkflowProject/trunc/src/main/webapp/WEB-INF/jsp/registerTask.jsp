@@ -7,6 +7,11 @@
 <link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css?random=20051112" media="screen"/>
 <script type="text/javascript" src="scripts/dhtmlgoodies_calendar.js?random=20090118"></script>
 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.autocomplete.css" />
+<script type="text/javascript"
+src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="scripts/jquery.autocomplete.js"></script>
+
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ajax.js" ></script>
 <script language="javascript" type="text/javascript">
     function requestdata()
@@ -63,14 +68,25 @@
                 <tr>
                     <td>Компания:</td>
                     <spring:bind path="registerTask.externalCompany">
-                        <td><input type="text" name="${status.expression}" value="${status.value}"></td>
+                        <td>
+                            <input type="text" id="${status.expression}" name="${status.expression}" value="${status.value}">
+                            <script>
+                                $("#externalCompany").autocomplete("autocompleteCompanies.htm");
+                            </script>
+
+                        </td>
                         <td><font color="red">${status.errorMessage}</font></td>
                     </spring:bind>
                 </tr>
                 <tr>
                     <td>Ф.И.О. отправителя:</td>
                     <spring:bind path="registerTask.externalAssignee">
-                        <td><input type="text" name="${status.expression}" value="${status.value}"></td>
+                        <td>
+                            <input type="text" name="${status.expression}" id="${status.expression}" value="${status.value}">
+                            <script>
+                                $("#externalAssignee").autocomplete("autocompleteAssignees.htm");
+                            </script>
+                        </td>
                         <td><font color="red">${status.errorMessage}</font></td>
                     </spring:bind>
                 </tr>

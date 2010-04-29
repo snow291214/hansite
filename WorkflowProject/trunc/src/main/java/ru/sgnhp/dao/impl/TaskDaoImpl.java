@@ -24,6 +24,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         super(TaskBean.class);
     }
 
+    @Override
     public List<TaskBean> getTaskByInternalNumber(int number) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("internalNumber", number);
@@ -34,6 +35,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return list;
     }
 
+    @Override
     public List<TaskBean> getTaskByExternalNumber(String number) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("externalNumber", number);
@@ -44,6 +46,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return list;
     }
 
+    @Override
     public List<TaskBean> getTaskByIncomingNumber(int number) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("incomingNumber", number);
@@ -54,6 +57,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return list;
     }
 
+    @Override
     public List<TaskBean> getTasksByExternalAssignee(String externalAssignee) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("externalAssignee", externalAssignee);
@@ -64,6 +68,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return list;
     }
 
+    @Override
     public List<TaskBean> getTasksByDescription(String description) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("description", description);
@@ -74,6 +79,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return list;
     }
 
+    @Override
     public int getNewInternalNumber() {
 //        Calendar today = Calendar.getInstance();
 //        int year = today.get(Calendar.YEAR);
@@ -87,6 +93,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return -1;
     }
 
+    @Override
     public int getNewIncomingNumber() {
         Calendar today = Calendar.getInstance();
         int year = today.get(Calendar.YEAR);
@@ -99,6 +106,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return -1;
     }
 
+    @Override
     public List<TaskBean> getTaskByExternalCompany(String externalCompany) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("externalCompany", externalCompany);
@@ -109,6 +117,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return list;
     }
 
+    @Override
     public List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException {
         Map<String, Object> value = new HashMap<String, Object>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -123,6 +132,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return list;
     }
 
+    @Override
     public List<TaskBean> getTaskByPrimaveraUid(String primaveraUid) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("primaveraUid", primaveraUid);
@@ -133,8 +143,26 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         return list;
     }
 
-    public List<String> getAllTasksWithPrimaveraUid() {
-        List list = getSession().createQuery("SELECT distinct t.primaveraUid FROM TaskBean t WHERE t.primaveraUid <> ''").list();
+    @Override
+    public List<String> getDistinctPrimaveraIDS() {
+        List list = getSession().createQuery("SELECT distinct t.primaveraUid " +
+                "FROM TaskBean t WHERE t.primaveraUid <> ''").list();
+        return list;
+    }
+
+    @Override
+    public List<String> getDistinctExternalCompanies(String query) {
+        List list = getSession().createQuery("SELECT distinct t.externalCompany " +
+                "FROM TaskBean t WHERE t.externalCompany <> '' AND t.externalCompany like " +
+                "'%"+query+"%' ORDER BY t.externalCompany").setMaxResults(20).list();
+        return list;
+    }
+
+    @Override
+    public List<String> getExternalAssignees(String query) {
+        List list = getSession().createQuery("SELECT distinct t.externalAssignee " +
+                "FROM TaskBean t WHERE t.externalAssignee <> '' AND t.externalAssignee like " +
+                "'%"+query+"%' ORDER BY t.externalAssignee").setMaxResults(20).list();
         return list;
     }
 }

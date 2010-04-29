@@ -65,6 +65,8 @@
                 <prop key="extraDescription.htm">extraDescription</prop>
                 <prop key="approveAndAssignWorkflow.htm">approveAndAssignWorkflow</prop>
                 <prop key="accessDenied.htm">accessDeniedController</prop>
+                <prop key="autocompleteCompanies.htm">autocompleteCompaniesController</prop>
+                <prop key="autocompleteAssignees.htm">autocompleteAssigneesController</prop>
             </props>
         </property>
     </bean>
@@ -555,6 +557,20 @@
             <value>${general.applicationPath}</value>
         </property>
     </bean>
+
+
+    <bean name="autocompleteCompaniesController" class="ru.sgnhp.web.controllers.AutocompleteCompaniesController">
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+
+    <bean name="autocompleteAssigneesController" class="ru.sgnhp.web.controllers.AutocompleteAssigneesController">
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+    </bean>
+    
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">

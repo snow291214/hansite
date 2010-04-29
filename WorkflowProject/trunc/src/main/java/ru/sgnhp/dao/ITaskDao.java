@@ -11,7 +11,7 @@ import ru.sgnhp.domain.TaskBean;
  *
  *****
  */
-public interface ITaskDao extends IGenericDao<TaskBean, Long>{
+public interface ITaskDao extends IGenericDao<TaskBean, Long> {
 
     List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException;
 
@@ -33,5 +33,9 @@ public interface ITaskDao extends IGenericDao<TaskBean, Long>{
 
     List<TaskBean> getTasksByDescription(String description);
 
-    List<String> getAllTasksWithPrimaveraUid();
+    List<String> getDistinctPrimaveraIDS();
+
+    List<String> getDistinctExternalCompanies(String query);
+
+    List<String> getExternalAssignees(String query);
 }

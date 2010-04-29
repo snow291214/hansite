@@ -32,26 +32,31 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<TaskBean> getTaskByInternalNumber(int number) {
         return taskDao.getTaskByInternalNumber(number);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<TaskBean> getTaskByExternalNumber(String number) {
         return taskDao.getTaskByExternalNumber("%" + number + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<TaskBean> getTaskByIncomingNumber(int number) {
         return taskDao.getTaskByIncomingNumber(number);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<TaskBean> getTasksByExternalAssignee(String externalAssignee) {
         return taskDao.getTasksByExternalAssignee("%" + externalAssignee + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public int getNewInternalNumber() {
         int value = taskDao.getNewInternalNumber();
         if (value == -1) {
@@ -61,6 +66,7 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public int getNewIncomingNumber() {
         int value = taskDao.getNewIncomingNumber();
         if (value == -1) {
@@ -70,6 +76,7 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<TaskBean> getTasksByDescription(String description) {
         return taskDao.getTasksByDescription("%" + description + "%");
     }
@@ -80,11 +87,13 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<TaskBean> getTaskByExternalCompany(String externalCompany) {
         return taskDao.getTaskByExternalCompany("%" + externalCompany + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void dailyReport() {
         Calendar today = Calendar.getInstance();
         //File file = new File(String.format("/media/storage/doc/скан/исходящие %1$tY/%2$s/", today, "incomingMail.csv"));
@@ -117,17 +126,30 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException {
         return taskDao.getAllIncomingMailByYear(currentYear);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<TaskBean> getTaskByPrimaveraUid(String primaveraUid) {
         return taskDao.getTaskByPrimaveraUid("%" + primaveraUid + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public List<String> getAllTasksWithPrimaveraUid() {
-        return taskDao.getAllTasksWithPrimaveraUid();
+    @Override
+    public List<String> getDistinctPrimaveraIDS() {
+        return taskDao.getDistinctPrimaveraIDS();
+    }
+
+    @Override
+    public List<String> getDistinctExternalCompanies(String query) {
+        return taskDao.getDistinctExternalCompanies(query);
+    }
+
+    @Override
+    public List<String> getExternalAssignees(String query) {
+        return taskDao.getExternalAssignees(query);
     }
 }

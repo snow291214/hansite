@@ -90,7 +90,7 @@ public class TaskDaoImplTest extends AbstractTransactionalDataSourceSpringContex
 
     @Test
     public void testGetPrimaveraUid() {
-        assertNotNull(taskDao.getAllTasksWithPrimaveraUid());
+        assertNotNull(taskDao.getDistinctPrimaveraIDS());
     }
 
     public void setTaskDao(ITaskDao taskDao) {

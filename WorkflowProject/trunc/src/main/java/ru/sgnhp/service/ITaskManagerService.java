@@ -35,5 +35,10 @@ public interface ITaskManagerService extends IGenericService<TaskBean, Long> {
 
     void dailyReport();
 
-    List<String> getAllTasksWithPrimaveraUid();
+    List<String> getDistinctPrimaveraIDS();
+
+    List<String> getDistinctExternalCompanies(String query);
+
+    List<String> getExternalAssignees(String query);
+
 }
