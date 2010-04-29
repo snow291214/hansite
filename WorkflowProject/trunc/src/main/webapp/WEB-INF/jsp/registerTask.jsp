@@ -8,8 +8,11 @@
 <script type="text/javascript" src="scripts/dhtmlgoodies_calendar.js?random=20090118"></script>
 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.autocomplete.css" />
+<!--
 <script type="text/javascript"
 src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+-->
+<script language="javascript" type="text/javascript" src="scripts/jquery-1.3.2.js"></script>
 <script language="javascript" type="text/javascript" src="scripts/jquery.autocomplete.js"></script>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ajax.js" ></script>
