@@ -558,13 +558,14 @@
         </property>
     </bean>
 
-
+    <!--AJAX 29.04.2010-->
     <bean name="autocompleteCompaniesController" class="ru.sgnhp.web.controllers.AutocompleteCompaniesController">
         <property name="taskManagerService">
             <ref bean="taskManagerService"/>
         </property>
     </bean>
 
+    <!--AJAX 29.04.2010-->
     <bean name="autocompleteAssigneesController" class="ru.sgnhp.web.controllers.AutocompleteAssigneesController">
         <property name="taskManagerService">
             <ref bean="taskManagerService"/>
