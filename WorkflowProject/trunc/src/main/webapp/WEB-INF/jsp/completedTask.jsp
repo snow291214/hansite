@@ -53,7 +53,7 @@
                 <pg:item>
                     <div style="margin-bottom: 10px;">
                         <div class="header green">
-                            Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
+                            Задача № <c:out value="${wf.taskBean.internalNumber}"/>. ${wf.taskBean.description}
                         </div>
                         <div>
                             Компания: <b>${wf.taskBean.externalCompany}</b>.
@@ -61,7 +61,7 @@
                             Входящий номер письма: <b>${wf.taskBean.incomingNumber}</b>.
                             Исходящий номер: <b>${wf.taskBean.externalNumber}</b>.<br />
                             Задача создана для: <b><c:out value="${wf.receiver.lastName} ${wf.receiver.firstName} ${wf.receiver.middleName}"/></b>
-                            Резолюция к задаче: <b><u><c:out value="${wf.description}"/>.</u></b>
+                            Резолюция к задаче: <b><u>${wf.description}.</u></b>
                             <br/><br/>
                             <div class="content">
                                 <%@ include file="/WEB-INF/jsp/includes/contentInclude.jsp" %>
