@@ -51,7 +51,7 @@
                 <pg:item>
                     <div style="margin-bottom: 10px;">
                         <div class="header blue">
-                            Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}"/>
+                            Задача № <c:out value="${wf.taskBean.internalNumber}"/>. <c:out value="${wf.taskBean.description}" escapeXml="false"/>
                         </div>
                         <div>
                             <!--Описание задачи: <br />-->

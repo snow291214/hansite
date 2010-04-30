@@ -121,8 +121,8 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
     public List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException {
         Map<String, Object> value = new HashMap<String, Object>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        Date startDate = simpleDateFormat.parse("01.01."+currentYear.toString());
-        Date finishDate = simpleDateFormat.parse("31.12."+currentYear.toString());
+        Date startDate = simpleDateFormat.parse("01.01." + currentYear.toString());
+        Date finishDate = simpleDateFormat.parse("31.12." + currentYear.toString());
         value.put("startDate", startDate);
         value.put("finishDate", finishDate);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findAllIncomingMailByYear", value);
@@ -145,24 +145,30 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
 
     @Override
     public List<String> getDistinctPrimaveraIDS() {
-        List list = getSession().createQuery("SELECT distinct t.primaveraUid " +
-                "FROM TaskBean t WHERE t.primaveraUid <> ''").list();
+        List list = getSession().createQuery("SELECT distinct t.primaveraUid "
+                + "FROM TaskBean t WHERE t.primaveraUid <> ''").list();
         return list;
     }
 
     @Override
     public List<String> getDistinctExternalCompanies(String query) {
-        List list = getSession().createQuery("SELECT distinct t.externalCompany " +
-                "FROM TaskBean t WHERE t.externalCompany <> '' AND t.externalCompany like " +
-                "'%"+query+"%' ORDER BY t.externalCompany").setMaxResults(20).list();
+        List list = null;
+        if (!query.equals("")) {
+            list = getSession().createQuery("SELECT distinct t.externalCompany "
+                    + "FROM TaskBean t WHERE t.externalCompany <> '' AND t.externalCompany like "
+                    + "'%" + query + "%' ORDER BY t.externalCompany").list();
+        }
         return list;
     }
 
     @Override
     public List<String> getExternalAssignees(String query) {
-        List list = getSession().createQuery("SELECT distinct t.externalAssignee " +
-                "FROM TaskBean t WHERE t.externalAssignee <> '' AND t.externalAssignee like " +
-                "'%"+query+"%' ORDER BY t.externalAssignee").setMaxResults(20).list();
+        List list = null;
+        if (!query.equals("")) {
+            list = getSession().createQuery("SELECT distinct t.externalAssignee "
+                    + "FROM TaskBean t WHERE t.externalAssignee <> '' AND t.externalAssignee like "
+                    + "'%" + query + "%' ORDER BY t.externalAssignee").list();
+        }
         return list;
     }
 }
