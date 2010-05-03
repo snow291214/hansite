@@ -136,7 +136,7 @@ public class OutgoingFileBean implements Serializable {
         String repositoryPath = pro.getProperty("repository.repositoryPath");
         SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
                 OutgoingMailBean b = this.getOutgoingMailBean();
-        logger.warn("!!!" + this.getOutgoingMailBean());
+        //logger.warn("!!!" + this.getOutgoingMailBean());
         String path = "/OutgoingMailFiles/" + getYearFromDate(this.getOutgoingMailBean().getOutgoingDate())
                 + "/" + getMonthFromDate(this.getOutgoingMailBean().getOutgoingDate())
                 + "/" + fmt.format(this.getOutgoingMailBean().getOutgoingDate()) + "/"

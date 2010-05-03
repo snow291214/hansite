@@ -76,7 +76,9 @@
                 </pg:item>
             </c:forEach>
             <pg:index title="Страницы: ">
+                <pg:nextPages>[Next]</pg:nextPages>
                 <pg:page><%=thisPage%></pg:page>
+                <pg:prevPages>[Prev]</pg:prevPages>
             </pg:index>
         </pg:paging>
     </div>
