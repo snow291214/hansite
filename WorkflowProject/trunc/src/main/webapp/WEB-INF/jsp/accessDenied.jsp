@@ -5,9 +5,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>403</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Доступ запрещен. Звоните 21-64.</h1>
     </body>
 </html>

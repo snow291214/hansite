@@ -76,7 +76,7 @@ public class UserDaoImpl extends GenericDaoHibernate<WorkflowUserBean, Long> imp
             userLogin.setAccountNonExpired(true);
             userLogin.setAccountNonLocked(true);
             userLogin.setCredentialsNonExpired(true);
-            userLogin.setEnabled(true);
+            userLogin.setEnabled(bean.isEnabled());
             userLogin.setAuthorities(new GrantedAuthority[]{new Role("ROLE_USER"),new Role(bean.getUserGroupBean().getName())});
             //logger.info("Third: " + userLogin.getAuthorities()[0].getAuthority()+", "+
             //        userLogin.getAuthorities()[1].getAuthority());

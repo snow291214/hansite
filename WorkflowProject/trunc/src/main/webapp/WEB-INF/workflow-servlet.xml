@@ -67,6 +67,7 @@
                 <prop key="accessDenied.htm">accessDeniedController</prop>
                 <prop key="autocompleteCompanies.htm">autocompleteCompaniesController</prop>
                 <prop key="autocompleteAssignees.htm">autocompleteAssigneesController</prop>
+                <prop key="newUser.htm">newUserController</prop>
             </props>
         </property>
     </bean>
@@ -571,7 +572,21 @@
             <ref bean="taskManagerService"/>
         </property>
     </bean>
-    
+
+    <!-- User Manager Controller 14.05.2010-->
+    <bean name="newUserController" class="ru.sgnhp.web.forms.NewUserFormController">
+        <property name="commandName" value="userLogin"/>
+        <property name="commandClass" value="ru.sgnhp.dto.UserLogin" />
+        <property name="formView">
+            <value>newUser</value>
+        </property>
+        <property name="successView">
+            <value>index.htm</value>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+    </bean>
     <!--========================== Validators ===============================-->
 
     <bean id="registerTaskFormValidator" class="ru.sgnhp.web.validator.RegisterTaskFormValidator">

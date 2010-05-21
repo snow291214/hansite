@@ -67,6 +67,8 @@ public class WorkflowUserBean implements Serializable {
     private String email;
     @Column(name = "SessionUid", length = 50)
     private String sessionUid;
+    @Column(name = "Enabled")
+    private Boolean enabled;
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
 
@@ -210,5 +212,13 @@ public class WorkflowUserBean implements Serializable {
 
     public void setOutgoingMailBeans(Set<OutgoingMailBean> outgoingMailBeans) {
         this.outgoingMailBeans = outgoingMailBeans;
+    }
+
+    public Boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }
