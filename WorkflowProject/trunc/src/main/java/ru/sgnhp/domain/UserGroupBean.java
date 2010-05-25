@@ -32,7 +32,7 @@ public class UserGroupBean implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false, length=4)
-    private Short uid;
+    private Long uid;
     @Column(name = "Description", length = 150)
     private String description;
     @Column(name = "Name", length = 20)
@@ -45,15 +45,15 @@ public class UserGroupBean implements Serializable {
     public UserGroupBean() {
     }
 
-    public UserGroupBean(Short uid) {
+    public UserGroupBean(Long uid) {
         this.uid = uid;
     }
 
-    public Short getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Short uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

@@ -181,6 +181,21 @@
         </constructor-arg>
         <property name="documentFileDao" ref="documentFileDao" />
     </bean>
+
+    <bean id="userGroupDao" class="ru.sgnhp.dao.impl.UserGroupDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="userGroupService" class="ru.sgnhp.service.impl.UserGroupServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.UserGroupBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="userGroupDao" ref="userGroupDao" />
+    </bean>
+
     <!--
     <bean id="fileBeanBlobDao" class="ru.sgnhp.dao.impl.FileBeanBlobDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />

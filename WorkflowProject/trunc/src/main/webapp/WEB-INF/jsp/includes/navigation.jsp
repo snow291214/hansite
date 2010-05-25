@@ -27,5 +27,6 @@
     <div>
         <p>Администратору</p>
         <a href="newUser.htm">Добавить пользователя</a><br />
+        <a href="userReport.htm">Список пользователей</a><br />
     </div>
 </sec:authorize>
