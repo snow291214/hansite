@@ -23,7 +23,7 @@
         <a href="documentReports.htm">Журналы документов</a><br />
     </div>
 </sec:authorize>
-<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG,ROLE_BOSS,ROLE_TOP">
+<sec:authorize ifAnyGranted="ROLE_ADMIN">
     <div>
         <p>Администратору</p>
         <a href="newUser.htm">Добавить пользователя</a><br />
