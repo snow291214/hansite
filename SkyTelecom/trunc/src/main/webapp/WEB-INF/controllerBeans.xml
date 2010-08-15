@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springmodules.org/schema/ehcache
+       http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd">
+
+
+    <!-- Login Form Controller-->
+    <bean name="loginFormController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="login" />
+
+    <!-- Logout Controller -->
+    <bean name="logoutController" class="net.skytelecom.web.controllers.LogoutController" />
+
+    <!-- Index Controller -->
+    <bean name="indexController" class="net.skytelecom.web.controllers.IndexController" >
+
+    </bean>
+
+    <!-- Customers Controller -->
+    <bean name="customersController" class="net.skytelecom.web.controllers.CustomersController" >
+        <property name="customerService">
+            <ref bean="customerService" />
+        </property>
+        <property name="userService">
+            <ref bean="userService" />
+        </property>
+    </bean>
+
+    <!-- Customer Editor Form Controller -->
+    <bean name="customerEditor" class="net.skytelecom.web.forms.CustomerEditorFormController" >
+        <property name="sessionForm">
+            <value>true</value>
+        </property>
+        <property name="commandName">
+            <value>customerDto</value>
+        </property>
+        <property name="commandClass">
+            <value>net.skytelecom.dto.CustomerDto</value>
+        </property>
+        <!--
+        <property name="validator">
+            <ref bean="registerTaskFormValidator"/>
+        </property>
+        -->
+        <property name="formView">
+            <value>customerEditor</value>
+        </property>
+        <property name="successView">
+            <value>customers.htm</value>
+        </property>
+        <property name="customerService">
+            <ref bean="customerService" />
+        </property>
+        <property name="userService">
+            <ref bean="userService" />
+        </property>
+    </bean>
+
+    <!-- Prices Controller -->
+    <bean name="pricesController" class="net.skytelecom.web.controllers.PricesController" >
+        <property name="customerService">
+            <ref bean="customerService" />
+        </property>
+        <property name="priceService">
+            <ref bean="priceService" />
+        </property>
+    </bean>
+
+    <bean name="priceEditorController" class="net.skytelecom.web.controllers.PricesEditorController">
+        <property name="priceService">
+            <ref bean="priceService" />
+        </property>
+        <property name="customerService">
+            <ref bean="customerService" />
+        </property>
+        <property name="userService">
+            <ref bean="userService" />
+        </property>
+    </bean>
+
+    <!--Price Editor Controller
+    <bean name="priceEditorFormController" class="net.skytelecom.web.forms.PriceEditorFormController" >
+        <property name="sessionForm">
+            <value>true</value>
+        </property>
+        <property name="commandName">
+            <value>priceDto</value>
+        </property>
+        <property name="commandClass">
+            <value>net.skytelecom.dto.PriceDto</value>
+        </property>
+        <property name="formView">
+            <value>priceEditor</value>
+        </property>
+        <property name="successView">
+            <value>priceEditor.htm</value>
+        </property>
+        <property name="priceService">
+            <ref bean="priceService" />
+        </property>
+        <property name="customerService">
+            <ref bean="customerService" />
+        </property>
+        <property name="userService">
+            <ref bean="userService" />
+        </property>
+    </bean>
+-->
+
+
+    <!-- Ajax Controller -->
+    <bean name="ajaxController" class="net.skytelecom.web.controllers.AjaxController">
+        <property name="priceService">
+            <ref bean="priceService" />
+        </property>
+        <property name="routingService">
+            <ref bean="routingService" />
+        </property>
+    </bean>
+</beans>

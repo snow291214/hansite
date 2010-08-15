@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <bean id="customerDao" class="net.skytelecom.dao.impl.CustomerDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="customerService" class="net.skytelecom.services.impl.CustomerServiceImpl">
+        <constructor-arg>
+            <bean class="net.skytelecom.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="net.skytelecom.entity.Customer"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="customerDao" ref="customerDao"/>
+    </bean>
+
+    <bean id="userDao" class="net.skytelecom.dao.impl.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="userService" class="net.skytelecom.services.impl.UserServiceImpl">
+        <constructor-arg>
+            <bean class="net.skytelecom.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="net.skytelecom.entity.Customer"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="priceDao" class="net.skytelecom.dao.impl.PriceDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="priceService" class="net.skytelecom.services.impl.PriceServiceImpl">
+        <constructor-arg>
+            <bean class="net.skytelecom.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="net.skytelecom.entity.Price"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="priceDao" ref="priceDao"/>
+    </bean>
+
+    <bean id="routingDao" class="net.skytelecom.dao.impl.RoutingDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="routingService" class="net.skytelecom.services.impl.RoutingServiceImpl">
+        <constructor-arg>
+            <bean class="net.skytelecom.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="net.skytelecom.entity.Routing"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="routingDao" ref="routingDao"/>
+    </bean>
+
+</beans>
