@@ -9,13 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.ForeignKey;
 
 /**
  *
@@ -23,7 +20,6 @@ import org.hibernate.annotations.ForeignKey;
  * ICQ: 164777039
  * Current date: 09.08.2010
  */
-
 @Entity
 @Table(name = "price_types", catalog = "skyteldb", schema = "")
 @NamedQueries({
@@ -31,6 +27,7 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "PriceType.findByUid", query = "SELECT p FROM PriceType p WHERE p.uid = :uid"),
     @NamedQuery(name = "PriceType.findByName", query = "SELECT p FROM PriceType p WHERE p.name = :name")})
 public class PriceType implements Serializable {
+
     private static final long serialVersionUID = -6899308407656688764L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,8 +39,10 @@ public class PriceType implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "priceType", fetch = FetchType.LAZY)
-    private Collection<Price> prices;
+    private Collection<CustomersPrices> customersPrices;
 
+//    @OneToMany(mappedBy = "priceType", fetch = FetchType.LAZY)
+//    private Collection<Price> prices;
     public PriceType() {
     }
 
@@ -97,11 +96,18 @@ public class PriceType implements Serializable {
         return "net.skytelecom.entity.PriceType[uid=" + uid + "]";
     }
 
-    public Collection<Price> getPrices() {
-        return prices;
+    public Collection<CustomersPrices> getCustomersPrices() {
+        return customersPrices;
     }
 
-    public void setPrices(Collection<Price> prices) {
-        this.prices = prices;
+    public void setCustomersPrices(Collection<CustomersPrices> customersPrices) {
+        this.customersPrices = customersPrices;
     }
+//    public Collection<Price> getPrices() {
+//        return prices;
+//    }
+//
+//    public void setPrices(Collection<Price> prices) {
+//        this.prices = prices;
+//    }
 }

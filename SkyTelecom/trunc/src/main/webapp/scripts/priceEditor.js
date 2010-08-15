@@ -1,5 +1,6 @@
 function clear(){
     $('#id_destinations option').remove();
+    //$('#id_customersPricesUid option').remove();
     $('#id_oldRate').val("");
     $('#id_newRate').val("");
     $('#id_activationDate').val("");
@@ -28,9 +29,28 @@ $(function(){
     $('#id_customers').change(function() {
         clear();
         showIndicator();
+        $('#id_customersPricesUid option').remove();
         $.post('ajax.htm',{
             'customerUid':$(this).val(),
             'requestType':0
+        }, function(xml){
+            $('#id_customersPricesUid').append('<option value="-">Choose...</option>');
+            $(xml).find('PriceType').each(function(){
+                $('#id_customersPricesUid').append('<option value="' + $(this).find("Uid").text() + '">' + $(this).find("Name").text() + '</option>');
+            });
+        });
+        hideIndicator();
+    });
+});
+
+$(function(){
+    $('#id_customersPricesUid').change(function() {
+        clear();
+        showIndicator();
+        //alert ($(this).val());
+        $.post('ajax.htm',{
+            'customersPricesUid':$(this).val(),
+            'requestType':1
         }, function(xml){
             $('#id_destinations').append('<option value="-">Choose...</option>');
             $(xml).find('Destination').each(function(){
@@ -47,7 +67,7 @@ $(function(){
         $.post('ajax.htm',{
             'destinationName':$(this).val(),
             'customerUid':$('#id_customers').val(),
-            'requestType':1
+            'requestType':2
         }, function(xml){
             $(xml).find('Value').each(function(){
                 $('#id_oldRate').val($(this).text());
@@ -74,7 +94,7 @@ $(function(){
     $('#id_check1').change(function () {
         if ($(this).attr("checked")) {
             $.post('ajax.htm',{
-                'requestType':2
+                'requestType':3
             }, function(xml){
                 $(xml).find('Provider').each(function(){
                     $('#SelectLeft').append('<option value="' + $(this).text() + '">' + $(this).text() + '</option>');
@@ -120,5 +140,5 @@ $(function(){
 });
 
 $(function(){
-    $("#id_newRate").numeric();;
+    $("#id_newRate").numeric();
 });

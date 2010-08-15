@@ -15,7 +15,7 @@
             <%@ include file="/WEB-INF/jsp/includes/navigation.jsp" %>
         </div>
         <div class="empty">
-            <pg:paging url="prices.htm?customerUid=${requestScope.model[\"customerUid\"]}" pageSize="1000">
+            <pg:paging url="prices.htm?customersPricesUid=${requestScope.model[\"customersPricesUid\"]}" pageSize="1000">
                 <table class="justTable">
                     <tr class="odd">
                         <td width="15%">Destination</td>

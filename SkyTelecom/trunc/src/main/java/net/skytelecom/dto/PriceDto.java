@@ -57,7 +57,7 @@ public class PriceDto implements Serializable {
         this.activationDate = price.getActivationDate();
         this.qos = price.getQos();
         this.lastFieldIgnore = price.getLastFieldIgnore();
-        this.customer = price.getCustomer();
+        //this.customer = price.getCustomer();
     }
 
     public Long getUid() {

@@ -20,5 +20,6 @@
     <mapping class="net.skytelecom.entity.Price"/>
     <mapping class="net.skytelecom.entity.Routing"/>
     <mapping class="net.skytelecom.entity.PriceType"/>
+    <mapping class="net.skytelecom.entity.CustomersPrices"/>
   </session-factory>
 </hibernate-configuration>

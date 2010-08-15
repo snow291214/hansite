@@ -4,6 +4,7 @@ import java.util.List;
 import net.skytelecom.dao.ICustomerDao;
 import net.skytelecom.dao.IUserDao;
 import net.skytelecom.entity.Customer;
+import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.User;
 import org.junit.Test;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
@@ -27,6 +28,21 @@ public class CustomerDaoTest extends AbstractTransactionalDataSourceSpringContex
         User user = getUserDao().get(1L);
         List<Customer> customers = customerDao.findByUser(user);
         assertNotNull(customers);
+    }
+
+    @Test
+    public void testCustomerPrices() {
+        User user = getUserDao().get(1L);
+        List<Customer> customers = customerDao.findByUser(user);
+        assertNotNull(customers);
+        Customer customer = customers.get(0);
+        assertNotNull(customer.getCustomersPrices());
+        assertNotNull(customer.getCustomersPrices());
+        //logger.warn(customer.getCustomersPrices().size());
+        for(CustomersPrices customersPrices : customer.getCustomersPrices()){
+            System.out.println(customersPrices.getPriceType().getName());
+            System.out.println(customersPrices.getPrices().size());
+        }
     }
 
     @Override

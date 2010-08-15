@@ -1,14 +1,13 @@
 package net.skytelecom.web.controllers;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.skytelecom.entity.Customer;
+import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.Price;
-import net.skytelecom.services.ICustomerService;
-import net.skytelecom.services.IPriceService;
+import net.skytelecom.services.ICustomersPricesService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -20,36 +19,33 @@ import org.springframework.web.servlet.mvc.Controller;
  */
 public class PricesController implements Controller {
 
-    private ICustomerService customerService;
-    private IPriceService priceService;
+    private ICustomersPricesService customersPricesService;
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String customerUid = request.getParameter("customerUid");
-        if (customerUid == null) {
+        String customersPricesUid = request.getParameter("customersPricesUid");
+        if (customersPricesUid == null) {
             return null;
         }
-        Customer customer = customerService.get(Long.parseLong(customerUid));
-        List<Price> prices = priceService.findByCustomer(customer);
+        CustomersPrices customersPrices = customersPricesService.get(Long.parseLong(customersPricesUid));
+        Collection<Price> prices = customersPrices.getPrices();
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("customerUid", customerUid);
+        model.put("customersPricesUid", customersPricesUid);
         model.put("prices", prices);
         return new ModelAndView("prices", "model", model);
     }
 
-    public IPriceService getPriceService() {
-        return priceService;
+    /**
+     * @return the customersPricesService
+     */
+    public ICustomersPricesService getCustomersPricesService() {
+        return customersPricesService;
     }
 
-    public void setPriceService(IPriceService priceService) {
-        this.priceService = priceService;
-    }
-
-    public ICustomerService getCustomerService() {
-        return customerService;
-    }
-
-    public void setCustomerService(ICustomerService customerService) {
-        this.customerService = customerService;
+    /**
+     * @param customersPricesService the customersPricesService to set
+     */
+    public void setCustomersPricesService(ICustomersPricesService customersPricesService) {
+        this.customersPricesService = customersPricesService;
     }
 }

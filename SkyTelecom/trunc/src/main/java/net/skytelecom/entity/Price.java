@@ -31,7 +31,8 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "Price.findAll", query = "SELECT p FROM Price p"),
     @NamedQuery(name = "Price.findByUid", query = "SELECT p FROM Price p WHERE p.uid = :uid"),
     @NamedQuery(name = "Price.findByPhoneCode", query = "SELECT p FROM Price p WHERE p.phoneCode = :phoneCode"),
-    @NamedQuery(name = "Price.findByDestination", query = "SELECT p FROM Price p WHERE p.destination = :destination and p.customer.uid = :customerUid"),
+    @NamedQuery(name = "Price.findByDestination", query = "SELECT p FROM Price p"
+    + " WHERE p.destination = :destination and  p.customersPrices.uid = :customersPricesUid"),
     @NamedQuery(name = "Price.findByCurrency", query = "SELECT p FROM Price p WHERE p.currency = :currency"),
     @NamedQuery(name = "Price.findByConnectRatePeak", query = "SELECT p FROM Price p WHERE p.connectRatePeak = :connectRatePeak"),
     @NamedQuery(name = "Price.findByRatePeak", query = "SELECT p FROM Price p WHERE p.ratePeak = :ratePeak"),
@@ -44,9 +45,8 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "Price.findByInitOffpeak", query = "SELECT p FROM Price p WHERE p.initOffpeak = :initOffpeak"),
     @NamedQuery(name = "Price.findByQuantOffpeak", query = "SELECT p FROM Price p WHERE p.quantOffpeak = :quantOffpeak"),
     @NamedQuery(name = "Price.findByActivationDate", query = "SELECT p FROM Price p WHERE p.activationDate = :activationDate"),
-    @NamedQuery(name = "Price.findByQos", query = "SELECT p FROM Price p WHERE p.qos = :qos"),
-    @NamedQuery(name = "Price.findDistinctDestinations", query = "SELECT distinct p.destination FROM Price p where p.customer.uid = :customerUid order by p.destination"),
-    @NamedQuery(name = "Price.findByCustomer", query = "SELECT p FROM Price p WHERE p.customer = :customer")})
+    @NamedQuery(name = "Price.findByQos", query = "SELECT p FROM Price p WHERE p.qos = :qos")
+})
 public class Price implements Serializable {
 
     private static final long serialVersionUID = -8195825319193929010L;
@@ -95,15 +95,15 @@ public class Price implements Serializable {
     @Column(name = "Routing", length = 65535)
     private String routing;
 
-    @ForeignKey(name = "fk_prices_customers")
-    @JoinColumn(name = "CustomerUid", referencedColumnName = "Uid")
+//    @ForeignKey(name = "fk_prices_customers")
+//    @JoinColumn(name = "CustomerUid", referencedColumnName = "Uid")
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Customer customer;
+//
+    @ForeignKey(name = "fk_price_customers_prices")
+    @JoinColumn(name = "CustomersPricesUid", referencedColumnName = "Uid", columnDefinition = "INTEGER(11)")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Customer customer;
-
-    @ForeignKey(name = "fk_prices_price_types")
-    @JoinColumn(name = "PriceTypesUid", referencedColumnName = "Uid")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private PriceType priceType;
+    private CustomersPrices customersPrices;
 
     public Price() {
     }
@@ -277,13 +277,13 @@ public class Price implements Serializable {
         return "net.skytelecom.entity.Price[uid=" + uid + "]";
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 
     public String getPriceIndicator() {
         return priceIndicator;
@@ -301,11 +301,19 @@ public class Price implements Serializable {
         this.routing = routing;
     }
 
-    public PriceType getPriceType() {
-        return priceType;
+    public CustomersPrices getCustomersPrices() {
+        return customersPrices;
     }
 
-    public void setPriceType(PriceType priceType) {
-        this.priceType = priceType;
+    public void setCustomersPrices(CustomersPrices customersPrices) {
+        this.customersPrices = customersPrices;
     }
+
+//    public PriceType getPriceType() {
+//        return priceType;
+//    }
+//
+//    public void setPriceType(PriceType priceType) {
+//        this.priceType = priceType;
+//    }
 }

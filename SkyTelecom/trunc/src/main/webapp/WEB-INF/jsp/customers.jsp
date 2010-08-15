@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,9 +18,9 @@
         <div class="empty">
             <table class="justTable">
                 <tr class="odd">
-                    <td width="20%">Customer name</td>
-                    <td width="20%">Customer prices</td>
-                    <td width="10%">Operations</td>
+                    <td width="20%">Customer's name</td>
+                    <td width="60%">Customer's prices</td>
+                    <td width="20%">Actions</td>
                 </tr>
                 <c:forEach var="customer" items="${customers}" varStatus="status">
                     <c:choose>
@@ -35,8 +36,9 @@
                             ${customer.customerName}
                         </td>
                         <td>
-                            <c:forEach var="price" items="${customer.prices}" varStatus="status">
-                                <a href="prices.htm?customerUid=${customer.uid}&priceType=${price.priceType.uid}">${price.priceType.name}</a>
+                            <c:forEach var="customersPrices" items="${customer.customersPrices}" varStatus="status">
+                                <a href="prices.htm?customersPricesUid=${customersPrices.priceType.uid}">${customersPrices.priceType.name}. 
+                                    Area Codes Count: ${fn:length(customersPrices.prices)}</a> ||
                             </c:forEach>
                         </td>
                         <td>

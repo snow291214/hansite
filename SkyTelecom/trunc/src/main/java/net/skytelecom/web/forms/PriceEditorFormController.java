@@ -44,7 +44,7 @@ public class PriceEditorFormController extends SimpleFormController {
          *      QoS's, indicators and routing.
          */
 
-        Long customerUid = Long.parseLong(request.getParameter("customerName"));
+        Long customersPricesUid = Long.parseLong(request.getParameter("customersPricesUid"));
         String destination = request.getParameter("destination");
         String routing = arrayToString(request.getParameterValues("routes"), ",");
         String currency = request.getParameter("currency");
@@ -55,12 +55,11 @@ public class PriceEditorFormController extends SimpleFormController {
         } catch (ParseException ex) {
             Logger.getLogger(PriceEditorFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //double oldRate = Double.parseDouble(request.getParameter("oldRate"));
         double newRate = Double.parseDouble(request.getParameter("newRate"));
         String indicator = request.getParameter("indicator");
         String qos = request.getParameter("qos");
 
-        List<Price> prices = priceService.findByDestinationName(destination, customerUid);
+        List<Price> prices = priceService.findByDestinationName(destination, customersPricesUid);
         for (Price price : prices) {
             price.setCurrency(currency);
             price.setActivationDate(activationDate);

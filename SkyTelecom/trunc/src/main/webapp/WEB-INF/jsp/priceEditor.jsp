@@ -35,11 +35,19 @@
                             </select>
                             <div id="placeholder" style="position: absolute; z-index: 1;"></div>
                         </td>
-                        <td rowspan="11" style="vertical-align: top;">
+                        <td rowspan="12" style="vertical-align: top;">
                             <div class="checklistbox">
                                 <table id="id_areacodes">
                                 </table>
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Choose a customer's price</td>
+                        <td colspan="2">
+                            <select name="customersPricesUid" id="id_customersPricesUid" style="width: 265px;">
+                                <option value="-">Choose customer's price...</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>

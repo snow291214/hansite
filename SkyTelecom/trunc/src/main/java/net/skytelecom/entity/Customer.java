@@ -76,17 +76,15 @@ public class Customer implements Serializable {
     @Column(name = "Sender", length = 50)
     private String sender;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private Collection<CustomersPrices> customersPrices;
+
     @ForeignKey(name = "fk_customers_users")
     @JoinColumn(name = "UserUid", referencedColumnName = "Uid")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private Collection<Price> prices;
-    
-    @Transient
-    private List<Map<Integer, String>> priceTypes;
-
+   
     public Customer() {
     }
 
@@ -219,19 +217,18 @@ public class Customer implements Serializable {
         return "net.skytelecom.entity.Company[uid=" + uid + "]";
     }
 
-    public Collection<Price> getPrices() {
-        return prices;
+
+    /**
+     * @return the customersPrices
+     */
+    public Collection<CustomersPrices> getCustomersPrices() {
+        return customersPrices;
     }
 
-    public void setPrices(Collection<Price> prices) {
-        this.prices = prices;
-    }
-
-    public List<Map<Integer, String>> getPriceTypes() {
-        return priceTypes;
-    }
-
-    public void setPriceTypes(List<Map<Integer, String>> priceTypes) {
-        this.priceTypes = priceTypes;
+    /**
+     * @param customersPrices the customersPrices to set
+     */
+    public void setCustomersPrices(Collection<CustomersPrices> customersPrices) {
+        this.customersPrices = customersPrices;
     }
 }

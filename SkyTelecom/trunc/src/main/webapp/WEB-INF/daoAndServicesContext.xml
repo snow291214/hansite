@@ -63,4 +63,18 @@
         <property name="routingDao" ref="routingDao"/>
     </bean>
 
+    <bean id="customersPricesDao" class="net.skytelecom.dao.impl.CustomersPricesDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="customersPricesService" class="net.skytelecom.services.impl.CustomersPricesServiceImpl">
+        <constructor-arg>
+            <bean class="net.skytelecom.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="net.skytelecom.entity.CustomersPrices"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="customersPricesDao" ref="customersPricesDao"/>
+    </bean>
+
 </beans>

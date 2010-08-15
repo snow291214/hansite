@@ -32,28 +32,28 @@ public class PriceDaoImpl extends GenericDaoHibernate<Price, Long> implements IP
     }
 
     @Override
-    public List<String> findDistinctDestinations(Long customerUid) {
+    public List<String> findDistinctDestinations(Long customersPricesUid) {
         Query query = getSession().createQuery("SELECT distinct p.destination "
-                + "FROM Price p where p.customer.uid = :customerUid order by p.destination");
-        query.setParameter("customerUid", customerUid);
+                + "FROM Price p where p.customersPrices.uid = :customersPricesUid order by p.destination");
+        query.setParameter("customersPricesUid", customersPricesUid);
         List<String> result = query.list();
         return result;
     }
 
     @Override
-    public List<String> findAreaCodesByCustomerUid(Long customerUid) {
+    public List<String> findAreaCodesByCustomerUid(Long customersPricesUid) {
         Query query = getSession().createQuery("SELECT p.phoneCode "
-                + "FROM Price p where p.customer.uid = :customerUid");
-        query.setParameter("customerUid", customerUid);
+                + "FROM Price p where p.customersPrices.uid = :customersPricesUid");
+        query.setParameter("customersPricesUid", customersPricesUid);
         List<String> result = query.list();
         return result;
     }
     
     @Override
-    public List<Price> findByDestinationName(String destination, Long customerUid) {
+    public List<Price> findByDestinationName(String destination, Long customersPricesUid) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("destination", destination);
-        value.put("customerUid", customerUid);
+        value.put("customersPricesUid", customersPricesUid);
         List<Price> list = this.findByNamedQuery("Price.findByDestination", value);
         if (list == null || list.isEmpty()) {
             return null;

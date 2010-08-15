@@ -67,11 +67,8 @@
 
     <!-- Prices Controller -->
     <bean name="pricesController" class="net.skytelecom.web.controllers.PricesController" >
-        <property name="customerService">
-            <ref bean="customerService" />
-        </property>
-        <property name="priceService">
-            <ref bean="priceService" />
+        <property name="customersPricesService">
+            <ref bean="customersPricesService" />
         </property>
     </bean>
 
@@ -124,6 +121,12 @@
         </property>
         <property name="routingService">
             <ref bean="routingService" />
+        </property>
+        <property name="customersPricesService">
+            <ref bean="customersPricesService" />
+        </property>
+        <property name="customerService">
+            <ref bean="customerService" />
         </property>
     </bean>
 </beans>

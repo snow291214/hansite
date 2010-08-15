@@ -20,12 +20,12 @@ public class PriceServiceTest extends AbstractTransactionalDataSourceSpringConte
     public PriceServiceTest() {
     }
 
-    @Test
-    public void testFindByCustomer() {
-        Customer customer = customerService.get(1L);
-        assertNotNull(priceService.findByCustomer(customer));
-        logger.warn(customer.getPrices().size());
-    }
+//    @Test
+//    public void testFindByCustomer() {
+//        Customer customer = customerService.get(1L);
+//        assertNotNull(priceService.findByCustomer(customer));
+////        logger.warn(customer.getPrices().size());
+//    }
 
     @Test
     public void testFindDistinctDestinations() {
