@@ -37,12 +37,16 @@
                         </td>
                         <td>
                             <c:forEach var="customersPrices" items="${customer.customersPrices}" varStatus="status">
-                                <a href="prices.htm?customersPricesUid=${customersPrices.priceType.uid}">${customersPrices.priceType.name}. 
+                                <a href="prices.htm?customersPricesUid=${customersPrices.uid}">${customersPrices.priceType.name}.
                                     Area Codes Count: ${fn:length(customersPrices.prices)}</a> ||
+                                    <a href="newPriceUpload.htm?customersPricesUid=${customersPrices.uid}">
+                                        Upload a new price list
+                                    </a><br />
                             </c:forEach>
                         </td>
                         <td>
-                            <a href="customerEditor.htm?uid=${customer.uid}">Edit</a> || <a href="customerEditor.htm?uid=${customer.uid}">Upload Prices</a> || <a href="customerEditor.htm?uid=${customer.uid}">Create A Price List</a> ||
+                            <a href="customerEditor.htm?uid=${customer.uid}">Edit</a> ||
+                            <a href="customerEditor.htm?uid=${customer.uid}">Create A Price List</a> ||
                             <sec:authorize ifAnyGranted="ROLE_ADMIN">
                                 <a href="customerEditor.htm?action=delete&customerUid=${customer.uid}">Delete</a>
                             </sec:authorize>

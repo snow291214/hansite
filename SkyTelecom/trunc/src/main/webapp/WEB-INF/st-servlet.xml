@@ -25,6 +25,7 @@
                 <prop key="prices.htm">pricesController</prop>
                 <prop key="priceEditor.htm">priceEditorController</prop>
                 <prop key="ajax.htm">ajaxController</prop>
+                <prop key="newPriceUpload.htm">newPriceUploadController</prop>
             </props>
         </property>
     </bean>
@@ -33,5 +34,10 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
-
+          
+    <!--============================== File Upload ==========================-->
+    <!-- MultipartResolver for parsing file uploads, implementation for Commons FileUpload -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1024000000"/>
+    </bean>
 </beans>

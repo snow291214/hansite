@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import net.skytelecom.dao.IPriceDao;
 import net.skytelecom.entity.Customer;
+import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.Price;
 import org.hibernate.Query;
 
@@ -59,5 +60,13 @@ public class PriceDaoImpl extends GenericDaoHibernate<Price, Long> implements IP
             return null;
         }
         return list;
+    }
+
+    @Override
+    public int deleteByCustomersPrices(CustomersPrices customersPrices) {
+        Query query = getSession().createQuery("DELETE FROM Price p WHERE "
+                + "p.customersPrices = :customersPrices");
+        query.setParameter("customersPrices", customersPrices);
+        return query.executeUpdate();
     }
 }

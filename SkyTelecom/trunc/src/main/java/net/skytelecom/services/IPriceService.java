@@ -2,6 +2,7 @@ package net.skytelecom.services;
 
 import java.util.List;
 import net.skytelecom.entity.Customer;
+import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.Price;
 
 /**
@@ -23,4 +24,6 @@ public interface IPriceService extends IGenericService<Price, Long> {
     List<String> findAreaCodesByCustomerUid(Long customerUid);
 
     Price getOldDestinationRateByDestinationName(String destination, Long customerUid);
+
+    int deleteByCustomersPrices(CustomersPrices customersPrices);
 }

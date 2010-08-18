@@ -4,6 +4,7 @@ import java.util.List;
 import net.skytelecom.dao.IGenericDao;
 import net.skytelecom.dao.IPriceDao;
 import net.skytelecom.entity.Customer;
+import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.Price;
 import net.skytelecom.services.IPriceService;
 import org.springframework.transaction.annotation.Propagation;
@@ -65,5 +66,11 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
     @Override
     public Price getOldDestinationRateByDestinationName(String destination, Long customerUid) {
         return this.findByDestinationName(destination, customerUid).get(0);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Override
+    public int deleteByCustomersPrices(CustomersPrices customersPrices) {
+        return priceDao.deleteByCustomersPrices(customersPrices);
     }
 }

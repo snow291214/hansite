@@ -15,7 +15,7 @@ public class PriceDto implements Serializable {
 
     private static final long serialVersionUID = 898653213087953738L;
     private Long uid;
-    private int phoneCode;
+    private String phoneCode;
     private String destination;
     private String currency;
     private String priceIndicator;
@@ -68,11 +68,11 @@ public class PriceDto implements Serializable {
         this.uid = uid;
     }
 
-    public int getPhoneCode() {
+    public String getPhoneCode() {
         return phoneCode;
     }
 
-    public void setPhoneCode(int phoneCode) {
+    public void setPhoneCode(String phoneCode) {
         this.phoneCode = phoneCode;
     }
 

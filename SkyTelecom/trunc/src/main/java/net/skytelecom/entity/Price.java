@@ -56,8 +56,8 @@ public class Price implements Serializable {
     @Column(name = "Uid", nullable = false, columnDefinition = "INTEGER(11)")
     private Long uid;
     @Basic(optional = false)
-    @Column(name = "PhoneCode", nullable = false)
-    private int phoneCode;
+    @Column(name = "PhoneCode", nullable = false, length = 50)
+    private String phoneCode;
     @Column(name = "Destination", length = 200)
     private String destination;
     @Column(name = "Currency", length = 20)
@@ -112,7 +112,7 @@ public class Price implements Serializable {
         this.uid = uid;
     }
 
-    public Price(Long uid, int phoneCode) {
+    public Price(Long uid, String phoneCode) {
         this.uid = uid;
         this.phoneCode = phoneCode;
     }
@@ -125,11 +125,11 @@ public class Price implements Serializable {
         this.uid = uid;
     }
 
-    public int getPhoneCode() {
+    public String getPhoneCode() {
         return phoneCode;
     }
 
-    public void setPhoneCode(int phoneCode) {
+    public void setPhoneCode(String phoneCode) {
         this.phoneCode = phoneCode;
     }
 

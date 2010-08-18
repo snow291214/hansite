@@ -84,36 +84,6 @@
         </property>
     </bean>
 
-    <!--Price Editor Controller
-    <bean name="priceEditorFormController" class="net.skytelecom.web.forms.PriceEditorFormController" >
-        <property name="sessionForm">
-            <value>true</value>
-        </property>
-        <property name="commandName">
-            <value>priceDto</value>
-        </property>
-        <property name="commandClass">
-            <value>net.skytelecom.dto.PriceDto</value>
-        </property>
-        <property name="formView">
-            <value>priceEditor</value>
-        </property>
-        <property name="successView">
-            <value>priceEditor.htm</value>
-        </property>
-        <property name="priceService">
-            <ref bean="priceService" />
-        </property>
-        <property name="customerService">
-            <ref bean="customerService" />
-        </property>
-        <property name="userService">
-            <ref bean="userService" />
-        </property>
-    </bean>
--->
-
-
     <!-- Ajax Controller -->
     <bean name="ajaxController" class="net.skytelecom.web.controllers.AjaxController">
         <property name="priceService">
@@ -129,4 +99,15 @@
             <ref bean="customerService" />
         </property>
     </bean>
+
+    <!-- Upload New Price Controller -->
+    <bean name="newPriceUploadController" class="net.skytelecom.web.controllers.NewPriceUploadController" >
+        <property name="customersPricesService">
+            <ref bean="customersPricesService" />
+        </property>
+        <property name="priceService">
+            <ref bean="priceService" />
+        </property>
+    </bean>
+
 </beans>
