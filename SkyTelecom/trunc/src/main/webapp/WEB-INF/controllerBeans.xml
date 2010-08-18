@@ -110,4 +110,31 @@
         </property>
     </bean>
 
+    <!-- Price Type Editor Form Controller -->
+    <bean name="priceTypeEditorFormController" class="net.skytelecom.web.forms.priceTypeEditorFormController" >
+        <property name="sessionForm">
+            <value>true</value>
+        </property>
+        <property name="commandName">
+            <value>priceTypeDto</value>
+        </property>
+        <property name="commandClass">
+            <value>net.skytelecom.dto.PriceTypeDto</value>
+        </property>
+        <!--
+        <property name="validator">
+            <ref bean="registerTaskFormValidator"/>
+        </property>
+        -->
+        <property name="formView">
+            <value>priceTypeEditor</value>
+        </property>
+        <property name="successView">
+            <value>priceTypeEditor.htm</value>
+        </property>
+        <property name="priceTypeService">
+            <ref bean="priceTypeService" />
+        </property>
+    </bean>
+
 </beans>

@@ -33,7 +33,7 @@ public class PriceType implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Basic(optional = false)
     @Column(name = "Name", nullable = false, length = 100)
     private String name;
@@ -46,20 +46,20 @@ public class PriceType implements Serializable {
     public PriceType() {
     }
 
-    public PriceType(Integer uid) {
+    public PriceType(Long uid) {
         this.uid = uid;
     }
 
-    public PriceType(Integer uid, String name) {
+    public PriceType(Long uid, String name) {
         this.uid = uid;
         this.name = name;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

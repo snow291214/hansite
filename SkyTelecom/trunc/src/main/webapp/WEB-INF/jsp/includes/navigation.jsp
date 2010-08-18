@@ -3,7 +3,7 @@
 <div>
     <p>For User</p>
     <a href="customers.htm">Customers</a><br />
-    <a href="customersPrices.htm">Customers Prices</a><br/>
+    <a href="priceTypeEditor.htm">Add or edit type of price-list</a><br/>
     <a href="priceEditor.htm">Change price wizard</a><br/>
     <a href="logout.htm">Logout</a>
     <sec:authorize ifAnyGranted="ROLE_ADMIN">
