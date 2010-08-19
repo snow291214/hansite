@@ -22,4 +22,6 @@ public interface IPriceDao extends IGenericDao<Price, Long> {
     List<Price> findByDestinationName(String destination, Long customersPricesUid);
 
     int deleteByCustomersPrices(CustomersPrices customersPrices);
+
+    Price batchSave(Price price, Boolean flush);
 }

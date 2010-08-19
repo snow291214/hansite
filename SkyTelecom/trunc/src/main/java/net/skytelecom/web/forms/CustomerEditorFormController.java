@@ -27,7 +27,7 @@ public class CustomerEditorFormController extends SimpleFormController {
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
-        String uid = request.getParameter("uid");
+        String uid = request.getParameter("customerUid");
         CustomerDto customerDto = null;
         if(uid != null){
             Customer customer = customerService.get(Long.parseLong(uid));

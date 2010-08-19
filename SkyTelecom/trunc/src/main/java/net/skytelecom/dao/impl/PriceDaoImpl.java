@@ -49,7 +49,7 @@ public class PriceDaoImpl extends GenericDaoHibernate<Price, Long> implements IP
         List<String> result = query.list();
         return result;
     }
-    
+
     @Override
     public List<Price> findByDestinationName(String destination, Long customersPricesUid) {
         Map<String, Object> value = new HashMap<String, Object>();
@@ -68,5 +68,15 @@ public class PriceDaoImpl extends GenericDaoHibernate<Price, Long> implements IP
                 + "p.customersPrices = :customersPrices");
         query.setParameter("customersPrices", customersPrices);
         return query.executeUpdate();
+    }
+
+    @Override
+    public Price batchSave(Price price, Boolean flush) {
+        price = super.save(price);
+        if (flush) {
+            this.getSession().flush();
+            this.getSession().clear();
+        }
+        return price;
     }
 }

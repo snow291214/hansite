@@ -12,7 +12,7 @@
         <input type="hidden" name="customersPricesUid" value="${customersPricesUid}" />
         <form:form commandName="fileUpload" action="" enctype="multipart/form-data">
             <div id="container" >
-                <p>Имя файла: <input type="file" name="files" id="f1"/></p>
+                <p>Choose a csv-file: <input type="file" name="files" id="f1"/></p>
             </div>
             <input type="submit"  value="Сохранить"/>
         </form:form>

@@ -26,4 +26,6 @@ public interface IPriceService extends IGenericService<Price, Long> {
     Price getOldDestinationRateByDestinationName(String destination, Long customerUid);
 
     int deleteByCustomersPrices(CustomersPrices customersPrices);
+
+    Price batchSave(Price price, Boolean flush);
 }

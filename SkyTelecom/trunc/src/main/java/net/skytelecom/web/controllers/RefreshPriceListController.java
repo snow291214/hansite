@@ -11,6 +11,7 @@ import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.Price;
 import net.skytelecom.services.ICustomersPricesService;
 import net.skytelecom.services.IPriceService;
+import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,7 +25,7 @@ import ru.sgnhp.DateUtils;
  * ICQ: 164777039
  * Current date: 15.08.2010
  */
-public class NewPriceUploadController implements Controller {
+public class RefreshPriceListController implements Controller {
 
     private IPriceService priceService;
     private ICustomersPricesService customersPricesService;
@@ -32,24 +33,26 @@ public class NewPriceUploadController implements Controller {
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (!(request instanceof MultipartHttpServletRequest)) {
-            return new ModelAndView("newPriceUpload");
+            return new ModelAndView("refreshPriceList");
         }
         if (request.getParameter("customersPricesUid") == null) {
             return new ModelAndView("customers");
         }
+        Logger logger = Logger.getLogger("");
+        logger.warn(new Date());
         final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
         final Map files = multiRequest.getFileMap();
         Price price = null;
         if (files.size() > 0) {
             CustomersPrices customersPrices = customersPricesService.get(Long.parseLong(request.getParameter("customersPricesUid")));
-            priceService.deleteByCustomersPrices(customersPrices);
+            logger.warn(priceService.deleteByCustomersPrices(customersPrices));
             for (Object file : files.values()) {
                 InputStream inputStream = ((MultipartFile) file).getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
                 int i = 0;
                 while ((line = bufferedReader.readLine()) != null) {
-                    if (i == 0){
+                    if (i == 0) {
                         i++;
                         continue;
                     }
@@ -61,8 +64,8 @@ public class NewPriceUploadController implements Controller {
                     price.setRatePeak(Double.parseDouble(a[5]));
                     price.setRateOffpeak(Double.parseDouble(a[5]));
                     price.setQos(a[4]);
-                    //Date date = DateUtils.stringToDate(a[6], "dd.MM.yyyy");
-                    price.setActivationDate(null);
+                    Date date = DateUtils.stringToDate(a[6], "dd-MM-yyyy");
+                    price.setActivationDate(date);
                     price.setConnectRateOffpeak(null);
                     price.setConnectRatePeak(null);
                     price.setCurrency(a[7]);
@@ -74,10 +77,16 @@ public class NewPriceUploadController implements Controller {
                     price.setPriceIndicator("current");
                     price.setQuantPeak(1D);
                     price.setQuantOffpeak(1D);
-                    priceService.save(price);
+                    if (i % 50 == 0) {
+                        getPriceService().batchSave(price, true);
+                    } else {
+                        getPriceService().batchSave(price, false);
+                    }
+                    i++;
                 }
             }
         }
+        logger.warn(new Date());
         return new ModelAndView(new RedirectView("customers.htm"));
     }
 

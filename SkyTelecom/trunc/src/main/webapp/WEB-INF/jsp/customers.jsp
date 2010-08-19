@@ -19,8 +19,8 @@
             <table class="justTable">
                 <tr class="odd">
                     <td width="20%">Customer's name</td>
-                    <td width="60%">Customer's prices</td>
-                    <td width="20%">Actions</td>
+                    <td width="50%">Customer's prices</td>
+                    <td width="30%">Actions</td>
                 </tr>
                 <c:forEach var="customer" items="${customers}" varStatus="status">
                     <c:choose>
@@ -39,14 +39,14 @@
                             <c:forEach var="customersPrices" items="${customer.customersPrices}" varStatus="status">
                                 <a href="prices.htm?customersPricesUid=${customersPrices.uid}">${customersPrices.priceType.name}.
                                     Area Codes Count: ${fn:length(customersPrices.prices)}</a> ||
-                                    <a href="newPriceUpload.htm?customersPricesUid=${customersPrices.uid}">
-                                        Upload a new price list
+                                    <a href="refreshPriceList.htm?customersPricesUid=${customersPrices.uid}">
+                                        Refresh the price list
                                     </a><br />
                             </c:forEach>
                         </td>
                         <td>
-                            <a href="customerEditor.htm?uid=${customer.uid}">Edit</a> ||
-                            <a href="customerEditor.htm?uid=${customer.uid}">Create A Price List</a> ||
+                            <a href="customerEditor.htm?customerUid=${customer.uid}">Edit</a> ||
+                            <a href="priceListWizard.htm?customerUid=${customer.uid}">Create A Price List</a> ||
                             <sec:authorize ifAnyGranted="ROLE_ADMIN">
                                 <a href="customerEditor.htm?action=delete&customerUid=${customer.uid}">Delete</a>
                             </sec:authorize>

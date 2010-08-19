@@ -71,7 +71,7 @@ public class AjaxController implements Controller {
                 break;
             //In this case we are getting distinct destinations from the database
             case 2:
-                customerUid = Long.parseLong(request.getParameter("customerUid"));
+                customerUid = Long.parseLong(request.getParameter("customersPricesUid"));
                 String destinationName = request.getParameter("destinationName");
                 Price price = priceService.getOldDestinationRateByDestinationName(destinationName, customerUid);
                 List<Price> prices = priceService.findByDestinationName(destinationName, customerUid);

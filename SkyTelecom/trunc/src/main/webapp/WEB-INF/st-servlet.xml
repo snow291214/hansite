@@ -25,8 +25,9 @@
                 <prop key="prices.htm">pricesController</prop>
                 <prop key="priceEditor.htm">priceEditorController</prop>
                 <prop key="ajax.htm">ajaxController</prop>
-                <prop key="newPriceUpload.htm">newPriceUploadController</prop>
+                <prop key="refreshPriceList.htm">refreshPriceListController</prop>
                 <prop key="priceTypeEditor.htm">priceTypeEditorFormController</prop>
+                <prop key="priceListWizard.htm">priceListWizardController</prop>
             </props>
         </property>
     </bean>

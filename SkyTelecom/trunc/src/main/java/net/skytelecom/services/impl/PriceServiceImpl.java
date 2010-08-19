@@ -73,4 +73,10 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
     public int deleteByCustomersPrices(CustomersPrices customersPrices) {
         return priceDao.deleteByCustomersPrices(customersPrices);
     }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Override
+    public Price batchSave(Price price, Boolean flush) {
+        return priceDao.batchSave(price, flush);
+    }
 }

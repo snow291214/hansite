@@ -100,8 +100,8 @@
         </property>
     </bean>
 
-    <!-- Upload New Price Controller -->
-    <bean name="newPriceUploadController" class="net.skytelecom.web.controllers.NewPriceUploadController" >
+    <!-- Refresh Price Controller -->
+    <bean name="refreshPriceListController" class="net.skytelecom.web.controllers.RefreshPriceListController" >
         <property name="customersPricesService">
             <ref bean="customersPricesService" />
         </property>
@@ -134,6 +134,22 @@
         </property>
         <property name="priceTypeService">
             <ref bean="priceTypeService" />
+        </property>
+    </bean>
+
+    <!-- Refresh Price Controller -->
+    <bean name="priceListWizardController" class="net.skytelecom.web.controllers.PriceListWizardController" >
+        <property name="priceTypeService">
+            <ref bean="priceTypeService" />
+        </property>
+        <property name="customerService">
+            <ref bean="customerService" />
+        </property>
+        <property name="customersPricesService">
+            <ref bean="customersPricesService" />
+        </property>
+        <property name="priceService">
+            <ref bean="priceService" />
         </property>
     </bean>
 

@@ -66,7 +66,7 @@ $(function(){
         showIndicator();
         $.post('ajax.htm',{
             'destinationName':$(this).val(),
-            'customerUid':$('#id_customers').val(),
+            'customersPricesUid':$('#id_customersPricesUid').val(),
             'requestType':2
         }, function(xml){
             $(xml).find('Value').each(function(){
