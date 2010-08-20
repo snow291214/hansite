@@ -8,7 +8,7 @@
         <title>Login Page</title>
     </head>
     <body>
-        <form name='f' action='/j_spring_security_check' method='POST'>
+        <form name='f' action='j_spring_security_check' method='POST'>
             <table bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
                 <tr>
                     <td>User:</td><td><input type='text' name='j_username' value=''></td>

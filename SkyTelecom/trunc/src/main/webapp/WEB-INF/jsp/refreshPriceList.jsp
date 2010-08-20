@@ -6,7 +6,7 @@
 <html>
     <head>
         <%@ include file="/WEB-INF/jsp/includes/includeHead.jsp" %>
-        <title>New Price Upload Page</title>
+        <title>Update current price-list</title>
     </head>
     <body>
         <input type="hidden" name="customersPricesUid" value="${customersPricesUid}" />
@@ -14,7 +14,7 @@
             <div id="container" >
                 <p>Choose a csv-file: <input type="file" name="files" id="f1"/></p>
             </div>
-            <input type="submit"  value="Сохранить"/>
+            <input type="submit"  value="Update"/>
         </form:form>
     </body>
 </html>

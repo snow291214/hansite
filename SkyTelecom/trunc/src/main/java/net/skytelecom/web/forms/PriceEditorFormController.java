@@ -36,7 +36,7 @@ public class PriceEditorFormController extends SimpleFormController {
     private IUserService userService;
 
     @Override
-    public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e){
+    public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException e) {
         /*
          *  1. I have to get a customer by Uid from the database.
          *  2. I have to get a list of destinations by name.
@@ -48,7 +48,7 @@ public class PriceEditorFormController extends SimpleFormController {
         String destination = request.getParameter("destination");
         String routing = arrayToString(request.getParameterValues("routes"), ",");
         String currency = request.getParameter("currency");
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         Date activationDate = null;
         try {
             activationDate = df.parse(request.getParameter("activationDate"));
@@ -58,7 +58,7 @@ public class PriceEditorFormController extends SimpleFormController {
         double newRate = Double.parseDouble(request.getParameter("newRate"));
         String indicator = request.getParameter("indicator");
         String qos = request.getParameter("qos");
-
+        int i = 0;
         List<Price> prices = priceService.findByDestinationName(destination, customersPricesUid);
         for (Price price : prices) {
             price.setCurrency(currency);
@@ -68,7 +68,13 @@ public class PriceEditorFormController extends SimpleFormController {
             price.setQos(qos);
             price.setRouting(routing);
             price.setPriceIndicator(indicator);
-            priceService.save(price);
+            //priceService.save(price);
+            if (i % 50 == 0) {
+                priceService.batchSave(price, true);
+            } else {
+                priceService.batchSave(price, false);
+            }
+            i++;
         }
 
         return new ModelAndView(new RedirectView(getSuccessView()));

@@ -42,10 +42,13 @@ public class PricesEditorController implements Controller {
             List<Customer> customers = getCustomerService().findByUser(user);
             return new ModelAndView("priceEditor", "customers", customers);
         } else {
-            Long customerUid = Long.parseLong(request.getParameter("customerName"));
+            String routing = null;
+            Long customersPricesUid = Long.parseLong(request.getParameter("customersPricesUid"));
             String destination = request.getParameter("destination");
             String[] routes = request.getParameterValues("routes");
-            String routing = arrayToString(routes, ",");
+            if (routes != null) {
+                routing = arrayToString(routes, ",");
+            }
             String currency = request.getParameter("currency");
             DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
             Date activationDate = null;
@@ -58,8 +61,8 @@ public class PricesEditorController implements Controller {
             double newRate = Double.parseDouble(request.getParameter("newRate"));
             String indicator = request.getParameter("indicator");
             String qos = request.getParameter("qos");
-
-            List<Price> prices = priceService.findByDestinationName(destination, customerUid);
+            int i = 0;
+            List<Price> prices = priceService.findByDestinationName(destination, customersPricesUid);
             for (Price price : prices) {
                 price.setCurrency(currency);
                 price.setActivationDate(activationDate);
@@ -68,7 +71,12 @@ public class PricesEditorController implements Controller {
                 price.setQos(qos);
                 price.setRouting(routing);
                 price.setPriceIndicator(indicator);
-                priceService.save(price);
+                if (i % 50 == 0) {
+                    getPriceService().batchSave(price, true);
+                } else {
+                    getPriceService().batchSave(price, false);
+                }
+                i++;
             }
 
             return new ModelAndView(new RedirectView("priceEditor.htm"));

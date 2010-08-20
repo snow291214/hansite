@@ -21,7 +21,7 @@ import javax.persistence.Table;
  * Current date: 28.06.2010
  */
 @Entity
-@Table(name = "Users", catalog = "skyteldb", schema = "")
+@Table(name = "users", catalog = "skyteldb", schema = "")
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByUid", query = "SELECT u FROM User u WHERE u.uid = :uid"),

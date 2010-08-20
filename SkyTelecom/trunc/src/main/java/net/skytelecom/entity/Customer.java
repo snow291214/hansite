@@ -31,7 +31,7 @@ import org.hibernate.annotations.ForeignKey;
  */
 
 @Entity
-@Table(name = "Customers", catalog = "skyteldb", schema = "")
+@Table(name = "customers", catalog = "skyteldb", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
     @NamedQuery(name = "Customer.findByUid", query = "SELECT c FROM Customer c WHERE c.uid = :uid"),
