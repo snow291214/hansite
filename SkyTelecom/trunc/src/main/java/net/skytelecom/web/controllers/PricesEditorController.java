@@ -10,9 +10,11 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.skytelecom.entity.Customer;
+import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.Price;
 import net.skytelecom.entity.User;
 import net.skytelecom.services.ICustomerService;
+import net.skytelecom.services.ICustomersPricesService;
 import net.skytelecom.services.IPriceService;
 import net.skytelecom.services.IUserService;
 import net.skytelecom.web.forms.PriceEditorFormController;
@@ -31,11 +33,11 @@ public class PricesEditorController implements Controller {
 
     private IPriceService priceService;
     private ICustomerService customerService;
+    private ICustomersPricesService customersPricesService;
     private IUserService userService;
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        //Long customerUid = Long.parseLong(request.getParameter("customerName"));
         if (request.getParameter("customerName") == null) {
             final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
             User user = getUserService().findByUsername(currentUser).get(0);
@@ -78,7 +80,11 @@ public class PricesEditorController implements Controller {
                 }
                 i++;
             }
-
+            CustomersPrices customersPrices = customersPricesService.get(customersPricesUid);
+            request.setAttribute("customerUid", customersPrices.getCustomer().getUid());
+            request.setAttribute("customerName", customersPrices.getCustomer().getCustomerName());
+            request.setAttribute("customersPricesUid", customersPricesUid);
+            request.setAttribute("priceType", customersPrices.getPriceType().getName());
             return new ModelAndView(new RedirectView("priceEditor.htm"));
         }
     }
@@ -103,19 +109,39 @@ public class PricesEditorController implements Controller {
         this.priceService = priceService;
     }
 
-    public ICustomerService getCustomerService() {
-        return customerService;
-    }
-
-    public void setCustomerService(ICustomerService customerService) {
-        this.customerService = customerService;
-    }
-
     public IUserService getUserService() {
         return userService;
     }
 
     public void setUserService(IUserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * @return the customersPricesService
+     */
+    public ICustomersPricesService getCustomersPricesService() {
+        return customersPricesService;
+    }
+
+    /**
+     * @param customersPricesService the customersPricesService to set
+     */
+    public void setCustomersPricesService(ICustomersPricesService customersPricesService) {
+        this.customersPricesService = customersPricesService;
+    }
+
+    /**
+     * @return the customerService
+     */
+    public ICustomerService getCustomerService() {
+        return customerService;
+    }
+
+    /**
+     * @param customerService the customerService to set
+     */
+    public void setCustomerService(ICustomerService customerService) {
+        this.customerService = customerService;
     }
 }

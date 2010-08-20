@@ -13,7 +13,7 @@ function addComment(comment){
     if((comment!=null)&&(comment!=""))
         $("#id_SelectRight").attr('selectedIndex', '-1');
 
-        $('#id_SelectRight').append('<option value="' + comment + '">' + comment + '</option>');
+    $('#id_SelectRight').append('<option value="' + comment + '">' + comment + '</option>');
 }
 
 
@@ -127,14 +127,36 @@ $(function() {
 });
 
 $(function(){
+    //alert(new Date ($('id_activationDate').value));
     $('#id_newRate').keyup(function () {
+        /*
+         * I HATE A FUCKING JAVA-SCRIPT!!!111
+         */
+        var tempString = '';
+        var currentDate = new Date();
+        var dateString = $('#id_activationDate').val();
+        var s = dateString.split('.');
+        dateString = s[1]+'/'+s[0]+'/'+s[2];
+        var activationDate = new Date();
+        activationDate.setTime(Date.parse(dateString));
+        if(activationDate > currentDate){
+            tempString = 'Pending ';
+        }
+
+
         if($(this).val() > $('#id_oldRate').val()){
-            $("#id_indicator").val("increase");
+            $("#id_indicator").val(tempString +"increase");
+            $("#id_indicator").css("color","white");
+            $("#id_indicator").css("backgroundColor","red");
         }else{
-            $("#id_indicator").val("decrease");
+            $("#id_indicator").val(tempString +"decrease");
+            $("#id_indicator").css("color","white");
+            $("#id_indicator").css("backgroundColor","green");
         }
         if($(this).val() == $('#id_oldRate').val()){
             $("#id_indicator").val("current");
+            $("#id_indicator").css("color","black");
+            $("#id_indicator").css("backgroundColor","white");
         }
     });
 });

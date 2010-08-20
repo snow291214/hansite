@@ -79,6 +79,9 @@
         <property name="customerService">
             <ref bean="customerService" />
         </property>
+        <property name="customersPricesService">
+            <ref bean="customersPricesService" />
+        </property>
         <property name="userService">
             <ref bean="userService" />
         </property>

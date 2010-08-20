@@ -9,6 +9,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="css/style.css" title="style" />
+        <script language="javascript" type="text/javascript" src="scripts/date.js"></script>
         <script language="javascript" type="text/javascript" src="scripts/jquery-1.3.2.js"></script>
         <script language="javascript" type="text/javascript" src="scripts/jquery.numeric.js"></script>
         <link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css?random=20100719" media="screen"/>
@@ -27,13 +28,22 @@
                     <tr>
                         <td>Choose a customer</td>
                         <td colspan="2">
-                            <select name="customerName" id="id_customers" style="width: 265px;">
-                                <option value="-">Choose...</option>
-                                <c:forEach var="customer" items="${requestScope.customers}">
-                                    <option value="${customer.uid}">${customer.customerName}</option>
-                                </c:forEach>
-                            </select>
-                            <div id="placeholder" style="position: absolute; z-index: 1;"></div>
+                            <c:choose>
+                                <c:when test="${requestScope.customerUid != null}">
+                                    <select name="customerName" id="id_customers" style="width: 265px;">
+                                        <option value="${requestScope.customerUid}">${requestScope.customerName}</option>
+                                    </select>
+                                </c:when>
+                                <c:otherwise>
+                                    <select name="customerName" id="id_customers" style="width: 265px;">
+                                        <option value="-">Choose...</option>
+                                        <c:forEach var="customer" items="${requestScope.customers}">
+                                            <option value="${customer.uid}">${customer.customerName}</option>
+                                        </c:forEach>
+                                    </select>
+                                    <div id="placeholder" style="position: absolute; z-index: 1;"></div>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                         <td rowspan="12" style="vertical-align: top;">
                             <div class="checklistbox">
