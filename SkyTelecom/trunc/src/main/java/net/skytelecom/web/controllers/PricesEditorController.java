@@ -21,7 +21,6 @@ import net.skytelecom.web.forms.PriceEditorFormController;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -38,12 +37,17 @@ public class PricesEditorController implements Controller {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (request.getParameter("customerName") == null) {
+        if (request.getParameter("customersPricesUid") == null) {
             final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
             User user = getUserService().findByUsername(currentUser).get(0);
             List<Customer> customers = getCustomerService().findByUser(user);
             return new ModelAndView("priceEditor", "customers", customers);
         } else {
+            Object action = request.getParameter("action");
+            if ((request.getParameter("direct") != null) & (action == null)) {
+                Long customersPricesUid = Long.parseLong(request.getParameter("customersPricesUid"));
+                return createMAV(customersPricesUid);
+            }
             String routing = null;
             Long customersPricesUid = Long.parseLong(request.getParameter("customersPricesUid"));
             String destination = request.getParameter("destination");
@@ -80,12 +84,7 @@ public class PricesEditorController implements Controller {
                 }
                 i++;
             }
-            CustomersPrices customersPrices = customersPricesService.get(customersPricesUid);
-            request.setAttribute("customerUid", customersPrices.getCustomer().getUid());
-            request.setAttribute("customerName", customersPrices.getCustomer().getCustomerName());
-            request.setAttribute("customersPricesUid", customersPricesUid);
-            request.setAttribute("priceType", customersPrices.getPriceType().getName());
-            return new ModelAndView(new RedirectView("priceEditor.htm"));
+            return createMAV(customersPricesUid);
         }
     }
 
@@ -99,6 +98,18 @@ public class PricesEditorController implements Controller {
             }
         }
         return result.toString();
+    }
+
+    private ModelAndView createMAV(Long customersPricesUid) {
+        CustomersPrices customersPrices = customersPricesService.get(customersPricesUid);
+        ModelAndView mav = new ModelAndView("priceEditor");
+        mav.addObject("action", "save");
+        mav.addObject("customerUid", customersPrices.getCustomer().getUid());
+        mav.addObject("customerName", customersPrices.getCustomer().getCustomerName());
+        mav.addObject("customersPricesUid", customersPricesUid);
+        mav.addObject("priceType", customersPrices.getPriceType().getName());
+        mav.addObject("destinations", priceService.findDistinctDestinations(customersPricesUid));
+        return mav;
     }
 
     public IPriceService getPriceService() {

@@ -37,11 +37,19 @@
                         </td>
                         <td>
                             <c:forEach var="customersPrices" items="${customer.customersPrices}" varStatus="status">
-                                <a href="prices.htm?customersPricesUid=${customersPrices.uid}">${customersPrices.priceType.name}.
-                                    Area Codes Count: ${fn:length(customersPrices.prices)}</a> ||
-                                    <a href="refreshPriceList.htm?customersPricesUid=${customersPrices.uid}">
-                                        Refresh the price list
-                                    </a><br />
+                                <a href="prices.htm?customersPricesUid=${customersPrices.uid}">${customersPrices.priceType.name}</a> ||
+                                <a href="refreshPriceList.htm?customersPricesUid=${customersPrices.uid}">
+                                    Refresh the price list
+                                </a>
+                                ||
+                                <a href="priceEditor.htm?direct=true&customersPricesUid=${customersPrices.uid}">
+                                    Change rates wizard
+                                </a>
+                                ||
+                                <a href="downloadChangedPriceList.htm?customersPricesUid=${customersPrices.uid}">
+                                    Download changed price list
+                                </a>
+                                <br />
                             </c:forEach>
                         </td>
                         <td>

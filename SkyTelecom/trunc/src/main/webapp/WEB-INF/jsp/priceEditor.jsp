@@ -24,6 +24,7 @@
         <div class="empty">
             <c:set var="counter" value="0" scope="page" />
             <form name="Form1" method="post" action="">
+                <input name="action" type="hidden" value="${action}" />
                 <table bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
                     <tr>
                         <td>Choose a customer</td>
@@ -33,6 +34,7 @@
                                     <select name="customerName" id="id_customers" style="width: 265px;">
                                         <option value="${requestScope.customerUid}">${requestScope.customerName}</option>
                                     </select>
+                                    <a href="priceEditor.htm">Reset</a>
                                 </c:when>
                                 <c:otherwise>
                                     <select name="customerName" id="id_customers" style="width: 265px;">
@@ -55,17 +57,38 @@
                     <tr>
                         <td>Choose a customer's price</td>
                         <td colspan="2">
-                            <select name="customersPricesUid" id="id_customersPricesUid" style="width: 265px;">
-                                <option value="-">Choose customer's price...</option>
-                            </select>
+                            <c:choose>
+                                <c:when test="${requestScope.customerUid != null}">
+                                    <select name="customersPricesUid" id="id_customersPricesUid" style="width: 265px;">
+                                        <option value="${requestScope.customersPricesUid}">${requestScope.priceType}</option>
+                                    </select>
+                                </c:when>
+                                <c:otherwise>
+                                    <select name="customersPricesUid" id="id_customersPricesUid" style="width: 265px;">
+                                        <option value="-">Choose customer's price...</option>
+                                    </select>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>
                     <tr>
                         <td>Choose a destination</td>
                         <td colspan="2">
-                            <select name="destination" id="id_destinations" style="width: 265px;">
-                                <option value="-">Choose destination...</option>
-                            </select>
+                            <c:choose>
+                                <c:when test="${requestScope.customerUid != null}">
+                                    <select name="destination" id="id_destinations" style="width: 265px;">
+                                        <option value="-">Choose...</option>
+                                        <c:forEach var="destination" items="${requestScope.destinations}">
+                                            <option value="${destination}">${destination}</option>
+                                        </c:forEach>
+                                    </select>
+                                </c:when>
+                                <c:otherwise>
+                                    <select name="destination" id="id_destinations" style="width: 265px;">
+                                        <option value="-">Choose destination...</option>
+                                    </select>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>
                     <tr>

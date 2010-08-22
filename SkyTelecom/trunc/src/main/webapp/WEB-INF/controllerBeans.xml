@@ -156,4 +156,14 @@
         </property>
     </bean>
 
+    <!--Download Changed Price-List Controller -->
+    <bean name="downloadChangedPriceListController" class="net.skytelecom.web.controllers.DownloadChangedPriceListController" >
+        <property name="customersPricesServices">
+            <ref bean="customersPricesService" />
+        </property>
+        <property name="priceService">
+            <ref bean="priceService" />
+        </property>
+    </bean>
+
 </beans>

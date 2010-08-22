@@ -11,19 +11,22 @@
 	    diskExpiryThreadIntervalSeconds="120"
 	    memoryStoreEvictionPolicy="LRU"
             />
-    <cache
-    name="org.hibernate.cache.StandardQueryCache"
+    <cache name="org.hibernate.cache.StandardQueryCache"
     maxElementsInMemory="5"
     eternal="false"
     timeToLiveSeconds="120"
     overflowToDisk="true"/>
-    <cache
-    name="org.hibernate.cache.UpdateTimestampsCache"
+    <cache name="org.hibernate.cache.UpdateTimestampsCache"
     maxElementsInMemory="5000"
     eternal="true"
     overflowToDisk="true"/>
-    <cache
-    name="net.skytelecom.entity.Customer"
+    <cache name="net.skytelecom.entity.Customer"
+    maxElementsInMemory="100"
+    eternal="false"
+    timeToIdleSeconds="300"
+    timeToLiveSeconds="600"
+    overflowToDisk="true"/>
+    <cache name="net.skytelecom.entity.Price"
     maxElementsInMemory="10000"
     eternal="false"
     timeToIdleSeconds="300"

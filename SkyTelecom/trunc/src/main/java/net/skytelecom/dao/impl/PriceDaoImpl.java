@@ -1,6 +1,7 @@
 package net.skytelecom.dao.impl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.skytelecom.dao.IPriceDao;
@@ -8,6 +9,8 @@ import net.skytelecom.entity.Customer;
 import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.Price;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -71,12 +74,31 @@ public class PriceDaoImpl extends GenericDaoHibernate<Price, Long> implements IP
     }
 
     @Override
-    public Price batchSave(Price price, Boolean flush) {
-        price = super.save(price);
+    public void batchSave(Price price, Boolean flush) {
         if (flush) {
             this.getSession().flush();
             this.getSession().clear();
         }
-        return price;
+        this.save(price);
+    }
+
+    @Override
+    public void batchSaveEx(List<Price> prices) {
+        Session session1 = getHibernateTemplate().getSessionFactory().openSession();
+        Transaction tx = session1.beginTransaction();
+        log.debug("Session Flush mode is  " + session1.getFlushMode());
+        int count = 0;
+        for (Price price : prices) {
+            session1.save(price);
+            count++;
+            if (count % 30 == 0) { //20, same as the JDBC batch size
+                //flush a batch of inserts and release memory:
+                session1.flush();
+                session1.clear();
+            }
+
+        }
+        tx.commit();
+        session1.close();
     }
 }

@@ -27,5 +27,9 @@ public interface IPriceService extends IGenericService<Price, Long> {
 
     int deleteByCustomersPrices(CustomersPrices customersPrices);
 
-    Price batchSave(Price price, Boolean flush);
+    void batchSave(Price price, Boolean flush);
+
+    void batchSaveEx(List<Price> prices);
+
+    Price fillingPricePropertiesFromCsvLine(String line, CustomersPrices customersPrices);
 }

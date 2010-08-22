@@ -23,5 +23,7 @@ public interface IPriceDao extends IGenericDao<Price, Long> {
 
     int deleteByCustomersPrices(CustomersPrices customersPrices);
 
-    Price batchSave(Price price, Boolean flush);
+    void batchSave(Price price, Boolean flush);
+
+    void batchSaveEx(List<Price> prices);
 }

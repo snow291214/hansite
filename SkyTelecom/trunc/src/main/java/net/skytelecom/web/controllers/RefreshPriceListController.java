@@ -3,7 +3,9 @@ package net.skytelecom.web.controllers;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +19,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.sgnhp.DateUtils;
 
 /**
  *
@@ -38,52 +39,26 @@ public class RefreshPriceListController implements Controller {
         if (request.getParameter("customersPricesUid") == null) {
             return new ModelAndView("customers");
         }
-        Logger logger = Logger.getLogger("");
-        logger.warn(new Date());
+        Logger logger = Logger.getLogger("Prices");
         final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
         final Map files = multiRequest.getFileMap();
-        Price price = null;
         if (files.size() > 0) {
             CustomersPrices customersPrices = customersPricesService.get(Long.parseLong(request.getParameter("customersPricesUid")));
-            logger.warn(priceService.deleteByCustomersPrices(customersPrices));
+            logger.warn(priceService.deleteByCustomersPrices(customersPrices) + " records were deleted");
             for (Object file : files.values()) {
                 InputStream inputStream = ((MultipartFile) file).getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
+                String line = null;
                 int i = 0;
+                List<Price> prices = new ArrayList<Price>();
                 while ((line = bufferedReader.readLine()) != null) {
                     if (i == 0) {
                         i++;
                         continue;
                     }
-                    String[] a = line.split(";");
-                    price = new Price();
-                    price.setCustomersPrices(customersPrices);
-                    price.setPhoneCode(a[2].trim());
-                    price.setDestination(a[3]);
-                    price.setRatePeak(Double.parseDouble(a[5]));
-                    price.setRateOffpeak(Double.parseDouble(a[5]));
-                    price.setQos(a[4]);
-                    Date date = DateUtils.stringToDate(a[6], "dd-MM-yyyy");
-                    price.setActivationDate(date);
-                    price.setConnectRateOffpeak(null);
-                    price.setConnectRatePeak(null);
-                    price.setCurrency(a[7]);
-                    price.setFreeOffpeak(0D);
-                    price.setFreePeak(0D);
-                    price.setInitPeak(1D);
-                    price.setInitOffpeak(1D);
-                    price.setLastFieldIgnore(Short.parseShort("0"));
-                    price.setPriceIndicator("current");
-                    price.setQuantPeak(1D);
-                    price.setQuantOffpeak(1D);
-                    if (i % 50 == 0) {
-                        getPriceService().batchSave(price, true);
-                    } else {
-                        getPriceService().batchSave(price, false);
-                    }
-                    i++;
+                    prices.add(priceService.fillingPricePropertiesFromCsvLine(line, customersPrices));
                 }
+                getPriceService().batchSaveEx(prices);
             }
         }
         logger.warn(new Date());

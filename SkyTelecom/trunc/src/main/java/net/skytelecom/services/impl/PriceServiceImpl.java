@@ -1,5 +1,6 @@
 package net.skytelecom.services.impl;
 
+import java.util.Date;
 import java.util.List;
 import net.skytelecom.dao.IGenericDao;
 import net.skytelecom.dao.IPriceDao;
@@ -9,6 +10,7 @@ import net.skytelecom.entity.Price;
 import net.skytelecom.services.IPriceService;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.sgnhp.DateUtils;
 
 /**
  *
@@ -76,7 +78,39 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
-    public Price batchSave(Price price, Boolean flush) {
-        return priceDao.batchSave(price, flush);
+    public void batchSave(Price price, Boolean flush) {
+        priceDao.batchSave(price, flush);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Override
+    public void batchSaveEx(List<Price> prices) {
+        priceDao.batchSaveEx(prices);
+    }
+
+    @Override
+    public Price fillingPricePropertiesFromCsvLine(String line, CustomersPrices customersPrices) {
+        String[] a = line.split(";");
+        Price price = new Price();
+        price.setCustomersPrices(customersPrices);
+        price.setPhoneCode(a[2].trim());
+        price.setDestination(a[3]);
+        price.setRatePeak(Double.parseDouble(a[5]));
+        price.setRateOffpeak(Double.parseDouble(a[5]));
+        price.setQos(a[4]);
+        Date date = DateUtils.stringToDate(a[6], "dd-MM-yyyy");
+        price.setActivationDate(date);
+        price.setConnectRateOffpeak(0D);
+        price.setConnectRatePeak(0D);
+        price.setCurrency(a[7]);
+        price.setFreeOffpeak(0D);
+        price.setFreePeak(0D);
+        price.setInitPeak(1D);
+        price.setInitOffpeak(1D);
+        price.setLastFieldIgnore(Short.parseShort("0"));
+        price.setPriceIndicator("current");
+        price.setQuantPeak(1D);
+        price.setQuantOffpeak(1D);
+        return price;
     }
 }
