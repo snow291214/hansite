@@ -1,6 +1,5 @@
 package net.skytelecom.services.test;
 
-import net.skytelecom.entity.Customer;
 import net.skytelecom.services.ICustomerService;
 import net.skytelecom.services.IPriceService;
 import org.junit.Test;

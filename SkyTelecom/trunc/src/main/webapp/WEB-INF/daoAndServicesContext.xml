@@ -91,4 +91,6 @@
         <property name="customersPricesDao" ref="customersPricesDao"/>
     </bean>
 
+    <bean id="excelPriceListService" class="net.skytelecom.services.impl.ExcelPriceListServiceImpl"/>
+
 </beans>

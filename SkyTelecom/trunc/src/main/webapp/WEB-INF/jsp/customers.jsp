@@ -47,7 +47,11 @@
                                 </a>
                                 ||
                                 <a href="downloadChangedPriceList.htm?customersPricesUid=${customersPrices.uid}">
-                                    Download changed price list
+                                    Download CSV price list
+                                </a>
+                                ||
+                                <a href="downloadExcelPriceList.htm?customersPricesUid=${customersPrices.uid}">
+                                    Download Excel price list
                                 </a>
                                 <br />
                             </c:forEach>

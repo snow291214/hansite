@@ -29,6 +29,7 @@
                 <prop key="priceTypeEditor.htm">priceTypeEditorFormController</prop>
                 <prop key="priceListWizard.htm">priceListWizardController</prop>
                 <prop key="downloadChangedPriceList.htm">downloadChangedPriceListController</prop>
+                <prop key="downloadExcelPriceList.htm">downloadExcelPriceListController</prop>
             </props>
         </property>
     </bean>

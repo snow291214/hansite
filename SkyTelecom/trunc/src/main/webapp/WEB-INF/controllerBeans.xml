@@ -166,4 +166,14 @@
         </property>
     </bean>
 
+    <!--Download Excel Price-List Controller -->
+    <bean name="downloadExcelPriceListController" class="net.skytelecom.web.controllers.DownloadExcelPriceList" >
+        <property name="customersPricesServices">
+            <ref bean="customersPricesService" />
+        </property>
+        <property name="excelPriceListService">
+            <ref bean="excelPriceListService" />
+        </property>
+    </bean>
+
 </beans>
