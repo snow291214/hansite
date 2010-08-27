@@ -34,7 +34,6 @@ public class DownloadExcelPriceList implements Controller {
 
     private ICustomersPricesService customersPricesServices;
     private IExcelPriceListService excelPriceListService;
-    //static final private String CONTENT_TYPE_CHARSET = "UTF-8";
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -138,11 +137,6 @@ public class DownloadExcelPriceList implements Controller {
 
             i++;
         }
-
-//        FileOutputStream fileOut = new FileOutputStream(fp + "template-out.xls");
-//        wb.write(fileOut);
-//        fileOut.close();
-
         final ServletOutputStream out = response.getOutputStream();
         try {
             wb.write(out);
