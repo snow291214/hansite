@@ -15,7 +15,7 @@
         <link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css?random=20100719" media="screen"/>
         <script type="text/javascript" src="scripts/dhtmlgoodies_calendar.js?random=20100719"></script>
         <script type='text/javascript' src="scripts/priceEditor.js"></script>
-        <title>Price Editor</title>
+        <title><fmt:message key="priceEditor.view.title"/></title>
     </head>
     <body>
         <div class="navigation">
@@ -34,7 +34,7 @@
                                     <select name="customerName" id="id_customers" style="width: 265px;">
                                         <option value="${requestScope.customerUid}">${requestScope.customerName}</option>
                                     </select>
-                                    <a href="priceEditor.htm">Reset</a>
+                                    <a href="priceEditor.htm"><fmt:message key="priceEditor.view.chooseAnotherCustomer"/></a>
                                 </c:when>
                                 <c:otherwise>
                                     <select name="customerName" id="id_customers" style="width: 265px;">
@@ -94,7 +94,7 @@
                     <tr>
                         <td>Currency</td>
                         <td align="left">
-                            <input type="text" name="currency" id="id_currency" />
+                            <input type="text" name="currency" id="id_currency" readonly/>
                         </td>
                         <td>&nbsp;</td>
                     </tr>
@@ -131,7 +131,7 @@
                             <select name="qos" id="id_qos" style="width: 265px;">
                                 <option value="">-</option>
                                 <option value="Premium">Premium</option>
-                                <option value="Premium,CLI">Premium,CLI</option>
+                                <option value="Premium, CLI">Premium,CLI</option>
                                 <option value="Direct">Direct</option>
                                 <option value=" 0\60\60"> 0\60\60</option>
                             </select>
@@ -144,7 +144,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <select id="SelectLeft" style="width: 120px;">
+                            <select id="SelectLeft" style="width: 240px;">
                             </select>
                         </td>
                         <td align="center">
@@ -159,7 +159,7 @@
                     </tr>
                     <tr>
                         <td colspan="3" align="right">
-                            <input type="submit" value="Change Rate">
+                            <input type="submit" class="btn" value="Change Rate"/>
                         </td>
                     </tr>
                 </table>

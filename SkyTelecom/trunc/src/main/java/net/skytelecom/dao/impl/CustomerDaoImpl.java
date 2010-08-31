@@ -29,4 +29,15 @@ public class CustomerDaoImpl extends GenericDaoHibernate<Customer, Long> impleme
         }
         return list;
     }
+
+    @Override
+    public List<Customer> findByUserAndWithPriceList(User user) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("user", user);
+        List<Customer> list = this.findByNamedQuery("Customer.findByUserAndWithPriceList", value);
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list;
+    }
 }

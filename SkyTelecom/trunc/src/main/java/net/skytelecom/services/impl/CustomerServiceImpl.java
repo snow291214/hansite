@@ -36,4 +36,9 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer, Long> impl
     public List<Customer> findByUser(User user) {
         return customerDao.findByUser(user);
     }
+
+    @Override
+    public List<Customer> findByUserAndWithPriceList(User user) {
+        return customerDao.findByUserAndWithPriceList(user);
+    }
 }

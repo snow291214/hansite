@@ -19,8 +19,8 @@
             <table class="justTable">
                 <tr class="odd">
                     <td width="20%">Customer's name</td>
-                    <td width="50%">Customer's prices</td>
-                    <td width="30%">Actions</td>
+                    <td width="65%">Customer's prices</td>
+                    <td width="15%">Actions</td>
                 </tr>
                 <c:forEach var="customer" items="${customers}" varStatus="status">
                     <c:choose>
@@ -36,32 +36,45 @@
                             ${customer.customerName}
                         </td>
                         <td>
-                            <c:forEach var="customersPrices" items="${customer.customersPrices}" varStatus="status">
-                                <a href="prices.htm?customersPricesUid=${customersPrices.uid}">${customersPrices.priceType.name}</a> ||
-                                <a href="refreshPriceList.htm?customersPricesUid=${customersPrices.uid}">
-                                    Refresh the price list
-                                </a>
-                                ||
-                                <a href="priceEditor.htm?direct=true&customersPricesUid=${customersPrices.uid}">
-                                    Change rates wizard
-                                </a>
-                                ||
-                                <a href="downloadChangedPriceList.htm?customersPricesUid=${customersPrices.uid}">
-                                    Download CSV price list
-                                </a>
-                                ||
-                                <a href="downloadExcelPriceList.htm?customersPricesUid=${customersPrices.uid}">
-                                    Download Excel price list
-                                </a>
-                                <br />
-                            </c:forEach>
+                            <table class="justTableSmall">
+                                <c:forEach var="customersPrices" items="${customer.customersPrices}" varStatus="status">
+                                    <tr>
+                                        <td>
+                                            <a href="prices.htm?customersPricesUid=${customersPrices.uid}">
+                                                ${customersPrices.priceType.name}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="refreshPriceList.htm?customersPricesUid=${customersPrices.uid}">
+                                                Refresh the price list
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="priceEditor.htm?direct=true&customersPricesUid=${customersPrices.uid}">
+                                                Change rates wizard
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="downloadChangedPriceList.htm?customersPricesUid=${customersPrices.uid}">
+                                                Download CSV price list
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="downloadExcelPriceList.htm?customersPricesUid=${customersPrices.uid}">
+                                                Download Excel price list
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
                         </td>
                         <td>
                             <a href="customerEditor.htm?customerUid=${customer.uid}">Edit</a> ||
-                            <a href="priceListWizard.htm?customerUid=${customer.uid}">Create A Price List</a> ||
+                            <a href="priceListWizard.htm?customerUid=${customer.uid}">Create A Price List</a><!-- ||
                             <sec:authorize ifAnyGranted="ROLE_ADMIN">
                                 <a href="customerEditor.htm?action=delete&customerUid=${customer.uid}">Delete</a>
                             </sec:authorize>
+                                                                                                             -->
                         </td>
                     </tr>
                 </c:forEach>

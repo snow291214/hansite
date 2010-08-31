@@ -75,11 +75,11 @@
                     <tr>
                         <td>
                             <input type="submit" align="right" value="Save">
+                            <input type="button"  onclick="javascript:history.back();" value="Go back"/>
                         </td>
                         <td>&nbsp;</td>
                     </tr>
                 </table>
-                <p><a href="customers.htm">Go back</a></p>
             </form>
         </div>
     </body>

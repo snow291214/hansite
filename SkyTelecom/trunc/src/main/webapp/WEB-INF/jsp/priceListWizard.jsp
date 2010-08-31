@@ -24,10 +24,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Choose a csv-file</td>
+                    <td>Choose a *.csv file for uploading</td>
                     <td>
                         <p><input type="file" name="files" id="f1"/></p>
-                        <input type="submit"  value="Сохранить"/>
+                        <input type="submit"  value="Save"/>
+                        <input type="button"  onclick="javascript:history.back();" value="Go back"/>
                     </td>
                 </tr>
             </table>

@@ -40,7 +40,7 @@ public class PricesEditorController implements Controller {
         if (request.getParameter("customersPricesUid") == null) {
             final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
             User user = getUserService().findByUsername(currentUser).get(0);
-            List<Customer> customers = getCustomerService().findByUser(user);
+            List<Customer> customers = getCustomerService().findByUserAndWithPriceList(user);
             return new ModelAndView("priceEditor", "customers", customers);
         } else {
             Object action = request.getParameter("action");

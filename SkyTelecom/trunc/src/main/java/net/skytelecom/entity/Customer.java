@@ -42,6 +42,7 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "Customer.findByBlockedDestinations", query = "SELECT c FROM Customer c WHERE c.blockedDestinations = :blockedDestinations"),
     @NamedQuery(name = "Customer.findByLatestReport", query = "SELECT c FROM Customer c WHERE c.latestReport = :latestReport"),
     @NamedQuery(name = "Customer.findByUser", query = "SELECT c FROM Customer c WHERE c.user = :user order by c.customerName"),
+    @NamedQuery(name = "Customer.findByUserAndWithPriceList", query = "SELECT c FROM Customer c WHERE c.user = :user and c.customersPrices.size > 0 order by c.customerName"),
     @NamedQuery(name = "Customer.findBySender", query = "SELECT c FROM Customer c WHERE c.sender = :sender")})
 public class Customer implements Serializable {
     private static final long serialVersionUID = 7349895648469106755L;

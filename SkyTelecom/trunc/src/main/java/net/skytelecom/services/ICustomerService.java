@@ -13,4 +13,6 @@ import net.skytelecom.entity.User;
 public interface ICustomerService extends IGenericService<Customer, Long> {
 
     List<Customer> findByUser(User user);
+
+    List<Customer> findByUserAndWithPriceList(User user);
 }

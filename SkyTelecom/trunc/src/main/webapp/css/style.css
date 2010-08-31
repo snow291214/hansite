@@ -43,6 +43,20 @@ table.justTable td{
     padding: 5px;
 }
 
+table.justTableSmall {
+    font-family:arial;
+    border-width: 1px;
+    border-color: black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.justTableSmall td{
+    font-size:8pt;
+    border-style: none;
+    padding: 5px;
+}
+
 .checklistbox {
     overflow: -moz-scrollbars-vertical !important;
     overflow: auto;
@@ -57,4 +71,12 @@ table.justTable td{
     overflow-y: scroll;
     overflow-x: scroll;
     text-align: left;
+}
+
+input.btn {
+  color:black;
+  font: bold 'trebuchet ms',helvetica,sans-serif;
+  background-color:#fed;
+  border:2px solid;
+  border-color: black;
 }
