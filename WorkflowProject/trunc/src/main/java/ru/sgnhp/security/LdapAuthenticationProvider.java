@@ -24,7 +24,8 @@ public class LdapAuthenticationProvider implements AuthenticationProvider {
     private LdapAuthenticator authenticator;
     private IUserManagerService userManagerService;
 
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    @Override
+    public Authentication authenticate(Authentication authentication){
         // Authenticate, using the passed-in credentials.
         DirContextOperations authAdapter = authenticator.authenticate(authentication);
 
@@ -47,6 +48,7 @@ public class LdapAuthenticationProvider implements AuthenticationProvider {
         return ldapAuth;
     }
 
+    @Override
     public boolean supports(Class clazz) {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(clazz));
     }

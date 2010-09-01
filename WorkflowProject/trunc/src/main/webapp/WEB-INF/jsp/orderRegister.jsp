@@ -51,6 +51,14 @@
                                         <option value="2" >Распоряжение</option>
                                     </c:otherwise>
                                 </c:choose>
+                                <c:choose>
+                                    <c:when test="${status.value eq 2}">
+                                        <option value="3" selected>Служебная записка</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="3" >Служебная записка</option>
+                                    </c:otherwise>
+                                </c:choose>
                             </select>
                         </spring:bind>
                     </td>

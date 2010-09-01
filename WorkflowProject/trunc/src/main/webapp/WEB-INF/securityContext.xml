@@ -21,9 +21,9 @@
 
 <!-- -->
     <bean id="theFirstLdapServer" class="ru.sgnhp.security.SgnhpSpringSecurityContextSource">
-        <constructor-arg value="ldap://10.1.32.1:389/" />
-        <property name="principalPrefix" value="ASU\" />
-        <property name="networkPattern" value="10.16.13." />
+        <constructor-arg value="ldap://10.34.24.14:389/" />
+        <property name="principalPrefix" value="MDSRV\" />
+        <property name="networkPattern" value="10.34." />
     </bean>
 
     <bean id="theSecondLdapServer" class="ru.sgnhp.security.SgnhpSpringSecurityContextSource">

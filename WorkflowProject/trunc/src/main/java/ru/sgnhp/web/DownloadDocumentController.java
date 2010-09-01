@@ -21,6 +21,7 @@ public class DownloadDocumentController implements Controller{
     private IDocumentFileService documentFileService;
     static final private String CONTENT_TYPE_CHARSET = "charset=windows-1251";
     
+    @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String fileUid = request.getParameter("fileID");
 

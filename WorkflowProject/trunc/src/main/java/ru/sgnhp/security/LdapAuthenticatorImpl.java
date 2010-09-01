@@ -24,6 +24,7 @@ public class LdapAuthenticatorImpl implements LdapAuthenticator {
     private SgnhpSpringSecurityContextSource contextFactoryThird;
     private String principalPrefix = "";
 
+    @Override
     public DirContextOperations authenticate(Authentication authentication) {
 
         // Grab the username and password out of the authentication object.
@@ -34,7 +35,7 @@ public class LdapAuthenticatorImpl implements LdapAuthenticator {
         principalPrefix = contextFactoryFirst.getPrincipalPrefix();
 
         if ((remoteIpAddress.startsWith(contextFactoryFirst.getNetworkPattern()))
-                || (remoteIpAddress.startsWith("0:"))) {
+                || (remoteIpAddress.startsWith("127.0."))) {
             contextFactory = contextFactoryFirst;
             principalPrefix = contextFactoryFirst.getPrincipalPrefix();
         }
