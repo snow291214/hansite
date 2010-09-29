@@ -163,7 +163,7 @@
                         </td>
                     </tr>
                 </table>
-                <p><a href="customers.htm">Customers Page</a> || <a href="customers.htm">Main Page</a></p>
+                <p><a href="customers.htm">Customers Page</a></p>
             </form>
         </div>
     </body>

@@ -19,7 +19,8 @@
             <table class="justTable">
                 <tr class="odd">
                     <td width="20%">Customer's name</td>
-                    <td width="65%">Customer's prices</td>
+                    <td width="10%">Main currency</td>
+                    <td width="55%">Customer's prices</td>
                     <td width="15%">Actions</td>
                 </tr>
                 <c:forEach var="customer" items="${customers}" varStatus="status">
@@ -34,6 +35,9 @@
                     <tr class="${rowColor}">
                         <td>
                             ${customer.customerName}
+                        </td>
+                        <td>
+                            ${customer.currency}
                         </td>
                         <td>
                             <table class="justTableSmall">

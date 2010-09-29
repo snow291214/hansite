@@ -2,7 +2,7 @@ package net.skytelecom.services;
 
 import java.io.IOException;
 import net.skytelecom.entity.CustomersPrices;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
  *
@@ -12,5 +12,5 @@ import org.apache.poi.ss.usermodel.Workbook;
  */
 public interface IExcelPriceListService {
 
-    Workbook generateOutputPriceList(CustomersPrices customersPrices) throws IOException, Exception;
+    HSSFWorkbook generateOutputPriceList(CustomersPrices customersPrices) throws IOException, Exception;
 }

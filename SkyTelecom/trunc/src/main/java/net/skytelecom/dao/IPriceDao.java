@@ -1,5 +1,6 @@
 package net.skytelecom.dao;
 
+import java.util.Date;
 import java.util.List;
 import net.skytelecom.entity.Customer;
 import net.skytelecom.entity.CustomersPrices;
@@ -20,6 +21,8 @@ public interface IPriceDao extends IGenericDao<Price, Long> {
     List<String> findAreaCodesByCustomerUid(Long customersPricesUid);
 
     List<Price> findByDestinationName(String destination, Long customersPricesUid);
+
+    List<Price> findByExpiredDate(Date date);
 
     int deleteByCustomersPrices(CustomersPrices customersPrices);
 

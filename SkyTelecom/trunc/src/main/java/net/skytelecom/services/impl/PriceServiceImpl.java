@@ -93,16 +93,16 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
         String[] a = line.split(";");
         Price price = new Price();
         price.setCustomersPrices(customersPrices);
-        price.setPhoneCode(a[2].trim());
-        price.setDestination(a[3]);
-        price.setRatePeak(Double.parseDouble(a[5]));
-        price.setRateOffpeak(Double.parseDouble(a[5]));
-        price.setQos(a[4]);
-        Date date = DateUtils.stringToDate(a[6], "dd-MM-yyyy");
+        price.setPhoneCode(a[0].trim());
+        price.setDestination(a[1]);
+        price.setRatePeak(Double.parseDouble(a[4]));
+        price.setRateOffpeak(Double.parseDouble(a[4]));
+        price.setQos(a[9]);
+        Date date = DateUtils.stringToDate(a[8], "dd.MM.yyyy");
         price.setActivationDate(date);
         price.setConnectRateOffpeak(0D);
         price.setConnectRatePeak(0D);
-        price.setCurrency(a[7]);
+        price.setCurrency(a[2]);
         price.setFreeOffpeak(0D);
         price.setFreePeak(0D);
         price.setInitPeak(1D);
@@ -112,5 +112,22 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
         price.setQuantPeak(1D);
         price.setQuantOffpeak(1D);
         return price;
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
+    public List<Price> findByExpiredDate(Date date) {
+        return priceDao.findByExpiredDate(date);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Override
+    public void changePriceIndicator() {
+        Date currentDate = DateUtils.nowDate();
+        List<Price> prices = priceDao.findByExpiredDate(currentDate);
+        for(Price price : prices){
+            price.setPriceIndicator("current");
+            priceDao.save(price);
+        }
     }
 }

@@ -60,13 +60,13 @@ public class PriceListWizardController implements Controller {
                     InputStream inputStream = ((MultipartFile) file).getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     String line;
-                    int i = 0;
+                    //int i = 0;
                     List<Price> prices = new ArrayList<Price>();
                     while ((line = bufferedReader.readLine()) != null) {
-                        if (i == 0) {
-                            i++;
-                            continue;
-                        }
+//                        if (i == 0) {
+//                            i++;
+//                            continue;
+//                        }
                         prices.add(priceService.fillingPricePropertiesFromCsvLine(line, customersPrices));
                     }
                     getPriceService().batchSaveEx(prices);

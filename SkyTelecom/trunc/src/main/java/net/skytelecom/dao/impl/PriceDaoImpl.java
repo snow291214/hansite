@@ -1,5 +1,6 @@
 package net.skytelecom.dao.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -100,5 +101,16 @@ public class PriceDaoImpl extends GenericDaoHibernate<Price, Long> implements IP
         }
         tx.commit();
         session1.close();
+    }
+
+    @Override
+    public List<Price> findByExpiredDate(Date date) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("activationDate", date);
+        List<Price> list = this.findByNamedQuery("Price.findByExpiredDate", value);
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list;
     }
 }

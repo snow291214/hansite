@@ -1,5 +1,6 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,56 +20,40 @@
                     <tr>
                         <td>Customer Name</td>
                         <spring:bind path="customerDto.customerName">
-                            <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
+                            <td><input type="text" name="${status.expression}" value="${status.value}"  style="width : 250px"/></td>
                             <td><font color="red">${status.errorMessage}</font></td>
                         </spring:bind>
                     </tr>
                     <tr>
-                        <td>Customer ID</td>
-                        <spring:bind path="customerDto.customerId">
-                            <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
-                            <td><font color="red">${status.errorMessage}</font></td>
-                        </spring:bind>
-                    </tr>
-                    <tr>
-                        <td>Currency</td>
+                        <td>Main Currency</td>
                         <spring:bind path="customerDto.currency">
-                            <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
+                            <td>
+                                <select name="${status.expression}" style="width : 250px">
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'USD'}">
+                                            <OPTION VALUE='USD' selected>United States of America, Dollars</OPTION>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <OPTION VALUE='USD'>United States of America, Dollars</OPTION>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'EUR'}">
+                                            <OPTION VALUE='EUR' selected>Euro Member Countries, Euro</OPTION>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <OPTION VALUE='EUR'>Euro Member Countries, Euro</OPTION>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </select>
+                            </td>
                             <td><font color="red">${status.errorMessage}</font></td>
                         </spring:bind>
                     </tr>
                     <tr>
-                        <td>Contact Person</td>
+                        <td>Account Manager</td>
                         <spring:bind path="customerDto.contactPerson">
-                            <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
-                            <td><font color="red">${status.errorMessage}</font></td>
-                        </spring:bind>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <spring:bind path="customerDto.email">
-                            <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
-                            <td><font color="red">${status.errorMessage}</font></td>
-                        </spring:bind>
-                    </tr>
-                    <tr>
-                        <td>Hidden Email</td>
-                        <spring:bind path="customerDto.hiddenEmail">
-                            <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
-                            <td><font color="red">${status.errorMessage}</font></td>
-                        </spring:bind>
-                    </tr>
-                    <tr>
-                        <td>Email Subject</td>
-                        <spring:bind path="customerDto.emailSubject">
-                            <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
-                            <td><font color="red">${status.errorMessage}</font></td>
-                        </spring:bind>
-                    </tr>
-                    <tr>
-                        <td>Sender</td>
-                        <spring:bind path="customerDto.sender">
-                            <td><input type="text" name="${status.expression}" value="${status.value}" /></td>
+                            <td><input type="text" name="${status.expression}" value="${status.value}"  style="width : 250px"/></td>
                             <td><font color="red">${status.errorMessage}</font></td>
                         </spring:bind>
                     </tr>

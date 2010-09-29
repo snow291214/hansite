@@ -45,6 +45,8 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "Price.findByInitOffpeak", query = "SELECT p FROM Price p WHERE p.initOffpeak = :initOffpeak"),
     @NamedQuery(name = "Price.findByQuantOffpeak", query = "SELECT p FROM Price p WHERE p.quantOffpeak = :quantOffpeak"),
     @NamedQuery(name = "Price.findByActivationDate", query = "SELECT p FROM Price p WHERE p.activationDate = :activationDate"),
+    @NamedQuery(name = "Price.findByExpiredDate", query = "SELECT p FROM Price p WHERE p.activationDate <"
+    + " :activationDate and p.priceIndicator <> 'current' "),
     @NamedQuery(name = "Price.findByQos", query = "SELECT p FROM Price p WHERE p.qos = :qos")
 })
 public class Price implements Serializable {

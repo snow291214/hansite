@@ -1,5 +1,6 @@
 package net.skytelecom.services;
 
+import java.util.Date;
 import java.util.List;
 import net.skytelecom.entity.Customer;
 import net.skytelecom.entity.CustomersPrices;
@@ -32,4 +33,8 @@ public interface IPriceService extends IGenericService<Price, Long> {
     void batchSaveEx(List<Price> prices);
 
     Price fillingPricePropertiesFromCsvLine(String line, CustomersPrices customersPrices);
+
+    List<Price> findByExpiredDate(Date date);
+
+    public void changePriceIndicator();
 }

@@ -27,9 +27,14 @@ public class PriceServiceTest extends AbstractTransactionalDataSourceSpringConte
 //    }
 
     @Test
-    public void testFindDistinctDestinations() {
-        assertNotNull(priceService.findDistinctDestinations(1L));
+    public void testChangePriceIndicator(){
+        priceService.changePriceIndicator();
     }
+
+//    @Test
+//    public void testFindDistinctDestinations() {
+//        assertNotNull(priceService.findDistinctDestinations(1L));
+//    }
 
     @Override
     protected String[] getConfigLocations() {
