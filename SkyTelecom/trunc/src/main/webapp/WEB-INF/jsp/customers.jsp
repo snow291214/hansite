@@ -50,7 +50,7 @@
                                         </td>
                                         <td>
                                             <a href="refreshPriceList.htm?customersPricesUid=${customersPrices.uid}">
-                                                Refresh the price list
+                                                Update the price list
                                             </a>
                                         </td>
                                         <td>
