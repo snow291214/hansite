@@ -31,18 +31,18 @@
                                 <select name="${status.expression}" style="width : 250px">
                                     <c:choose>
                                         <c:when test="${status.value eq 'USD'}">
-                                            <OPTION VALUE='USD' selected>United States of America, Dollars</OPTION>
+                                            <OPTION VALUE='USD' selected>USD</OPTION>
                                         </c:when>
                                         <c:otherwise>
-                                            <OPTION VALUE='USD'>United States of America, Dollars</OPTION>
+                                            <OPTION VALUE='USD'>USD</OPTION>
                                         </c:otherwise>
                                     </c:choose>
                                     <c:choose>
                                         <c:when test="${status.value eq 'EUR'}">
-                                            <OPTION VALUE='EUR' selected>Euro Member Countries, Euro</OPTION>
+                                            <OPTION VALUE='EUR' selected>EUR</OPTION>
                                         </c:when>
                                         <c:otherwise>
-                                            <OPTION VALUE='EUR'>Euro Member Countries, Euro</OPTION>
+                                            <OPTION VALUE='EUR'>EUR</OPTION>
                                         </c:otherwise>
                                     </c:choose>
                                 </select>
@@ -53,8 +53,62 @@
                     <tr>
                         <td>Account Manager</td>
                         <spring:bind path="customerDto.contactPerson">
+                            <!--
                             <td><input type="text" name="${status.expression}" value="${status.value}"  style="width : 250px"/></td>
                             <td><font color="red">${status.errorMessage}</font></td>
+                            -->
+                            <td>
+                                <select name="${status.expression}" style="width : 250px">
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'Elmira Tameeva'}">
+                                            <OPTION VALUE='Elmira Tameeva' selected>Elmira Tameeva</OPTION>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <OPTION VALUE='Elmira Tameeva'>Elmira Tameeva</OPTION>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'Irina Bondarchuk'}">
+                                            <OPTION VALUE='Irina Bondarchuk' selected>Irina Bondarchuk</OPTION>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <OPTION VALUE='Irina Bondarchuk'>Irina Bondarchuk</OPTION>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'Eugene Nisterenko'}">
+                                            <OPTION VALUE='Eugene Nisterenko' selected>Eugene Nisterenko</OPTION>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <OPTION VALUE='Eugene Nisterenko'>Eugene Nisterenko</OPTION>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'Alexander Sokotuhov'}">
+                                            <OPTION VALUE='Alexander Sokotuhov' selected>Alexander Sokotuhov</OPTION>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <OPTION VALUE='Alexander Sokotuhov'>Alexander Sokotuhov</OPTION>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'Viktor Mikheev'}">
+                                            <OPTION VALUE='Viktor Mikheev' selected>Viktor Mikheev</OPTION>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <OPTION VALUE='Viktor Mikheev'>Viktor Mikheev</OPTION>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'Gregory Veh'}">
+                                            <OPTION VALUE='Gregory Veh' selected>Gregory Veh</OPTION>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <OPTION VALUE='Gregory Veh'>Gregory Veh</OPTION>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </select>
+                            </td>
                         </spring:bind>
                     </tr>
                     <tr>

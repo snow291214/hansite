@@ -49,20 +49,31 @@ public class RefreshPriceListController implements Controller {
                 InputStream inputStream = ((MultipartFile) file).getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line = null;
-                int i = 0;
+                String[] a;
                 List<Price> prices = new ArrayList<Price>();
                 while ((line = bufferedReader.readLine()) != null) {
-                    if (i == 0) {
-                        i++;
-                        continue;
+                    a = line.split(";");
+                    if (a.length > 0) {
+                        if (!this.isNumeric(a[2])) {
+                            continue;
+                        }
+                        prices.add(priceService.fillingPricePropertiesFromCsvLine(a, customersPrices));
                     }
-                    prices.add(priceService.fillingPricePropertiesFromCsvLine(line, customersPrices));
                 }
                 getPriceService().batchSaveEx(prices);
             }
         }
         logger.warn(new Date());
         return new ModelAndView(new RedirectView("customers.htm"));
+    }
+
+    private boolean isNumeric(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     /**

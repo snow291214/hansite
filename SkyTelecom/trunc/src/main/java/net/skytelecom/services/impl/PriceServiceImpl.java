@@ -89,20 +89,19 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
     }
 
     @Override
-    public Price fillingPricePropertiesFromCsvLine(String line, CustomersPrices customersPrices) {
-        String[] a = line.split(";");
+    public Price fillingPricePropertiesFromCsvLine(String[] a, CustomersPrices customersPrices) {
         Price price = new Price();
         price.setCustomersPrices(customersPrices);
-        price.setPhoneCode(a[0].trim());
-        price.setDestination(a[1]);
-        price.setRatePeak(Double.parseDouble(a[4]));
-        price.setRateOffpeak(Double.parseDouble(a[4]));
-        price.setQos(a[9]);
-        Date date = DateUtils.stringToDate(a[8], "dd.MM.yyyy");
+        price.setPhoneCode(a[2].trim());
+        price.setDestination(a[3]);
+        price.setRatePeak(Double.parseDouble(a[5]));
+        price.setRateOffpeak(Double.parseDouble(a[5]));
+        price.setQos(a[4]);
+        Date date = DateUtils.stringToDate(a[6], "dd.MM.yyyy");
         price.setActivationDate(date);
         price.setConnectRateOffpeak(0D);
         price.setConnectRatePeak(0D);
-        price.setCurrency(a[2]);
+        price.setCurrency(a[7]);
         price.setFreeOffpeak(0D);
         price.setFreePeak(0D);
         price.setInitPeak(1D);

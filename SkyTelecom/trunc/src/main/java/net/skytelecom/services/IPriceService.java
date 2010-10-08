@@ -32,7 +32,7 @@ public interface IPriceService extends IGenericService<Price, Long> {
 
     void batchSaveEx(List<Price> prices);
 
-    Price fillingPricePropertiesFromCsvLine(String line, CustomersPrices customersPrices);
+    Price fillingPricePropertiesFromCsvLine(String[] a, CustomersPrices customersPrices);
 
     List<Price> findByExpiredDate(Date date);
 

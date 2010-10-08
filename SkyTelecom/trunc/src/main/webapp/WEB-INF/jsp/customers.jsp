@@ -12,6 +12,7 @@
         <title>Customers View Page</title>
     </head>
     <body>
+        <c:if test="${param.result != null}"><script language="javascript">window.alert('Done!');</script></c:if>
         <div class="navigation">
             <%@ include file="/WEB-INF/jsp/includes/navigation.jsp" %>
         </div>
@@ -45,7 +46,7 @@
                                     <tr>
                                         <td>
                                             <a href="prices.htm?customersPricesUid=${customersPrices.uid}">
-                                                ${customersPrices.priceType.name}
+                                                ${customersPrices.priceType.name} (View)
                                             </a>
                                         </td>
                                         <td>
@@ -78,7 +79,7 @@
                             <sec:authorize ifAnyGranted="ROLE_ADMIN">
                                 <a href="customerEditor.htm?action=delete&customerUid=${customer.uid}">Delete</a>
                             </sec:authorize>
-                                                                                                             -->
+                            -->
                         </td>
                     </tr>
                 </c:forEach>

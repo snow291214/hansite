@@ -49,7 +49,7 @@ public class PriceListWizardController implements Controller {
             String priceTypeUid = request.getParameter("priceTypeUid");
             final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
             final Map files = multiRequest.getFileMap();
-            Price price = null;
+            //Price price = null;
             if (files.size() > 0) {
                 CustomersPrices customersPrices = new CustomersPrices();
                 customersPrices.setCustomer(customerService.get(Long.parseLong(customerUid)));
@@ -60,21 +60,34 @@ public class PriceListWizardController implements Controller {
                     InputStream inputStream = ((MultipartFile) file).getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     String line;
-                    //int i = 0;
+                    String[] a;
                     List<Price> prices = new ArrayList<Price>();
                     while ((line = bufferedReader.readLine()) != null) {
-//                        if (i == 0) {
-//                            i++;
-//                            continue;
-//                        }
-                        prices.add(priceService.fillingPricePropertiesFromCsvLine(line, customersPrices));
+                        a = line.split(";");
+                        if (a.length > 0) {
+                            if (!this.isNumeric(a[2])) {
+                                continue;
+                            }
+                            prices.add(priceService.fillingPricePropertiesFromCsvLine(a, customersPrices));
+                        }
                     }
                     getPriceService().batchSaveEx(prices);
                 }
-                return new ModelAndView(new RedirectView("customers.htm"));
+                ModelAndView mav = new ModelAndView(new RedirectView("customers.htm"));
+                mav.addObject("result", "done");
+                return mav;
             }
         }
         return new ModelAndView("priceListWizard");
+    }
+
+    private boolean isNumeric(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     /**
