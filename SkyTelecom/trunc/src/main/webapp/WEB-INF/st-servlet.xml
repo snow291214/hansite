@@ -83,4 +83,28 @@ Expression	 Meaning
 0 11 11 11 11 ?	 Fire every November 11th at 11:11am.
  -->
 
+    <!-- Changing indicators of prices -->
+
+    <bean id="changePriceIndicator" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="priceService"/>
+        <property name="targetMethod" value="changePriceIndicator"/>
+    </bean>
+
+    <bean id="changePriceIndicatorTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="changePriceIndicator"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 00 19 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="changePriceIndicatorTrigger" />
+            </list>
+        </property>
+    </bean>
+
 </beans>

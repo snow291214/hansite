@@ -34,7 +34,9 @@
                                     <select name="customerName" id="id_customers" style="width: 265px;">
                                         <option value="${requestScope.customerUid}">${requestScope.customerName}</option>
                                     </select>
-                                    <a href="priceEditor.htm"><fmt:message key="priceEditor.view.chooseAnotherCustomer"/></a>
+                                    <a href="priceEditor.htm">
+                                        <fmt:message key="priceEditor.view.chooseAnotherCustomer"/>
+                                    </a>
                                 </c:when>
                                 <c:otherwise>
                                     <select name="customerName" id="id_customers" style="width: 265px;">
@@ -101,7 +103,7 @@
                     <tr>
                         <td>Actual date</td>
                         <td align="left">
-                            <input type="text" name="activationDate" id="id_activationDate" readonly/>
+                            <input type="text" name="activationDate" id="id_activationDate" value="${requestScope.pendingDate}" readonly/>
                             <input type="button" value="Date" onclick="displayCalendar(document.forms[0].activationDate,'dd.mm.yyyy',this)">
                         </td>
                         <td>&nbsp;</td>
@@ -116,7 +118,7 @@
                     <tr>
                         <td align="left">Enter a new value</td>
                         <td>
-                            <input type="text" name="newRate" id="id_newRate"/>
+                            <input type="text" name="newRate" id="id_newRate" onchange="enable();"/>
                         </td>
                     </tr>
                     <tr>
@@ -159,11 +161,19 @@
                     </tr>
                     <tr>
                         <td colspan="3" align="right">
-                            <input type="submit" class="btn" value="Change Rate"/>
+                            <a href="customers.htm">Customers Page</a>
+                            ||
+                            <a href="downloadExcelPriceList.htm?customersPricesUid=${requestScope.customersPricesUid}">
+                                Download Excel price list
+                            </a>
+                            ||
+                            <a href="downloadExcelPriceList.htm?customersPricesUid=${requestScope.customersPricesUid}&changesOnly=yes">
+                                Download changes of the price list
+                            </a>
+                            <input type="submit" class="btn" value="Change Rate" id="buttonChangeRate"/>
                         </td>
                     </tr>
                 </table>
-                <p><a href="customers.htm">Customers Page</a></p>
             </form>
         </div>
     </body>

@@ -28,7 +28,7 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "customers_prices", catalog = "skyteldb", schema = "")
 @NamedQueries({
     @NamedQuery(name = "CustomersPrices.findAll", query = "SELECT c FROM CustomersPrices c"),
-    @NamedQuery(name = "CustomersPrices.findByUid", query = "SELECT c FROM CustomersPrices c WHERE c.uid = :uid")//,
+    @NamedQuery(name = "CustomersPrices.findByUid", query = "SELECT c FROM CustomersPrices c WHERE c.uid = :uid")
 //    @NamedQuery(name = "CustomersPrices.findByCustomerUid", query = "SELECT c FROM CustomersPrices c WHERE c.customerUid = :customerUid"),
 //    @NamedQuery(name = "CustomersPrices.findByPriceTypeUid", query = "SELECT c FROM CustomersPrices c WHERE c.priceTypeUid = :priceTypeUid")
 })

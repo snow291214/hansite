@@ -1,7 +1,5 @@
 package net.skytelecom.web.controllers;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -10,9 +8,9 @@ import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.Price;
 import net.skytelecom.services.ICustomersPricesService;
 import net.skytelecom.services.IPriceService;
+import net.skytelecom.utils.DateUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-import ru.sgnhp.DateUtils;
 
 /**
  *

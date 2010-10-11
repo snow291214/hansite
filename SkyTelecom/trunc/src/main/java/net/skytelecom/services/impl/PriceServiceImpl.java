@@ -8,9 +8,9 @@ import net.skytelecom.entity.Customer;
 import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.entity.Price;
 import net.skytelecom.services.IPriceService;
+import net.skytelecom.utils.DateUtils;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.sgnhp.DateUtils;
 
 /**
  *
@@ -97,7 +97,7 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
         price.setRatePeak(Double.parseDouble(a[5]));
         price.setRateOffpeak(Double.parseDouble(a[5]));
         price.setQos(a[4]);
-        Date date = DateUtils.stringToDate(a[6], "dd.MM.yyyy");
+        Date date = DateUtils.stringToDate(a[6], "dd-MM-yyyy");
         price.setActivationDate(date);
         price.setConnectRateOffpeak(0D);
         price.setConnectRatePeak(0D);

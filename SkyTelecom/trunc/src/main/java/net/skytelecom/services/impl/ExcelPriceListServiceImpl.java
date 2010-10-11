@@ -188,6 +188,9 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
         cell.setCellStyle(cellStyleDateHeader);
         cell.setCellValue(new Date());
 
+        if (customersPrices.getPrices() == null) {
+            return wb;
+        }
         //Data page
         sheet = wb.getSheetAt(1);
         sheet.setDisplayGridlines(false);

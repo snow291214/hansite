@@ -1,5 +1,6 @@
 package net.skytelecom.services.impl;
 
+import java.util.List;
 import net.skytelecom.dao.ICustomersPricesDao;
 import net.skytelecom.dao.IGenericDao;
 import net.skytelecom.entity.CustomersPrices;
@@ -26,5 +27,10 @@ public class CustomersPricesServiceImpl extends GenericServiceImpl<CustomersPric
 
     public void setCustomersPricesDao(ICustomersPricesDao customersPricesDao) {
         this.customersPricesDao = customersPricesDao;
+    }
+
+    @Override
+    public CustomersPrices findByChangedIndicators(Long uid) {
+        return this.getCustomersPricesDao().findByChangedIndicators(uid);
     }
 }

@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.skytelecom.entity.CustomersPrices;
 import net.skytelecom.services.ICustomersPricesService;
 import net.skytelecom.services.IExcelPriceListService;
+import net.skytelecom.utils.DateUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-import ru.sgnhp.DateUtils;
 
 /**
  *
@@ -28,7 +28,12 @@ public class DownloadExcelPriceList implements Controller {
             return new ModelAndView("customers");
         }
         Long customersPricesUid = Long.parseLong(request.getParameter("customersPricesUid"));
-        CustomersPrices customersPrices = getCustomersPricesServices().get(customersPricesUid);
+        CustomersPrices customersPrices;
+        if (request.getParameter("changesOnly") != null) {
+            customersPrices = this.customersPricesServices.findByChangedIndicators(customersPricesUid);
+        }else{
+            customersPrices = getCustomersPricesServices().get(customersPricesUid);
+        }
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=\"update_"
                 + DateUtils.nowString("dd.MM.yyyy") + "_" + customersPrices.getCustomer().getCustomerName()

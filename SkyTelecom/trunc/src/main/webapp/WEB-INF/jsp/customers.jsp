@@ -67,6 +67,9 @@
                                         <td>
                                             <a href="downloadExcelPriceList.htm?customersPricesUid=${customersPrices.uid}">
                                                 Download Excel price list
+                                            </a><br/>
+                                            <a href="downloadExcelPriceList.htm?customersPricesUid=${customersPrices.uid}&changesOnly=yes">
+                                                Download changes of the price list
                                             </a>
                                         </td>
                                     </tr>

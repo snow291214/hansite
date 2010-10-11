@@ -1,5 +1,6 @@
 package net.skytelecom.dao;
 
+import java.util.List;
 import net.skytelecom.entity.CustomersPrices;
 
 /**
@@ -9,4 +10,6 @@ import net.skytelecom.entity.CustomersPrices;
  * Current date: 15.08.2010
  */
 public interface ICustomersPricesDao extends IGenericDao<CustomersPrices, Long> {
+
+    CustomersPrices findByChangedIndicators(Long uid);
 }

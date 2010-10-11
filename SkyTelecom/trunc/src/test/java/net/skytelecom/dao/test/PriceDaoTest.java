@@ -1,9 +1,9 @@
 package net.skytelecom.dao.test;
 
 import net.skytelecom.dao.IPriceDao;
+import net.skytelecom.utils.DateUtils;
 import org.junit.Test;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
-import ru.sgnhp.DateUtils;
 
 /**
  *

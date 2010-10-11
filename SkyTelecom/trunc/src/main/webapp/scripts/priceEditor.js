@@ -9,6 +9,10 @@ function clear(){
     $('#id_indicator').val("");
 }
 
+function enable() {
+    $('#buttonChangeRate').attr('disabled', false);
+}
+
 function addComment(comment){
     if((comment!=null)&&(comment!=""))
         $("#id_SelectRight").attr('selectedIndex', '-1');

@@ -1,4 +1,4 @@
-package ru.sgnhp;
+package net.skytelecom.utils;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -9,8 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DateUtils {
-
-    private static final String DATE_FORMAT_NOW = "dd.MM.yyyy";
 
     public static Date stringToDate(String dateString, String dateFormat) {
         Date date = null;
@@ -32,9 +30,9 @@ public class DateUtils {
         return sdf.format(cal.getTime());
     }
 
-    public static String increaseDateString(int value) {
+    public static String increaseDateString(String dateFormat, int value) {
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         cal.add(Calendar.DATE, value);
         return sdf.format(cal.getTime());
     }

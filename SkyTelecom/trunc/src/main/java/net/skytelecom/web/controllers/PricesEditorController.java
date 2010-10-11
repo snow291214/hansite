@@ -17,10 +17,12 @@ import net.skytelecom.services.ICustomerService;
 import net.skytelecom.services.ICustomersPricesService;
 import net.skytelecom.services.IPriceService;
 import net.skytelecom.services.IUserService;
+import net.skytelecom.utils.DateUtils;
 import net.skytelecom.web.forms.PriceEditorFormController;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+
 
 /**
  *
@@ -41,11 +43,13 @@ public class PricesEditorController implements Controller {
             final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
             User user = getUserService().findByUsername(currentUser).get(0);
             List<Customer> customers = getCustomerService().findByUserAndWithPriceList(user);
+            request.setAttribute("pendingDate", DateUtils.increaseDateString("dd.MM.yyyy", 7));
             return new ModelAndView("priceEditor", "customers", customers);
         } else {
             Object action = request.getParameter("action");
             if ((request.getParameter("direct") != null) & (action == null)) {
                 Long customersPricesUid = Long.parseLong(request.getParameter("customersPricesUid"));
+                request.setAttribute("pendingDate", DateUtils.increaseDateString("dd.MM.yyyy", 7));
                 return createMAV(customersPricesUid);
             }
             String routing = null;
@@ -84,6 +88,7 @@ public class PricesEditorController implements Controller {
                 }
                 i++;
             }
+            request.setAttribute("pendingDate", DateUtils.increaseDateString("dd.MM.yyyy", 7));
             return createMAV(customersPricesUid);
         }
     }

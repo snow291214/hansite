@@ -23,7 +23,7 @@
     </appender>
 
     <appender name="LOG-FILE-APPENDER" class="org.apache.log4j.FileAppender">
-        <param name="file" value="../workflow.log"/>
+        <param name="file" value="../skytelecom.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} [%5p] %c %m at %l%n"/>
         </layout>
@@ -36,7 +36,7 @@
     </category>
 
     <category name="org.hibernate.SQL">
-        <priority value="WARN"/>
+        <priority value="DEBUG"/>
     </category>
 
     <category name="org.springframework">
@@ -44,7 +44,7 @@
     </category>
 
     <root>
-        <priority value="DEBUG"/>
+        <priority value="WARN"/>
         <appender-ref ref="CONSOLE-WARN"/>
         <appender-ref ref="CONSOLE-DEBUG"/>
         <appender-ref ref="LOG-FILE-APPENDER"/>
