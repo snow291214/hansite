@@ -112,4 +112,14 @@ public class PriceDaoImpl extends GenericDaoHibernate<Price, Long> implements IP
         }
         return list;
     }
+
+    @Override
+    public int deleteByDestinationName(String destinationName, Long customersPricesUid) {
+        Query query = getSession().createQuery("DELETE FROM Price p WHERE "
+                + "p.destination = :destinationName and "
+                +"p.customersPrices.uid = :customersPricesUid");
+        query.setParameter("destinationName", destinationName);
+        query.setParameter("customersPricesUid", customersPricesUid);
+        return query.executeUpdate();
+    }
 }

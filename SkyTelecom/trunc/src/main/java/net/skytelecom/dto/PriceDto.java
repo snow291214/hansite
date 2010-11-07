@@ -2,6 +2,7 @@ package net.skytelecom.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import net.skytelecom.entity.Customer;
 import net.skytelecom.entity.Price;
 
@@ -34,8 +35,14 @@ public class PriceDto implements Serializable {
     private Short lastFieldIgnore;
     private Customer customer;
     private Double newRate;
+    private List<String> destinations;
+    private Long customersPricesUid;
 
     public PriceDto() {
+    }
+
+    public PriceDto(List<String> destinations) {
+        this.destinations = destinations;
     }
 
     public PriceDto(Price price) {
@@ -218,5 +225,33 @@ public class PriceDto implements Serializable {
 
     public void setNewRate(Double newRate) {
         this.newRate = newRate;
+    }
+
+    /**
+     * @return the destinations
+     */
+    public List<String> getDestinations() {
+        return destinations;
+    }
+
+    /**
+     * @param destinations the destinations to set
+     */
+    public void setDestinations(List<String> destinations) {
+        this.destinations = destinations;
+    }
+
+    /**
+     * @return the customerPriceUid
+     */
+    public Long getCustomersPricesUid() {
+        return customersPricesUid;
+    }
+
+    /**
+     * @param customerPriceUid the customerPriceUid to set
+     */
+    public void setCustomersPricesUid(Long customersPricesUid) {
+        this.customersPricesUid = customersPricesUid;
     }
 }

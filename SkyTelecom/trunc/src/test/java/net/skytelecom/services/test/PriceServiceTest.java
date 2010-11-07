@@ -1,5 +1,6 @@
 package net.skytelecom.services.test;
 
+import java.util.List;
 import net.skytelecom.services.ICustomerService;
 import net.skytelecom.services.IPriceService;
 import org.junit.Test;
@@ -25,16 +26,15 @@ public class PriceServiceTest extends AbstractTransactionalDataSourceSpringConte
 //        assertNotNull(priceService.findByCustomer(customer));
 ////        logger.warn(customer.getPrices().size());
 //    }
-
-    @Test
-    public void testChangePriceIndicator(){
-        priceService.changePriceIndicator();
-    }
-
 //    @Test
-//    public void testFindDistinctDestinations() {
-//        assertNotNull(priceService.findDistinctDestinations(1L));
+//    public void testChangePriceIndicator(){
+//        priceService.changePriceIndicator();
 //    }
+    @Test
+    public void testFindDistinctDestinations() {
+        List<String> destinations = priceService.findDistinctDestinations(40L);
+        assert (destinations.size() > 0);
+    }
 
     @Override
     protected String[] getConfigLocations() {

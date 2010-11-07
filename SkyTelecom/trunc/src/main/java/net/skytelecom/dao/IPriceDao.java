@@ -26,6 +26,8 @@ public interface IPriceDao extends IGenericDao<Price, Long> {
 
     int deleteByCustomersPrices(CustomersPrices customersPrices);
 
+    int deleteByDestinationName(String destinationName, Long customersPricesUid);
+
     void batchSave(Price price, Boolean flush);
 
     void batchSaveEx(List<Price> prices);

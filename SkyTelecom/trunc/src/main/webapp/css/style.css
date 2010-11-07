@@ -46,15 +46,18 @@ table.justTable td{
 table.justTableSmall {
     font-family:arial;
     border-width: 1px;
-    border-color: black;
     border-collapse: collapse;
     width: 100%;
 }
 
 table.justTableSmall td{
     font-size:8pt;
-    border-style: none;
+    border-style: dashed;
     padding: 5px;
+    border-right-color: silver;
+    border-left-color: silver;
+    border-bottom-color: silver;
+    border-top-color: silver;
 }
 
 .checklistbox {
@@ -68,6 +71,22 @@ table.justTableSmall td{
     padding: 10px;
     height: 515px;
     width: 180px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    text-align: left;
+}
+
+.destinations {
+    overflow: -moz-scrollbars-vertical !important;
+    overflow: auto;
+    border-top: 1px solid silver;
+    border-left: 1px solid silver;
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    background-color: white;
+    padding: 10px;
+    height: 500px;
+    width: 500px;
     overflow-y: scroll;
     overflow-x: scroll;
     text-align: left;

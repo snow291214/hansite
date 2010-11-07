@@ -12,5 +12,5 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  */
 public interface IExcelPriceListService {
 
-    HSSFWorkbook generateOutputPriceList(CustomersPrices customersPrices) throws IOException, Exception;
+    HSSFWorkbook generateOutputPriceList(CustomersPrices customersPrices, String fp) throws IOException, Exception;
 }

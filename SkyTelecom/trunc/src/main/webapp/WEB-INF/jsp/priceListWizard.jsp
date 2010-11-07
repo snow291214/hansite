@@ -17,6 +17,7 @@
                     <td width="200px">Choose a type of price list</td>
                     <td>
                         <select name="priceTypeUid" style="width: 265px;">
+                            <option value="-1">Choose a type of price</option>
                             <c:forEach var="priceType" items="${priceTypes}" varStatus="status">
                                 <option value="${priceType.uid}">${priceType.name}</option>
                             </c:forEach>

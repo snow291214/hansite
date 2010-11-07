@@ -30,11 +30,11 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 public class ExcelPriceListServiceImpl implements IExcelPriceListService {
 
     @Override
-    public HSSFWorkbook generateOutputPriceList(CustomersPrices customersPrices) throws IOException, Exception {
-        Properties pro = new Properties();
-        pro.load(this.getClass().getResourceAsStream("/general.properties"));
-        String fp = pro.getProperty("reports.reportFilesFolder");
-        InputStream inp = new FileInputStream(fp + "template.xls");
+    public HSSFWorkbook generateOutputPriceList(CustomersPrices customersPrices, String fp) throws IOException, Exception {
+//        Properties pro = new Properties();
+//        pro.load(this.getClass().getResourceAsStream("/general.properties"));
+//        String fp = pro.getProperty("reports.reportFilesFolder");
+        InputStream inp = new FileInputStream(fp + "/template.xls");
         HSSFWorkbook wb = (HSSFWorkbook) WorkbookFactory.create(inp);
         CreationHelper createHelper = wb.getCreationHelper();
         Row row = null;
@@ -232,6 +232,10 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
                 cell.setCellValue(price.getActivationDate());
                 cell.setCellStyle(createCellBorder(cellStyleDateIncrease));
 
+                cell = row.createCell(7);
+                cell.setCellValue(price.getRouting());
+                cell.setCellStyle(createCellBorder(cellStyleGeneral));
+
             } else if (price.getPriceIndicator().toUpperCase().contains("DECREASE")) {
                 cell = row.createCell(0);
                 cell.setCellType(Cell.CELL_TYPE_STRING);
@@ -266,6 +270,11 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
                 cell = row.createCell(6);
                 cell.setCellValue(price.getActivationDate());
                 cell.setCellStyle(createCellBorder(cellStyleDateDecrease));
+
+                cell = row.createCell(7);
+                cell.setCellValue(price.getRouting());
+                cell.setCellStyle(createCellBorder(cellStyleGeneral));
+
             } else if (price.getPriceIndicator().toUpperCase().contains("TERMINATED")) {
                 cell = row.createCell(0);
                 cell.setCellType(Cell.CELL_TYPE_STRING);
@@ -300,6 +309,11 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
                 cell = row.createCell(6);
                 cell.setCellValue(price.getActivationDate());
                 cell.setCellStyle(createCellBorder(cellStyleDateTerminated));
+
+                cell = row.createCell(7);
+                cell.setCellValue(price.getRouting());
+                cell.setCellStyle(createCellBorder(cellStyleGeneral));
+
             } else if (price.getPriceIndicator().toUpperCase().contains("NEW")) {
                 cell = row.createCell(0);
                 cell.setCellType(Cell.CELL_TYPE_STRING);
@@ -334,6 +348,11 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
                 cell = row.createCell(6);
                 cell.setCellValue(price.getActivationDate());
                 cell.setCellStyle(createCellBorder(cellStyleDateNew));
+
+                cell = row.createCell(7);
+                cell.setCellValue(price.getRouting());
+                cell.setCellStyle(createCellBorder(cellStyleGeneral));
+
             } else if (price.getPriceIndicator().toUpperCase().contains("CURRENT")) {
                 cell = row.createCell(0);
                 cell.setCellType(Cell.CELL_TYPE_STRING);
@@ -368,6 +387,10 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
                 cell = row.createCell(6);
                 cell.setCellValue(price.getActivationDate());
                 cell.setCellStyle(createCellBorder(cellStyleDate));
+
+                cell = row.createCell(7);
+                cell.setCellValue(price.getRouting());
+                cell.setCellStyle(createCellBorder(cellStyleGeneral));
             }
             i++;
         }

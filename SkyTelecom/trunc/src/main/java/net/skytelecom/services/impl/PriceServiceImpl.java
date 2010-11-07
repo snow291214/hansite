@@ -48,8 +48,8 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
-    public List<String> findDistinctDestinations(Long customerUid) {
-        return priceDao.findDistinctDestinations(customerUid);
+    public List<String> findDistinctDestinations(Long customerPricesUid) {
+        return priceDao.findDistinctDestinations(customerPricesUid);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
@@ -88,6 +88,7 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
         priceDao.batchSaveEx(prices);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public Price fillingPricePropertiesFromCsvLine(String[] a, CustomersPrices customersPrices) {
         Price price = new Price();
@@ -124,9 +125,17 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
     public void changePriceIndicator() {
         Date currentDate = DateUtils.nowDate();
         List<Price> prices = priceDao.findByExpiredDate(currentDate);
-        for(Price price : prices){
+        for (Price price : prices) {
             price.setPriceIndicator("current");
             priceDao.save(price);
+        }
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Override
+    public void deleteByDestinationsNames(String[] destinations, Long customersPricesUid) {
+        for (String destination : destinations) {
+            priceDao.deleteByDestinationName(destination, customersPricesUid);
         }
     }
 }

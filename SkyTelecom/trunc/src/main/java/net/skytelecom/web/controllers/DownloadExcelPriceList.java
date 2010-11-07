@@ -31,16 +31,20 @@ public class DownloadExcelPriceList implements Controller {
         CustomersPrices customersPrices;
         if (request.getParameter("changesOnly") != null) {
             customersPrices = this.customersPricesServices.findByChangedIndicators(customersPricesUid);
-        }else{
+            response.setHeader("Content-Disposition", "attachment; filename=\"update_"
+                    + DateUtils.nowString("dd.MM.yyyy") + "_" + customersPrices.getCustomer().getCustomerName()
+                    + "_" + customersPrices.getPriceType().getName() + "(changes).xls"
+                    + "\"");
+        } else {
             customersPrices = getCustomersPricesServices().get(customersPricesUid);
+            response.setHeader("Content-Disposition", "attachment; filename=\"update_"
+                    + DateUtils.nowString("dd.MM.yyyy") + "_" + customersPrices.getCustomer().getCustomerName()
+                    + "_" + customersPrices.getPriceType().getName() + "(full).xls"
+                    + "\"");
         }
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=\"update_"
-                + DateUtils.nowString("dd.MM.yyyy") + "_" + customersPrices.getCustomer().getCustomerName()
-                + "_" + customersPrices.getPriceType().getName() + ".xls"
-                + "\"");
 
-        HSSFWorkbook wb = excelPriceListService.generateOutputPriceList(customersPrices);
+        HSSFWorkbook wb = excelPriceListService.generateOutputPriceList(customersPrices, request.getSession().getServletContext().getRealPath("files"));
         final ServletOutputStream out = response.getOutputStream();
         try {
             wb.write(out);

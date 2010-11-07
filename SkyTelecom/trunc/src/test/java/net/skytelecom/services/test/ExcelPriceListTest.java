@@ -27,16 +27,16 @@ public class ExcelPriceListTest extends AbstractTransactionalDataSourceSpringCon
     }
 
     @Test
-    public void testGenerateExcelPriceList() throws IOException, Exception {
-        CustomersPrices customersPrices = customersPricesService.get(5L);
-        Properties pro = new Properties();
-        pro.load(this.getClass().getResourceAsStream("/general.properties"));
-        String fp = pro.getProperty("reports.reportFilesFolder");
-        HSSFWorkbook wb = excelPriceListService.generateOutputPriceList(customersPrices);
-        FileOutputStream fileOut = new FileOutputStream(fp + "template-out.xls");
-        wb.write(fileOut);
-        fileOut.close();
-    }
+//    public void testGenerateExcelPriceList() throws IOException, Exception {
+//        CustomersPrices customersPrices = customersPricesService.get(5L);
+//        Properties pro = new Properties();
+//        pro.load(this.getClass().getResourceAsStream("/general.properties"));
+//        String fp = pro.getProperty("reports.reportFilesFolder");
+//        HSSFWorkbook wb = excelPriceListService.generateOutputPriceList(customersPrices);
+//        FileOutputStream fileOut = new FileOutputStream(fp + "template-out.xls");
+//        wb.write(fileOut);
+//        fileOut.close();
+//    }
 
     @Override
     protected String[] getConfigLocations() {

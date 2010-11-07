@@ -57,6 +57,9 @@
                                         <td>
                                             <a href="priceEditor.htm?direct=true&customersPricesUid=${customersPrices.uid}">
                                                 Change rates wizard
+                                            </a><br/>
+                                            <a href="deleteDestinations.htm?customersPricesUid=${customersPrices.uid}">
+                                                Delete Destinations
                                             </a>
                                         </td>
                                         <td>
@@ -77,12 +80,9 @@
                             </table>
                         </td>
                         <td>
-                            <a href="customerEditor.htm?customerUid=${customer.uid}">Edit</a> ||
-                            <a href="priceListWizard.htm?customerUid=${customer.uid}">Create A Price List</a><!-- ||
-                            <sec:authorize ifAnyGranted="ROLE_ADMIN">
-                                <a href="customerEditor.htm?action=delete&customerUid=${customer.uid}">Delete</a>
-                            </sec:authorize>
-                            -->
+                            <a href="customerEditor.htm?customerUid=${customer.uid}">Edit Customer</a> <br />
+                            <a href="deleteCustomer.htm?customerUid=${customer.uid}" onclick="return confirm('Do you really want to delete the customer?')">Delete Customer</a><br />
+                            <a href="priceListWizard.htm?customerUid=${customer.uid}">Create A Price List</a><br />
                         </td>
                     </tr>
                 </c:forEach>

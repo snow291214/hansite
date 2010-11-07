@@ -18,7 +18,7 @@ public interface IPriceService extends IGenericService<Price, Long> {
 
     void importCSVDatasheet();
 
-    List<String> findDistinctDestinations(Long customerUid);
+    List<String> findDistinctDestinations(Long customerPricesUid);
 
     List<Price> findByDestinationName(String destination, Long customerUid);
 
@@ -27,6 +27,8 @@ public interface IPriceService extends IGenericService<Price, Long> {
     Price getOldDestinationRateByDestinationName(String destination, Long customerUid);
 
     int deleteByCustomersPrices(CustomersPrices customersPrices);
+
+    void deleteByDestinationsNames(String[] destinations, Long customersPricesUid);
 
     void batchSave(Price price, Boolean flush);
 
