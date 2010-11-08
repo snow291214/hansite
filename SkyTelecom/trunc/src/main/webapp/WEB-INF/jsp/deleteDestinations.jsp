@@ -58,7 +58,7 @@
                 </div>
                 <p>
                     <button type="button" onclick="goToUrl()">Go back</button> ||
-                    <input type="submit" disabled align="right" name="Button1" value="Delete">
+                    <input type="submit" disabled align="right" name="Button1" value="Delete" onclick="return confirm('Do you really want to delete the destination?')">
                 </p>
             </form>
 
