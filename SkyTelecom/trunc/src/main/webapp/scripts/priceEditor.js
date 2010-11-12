@@ -67,6 +67,8 @@ $(function(){
 
 $(function(){
     $('#id_destinations').change(function() {
+        if($(this).val() == "")
+        clear();
         showIndicator();
         $.post('ajax.htm',{
             'destinationName':$(this).val(),
