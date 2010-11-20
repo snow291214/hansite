@@ -215,4 +215,31 @@
         </property>
     </bean>
 
+    <bean name="newPriceFormController" class="net.skytelecom.web.forms.NewDestinationFormController">
+        <property name="sessionForm">
+            <value>true</value>
+        </property>
+        <property name="commandName">
+            <value>priceDto</value>
+        </property>
+        <property name="commandClass">
+            <value>net.skytelecom.dto.PriceDto</value>
+        </property>
+        <property name="validator">
+            <ref bean="newDestinationValidator"/>
+        </property>
+        <property name="formView">
+            <value>addNewDestination</value>
+        </property>
+        <property name="successView">
+            <value>addNewDestination.htm</value>
+        </property>
+        <property name="priceService">
+            <ref bean="priceService" />
+        </property>
+        <property name="customersPricesService">
+            <ref bean="customersPricesService" />
+        </property>
+    </bean>
+
 </beans>

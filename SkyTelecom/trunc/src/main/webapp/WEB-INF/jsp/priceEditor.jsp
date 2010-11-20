@@ -74,7 +74,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Choose a destination</td>
+                        <td>Choose a destination (<a href="addNewDestination.htm?customersPricesUid=${requestScope.customersPricesUid}" id="id_addnew_href">Add new</a>)</td>
                         <td colspan="2" id="id_destination_td">
                             <c:choose>
                                 <c:when test="${requestScope.customerUid != null}">

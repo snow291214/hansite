@@ -66,6 +66,8 @@ $(function(){
             'customersPricesUid':$(this).val(),
             'requestType':1
         }, function(xml){
+            $('#id_addnew_href').attr('href', 'addNewDestination.htm?customersPricesUid='+
+                $('#id_customersPricesUid').val());
             $('#id_destinations').append('<option value="-">Choose...</option>');
             $(xml).find('Destination').each(function(){
                 $('#id_destinations').append('<option value="' + $(this).text() + '">' + $(this).text() + '</option>');

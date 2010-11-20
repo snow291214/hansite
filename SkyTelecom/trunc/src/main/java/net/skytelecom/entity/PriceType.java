@@ -37,6 +37,8 @@ public class PriceType implements Serializable {
     @Basic(optional = false)
     @Column(name = "Name", nullable = false, length = 100)
     private String name;
+    @Column(name = "ShortName", nullable = false, length = 5)
+    private String shortName;
 
     @OneToMany(mappedBy = "priceType", fetch = FetchType.LAZY)
     private Collection<CustomersPrices> customersPrices;
@@ -102,6 +104,20 @@ public class PriceType implements Serializable {
 
     public void setCustomersPrices(Collection<CustomersPrices> customersPrices) {
         this.customersPrices = customersPrices;
+    }
+
+    /**
+     * @return the shortName
+     */
+    public String getShortName() {
+        return shortName;
+    }
+
+    /**
+     * @param shortName the shortName to set
+     */
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 //    public Collection<Price> getPrices() {
 //        return prices;

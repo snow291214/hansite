@@ -29,10 +29,8 @@
             /WEB-INF/databaseContext.xml,
             /WEB-INF/controllerBeans.xml,
             /WEB-INF/securityContext.xml,
-            /WEB-INF/daoAndServicesContext.xml
-            <!--
-            /WEB-INF/hibernate-beans.xml,
-            /WEB-INF/securityContext.xml-->
+            /WEB-INF/daoAndServicesContext.xml,
+            /WEB-INF/validators.xml
         </param-value>
     </context-param>
     <listener>

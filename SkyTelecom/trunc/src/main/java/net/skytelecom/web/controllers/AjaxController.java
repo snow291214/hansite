@@ -37,6 +37,9 @@ public class AjaxController implements Controller {
         switch (requestType) {
             //In this case we are getting customer's prices from the database
             case 0:
+                if(request.getParameter("customerUid").equals("-")){
+                    return null;
+                }
                 customerUid = Long.parseLong(request.getParameter("customerUid"));
                 Collection<CustomersPrices> collection = customerService.get(customerUid).getCustomersPrices();
                 response.setContentType("text/xml");
@@ -57,6 +60,9 @@ public class AjaxController implements Controller {
                 break;
             //In this case we are getting distinct destinations from the database
             case 1:
+                if(request.getParameter("customersPricesUid").equals("-")){
+                    return null;
+                }
                 Long customersPricesUid = Long.parseLong(request.getParameter("customersPricesUid"));
                 List<String> destinations = priceService.findDistinctDestinations(customersPricesUid);
                 response.setContentType("text/xml");
@@ -70,6 +76,9 @@ public class AjaxController implements Controller {
                 break;
             //In this case we are getting distinct destinations from the database
             case 2:
+                if(request.getParameter("customersPricesUid").equals("-")){
+                    return null;
+                }
                 customerUid = Long.parseLong(request.getParameter("customersPricesUid"));
                 String destinationName = request.getParameter("destinationName");
                 Price price = priceService.getOldDestinationRateByDestinationName(destinationName, customerUid);
