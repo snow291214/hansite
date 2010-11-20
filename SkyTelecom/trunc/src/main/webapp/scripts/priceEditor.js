@@ -9,6 +9,16 @@ function clear(){
     $('#id_indicator').val("");
 }
 
+function clear1(){
+    $('#id_destination_remove_link').remove();
+    $('#id_oldRate').val("");
+    $('#id_newRate').val("");
+    $('#id_activationDate').val("");
+    $('#id_currency').val("");
+    $('#id_areacodes').children('tbody').remove();
+    $('#id_indicator').val("");
+}
+
 function enable() {
     $('#buttonChangeRate').attr('disabled', false);
 }
@@ -67,8 +77,10 @@ $(function(){
 
 $(function(){
     $('#id_destinations').change(function() {
-        if($(this).val() == "")
-        clear();
+        if($(this).val() == "-"){
+            clear1();
+            return;
+        }
         showIndicator();
         $.post('ajax.htm',{
             'destinationName':$(this).val(),
@@ -91,6 +103,10 @@ $(function(){
                 $('#id_areacodes').append("<tr><td>"+counter+": "+ $(this).text()+"</td></tr>");
                 counter++;
             });
+            $('#id_destination_remove_link').remove();
+            $('#id_destination_td').append('<a href="deleteCurrentDestination.htm?customersPricesUid='+
+                $('#id_customersPricesUid').val()+ '&destinationName='+$('#id_destinations').val()
+                +'" id="id_destination_remove_link" onclick="return confirm(\'Do you really want to delete the destination?\')">Delete current destination</a>');
         });
         hideIndicator();
     });

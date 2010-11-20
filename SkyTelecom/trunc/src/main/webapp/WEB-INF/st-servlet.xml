@@ -26,6 +26,7 @@
                 <prop key="prices.htm">pricesController</prop>
                 <prop key="priceEditor.htm">priceEditorController</prop>
                 <prop key="deleteDestinations.htm">deleteDestinationsFormController</prop>
+                <prop key="deleteCurrentDestination.htm">deleteCurrentDestinationController</prop>
                 <prop key="ajax.htm">ajaxController</prop>
                 <prop key="refreshPriceList.htm">refreshPriceListController</prop>
                 <prop key="priceTypeEditor.htm">priceTypeEditorFormController</prop>

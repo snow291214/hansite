@@ -120,6 +120,12 @@
         </property>
     </bean>
 
+    <bean name="deleteCurrentDestinationController" class="net.skytelecom.web.controllers.DeleteCurrentDestinationController">
+        <property name="priceService">
+            <ref bean="priceService" />
+        </property>
+    </bean>
+
     <!-- Ajax Controller -->
     <bean name="ajaxController" class="net.skytelecom.web.controllers.AjaxController">
         <property name="priceService">

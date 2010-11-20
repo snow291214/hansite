@@ -60,8 +60,8 @@ public class PriceServiceImpl extends GenericServiceImpl<Price, Long> implements
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
-    public List<Price> findByDestinationName(String destination, Long customerUid) {
-        return priceDao.findByDestinationName(destination, customerUid);
+    public List<Price> findByDestinationName(String destination, Long customersPricesUid) {
+        return priceDao.findByDestinationName(destination, customersPricesUid);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)

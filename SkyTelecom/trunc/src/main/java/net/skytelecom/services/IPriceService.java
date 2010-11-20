@@ -20,7 +20,7 @@ public interface IPriceService extends IGenericService<Price, Long> {
 
     List<String> findDistinctDestinations(Long customerPricesUid);
 
-    List<Price> findByDestinationName(String destination, Long customerUid);
+    List<Price> findByDestinationName(String destination, Long customersPricesUid);
 
     List<String> findAreaCodesByCustomerUid(Long customerUid);
 

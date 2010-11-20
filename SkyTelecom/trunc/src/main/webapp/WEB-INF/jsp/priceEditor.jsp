@@ -58,7 +58,7 @@
                     </tr>
                     <tr>
                         <td>Choose a customer's price</td>
-                        <td colspan="2">
+                        <td colspan="2" id="id_customersPrices_td">
                             <c:choose>
                                 <c:when test="${requestScope.customerUid != null}">
                                     <select name="customersPricesUid" id="id_customersPricesUid" style="width: 265px;">
@@ -75,7 +75,7 @@
                     </tr>
                     <tr>
                         <td>Choose a destination</td>
-                        <td colspan="2">
+                        <td colspan="2" id="id_destination_td">
                             <c:choose>
                                 <c:when test="${requestScope.customerUid != null}">
                                     <select name="destination" id="id_destinations" style="width: 265px;">
