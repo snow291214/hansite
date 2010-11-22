@@ -23,7 +23,7 @@
     </appender>
 
     <appender name="LOG-FILE-APPENDER" class="org.apache.log4j.FileAppender">
-        <param name="file" value="../workflow.log"/>
+        <param name="file" value="/var/log/skytel.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} [%5p] %c %m at %l%n"/>
         </layout>
