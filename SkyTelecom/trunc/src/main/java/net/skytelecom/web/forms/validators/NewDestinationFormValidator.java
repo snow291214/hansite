@@ -30,5 +30,8 @@ public class NewDestinationFormValidator implements Validator {
         if (m.find()) {
             errors.rejectValue("phoneCode", "newDestinationValidator.phoneCode.incorrectSymbols");
         }
+        if (!(((PriceDto)target).getRatePeak() instanceof Double)){
+            errors.rejectValue("ratePeak", "newDestinationValidator.rate.incorrectSymbols");
+        }
     }
 }

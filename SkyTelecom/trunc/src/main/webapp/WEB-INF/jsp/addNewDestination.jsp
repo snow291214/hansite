@@ -36,22 +36,77 @@
                             <td><font color="red">${status.errorMessage}</font></td>
                         </spring:bind>
                     </tr>
-                    <!--
+                    <tr>
+                        <td>Rate</td>
+                        <spring:bind path="priceDto.ratePeak">
+                            <td><input type="text" name="${status.expression}" value="${status.value}"  style="width : 250px"/></td>
+                            <td><font color="red">${status.errorMessage}</font></td>
+                        </spring:bind>
+                    </tr>
                     <tr>
                         <td>Activation Date</td>
-                    <spring:bind path="priceDto.activationDate">
-                        <td>
-                            <input type="text" name="${status.expression}" value="${status.value}" readonly>
-                            <input type="button" value="Date" onclick="displayCalendar(document.forms[0].activationDate,'dd.mm.yyyy',this)">
-                        </td>
-                        <td><font color="red">${status.errorMessage}</font></td>
-                    </spring:bind>
-                </tr>
-                    -->
+                        <spring:bind path="priceDto.activationDate">
+                            <td>
+                                <input type="text" name="${status.expression}" value="${status.value}" readonly>
+                                <input type="button" value="Date" onclick="displayCalendar(document.forms[0].activationDate,'dd.mm.yyyy',this)">
+                            </td>
+                            <td><font color="red">${status.errorMessage}</font></td>
+                        </spring:bind>
+                    </tr>
                     <tr>
                         <td>Phone Codes (comma-separated, e.g. 57,5710,570)</td>
                         <spring:bind path="priceDto.phoneCode">
                             <td><input type="text" name="${status.expression}" value="${status.value}"  style="width : 250px" /></td>
+                            <td><font color="red">${status.errorMessage}</font></td>
+                        </spring:bind>
+                    </tr>
+                    <tr>
+                        <td>QoS</td>
+                        <spring:bind path="priceDto.qos">
+                            <td>
+                                <select name="${status.expression}" style="width : 250px">
+                                    <c:choose>
+                                        <c:when test="${status.value eq ''}">
+                                            <option value="" selected>-</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="">-</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'Premium'}">
+                                            <option value="Premium" selected>Premium</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="Premium" >Premium</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'Premium, CLI'}">
+                                            <option value="Premium, CLI" selected>Premium, CLI</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="Premium, CLI">Premium, CLI</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq 'Direct'}">
+                                            <option value="Direct" selected>Direct</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="Direct">Direct</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${status.value eq ' 0\\\60\\\60'}">
+                                            <option value=" 0\60\60" selected> 0\60\60</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value=" 0\60\60"> 0\60\60</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </select>
+                            </td>
                             <td><font color="red">${status.errorMessage}</font></td>
                         </spring:bind>
                     </tr>

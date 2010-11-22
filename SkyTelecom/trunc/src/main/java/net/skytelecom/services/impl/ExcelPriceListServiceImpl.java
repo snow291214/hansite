@@ -234,7 +234,7 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
 
                 cell = row.createCell(7);
                 cell.setCellValue(price.getRouting());
-                cell.setCellStyle(createCellBorder(cellStyleGeneral));
+                cell.setCellStyle(createCellBorder(cellStyleGeneralIncrease));
 
             } else if (price.getPriceIndicator().toUpperCase().contains("DECREASE")) {
                 cell = row.createCell(0);
@@ -273,7 +273,7 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
 
                 cell = row.createCell(7);
                 cell.setCellValue(price.getRouting());
-                cell.setCellStyle(createCellBorder(cellStyleGeneral));
+                cell.setCellStyle(createCellBorder(cellStyleGeneralDecrease));
 
             } else if (price.getPriceIndicator().toUpperCase().contains("TERMINATED")) {
                 cell = row.createCell(0);
@@ -312,7 +312,7 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
 
                 cell = row.createCell(7);
                 cell.setCellValue(price.getRouting());
-                cell.setCellStyle(createCellBorder(cellStyleGeneral));
+                cell.setCellStyle(createCellBorder(cellStyleGeneralTerminated));
 
             } else if (price.getPriceIndicator().toUpperCase().contains("NEW")) {
                 cell = row.createCell(0);
@@ -351,7 +351,7 @@ public class ExcelPriceListServiceImpl implements IExcelPriceListService {
 
                 cell = row.createCell(7);
                 cell.setCellValue(price.getRouting());
-                cell.setCellStyle(createCellBorder(cellStyleGeneral));
+                cell.setCellStyle(createCellBorder(cellStyleGeneralNew));
 
             } else if (price.getPriceIndicator().toUpperCase().contains("CURRENT")) {
                 cell = row.createCell(0);

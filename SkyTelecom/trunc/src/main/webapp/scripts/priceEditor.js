@@ -72,6 +72,8 @@ $(function(){
             $(xml).find('Destination').each(function(){
                 $('#id_destinations').append('<option value="' + $(this).text() + '">' + $(this).text() + '</option>');
             });
+            $('#id_destination_header_td').append('(<a href="addNewDestination.htm?customersPricesUid='+
+                $('#id_customersPricesUid').val()+'" id="id_addnew_href">Add new</a>)');
         });
         hideIndicator();
     });

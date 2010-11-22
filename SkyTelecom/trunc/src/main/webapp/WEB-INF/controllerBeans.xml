@@ -232,7 +232,7 @@
             <value>addNewDestination</value>
         </property>
         <property name="successView">
-            <value>addNewDestination.htm</value>
+            <value>priceEditor.htm</value>
         </property>
         <property name="priceService">
             <ref bean="priceService" />

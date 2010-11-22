@@ -58,6 +58,9 @@
                                             <a href="priceEditor.htm?direct=true&customersPricesUid=${customersPrices.uid}">
                                                 Change rates wizard
                                             </a><br/>
+                                            <a href="addNewDestination.htm?customersPricesUid=${customersPrices.uid}">
+                                                Add New Destinations
+                                            </a><br/>
                                             <a href="deleteDestinations.htm?customersPricesUid=${customersPrices.uid}">
                                                 Delete Destinations
                                             </a>

@@ -74,7 +74,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Choose a destination (<a href="addNewDestination.htm?customersPricesUid=${requestScope.customersPricesUid}" id="id_addnew_href">Add new</a>)</td>
+                        <td id="id_destination_header_td">Choose a destination
+                            <c:choose>
+                                <c:when test="${requestScope.customersPricesUid != null}">
+                                    (<a href="addNewDestination.htm?customersPricesUid=${requestScope.customersPricesUid}" id="id_addnew_href">Add new</a>)
+                                </c:when>
+                            </c:choose>
+                        </td>
                         <td colspan="2" id="id_destination_td">
                             <c:choose>
                                 <c:when test="${requestScope.customerUid != null}">

@@ -61,13 +61,28 @@ public class NewDestinationFormController extends SimpleFormController {
             price.setDestination(priceDto.getDestination());
             price.setPriceIndicator("new");
             price.setCurrency(priceDto.getCurrency());
-            price.setPhoneCode(phoneCode);
+            price.setPhoneCode(phoneCode.trim());
+            price.setActivationDate(priceDto.getActivationDate());
+            price.setRatePeak(priceDto.getRatePeak());
+            price.setRateOffpeak(priceDto.getRatePeak());
             price.setCustomersPrices(customersPrices);
+            price.setQos(priceDto.getQos());
+            //Static fields
+            price.setConnectRateOffpeak(0D);
+            price.setConnectRatePeak(0D);
+            price.setFreeOffpeak(0D);
+            price.setFreePeak(0D);
+            price.setInitPeak(1D);
+            price.setInitOffpeak(1D);
+            price.setLastFieldIgnore(Short.parseShort("0"));
+            price.setQuantPeak(1D);
+            price.setQuantOffpeak(1D);
             priceService.save(price);
         }
 
         ModelAndView mav = new ModelAndView(new RedirectView(getSuccessView()));
         mav.addObject("customersPricesUid", priceDto.getCustomersPricesUid());
+        mav.addObject("direct", "true");
         return mav;
     }
 
