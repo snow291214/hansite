@@ -5,7 +5,7 @@ import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

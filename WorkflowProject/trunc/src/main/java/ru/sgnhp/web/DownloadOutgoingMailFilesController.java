@@ -12,7 +12,7 @@ import ru.sgnhp.service.IOutgoingFileService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

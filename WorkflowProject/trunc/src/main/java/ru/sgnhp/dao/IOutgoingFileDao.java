@@ -5,7 +5,7 @@ import ru.sgnhp.domain.OutgoingFileBean;
  /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****/
 public interface IOutgoingFileDao extends IGenericDao<OutgoingFileBean, Long> {

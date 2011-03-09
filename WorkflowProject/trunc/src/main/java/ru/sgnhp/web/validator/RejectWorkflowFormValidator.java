@@ -8,7 +8,7 @@ import ru.sgnhp.dto.RejectWorkflowDto;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  * Created on: 16.02.2010
  *
  *****

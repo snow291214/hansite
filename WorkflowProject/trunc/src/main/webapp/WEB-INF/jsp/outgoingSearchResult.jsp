@@ -21,7 +21,7 @@
                 Имя получателя: <b>${omb.receiverName}.</b>
                 <table class="workflowManager">
                     <tr>
-                        <td width="20%">Ответственный от СГНХП</td>
+                        <td width="20%">Ответственный от Медсервис</td>
                         <td width="10%">Зарегистрировано</td>
                         <td width="15%">Ожидаемая дата ответа</td>
                         <td width="15%">Номер в "Documentum"</td>

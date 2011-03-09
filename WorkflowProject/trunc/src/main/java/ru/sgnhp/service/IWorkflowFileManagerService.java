@@ -5,7 +5,7 @@ import ru.sgnhp.domain.WorkflowFileBean;
  /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****/
 public interface IWorkflowFileManagerService extends IGenericService<WorkflowFileBean, Long>{

@@ -7,11 +7,13 @@ import ru.sgnhp.domain.TaskBean;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */
 public interface ITaskManagerService extends IGenericService<TaskBean, Long> {
+
+    TaskBean saveEx(TaskBean taskBean);
 
     List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException;
 
@@ -40,5 +42,4 @@ public interface ITaskManagerService extends IGenericService<TaskBean, Long> {
     List<String> getDistinctExternalCompanies(String query);
 
     List<String> getExternalAssignees(String query);
-
 }

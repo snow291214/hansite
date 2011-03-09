@@ -15,7 +15,7 @@ import ru.sgnhp.service.IDocumentService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

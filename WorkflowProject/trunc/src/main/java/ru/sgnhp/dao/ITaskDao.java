@@ -7,11 +7,13 @@ import ru.sgnhp.domain.TaskBean;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */
 public interface ITaskDao extends IGenericDao<TaskBean, Long> {
+
+    TaskBean saveEx(TaskBean taskBean);
 
     List<TaskBean> getAllIncomingMailByYear(Integer currentYear) throws ParseException;
 

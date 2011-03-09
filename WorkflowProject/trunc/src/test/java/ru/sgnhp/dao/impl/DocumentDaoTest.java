@@ -14,7 +14,7 @@ import ru.sgnhp.domain.DocumentFileBean;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

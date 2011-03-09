@@ -27,7 +27,7 @@ import ru.sgnhp.service.IMailService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */
@@ -74,11 +74,11 @@ public class MailServiceImpl implements IMailService {
                     + "<p style=\"font-family:Arial;font-size:12px;\">"
                     + "Идентификатор работы в СКП 'Primavera': "
                     + _workflow.getTaskBean().getPrimaveraUid() + "</p>"
-                    + "<a href=\""+ this.applicationPath
+                    + "<a href=\"" + this.applicationPath
                     + "\">Просмотреть все задачи</a> <br />"
                     + "<a href=\"" + this.applicationPath + "workflowManager.htm?workflowID="
                     + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
-                    + "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"
+                    + "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
 
@@ -94,11 +94,11 @@ public class MailServiceImpl implements IMailService {
             message.setContent(multipart);
             Transport.send(message);
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void sendmailChangeState(WorkflowBean _workflow) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -144,9 +144,9 @@ public class MailServiceImpl implements IMailService {
                     + _workflow.getState().getStateDescription() + "</p>"
                     + "<p style=\"font-family:Arial;font-size:12px;\">Записка к смене статуса: "
                     + _workflow.getWorkflowNote() + "</p>"
-                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/"
+                    + "<a href=\"" + this.applicationPath
                     + "\">Просмотреть все задачи</a> <br />"
-                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/workflowManager.htm?workflowID="
+                    + "<a href=\"" + this.applicationPath + "workflowManager.htm?workflowID="
                     + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
@@ -158,6 +158,7 @@ public class MailServiceImpl implements IMailService {
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void sendmailRemind(WorkflowBean _workflow) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -195,6 +196,7 @@ public class MailServiceImpl implements IMailService {
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void sendmailSheduler(ArrayList<WorkflowBean> wfs) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -244,8 +246,8 @@ public class MailServiceImpl implements IMailService {
                     + "</tr>"
                     + tableBody
                     + "</table>"
-                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачи</a>"
-                    + "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"
+                    + "<a href=\"" + this.applicationPath + "\">Просмотреть задачи</a>"
+                    + "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
@@ -256,6 +258,7 @@ public class MailServiceImpl implements IMailService {
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void sendmailReport(List<WorkflowBean> wfs) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -290,7 +293,7 @@ public class MailServiceImpl implements IMailService {
                         + "<td>" + wf.getDescription() + "</td>"
                         + "<td>" + wf.getState().getStateDescription() + "</td>"
                         + "<td>" + wf.getWorkflowNote() + "</td>"
-                        + "<td><a href=\"http://sgnhp.snos.ru:8080/Workflow/roadmap.htm?workflowID="
+                        + "<td><a href=\"" + this.applicationPath + "/roadmap.htm?workflowID="
                         + wf.getUid() + "\">" + wf.getUid() + "</a></td>"
                         + "</tr>";
                 counter++;
@@ -318,8 +321,8 @@ public class MailServiceImpl implements IMailService {
                     + tableBody
                     + "</table>"
                     + "<br />"
-                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow\">Просмотреть задачи</a>"
-                    + "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"
+                    + "<a href=\"" + this.applicationPath + "\">Просмотреть задачи</a>"
+                    + "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
@@ -388,6 +391,7 @@ public class MailServiceImpl implements IMailService {
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void tasksForReviewReport(List<WorkflowBean> wfs) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -422,7 +426,7 @@ public class MailServiceImpl implements IMailService {
                         + "<td>" + wf.getDescription() + "</td>"
                         + "<td>" + wf.getState().getStateDescription() + "</td>"
                         + "<td>" + wf.getWorkflowNote() + "</td>"
-                        + "<td><a href=\"http://sgnhp.snos.ru:8080/Workflow/roadmap.htm?workflowID="
+                        + "<td><a href=\"" + this.applicationPath + "roadmap.htm?workflowID="
                         + wf.getUid() + "\">" + wf.getUid() + "</a></td>"
                         + "</tr>";
                 counter++;
@@ -450,8 +454,8 @@ public class MailServiceImpl implements IMailService {
                     + tableBody
                     + "</table>"
                     + "<br />"
-                    + "<a href=\"http://sgnhp.snos.ru:8080/Workflow/tasksForReview.htm\">Просмотреть и проверить выполненные задачи</a>"
-                    + "<p>Есть вопрос? Звоните: 21-64. Алексей.</p>"
+                    + "<a href=\"" + this.applicationPath + "tasksForReview.htm\">Просмотреть и проверить выполненные задачи</a>"
+                    + "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
@@ -462,6 +466,7 @@ public class MailServiceImpl implements IMailService {
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void sendmailOrder(DocumentBean documentBean) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);

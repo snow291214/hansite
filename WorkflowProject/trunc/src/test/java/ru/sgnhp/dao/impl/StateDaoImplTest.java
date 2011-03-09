@@ -7,7 +7,7 @@ import ru.sgnhp.dao.IStateDao;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

@@ -14,7 +14,7 @@ import ru.sgnhp.dto.UserLogin;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */
@@ -32,7 +32,7 @@ public class UserDaoImpl extends GenericDaoHibernate<WorkflowUserBean, Long> imp
             bean.getReceivedWorkflows();
             bean.getAssignedWorkflows();
         }
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
@@ -47,7 +47,7 @@ public class UserDaoImpl extends GenericDaoHibernate<WorkflowUserBean, Long> imp
             bean.getReceivedWorkflows();
             bean.getAssignedWorkflows();
         }
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list.get(0);
@@ -58,7 +58,7 @@ public class UserDaoImpl extends GenericDaoHibernate<WorkflowUserBean, Long> imp
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("email", email);
         List<WorkflowUserBean> list = this.findByNamedQuery("WorkflowUserBean.findByEmail", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list.get(0);
@@ -76,7 +76,7 @@ public class UserDaoImpl extends GenericDaoHibernate<WorkflowUserBean, Long> imp
             userLogin.setAccountNonExpired(true);
             userLogin.setAccountNonLocked(true);
             userLogin.setCredentialsNonExpired(true);
-            userLogin.setEnabled(bean.isEnabled());
+            userLogin.setEnabled(true);
             userLogin.setAuthorities(new GrantedAuthority[]{new Role("ROLE_USER"),new Role(bean.getUserGroupBean().getName())});
             //logger.info("Third: " + userLogin.getAuthorities()[0].getAuthority()+", "+
             //        userLogin.getAuthorities()[1].getAuthority());

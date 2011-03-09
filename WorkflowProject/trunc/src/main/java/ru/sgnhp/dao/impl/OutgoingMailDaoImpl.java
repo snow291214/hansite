@@ -13,7 +13,7 @@ import ru.sgnhp.domain.OutgoingMailBean;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

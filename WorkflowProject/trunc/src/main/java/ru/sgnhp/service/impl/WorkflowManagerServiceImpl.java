@@ -21,7 +21,7 @@ import ru.sgnhp.service.IWorkflowManagerService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */
@@ -37,9 +37,10 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Override
     public WorkflowBean assignTaskToUser(WorkflowBean wf) {
         wf = workflowDao.save(wf);
-        mailService.sendmailAssign(wf);
+        //mailService.sendmailAssign(wf);
         return wf;
     }
 
@@ -48,26 +49,31 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getRecievedWorkflowsByUserUid(Long uid) {
         return workflowDao.getRecievedWorkflowsByUserUid(uid);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getAssignedWorkflowsByUserUid(Long parentUid, Boolean completed) {
         return workflowDao.getAssignedWorkflowsByUserUid(parentUid, completed);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getCompletedWorkflowsByUserUid(Long uid) {
         return workflowDao.getCompletedWorkflowsByUserUid(uid);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public WorkflowBean getWorkflowByUid(Long workflowUid) {
         return workflowDao.get(workflowUid);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getWorkflowByParentUid(Long workflowUid) {
         return workflowDao.getWorkflowByParentUid(workflowUid);
     }
@@ -86,6 +92,7 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, Long workflowParentUid, ArrayList roadmap) {
         ArrayList<WorkflowBean> up = stepDown(workflowUid, new ArrayList());
         Collections.reverse(up);
@@ -123,26 +130,31 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getWorkflowsByDescription(Long userUid, SearchTaskDto searchTaskBean) {
         return workflowDao.getWorkflowsByDescription(userUid, searchTaskBean.getTaskDescription());
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getWorkflowsByTaskUid(Long taskUid) {
         return workflowDao.getWorkflowsByTaskUid(taskUid);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getRecievedWorkflows() {
         return workflowDao.getRecievedWorkflows();
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid) {
         return workflowDao.getAllUncompletedByParentUserUid(parentUserUid);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Override
     public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean) {
         beanDto.setFinishDate(DateUtils.nowDate());
         beanDto = workflowDao.updateWorkflowState(beanDto, stateBean);
@@ -150,55 +162,61 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
 //        if ((stateBean.getStateUid() == 3) || (stateBean.getStateUid() == 5)) {
 //            beanDto.setFinishDate(DateUtils.nowDate());
 //        }
-        mailService.sendmailChangeState(workflowBean);
+        //mailService.sendmailChangeState(workflowBean);
         return beanDto;
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void taskReminder() {
         List<WorkflowUserBean> users = userManagerService.getAll();
         for (WorkflowUserBean user : users) {
             List<WorkflowBean> workflows = this.getRecievedWorkflowsByUserUid(user.getUid());
             if (workflows != null) {
-                mailService.sendmailSheduler((ArrayList) workflows);
+                //mailService.sendmailSheduler((ArrayList) workflows);
             }
         }
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void taskReport() {
         List<WorkflowUserBean> users = userManagerService.getAll();
         for (WorkflowUserBean user : users) {
             List<WorkflowBean> uncompletedWorkflows = this.getAllUncompletedByParentUserUid(user.getUid());
             if (uncompletedWorkflows != null) {
-                mailService.sendmailReport(uncompletedWorkflows);
+                //mailService.sendmailReport(uncompletedWorkflows);
             }
         }
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate) {
         return workflowDao.getWorkflowsByPeriodOfDate(parentUserUid, userUid, startDate, finishDate);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<WorkflowBean> getWorkflowsByUserUidAndStateUids(Long userUid, Long[] stateUids) {
         return workflowDao.getWorkflowsByUserUidAndStateUids(userUid, stateUids);
     }
     
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void tasksForReviewReport() {
         List<WorkflowUserBean> users = userManagerService.getAll();
         Long[] stateUids = {5L};
         for (WorkflowUserBean user : users) {
             List<WorkflowBean> uncompletedWorkflows = this.getWorkflowsByUserUidAndStateUids(user.getUid(), stateUids);
             if (uncompletedWorkflows != null) {
-                mailService.tasksForReviewReport(uncompletedWorkflows);
+                //mailService.tasksForReviewReport(uncompletedWorkflows);
             }
         }
     }
     
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public boolean isTaskAssignedToUser(Long taskUid, Long userUid) {
         return workflowDao.isTaskAssignedToUser(taskUid, userUid);
     }

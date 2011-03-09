@@ -8,7 +8,7 @@ import ru.sgnhp.service.IUserGroupService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

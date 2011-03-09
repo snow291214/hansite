@@ -35,7 +35,7 @@ import ru.sgnhp.service.IWorkflowManagerService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */
@@ -153,8 +153,8 @@ public class NewOrderFormController extends AbstractWizardFormController {
         taskBean.setExternalAssignee(documentBean.getControlPerson().getLastName()
                 + " " + documentBean.getControlPerson().getFirstName()
                 + " " + documentBean.getControlPerson().getMiddleName());
-        taskBean.setExternalCompany("СГНХП");
-        taskBean = getTaskManagerService().save(taskBean);
+        taskBean.setExternalCompany("Медсервис");
+        getTaskManagerService().save(taskBean);
 
         /*
         Рассылка пользователям задачи ознакомления с распорядительным документом

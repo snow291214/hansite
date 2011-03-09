@@ -8,7 +8,7 @@ import ru.sgnhp.service.IDocumentTypeService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

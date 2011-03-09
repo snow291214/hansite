@@ -9,13 +9,13 @@
         <s:intercept-url pattern="/accessDenied.htm" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <s:intercept-url pattern="/authentication.htm" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <s:intercept-url pattern="/*.htm" access="IS_AUTHENTICATED_REMEMBERED"/>
-        <!-- x.509 AUTHENTICATION
+
         <s:x509 subject-principal-regex="CN=(.*?)," user-service-ref="userManagerService" />
-         -->
-        <!-- LDAP AUTHENTICATION -->
+
+        <!-- LDAP AUTHENTICATION
         <s:form-login login-page="/authentication.htm" />
         <s:anonymous/>
-        
+         -->
         <s:logout/>
     </s:http>
 

@@ -19,7 +19,7 @@ import ru.sgnhp.service.IOutgoingMailService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

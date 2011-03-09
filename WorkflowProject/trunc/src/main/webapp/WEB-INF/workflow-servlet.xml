@@ -736,7 +736,7 @@ Expression	 Meaning
             <value>0 00 18 ? * MON-FRI</value>
         </property>
     </bean>
-
+    <!--
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
@@ -748,7 +748,7 @@ Expression	 Meaning
             </list>
         </property>
     </bean>
-
+    -->
     <!--===============================Ehcache config========================
     <ehcache:config configLocation="classpath:ehcache.xml" />
     -->

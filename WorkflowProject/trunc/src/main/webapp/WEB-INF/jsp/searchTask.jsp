@@ -9,7 +9,7 @@
     <form name="formSearch" method="post" action="searchTask.htm">
         <table border="0" cellspacing="0" cellpadding="5">
             <tr>
-                <td rowspan="8"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
+                <td rowspan="8"><img src="images/logo.png" alt="Медсервис" align="left" vspace="5" hspace="5"/></td>
                 <td><label for="byInternalNumber">Поиск по внутреннему номеру задачи</label></td>
                 <td>
                     <input type="radio" name="searchType" id="byInternalNumber" value="0" />

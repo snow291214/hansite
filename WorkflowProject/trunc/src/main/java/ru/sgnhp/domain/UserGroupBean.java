@@ -19,7 +19,7 @@ import org.hibernate.annotations.OnDeleteAction;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

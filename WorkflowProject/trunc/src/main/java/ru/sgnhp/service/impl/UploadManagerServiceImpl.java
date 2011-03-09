@@ -9,7 +9,7 @@ import ru.sgnhp.service.IUploadManagerService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

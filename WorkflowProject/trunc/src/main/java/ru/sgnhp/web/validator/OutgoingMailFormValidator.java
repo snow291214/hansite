@@ -8,7 +8,7 @@ import ru.sgnhp.dto.OutgoingMailDto;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

@@ -9,7 +9,7 @@ import ru.sgnhp.domain.DocumentTypeBean;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

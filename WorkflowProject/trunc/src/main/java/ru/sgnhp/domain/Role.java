@@ -6,7 +6,7 @@ import org.springframework.security.GrantedAuthority;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

@@ -2,13 +2,13 @@
 <%@page pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/includes/include.jsp" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<title>Система электронного документооборота ООО "Салаватгазонефтехимпроект"</title>
+<title>Система электронного документооборота ООО "Медсервис"</title>
 <%@ taglib uri="/WEB-INF/taglib/pagerlib.tld" prefix="pg" %>
 </head>
 <body>
     <table>
         <tr>
-            <td rowspan="2"><img src="images/logo.jpg" alt="СГНХП" align="left" vspace="5" hspace="5"/></td>
+            <td rowspan="2"><img src="images/logo.png" alt="Медсервис" align="left" vspace="5" hspace="5"/></td>
             <td height="30px"><c:out value="Здравствуйте,
                    ${sessionScope.initiator.lastName}
                    ${sessionScope.initiator.firstName}

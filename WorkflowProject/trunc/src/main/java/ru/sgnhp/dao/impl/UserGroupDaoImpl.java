@@ -6,7 +6,7 @@ import ru.sgnhp.domain.UserGroupBean;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

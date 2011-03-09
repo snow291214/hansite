@@ -16,7 +16,7 @@ import ru.sgnhp.dao.IGenericDao;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

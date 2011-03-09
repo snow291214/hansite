@@ -13,7 +13,7 @@ import ru.sgnhp.service.ITaskManagerService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  * Created on: 03.03.2010
  *
  *****

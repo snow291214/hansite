@@ -7,7 +7,7 @@ import org.springframework.security.userdetails.UserDetails;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

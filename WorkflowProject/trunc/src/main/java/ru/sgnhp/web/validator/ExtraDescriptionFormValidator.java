@@ -8,7 +8,7 @@ import ru.sgnhp.dto.WorkflowBeanDto;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

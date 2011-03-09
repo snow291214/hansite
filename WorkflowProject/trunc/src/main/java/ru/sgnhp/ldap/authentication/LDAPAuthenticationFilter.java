@@ -15,7 +15,7 @@ import ru.sgnhp.domain.WorkflowUserBean;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

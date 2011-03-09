@@ -3,6 +3,7 @@ package ru.sgnhp.service.impl;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,7 +16,7 @@ import ru.sgnhp.service.IUserManagerService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */
@@ -50,6 +51,7 @@ public class UserManagerServiceImpl extends GenericServiceImpl<WorkflowUserBean,
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public UserDetails loadUserByUsername(String username) {
+        //logger.error("!!!! Username: "+username);
         return userDao.loadUserByUsername(username);
     }
 

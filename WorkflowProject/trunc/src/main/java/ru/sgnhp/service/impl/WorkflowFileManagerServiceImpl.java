@@ -9,7 +9,7 @@ import ru.sgnhp.service.IWorkflowFileManagerService;
  ******
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */

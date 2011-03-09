@@ -18,7 +18,7 @@ import ru.sgnhp.service.ITaskManagerService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */
@@ -143,13 +143,21 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
         return taskDao.getDistinctPrimaveraIDS();
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public List<String> getDistinctExternalCompanies(String query) {
         return taskDao.getDistinctExternalCompanies(query);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public List<String> getExternalAssignees(String query) {
         return taskDao.getExternalAssignees(query);
+    }
+    
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Override
+    public TaskBean saveEx(TaskBean taskBean) {
+        return taskDao.save(taskBean);
     }
 }

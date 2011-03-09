@@ -25,7 +25,7 @@ import ru.sgnhp.service.IWorkflowManagerService;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  * Отличие от AssignWorkflowFormController в  том, что здесь первичный
  * ввод задачи.

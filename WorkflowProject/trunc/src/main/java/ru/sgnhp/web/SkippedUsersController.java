@@ -9,7 +9,7 @@ import org.springframework.web.servlet.view.RedirectView;
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  * Created on: 04.03.2010
  *
  *****

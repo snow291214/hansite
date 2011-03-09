@@ -2,19 +2,20 @@ package ru.sgnhp.dao.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import ru.sgnhp.dao.ITaskDao;
 import ru.sgnhp.domain.TaskBean;
 
 /*****
  *
  * @author Alexey Khudyakov
- * @company "Salavatgazoneftehimproekt" Ltd
+ * @Skype: khudyakov.alexey
  *
  *****
  */
@@ -29,7 +30,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("internalNumber", number);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByInternalNumber", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
@@ -40,7 +41,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("externalNumber", number);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByExternalNumber", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
@@ -51,7 +52,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("incomingNumber", number);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByIncomingNumber", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
@@ -62,7 +63,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("externalAssignee", externalAssignee);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByExternalAssignee", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
@@ -73,7 +74,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("description", description);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByDescription", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
@@ -111,7 +112,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("externalCompany", externalCompany);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByExternalCompany", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
@@ -126,7 +127,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         value.put("startDate", startDate);
         value.put("finishDate", finishDate);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findAllIncomingMailByYear", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
@@ -137,7 +138,7 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("primaveraUid", primaveraUid);
         List<TaskBean> list = this.findByNamedQuery("TaskBean.findByPrimaveraUid", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
@@ -170,5 +171,26 @@ public class TaskDaoImpl extends GenericDaoHibernate<TaskBean, Long> implements 
                     + "'%" + query + "%' ORDER BY t.externalAssignee").list();
         }
         return list;
+    }
+
+    @Override
+    public TaskBean saveEx(TaskBean taskBean) {
+        Session sess = this.getSession();
+        Transaction tx = null;
+        try {
+            tx = sess.beginTransaction();
+
+            taskBean = this.save(taskBean);
+
+            tx.commit();
+        } catch (RuntimeException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e; // or display error message
+        } finally {
+            sess.close();
+        }
+        return taskBean;
     }
 }
