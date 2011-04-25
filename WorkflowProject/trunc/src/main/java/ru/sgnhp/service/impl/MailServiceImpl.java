@@ -16,10 +16,13 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
+import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.sgnhp.Translit;
 import ru.sgnhp.domain.DocumentBean;
 import ru.sgnhp.domain.FileBean;
+import ru.sgnhp.domain.OutgoingFileBean;
 import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IMailService;
@@ -51,6 +54,7 @@ public class MailServiceImpl implements IMailService {
         try {
             InternetAddress address = new InternetAddress(fromAddress);
             address.setPersonal(fromName, "utf-8");
+            message.addHeader("X-Priority", "1");
             message.setFrom(address);
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(_workflow.getReceiver().getEmail()));
@@ -63,37 +67,39 @@ public class MailServiceImpl implements IMailService {
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
 
-            htmlPart.setContent("<html><body><h2>Задача № "
+            htmlPart.setContent("<html><body><h2>Номер задачи:  "
                     + _workflow.getTaskBean().getInternalNumber() + "</h2>"
-                    + "<p style=\"font-family:Arial;font-size:12px;\">Задачу назначил: "
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Задачу передал: "
                     + _workflow.getAssignee().getFirstName()
                     + " " + _workflow.getAssignee().getMiddleName() + " "
                     + _workflow.getAssignee().getLastName() + "</p>"
                     + "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: "
                     + _workflow.getDescription() + "</p>"
                     + "<p style=\"font-family:Arial;font-size:12px;\">"
-                    + "Идентификатор работы в СКП 'Primavera': "
-                    + _workflow.getTaskBean().getPrimaveraUid() + "</p>"
-                    + "<a href=\"" + this.applicationPath
-                    + "\">Просмотреть все задачи</a> <br />"
-                    + "<a href=\"" + this.applicationPath + "workflowManager.htm?workflowID="
-                    + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
-                    + "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
+                    + "Во вложении письма электронная копия документа</p>"
+                    //                    + "<a href=\"" + this.applicationPath
+                    //                    + "\">Просмотреть все задачи</a> <br />"
+                    //                    + "<a href=\"" + this.applicationPath + "workflowManager.htm?workflowID="
+                    //                    + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
+                    //+ "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
 
+            Translit translit = new Translit();
             // Part two is attachment
             htmlPart = new MimeBodyPart();
             Set<FileBean> fileBeans = _workflow.getTaskBean().getFilesSet();
             for (FileBean fileBean : fileBeans) {
                 DataSource dataSource = new ByteArrayDataSource(fileBean.getBlobField(), "application/x-any");
                 htmlPart.setDataHandler(new DataHandler(dataSource));
-                htmlPart.setFileName(fileBean.getFileName());
+                htmlPart.setFileName(translit.toTranslit(fileBean.getFileName()));
                 multipart.addBodyPart(htmlPart);
             }
             message.setContent(multipart);
             Transport.send(message);
         } catch (Exception e) {
+            Logger logger = Logger.getLogger(this.getClass());
+            logger.error(e.fillInStackTrace());
         }
     }
 
@@ -357,6 +363,7 @@ public class MailServiceImpl implements IMailService {
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void sendmailOutgoing(OutgoingMailBean outgoingMailBean) {
         Properties props = System.getProperties();
         props.put("mail.smtp.host", mailHostName);
@@ -365,6 +372,7 @@ public class MailServiceImpl implements IMailService {
         try {
             InternetAddress address = new InternetAddress(fromAddress);
             address.setPersonal(fromName, "utf-8");
+            message.addHeader("X-Priority", "1");
             message.setFrom(address);
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(outgoingMailBean.getWorkflowUserBean().getEmail()));
@@ -383,10 +391,23 @@ public class MailServiceImpl implements IMailService {
                     + outgoingMailBean.getReceiverCompany() + ". ФИО получателя: " + outgoingMailBean.getReceiverName()
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
+
+            Translit translit = new Translit();
+            // Part two is attachment
+            htmlPart = new MimeBodyPart();
+            Set<OutgoingFileBean> fileBeans = outgoingMailBean.getOutgoingFileBeanSet();
+            for (OutgoingFileBean fileBean : fileBeans) {
+                DataSource dataSource = new ByteArrayDataSource(fileBean.getBlobField(), "application/x-any");
+                htmlPart.setDataHandler(new DataHandler(dataSource));
+                htmlPart.setFileName(translit.toTranslit(fileBean.getFileName()));
+                multipart.addBodyPart(htmlPart);
+            }
+
             message.setContent(multipart);
             Transport.send(message);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(this.getClass());
+            logger.info(e.getMessage());
         }
     }
 

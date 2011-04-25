@@ -3,8 +3,10 @@ package ru.sgnhp.web;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -99,13 +101,17 @@ public class OutgoingLetterController extends AbstractWizardFormController {
         /* Сохраняем прикрепленные файлы */
         final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
         final Map files = multiRequest.getFileMap();
+        Set<OutgoingFileBean> f = new HashSet<OutgoingFileBean>();
         for (Object file : files.values()) {
             OutgoingFileBean outgoingFileBean = new OutgoingFileBean();
             outgoingFileBean.setOutgoingMailBean(outgoingMailBean);
             outgoingFileBean.setFileName(((MultipartFile) file).getOriginalFilename());
             outgoingFileBean.setBlobField(((MultipartFile) file).getBytes());
-            outgoingFileService.save(outgoingFileBean);
+            f.add(outgoingFileService.save(outgoingFileBean));
         }
+
+        outgoingMailBean.setOutgoingFileBeanSet(f);
+
         /*Отправляем письмо*/
         mailService.sendmailOutgoing(outgoingMailBean);
         request.getSession().setAttribute("responsibleUid", null);

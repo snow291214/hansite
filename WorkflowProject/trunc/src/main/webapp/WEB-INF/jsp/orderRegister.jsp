@@ -52,11 +52,19 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <c:choose>
-                                    <c:when test="${status.value eq 2}">
+                                    <c:when test="${status.value eq 3}">
                                         <option value="3" selected>Служебная записка</option>
                                     </c:when>
                                     <c:otherwise>
                                         <option value="3" >Служебная записка</option>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${status.value eq 4}">
+                                        <option value="4" selected>Приказ Минздрава</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="4" >Приказ Минздрава</option>
                                     </c:otherwise>
                                 </c:choose>
                             </select>
@@ -66,7 +74,12 @@
                 <tr>
                     <td>Номер документа:</td>
                     <spring:bind path="documentDto.incomingNumber">
-                        <td><input type="text" name="${status.expression}" id="incomingNumber" value="${status.value}" readonly /></td>
+                        <td><input type="text" name="${status.expression}" id="incomingNumber" value="${status.value}" /></td>
+                        <td><font color="red">${status.errorMessage}</font></td>
+                    </spring:bind>
+                    <td>Префикс документа:</td>
+                    <spring:bind path="documentDto.documentPrefix">
+                        <td><input type="text" name="${status.expression}" id="documentPrefix" value="${status.value}" /></td>
                         <td><font color="red">${status.errorMessage}</font></td>
                     </spring:bind>
                 </tr>

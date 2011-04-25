@@ -1,6 +1,8 @@
 package ru.sgnhp.web;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.context.SecurityContextHolder;
@@ -49,6 +51,7 @@ public class UploadController extends SimpleFormController {
         /* Сохраняем файлы */
         final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
         final Map files = multiRequest.getFileMap();
+        Set<FileBean> f = new HashSet<FileBean>();
         for (Object file : files.values()) {
             String fileName = ((MultipartFile) file).getOriginalFilename();
             if (!fileName.equals("")) {
@@ -56,9 +59,11 @@ public class UploadController extends SimpleFormController {
                 bean.setTaskUid(task);
                 bean.setFileName(((MultipartFile) file).getOriginalFilename());
                 bean.setBlobField(((MultipartFile) file).getBytes());
-                bean = uploadManagerService.save(bean);
+                f.add(uploadManagerService.save(bean));
             }
         }
+
+        task.setFilesSet(f);
 
         /* Назначаем задание пользователям */
         //WorkflowUserBean initiator = (WorkflowUserBean) request.getSession().getAttribute("initiator");

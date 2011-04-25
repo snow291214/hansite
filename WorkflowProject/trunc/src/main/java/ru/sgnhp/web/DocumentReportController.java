@@ -41,7 +41,8 @@ public class DocumentReportController extends SimpleFormController {
         List model = null;
         String view = "documentReports";
         ModelAndView mv = null;
-        HashMap map = null;
+        HashMap map = new HashMap();
+        map.put("year", documentReportDto.getReportYear());
         switch (documentReportDto.getReportType()) {
             case 0:
                 view = "incomingMailReport";
@@ -53,8 +54,6 @@ public class DocumentReportController extends SimpleFormController {
                 break;
             case 2:
                 view = "orderReport";
-                map = new HashMap();
-                map.put("year", documentReportDto.getReportYear());
                 map.put("documentType", "Приказов");
                 map.put("documentTypeHeader", "приказа");
                 map.put("orders", documentService.getAllDocumentsByYear(documentReportDto.getReportYear(),
@@ -63,12 +62,26 @@ public class DocumentReportController extends SimpleFormController {
                 break;
             case 3:
                 view = "orderReport";
-                map = new HashMap();
-                map.put("year", documentReportDto.getReportYear());
                 map.put("documentType", "Распоряжений");
                 map.put("documentTypeHeader", "распоряжения");
                 map.put("orders", documentService.getAllDocumentsByYear(documentReportDto.getReportYear(),
                         documentTypeService.get(2L)));
+                mv = new ModelAndView(view, "model", map);
+                break;
+            case 4:
+                view = "orderReport";
+                map.put("documentType", "Служебных записок");
+                map.put("documentTypeHeader", "служебной записки");
+                map.put("orders", documentService.getAllDocumentsByYear(documentReportDto.getReportYear(),
+                        documentTypeService.get(3L)));
+                mv = new ModelAndView(view, "model", map);
+                break;
+            case 5:
+                view = "orderReport";
+                map.put("documentType", "Приказов Минздрава");
+                map.put("documentTypeHeader", "приказа Минздрава");
+                map.put("orders", documentService.getAllDocumentsByYear(documentReportDto.getReportYear(),
+                        documentTypeService.get(4L)));
                 mv = new ModelAndView(view, "model", map);
                 break;
         }

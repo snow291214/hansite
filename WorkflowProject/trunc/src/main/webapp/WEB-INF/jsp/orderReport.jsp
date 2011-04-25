@@ -28,7 +28,7 @@
         </tr>
         <c:forEach var="m" items="${requestScope.model[\"orders\"]}">
             <tr>
-                <td>${m.documentNumber}</td>
+                <td>${m.documentNumber}${m.documentPrefix}</td>
                 <td><fmt:formatDate pattern="dd.MM.yyyy" value="${m.documentDate}" /></td>
                 <td>${m.description}</td>
                 <td>

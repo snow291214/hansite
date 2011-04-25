@@ -32,41 +32,49 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getByOutgoingNumber(Long outgoingNumber) {
         return outgoingMailDao.getByOutgoingNumber(outgoingNumber);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getByDescription(String description) {
         return outgoingMailDao.getByDescription("%" + description + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getByOutgoingDate(Date outgoingDate) {
         return outgoingMailDao.getByOutgoingDate(outgoingDate);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getByDocumentumNumber(String documentumNumber) {
         return outgoingMailDao.getByDocumentumNumber("%" + documentumNumber + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getByReceiverCompany(String receiverCompany) {
         return outgoingMailDao.getByReceiverCompany("%" + receiverCompany + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getByReceiverName(String receiverName) {
         return outgoingMailDao.getByReceiverName("%" + receiverName + "%");
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getByResponsibleUid(Long responsibleUid) {
         return outgoingMailDao.getByResponsibleUid(responsibleUid);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getByDueDate(Date dueDate) {
         return outgoingMailDao.getByDueDate(dueDate);
     }
@@ -76,6 +84,7 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public Long getNewOutgoingNumber() {
         Long value = outgoingMailDao.getNewOutgoingNumber();
         if (value == -1) {
@@ -85,16 +94,19 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getByPeriodOfDate(Date outgoingDate, Date dueDate) {
         return outgoingMailDao.getByPeriodOfDate(outgoingDate, dueDate);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<OutgoingMailBean> getAllOutgoingMailByYear(Integer currentYear) throws ParseException {
         return outgoingMailDao.getAllIncomingMailByYear(currentYear);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public void dailyReport() {
         Calendar today = Calendar.getInstance();
         //File file = new File(String.format("/media/storage/doc/скан/исходящие %1$tY/%2$s/", today, "incomingMail.csv"));
@@ -136,6 +148,7 @@ public class OutgoingMailServiceImpl extends GenericServiceImpl<OutgoingMailBean
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<String> getAllOutgoingMailWithPrimaveraUid() {
         return outgoingMailDao.getAllOutgoingMailWithPrimaveraUid();
     }

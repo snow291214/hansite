@@ -13,6 +13,7 @@ public class DocumentDto {
 
     private Long uid;
     private int incomingNumber;
+    private String documentPrefix;
     private Date documentDate;
     private String description;
     private Long documentTypeUid;
@@ -66,5 +67,19 @@ public class DocumentDto {
 
     public void setIncomingNumber(int incomingNumber) {
         this.incomingNumber = incomingNumber;
+    }
+
+    /**
+     * @return the documentPrefix
+     */
+    public String getDocumentPrefix() {
+        return documentPrefix;
+    }
+
+    /**
+     * @param documentPrefix the documentPrefix to set
+     */
+    public void setDocumentPrefix(String documentPrefix) {
+        this.documentPrefix = documentPrefix;
     }
 }

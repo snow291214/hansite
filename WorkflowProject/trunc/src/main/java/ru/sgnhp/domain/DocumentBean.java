@@ -53,6 +53,8 @@ public class DocumentBean implements Serializable {
     @Basic(optional = false)
     @Column(name = "DocumentNumber", nullable = false)
     private int documentNumber;
+    @Column(name = "DocumentPrefix", length = 2)
+    private String documentPrefix;
     @Basic(optional = false)
     @Column(name = "DocumentDate", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -84,11 +86,12 @@ public class DocumentBean implements Serializable {
         this.uid = uid;
     }
 
-    public DocumentBean(Long uid, int documentNumber, Date documentDate, String description) {
+    public DocumentBean(Long uid, int documentNumber, String documentPrefix, Date documentDate, String description) {
         this.uid = uid;
         this.documentNumber = documentNumber;
         this.documentDate = documentDate;
         this.description = description;
+        this.documentPrefix = documentPrefix;
     }
 
     public Long getUid() {
@@ -178,6 +181,20 @@ public class DocumentBean implements Serializable {
 
     public void setControlPerson(WorkflowUserBean controlPerson) {
         this.controlPerson = controlPerson;
+    }
+
+    /**
+     * @return the documentPrefix
+     */
+    public String getDocumentPrefix() {
+        return documentPrefix;
+    }
+
+    /**
+     * @param documentPrefix the documentPrefix to set
+     */
+    public void setDocumentPrefix(String documentPrefix) {
+        this.documentPrefix = documentPrefix;
     }
 
 

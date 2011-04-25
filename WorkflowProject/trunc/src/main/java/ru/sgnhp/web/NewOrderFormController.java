@@ -3,8 +3,10 @@ package ru.sgnhp.web;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.DocumentBean;
 import ru.sgnhp.domain.DocumentFileBean;
+import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.domain.TaskBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
@@ -29,6 +32,7 @@ import ru.sgnhp.service.IDocumentService;
 import ru.sgnhp.service.IDocumentTypeService;
 import ru.sgnhp.service.IStateManagerService;
 import ru.sgnhp.service.ITaskManagerService;
+import ru.sgnhp.service.IUploadManagerService;
 import ru.sgnhp.service.IUserManagerService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
@@ -51,6 +55,7 @@ public class NewOrderFormController extends AbstractWizardFormController {
     private IStateManagerService stateManagerService;
     private int currentPage;
     private String serverName;
+    private IUploadManagerService uploadManagerService;
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws ServletException {
@@ -120,6 +125,7 @@ public class NewOrderFormController extends AbstractWizardFormController {
         documentBean.setDescription(documentDto.getDescription());
         documentBean.setDocumentDate(documentDto.getDocumentDate());
         documentBean.setDocumentNumber(documentDto.getIncomingNumber());
+        documentBean.setDocumentPrefix(documentDto.getDocumentPrefix().toUpperCase());
         documentBean.setDocumentTypeBean(getDocumentTypeService().get(documentDto.getDocumentTypeUid()));
         documentBean.setContactPerson(contactUserBean);
         documentBean.setControlPerson(controlUserBean);
@@ -127,44 +133,59 @@ public class NewOrderFormController extends AbstractWizardFormController {
 
         /*Сохранение файлов в БД*/
         final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+        Set<DocumentFileBean> documentFileBeans = new HashSet<DocumentFileBean>();
         final Map files = multiRequest.getFileMap();
         for (Object file : files.values()) {
             DocumentFileBean documentFileBean = new DocumentFileBean();
             documentFileBean.setBlobField(((MultipartFile) file).getBytes());
             documentFileBean.setFileName(((MultipartFile) file).getOriginalFilename());
             documentFileBean.setDocumentBean(documentBean);
-            getDocumentFileService().save(documentFileBean);
+            documentFileBeans.add(getDocumentFileService().save(documentFileBean));
         }
-        /*Отправляем письмо*/
-        //mailService.sendmailOrder(documentBean);
-
         /*
         Создание и сохранение задачи ознакомления с распорядительным документом
          */
         TaskBean taskBean = new TaskBean();
         taskBean.setInternalNumber(taskManagerService.getNewInternalNumber());
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        taskBean.setDescription(documentBean.getDocumentTypeBean().getDescription()
-                + " № " + String.valueOf(documentBean.getDocumentNumber())
-                + " от " + df.format(documentBean.getDocumentDate())
-                + ". " + documentBean.getDescription());
+        if (documentBean.getDocumentPrefix().isEmpty()) {
+            taskBean.setDescription(documentBean.getDocumentTypeBean().getDescription()
+                    + " № " + String.valueOf(documentBean.getDocumentNumber())
+                    + " от " + df.format(documentBean.getDocumentDate())
+                    + ". " + documentBean.getDescription());
+        } else {
+            taskBean.setDescription(documentBean.getDocumentTypeBean().getDescription()
+                    + " № " + String.valueOf(documentBean.getDocumentNumber())
+                    + "/" + documentBean.getDocumentPrefix()
+                    + " от " + df.format(documentBean.getDocumentDate())
+                    + ". " + documentBean.getDescription());
+        }
         taskBean.setStartDate(DateUtils.nowDate());
         taskBean.setDueDate(DateUtils.nowDate());
         taskBean.setExternalAssignee(documentBean.getControlPerson().getLastName()
                 + " " + documentBean.getControlPerson().getFirstName()
                 + " " + documentBean.getControlPerson().getMiddleName());
         taskBean.setExternalCompany("Медсервис");
-        getTaskManagerService().save(taskBean);
+        taskBean = getTaskManagerService().save(taskBean);
+
+        /* Создание списка файлов для задачи */
+        Set<FileBean> fileBeans = new HashSet<FileBean>();
+        for (DocumentFileBean documentFileBean : documentFileBeans) {
+            FileBean fileBean = new FileBean();
+            fileBean.setTaskUid(taskBean);
+            fileBean.setFileName(documentFileBean.getFileName());
+            fileBean.setBlobField(documentFileBean.getBlobField());
+            fileBeans.add(getUploadManagerService().save(fileBean));
+        }
+
+        taskBean.setFilesSet(fileBeans);
 
         /*
         Рассылка пользователям задачи ознакомления с распорядительным документом
          */
         final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
         WorkflowUserBean initiator = getUserManagerService().getUserByLogin(currentUser);
-        String description = "Прошу ознакомиться с распорядительным документом. "
-                + "<a href=\""+this.getServerName()+"getDocumentFiles.htm?fileID="
-                + documentBean.getUid().toString()
-                + "\">Ссылка на документ</a>";
+        String description = "Прошу ознакомиться с документом. ";
         for (String uid : userUids) {
             WorkflowBean wf = new WorkflowBean();
             wf.setParentUid(-1L);
@@ -246,5 +267,19 @@ public class NewOrderFormController extends AbstractWizardFormController {
 
     public void setServerName(String serverName) {
         this.serverName = serverName;
+    }
+
+    /**
+     * @return the uploadManagerService
+     */
+    public IUploadManagerService getUploadManagerService() {
+        return uploadManagerService;
+    }
+
+    /**
+     * @param uploadManagerService the uploadManagerService to set
+     */
+    public void setUploadManagerService(IUploadManagerService uploadManagerService) {
+        this.uploadManagerService = uploadManagerService;
     }
 }

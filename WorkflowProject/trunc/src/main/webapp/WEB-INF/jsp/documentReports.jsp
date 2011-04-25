@@ -83,6 +83,18 @@
                         <input type="radio" name="reportType" id="order2" value="3"/>
                     </td>
                 </tr>
+                <tr>
+                    <td><label for="order3">Журнал служебных записок</label></td>
+                    <td>
+                        <input type="radio" name="reportType" id="order3" value="4"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="order4">Журнал приказов Минздрава</label></td>
+                    <td>
+                        <input type="radio" name="reportType" id="order4" value="5"/>
+                    </td>
+                </tr>
             </table>
             <input type="button" onclick="javascript:history.back();" value="Назад"/>
             <input type="submit" value="Сформировать" />

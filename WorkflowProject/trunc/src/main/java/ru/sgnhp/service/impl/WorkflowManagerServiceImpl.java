@@ -40,7 +40,7 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     @Override
     public WorkflowBean assignTaskToUser(WorkflowBean wf) {
         wf = workflowDao.save(wf);
-        //mailService.sendmailAssign(wf);
+        mailService.sendmailAssign(wf);
         return wf;
     }
 

@@ -475,11 +475,9 @@
         <property name="userManagerService">
             <ref bean="userManagerService"/>
         </property>
-        <!--
-        <property name="mailService">
-            <ref bean="mailServiceManager"/>
+        <property name="uploadManagerService">
+            <ref bean="uploadManagerService"/>
         </property>
-        -->
         <property name="taskManagerService">
             <ref bean="taskManagerService"/>
         </property>
