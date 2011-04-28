@@ -85,7 +85,7 @@
                 </td>
             </tr>
         </table>
-        <input type="submit" value="Cancel" name="_cancel">
+        <input type="submit" value="Отмена" name="_cancel">
         <input type="submit" value="Далее >>" name="_target1"/>
     </form>
 </body>

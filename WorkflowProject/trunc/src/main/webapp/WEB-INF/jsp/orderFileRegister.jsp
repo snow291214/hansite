@@ -28,9 +28,9 @@
     <div id="container" >
         <p>Имя файла: <input type="file" name="files" id="f1"/></p>
     </div>
-    <input type="submit" value="Cancel" name="_cancel">
-    <input type="submit" value="<< Back" name="_target1">
-    <input type="submit" value="Finish" name="_finish" />
+    <input type="submit" value="Отмена" name="_cancel">
+    <input type="submit" value="<< Назад" name="_target1">
+    <input type="submit" value="Сохранить" name="_finish" />
 </form>
 </body>
 </html>
