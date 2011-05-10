@@ -23,6 +23,7 @@ public class CompletedTaskController implements Controller {
 
     private IWorkflowManagerService workflowManagerService;
 
+    @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long initiatorUid = ((WorkflowUserBean) request.getSession().getAttribute("initiator")).getUid();
         List<WorkflowBean> wfs = workflowManagerService.getCompletedWorkflowsByUserUid(initiatorUid);

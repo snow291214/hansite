@@ -87,9 +87,10 @@ public class MailServiceImpl implements IMailService {
 
             Translit translit = new Translit();
             // Part two is attachment
-            htmlPart = new MimeBodyPart();
+            //htmlPart = new MimeBodyPart();
             Set<FileBean> fileBeans = _workflow.getTaskBean().getFilesSet();
             for (FileBean fileBean : fileBeans) {
+                htmlPart = new MimeBodyPart();
                 DataSource dataSource = new ByteArrayDataSource(fileBean.getBlobField(), "application/x-any");
                 htmlPart.setDataHandler(new DataHandler(dataSource));
                 htmlPart.setFileName(translit.toTranslit(fileBean.getFileName()));
@@ -394,9 +395,10 @@ public class MailServiceImpl implements IMailService {
 
             Translit translit = new Translit();
             // Part two is attachment
-            htmlPart = new MimeBodyPart();
+            //htmlPart = new MimeBodyPart();
             Set<OutgoingFileBean> fileBeans = outgoingMailBean.getOutgoingFileBeanSet();
             for (OutgoingFileBean fileBean : fileBeans) {
+                htmlPart = new MimeBodyPart();
                 DataSource dataSource = new ByteArrayDataSource(fileBean.getBlobField(), "application/x-any");
                 htmlPart.setDataHandler(new DataHandler(dataSource));
                 htmlPart.setFileName(translit.toTranslit(fileBean.getFileName()));
@@ -514,7 +516,8 @@ public class MailServiceImpl implements IMailService {
             message.setContent(multipart);
             Transport.send(message);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger("MailServiceImpl");
+            logger.error(e);
         }
     }
 

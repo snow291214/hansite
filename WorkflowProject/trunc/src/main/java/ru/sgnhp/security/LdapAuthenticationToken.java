@@ -75,10 +75,12 @@ public class LdapAuthenticationToken extends AbstractAuthenticationToken {
         this.authorities.add(authority);
     }
 
+    @Override
     public Object getCredentials() {
         return auth.getCredentials();
     }
 
+    @Override
     public Object getPrincipal() {
         return auth.getPrincipal();
     }

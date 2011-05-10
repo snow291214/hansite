@@ -5,7 +5,9 @@
     <a href="index.htm">Главная страница</a><br />
     <a href="<c:url value="selectUsers.htm" />">Создать задачу</a><br />
     <a href="tasksForReview.htm">Задачи, ожидающие проверки</a><br />
+    <!--
     <a href="primaveraReportWizard.htm">Текущие работы в Primavera</a><br />
+    -->
     <a href="logout.htm">Завершить работу</a>
 </div>
 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_REG">
