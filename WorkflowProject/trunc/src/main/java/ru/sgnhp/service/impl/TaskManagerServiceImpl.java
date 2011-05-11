@@ -121,7 +121,7 @@ public class TaskManagerServiceImpl extends GenericServiceImpl<TaskBean, Long> i
         } catch (ParseException ex) {
             Logger.getLogger(TaskManagerServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(TaskManagerServiceImpl.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

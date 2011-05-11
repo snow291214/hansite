@@ -19,12 +19,14 @@ import javax.mail.util.ByteArrayDataSource;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.sgnhp.DateUtils;
 import ru.sgnhp.Translit;
 import ru.sgnhp.domain.DocumentBean;
 import ru.sgnhp.domain.FileBean;
 import ru.sgnhp.domain.OutgoingFileBean;
 import ru.sgnhp.domain.OutgoingMailBean;
 import ru.sgnhp.domain.WorkflowBean;
+import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IMailService;
 
 /*****
@@ -81,7 +83,7 @@ public class MailServiceImpl implements IMailService {
                     //                    + "\">Просмотреть все задачи</a> <br />"
                     //                    + "<a href=\"" + this.applicationPath + "workflowManager.htm?workflowID="
                     //                    + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
-                    //+ "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
+                    //+ "<p>Есть вопрос? Звоните: 17-70. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
 
@@ -254,7 +256,7 @@ public class MailServiceImpl implements IMailService {
                     + tableBody
                     + "</table>"
                     + "<a href=\"" + this.applicationPath + "\">Просмотреть задачи</a>"
-                    + "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
+                    + "<p>Есть вопрос? Звоните: 17-70. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
@@ -283,32 +285,32 @@ public class MailServiceImpl implements IMailService {
 
             String tableBody = "";
             int counter = 1;
+
             for (WorkflowBean wf : wfs) {
                 tableBody += "<tr>"
                         + "<td>" + counter + "</td>"
                         + "<td>" + wf.getTaskBean().getDescription() + "</td>"
                         + "<td>"
-                        + wf.getAssignee().getLastName() + " "
-                        + wf.getAssignee().getFirstName() + " "
-                        + wf.getAssignee().getMiddleName()
-                        + "</td>"
-                        + "<td>"
                         + wf.getReceiver().getLastName() + " "
                         + wf.getReceiver().getFirstName() + " "
                         + wf.getReceiver().getMiddleName() + " "
                         + "</td>"
-                        + "<td>" + wf.getDescription() + "</td>"
+                        + "<td>"
+                        + DateUtils.dateToString(wf.getAssignDate(),"dd.MM.yyyy")
+//                        + wf.getAssignee().getLastName() + " "
+//                        + wf.getAssignee().getFirstName() + " "
+//                        + wf.getAssignee().getMiddleName()
+                        + "</td>"
+                        //+ "<td>" + wf.getDescription() + "</td>"
                         + "<td>" + wf.getState().getStateDescription() + "</td>"
-                        + "<td>" + wf.getWorkflowNote() + "</td>"
-                        + "<td><a href=\"" + this.applicationPath + "/roadmap.htm?workflowID="
-                        + wf.getUid() + "\">" + wf.getUid() + "</a></td>"
                         + "</tr>";
                 counter++;
             }
+
             htmlPart.setContent("<html><head><style type=\"text/css\"> "
                     + "body {font-family:Arial;font-size:small;}"
-                    + "table {font-family:Arial; font-size:8pt;border-collapse:collapse}"
-                    + "td {border: 1px solid #000000;}"
+                    + "table {font-family:Arial; font-size:12pt;border-collapse:collapse;}"
+                    + "td {border: 1px solid #000000;;margins: 5px 5px 5px 5px;}"
                     + "</style></style></head><body>"
                     + "<p> Уважаемый (ая) коллега!</p>"
                     + "<p>"
@@ -316,20 +318,18 @@ public class MailServiceImpl implements IMailService {
                     + "</p>"
                     + "<table width=100%>"
                     + "<tr align=center>"
-                    + "<td width=10%>Номер п/п</td>"
-                    + "<td width=20%>Текст задачи</td>"
-                    + "<td width=20%>Задачу назначил</td>"
+                    + "<td width=5%>Номер п/п</td>"
+                    + "<td width=55%>Текст задачи</td>"
                     + "<td width=20%>Задачу получил</td>"
-                    + "<td width=30%>Резолюция к задаче</td>"
-                    + "<td width=5%>Состояние задачи</td>"
-                    + "<td width=10%>Записка к задаче</td>"
-                    + "<td width=5%>Ссылка на задачу</td>"
+                    + "<td width=10%>Дата назначения задачи</td>"
+                    //+ "<td width=30%>Резолюция к задаче</td>"
+                    + "<td width=10%>Состояние задачи</td>"
                     + "</tr>"
                     + tableBody
                     + "</table>"
                     + "<br />"
                     + "<a href=\"" + this.applicationPath + "\">Просмотреть задачи</a>"
-                    + "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
+                    + "<p>Есть вопрос? Звоните: 17-70. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);
@@ -478,7 +478,7 @@ public class MailServiceImpl implements IMailService {
                     + "</table>"
                     + "<br />"
                     + "<a href=\"" + this.applicationPath + "tasksForReview.htm\">Просмотреть и проверить выполненные задачи</a>"
-                    + "<p>Есть вопрос? Звоните: 57-15. Алексей.</p>"
+                    + "<p>Есть вопрос? Звоните: 17-70. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
             message.setContent(multipart);

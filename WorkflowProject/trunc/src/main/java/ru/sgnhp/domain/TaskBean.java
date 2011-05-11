@@ -15,6 +15,7 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -91,6 +92,7 @@ public class TaskBean implements Serializable {
     private String primaveraUid;
     @OneToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @OrderBy("fileName")
     private Set<FileBean> filesSet = new HashSet<FileBean>();
 
     @OneToMany(mappedBy = "taskBean", fetch = FetchType.LAZY)

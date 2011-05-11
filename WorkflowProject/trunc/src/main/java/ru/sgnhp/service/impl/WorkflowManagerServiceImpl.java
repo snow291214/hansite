@@ -181,11 +181,15 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public void taskReport() {
-        List<WorkflowUserBean> users = userManagerService.getAll();
+        //List<WorkflowUserBean> users = userManagerService.getAll();
+        List<WorkflowUserBean> users = new ArrayList<WorkflowUserBean>();
+        users.add(userManagerService.getUserByLogin("77llv"));
+        //users.add(userManagerService.getUserByLogin("77knv"));
+        //users.add(userManagerService.getUserByLogin("77fdg"));
         for (WorkflowUserBean user : users) {
             List<WorkflowBean> uncompletedWorkflows = this.getAllUncompletedByParentUserUid(user.getUid());
             if (uncompletedWorkflows != null) {
-                //mailService.sendmailReport(uncompletedWorkflows);
+                mailService.sendmailReport(uncompletedWorkflows);
             }
         }
     }

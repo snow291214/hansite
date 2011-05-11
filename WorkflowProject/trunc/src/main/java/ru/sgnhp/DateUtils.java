@@ -26,6 +26,12 @@ public class DateUtils {
         return date;
     }
 
+    public static String dateToString(java.util.Date date, String dateFormat) throws ParseException {
+        DateFormat formatter = new SimpleDateFormat(dateFormat);
+        String s = formatter.format(date);
+        return s;
+    }
+
     public static String nowString(String dateFormat) {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
