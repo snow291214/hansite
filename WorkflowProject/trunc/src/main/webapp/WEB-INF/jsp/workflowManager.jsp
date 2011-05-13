@@ -36,7 +36,7 @@
                 <td>Состояние задачи:</td>
                 <spring:bind path="workflowManager.stateUid">
                     <td>
-                        <select name="${status.expression}" style="width : 200px">
+                        <select name="${status.expression}" style="width : 270px">
                             <c:choose>
                                 <c:when test="${status.value eq 0}">
                                     <option value="0" selected>Не начата</option>
@@ -53,7 +53,6 @@
                                     <option value="2" >В работе</option>
                                 </c:otherwise>
                             </c:choose>
-
                             <c:choose>
                                 <c:when test="${status.value eq 5}">
                                     <option value="5" selected>Сохранить для проверки</option>
@@ -62,16 +61,14 @@
                                     <option value="5">Сохранить для проверки</option>
                                 </c:otherwise>
                             </c:choose>
-                            <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_TOP">
-                                <c:choose>
-                                    <c:when test="${status.value eq 3}">
-                                        <option value="3" selected>Принято к сведению</option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="3">Принято к сведению</option>
-                                    </c:otherwise>
-                                </c:choose>
-                            </sec:authorize>
+                            <c:choose>
+                                <c:when test="${status.value eq 3}">
+                                    <option value="3" selected>Задача завершена/Принято к сведению</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="3">Задача завершена / Принято к сведению</option>
+                                </c:otherwise>
+                            </c:choose>
                         </select>
                     </td>
                     <td><font color="red">${status.errorMessage}</font></td>
@@ -81,7 +78,7 @@
                 <td>Записка к смене состояния задачи:</td>
                 <spring:bind path="workflowManager.workflowNote">
                     <td>
-                        <textarea rows="4" cols="22" name="<c:out value="${status.expression}"/>">${status.value}</textarea>
+                        <textarea rows="4" cols="30" name="<c:out value="${status.expression}"/>">${status.value}</textarea>
                     </td>
                     <td><font color="red">${status.errorMessage}</font></td>
                 </spring:bind>
