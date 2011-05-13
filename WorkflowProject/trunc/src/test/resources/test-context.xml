@@ -139,6 +139,7 @@
         <property name="fromAddress" value="${mail.fromAddress}"/>
         <property name="fromName" value="${mail.fromName}" />
         <property name="applicationPath" value="${general.applicationPath}" />
+        <property name="workflowManagerService" ref="workflowManagerService" />
     </bean>
 
     <bean id="outgoingMailDao" class="ru.sgnhp.dao.impl.OutgoingMailDaoImpl">

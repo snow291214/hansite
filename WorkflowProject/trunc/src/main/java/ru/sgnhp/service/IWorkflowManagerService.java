@@ -54,4 +54,6 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean, L
     void tasksForReviewReport();
 
     boolean isTaskAssignedToUser(Long taskUid, Long userUid);
+
+    boolean isWorkflowActive(Long workflowUid);
 }

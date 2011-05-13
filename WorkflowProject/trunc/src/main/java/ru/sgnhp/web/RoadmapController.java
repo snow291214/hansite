@@ -22,6 +22,7 @@ public class RoadmapController implements Controller {
 
     private IWorkflowManagerService workflowManagerService;
 
+    @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String workflowUid = request.getParameter("workflowID");
         WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(Long.parseLong(workflowUid));

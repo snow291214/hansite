@@ -218,10 +218,27 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
             }
         }
     }
-    
+
+
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public boolean isTaskAssignedToUser(Long taskUid, Long userUid) {
         return workflowDao.isTaskAssignedToUser(taskUid, userUid);
+    }
+
+    @Override
+    public boolean isWorkflowActive(Long workflowUid) {
+        List<WorkflowBean> workflowBeans = this.getWorkflowByParentUid(workflowUid);
+        if(workflowBeans == null){
+            return true;
+        }
+        for(WorkflowBean workflowBean : workflowBeans){
+            if((workflowBean.getState().getStateUid() == 3)){
+                return false;
+            }else{
+                this.isWorkflowActive(workflowBean.getUid());
+            }
+        }
+        return true;
     }
 }
