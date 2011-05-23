@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,15 +36,16 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "documents", catalog = "workflowdb", schema = "")
 @NamedQueries({
     @NamedQuery(name = "DocumentBean.findAll", query = "SELECT d FROM DocumentBean d"),
-    @NamedQuery(name = "DocumentBean.findByUid", query = "SELECT d FROM DocumentBean " +
-        "d WHERE d.uid = :uid"),
-    @NamedQuery(name = "DocumentBean.findByDocumentNumber", query = "SELECT d FROM " +
-        "DocumentBean d WHERE d.documentNumber = :documentNumber and " +
-        "d.documentTypeBean = :documentTypeBean"),
-    @NamedQuery(name = "DocumentBean.findByDocumentDate", query = "SELECT d FROM " +
-        "DocumentBean d WHERE d.documentDate between :startDate and :finishDate and " +
-        "d.documentTypeBean = :documentTypeBean")})
+    @NamedQuery(name = "DocumentBean.findByUid", query = "SELECT d FROM DocumentBean "
+    + "d WHERE d.uid = :uid"),
+    @NamedQuery(name = "DocumentBean.findByDocumentNumber", query = "SELECT d FROM "
+    + "DocumentBean d WHERE d.documentNumber = :documentNumber and "
+    + "d.documentTypeBean = :documentTypeBean"),
+    @NamedQuery(name = "DocumentBean.findByDocumentDate", query = "SELECT d FROM "
+    + "DocumentBean d WHERE d.documentDate between :startDate and :finishDate and "
+    + "d.documentTypeBean = :documentTypeBean")})
 public class DocumentBean implements Serializable {
+
     private static final long serialVersionUID = 10L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,19 +66,20 @@ public class DocumentBean implements Serializable {
     @Column(name = "Description", nullable = false, length = 65535)
     private String description;
     @ForeignKey(name = "fk_document_document_types")
-    @JoinColumn(name = "DocumentTypeUid", referencedColumnName = "Uid",  nullable = false, columnDefinition = "INTEGER(11)")
+    @JoinColumn(name = "DocumentTypeUid", referencedColumnName = "Uid", nullable = false, columnDefinition = "INTEGER(11)")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DocumentTypeBean documentTypeBean;
     @ForeignKey(name = "fk_documents_contact_users")
-    @JoinColumn(name = "ContactUserUid", referencedColumnName = "Uid",  nullable = false, columnDefinition = "INTEGER(11) UNSIGNED")
+    @JoinColumn(name = "ContactUserUid", referencedColumnName = "Uid", nullable = false, columnDefinition = "INTEGER(11) UNSIGNED")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private WorkflowUserBean contactPerson;
     @ForeignKey(name = "fk_documents_control_users")
-    @JoinColumn(name = "ControlUserUid", referencedColumnName = "Uid",  nullable = false, columnDefinition = "INTEGER(11) UNSIGNED")
+    @JoinColumn(name = "ControlUserUid", referencedColumnName = "Uid", nullable = false, columnDefinition = "INTEGER(11) UNSIGNED")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private WorkflowUserBean controlPerson;
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentBean", fetch = FetchType.LAZY)
+    @OrderBy("fileName")
     private Set<DocumentFileBean> documentFileBeanSet;
 
     public DocumentBean() {
@@ -196,6 +199,4 @@ public class DocumentBean implements Serializable {
     public void setDocumentPrefix(String documentPrefix) {
         this.documentPrefix = documentPrefix;
     }
-
-
 }
