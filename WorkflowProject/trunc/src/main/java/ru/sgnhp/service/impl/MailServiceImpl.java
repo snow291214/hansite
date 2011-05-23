@@ -302,43 +302,38 @@ public class MailServiceImpl implements IMailService {
                     counter = 1;
                 }
 
-                tableBody += "<tr>"
-                        + "<td>" + counter + "</td>"
-                        + "<td>" + wf.getTaskBean().getDescription() + "</td>"
-                        + "<td>"
-                        + wf.getReceiver().getLastName() + " "
-                        + wf.getReceiver().getFirstName() + " "
-                        + wf.getReceiver().getMiddleName() + " "
-                        + "</td>"
-                        + "<td>"
-                        + DateUtils.dateToString(wf.getAssignDate(), "dd.MM.yyyy")
-                        //                        + wf.getAssignee().getLastName() + " "
-                        //                        + wf.getAssignee().getFirstName() + " "
-                        //                        + wf.getAssignee().getMiddleName()
-                        + "</td>"
-                        //+ "<td>" + wf.getDescription() + "</td>"
-                        + "<td>" + wf.getState().getStateDescription() + "</td>"
-                        + "</tr>";
-
                 if ((wf.getState().getStateUid() == 1L) & (getWorkflowManagerService().isWorkflowActive(wf.getUid()))) {
                     ArrayList<WorkflowBean> roadmap = new ArrayList<WorkflowBean>();
                     roadmap.add(wf);
                     roadmap = this.getWorkflowManagerService().getWorkflowMembersByWorkflowUid(wf.getUid(), wf.getParentUid(), roadmap);
                     Collections.reverse(roadmap);
                     tableBody += "<tr>"
+                            + "<td>" + counter + "</td>"
+                            + "<td>" + wf.getTaskBean().getDescription() + "</td>"
+                            + "<td>"
+                            + wf.getReceiver().getLastName() + " "
+                            + wf.getReceiver().getFirstName() + " "
+                            + wf.getReceiver().getMiddleName() + " "
+                            + "</td>"
+                            + "<td>"
+                            + DateUtils.dateToString(wf.getAssignDate(), "dd.MM.yyyy")
+                            + "</td>"
+                            + "<td>" + wf.getState().getStateDescription() + "</td>"
+                            + "</tr>"
+                            + "<tr>"
                             + "<td><br />"
                             + " Маршрут задачи: "
                             + "<br />&nbsp;</td>"
                             + "<td colspan=4><table width=100%>";
                     int c = 1;
-                        tableBody += "<tr>"
-                                + "<td>Номер п/п</td>"
-                                + "<td>Задачу назначил</td>"
-                                + "<td>Задачу получил</td>"
-                                + "<td>Дата получения задачи</td>"
-                                + "<td>Резолюция к задаче</td>"
-                                + "<td>Состояние задачи</td>"
-                                + "</tr>";
+                    tableBody += "<tr>"
+                            + "<td>Номер п/п</td>"
+                            + "<td>Задачу назначил</td>"
+                            + "<td>Задачу получил</td>"
+                            + "<td>Дата получения задачи</td>"
+                            + "<td>Резолюция к задаче</td>"
+                            + "<td>Состояние задачи</td>"
+                            + "</tr>";
                     for (WorkflowBean w : roadmap) {
                         tableBody += "<tr>"
                                 + "<td>" + c + "</td>"
@@ -354,7 +349,7 @@ public class MailServiceImpl implements IMailService {
                                 + "</td>"
                                 + "<td>"
                                 + DateUtils.dateToString(w.getAssignDate(), "dd.MM.yyyy")
-                                +"</td>"
+                                + "</td>"
                                 + "<td>"
                                 + w.getDescription()
                                 + "</td>"
@@ -365,6 +360,22 @@ public class MailServiceImpl implements IMailService {
                         c++;
                     }
                     tableBody += "</table></td></tr>";
+                } else if ((wf.getState().getStateUid() == 1L) & (!getWorkflowManagerService().isWorkflowActive(wf.getUid()))) {
+                    continue;
+                } else {
+                    tableBody += "<tr>"
+                            + "<td>" + counter + "</td>"
+                            + "<td>" + wf.getTaskBean().getDescription() + "</td>"
+                            + "<td>"
+                            + wf.getReceiver().getLastName() + " "
+                            + wf.getReceiver().getFirstName() + " "
+                            + wf.getReceiver().getMiddleName() + " "
+                            + "</td>"
+                            + "<td>"
+                            + DateUtils.dateToString(wf.getAssignDate(), "dd.MM.yyyy")
+                            + "</td>"
+                            + "<td>" + wf.getState().getStateDescription() + "</td>"
+                            + "</tr>";
                 }
 
                 counter++;
