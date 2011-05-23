@@ -128,7 +128,7 @@ public class FileBean implements Serializable {
 
         File directory = new File(repositoryPath + path);
         if (!directory.exists()) {
-            logger.info("creating directory: " + repositoryPath + path);
+            //logger.info("creating directory: " + repositoryPath + path);
             directory.mkdirs();
         }
 

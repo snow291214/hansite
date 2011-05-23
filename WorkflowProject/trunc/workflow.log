@@ -1,0 +1,1 @@
+2011-05-18 09:35:04,600 [ERROR] ru.sgnhp.service.impl.MailServiceImpl java.io.FileNotFoundException: \var\storage\repository\TaskFiles\2011\05\16.05.2011\624\scan 021.png (Системе не удается найти указанный путь) at ru.sgnhp.service.impl.MailServiceImpl.sendmailAssign(MailServiceImpl.java:106)

@@ -76,6 +76,8 @@ public class MailServiceImpl implements IMailService {
                     + _workflow.getAssignee().getFirstName()
                     + " " + _workflow.getAssignee().getMiddleName() + " "
                     + _workflow.getAssignee().getLastName() + "</p>"
+                    + "<p style=\"font-family:Arial;font-size:12px;\">Описание задачи: "
+                    + _workflow.getTaskBean().getDescription() + "</p>"
                     + "<p style=\"font-family:Arial;font-size:12px;\">Резолюция к задаче: "
                     + _workflow.getDescription() + "</p>"
                     + "<p style=\"font-family:Arial;font-size:12px;\">"

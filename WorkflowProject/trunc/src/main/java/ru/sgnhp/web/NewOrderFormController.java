@@ -137,9 +137,9 @@ public class NewOrderFormController extends AbstractWizardFormController {
         final Map files = multiRequest.getFileMap();
         for (Object file : files.values()) {
             DocumentFileBean documentFileBean = new DocumentFileBean();
-            documentFileBean.setBlobField(((MultipartFile) file).getBytes());
-            documentFileBean.setFileName(((MultipartFile) file).getOriginalFilename());
             documentFileBean.setDocumentBean(documentBean);
+            documentFileBean.setFileName(((MultipartFile) file).getOriginalFilename());
+            documentFileBean.setBlobField(((MultipartFile) file).getBytes());
             documentFileBeans.add(getDocumentFileService().save(documentFileBean));
         }
         /*

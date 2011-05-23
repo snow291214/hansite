@@ -33,6 +33,12 @@ public class MailServiceImplTest extends AbstractTransactionalDataSourceSpringCo
 //    }
 
     @Test
+    public void testSendmailAssign(){
+        WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(935L);
+        mailService.sendmailAssign(workflowBean);
+    }
+
+    @Test
     public void testTaskReport(){
         //WorkflowBean workflowBean = workflowManagerService.getWorkflowByUid(3784L);
         //mailService.sendmailAssign(workflowBean);
