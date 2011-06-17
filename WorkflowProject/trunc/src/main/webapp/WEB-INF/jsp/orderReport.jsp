@@ -26,9 +26,14 @@
             <td align="center">5</td>
             <td align="center">6</td>
         </tr>
-        <c:forEach var="m" items="${requestScope.model[\"orders\"]}">
+        <c:forEach var="m" items="${requestScope.model['orders']}">
             <tr>
-                <td>${m.documentNumber}${m.documentPrefix}</td>
+                <td>
+                    ${m.documentNumber}
+                    <c:if test="${m.documentPrefix != ''}">
+                        /${m.documentPrefix}
+                    </c:if>
+                </td>
                 <td><fmt:formatDate pattern="dd.MM.yyyy" value="${m.documentDate}" /></td>
                 <td>${m.description}</td>
                 <td>
@@ -42,7 +47,7 @@
                     ${m.controlPerson.middleName}
                 </td>
                 <td>
-                   <c:forEach var = "orderFile" items="${m.documentFileBeanSet}">
+                    <c:forEach var = "orderFile" items="${m.documentFileBeanSet}">
                         <a href="<c:url value="getDocumentFiles.htm?fileID=${orderFile.uid}" />">${orderFile.fileName}</a>
                     </c:forEach>
                 </td>

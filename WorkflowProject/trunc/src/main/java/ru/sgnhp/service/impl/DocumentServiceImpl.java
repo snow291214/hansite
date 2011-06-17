@@ -28,21 +28,25 @@ public class DocumentServiceImpl extends GenericServiceImpl<DocumentBean, Long> 
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<DocumentBean> findByDocumentNumber(Long documentNumber, DocumentTypeBean documentTypeBean) {
         return documentDao.findByDocumentNumber(documentNumber, documentTypeBean);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<DocumentBean> findByDocumentDate(Date startDate, Date finishDate, DocumentTypeBean documentTypeBean) {
         return documentDao.findByDocumentDate(startDate, finishDate, documentTypeBean);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public int getNewDocumentNumber(int currentYear, Long documentTypeUid) {
         return documentDao.getNewDocumentNumber(currentYear, documentTypeUid);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
     public List<DocumentBean> getAllDocumentsByYear(Integer currentYear, DocumentTypeBean documentTypeBean) throws ParseException{
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date startDate = simpleDateFormat.parse("01.01." + currentYear.toString());

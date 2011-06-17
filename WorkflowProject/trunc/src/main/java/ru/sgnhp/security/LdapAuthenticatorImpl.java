@@ -1,7 +1,6 @@
 package ru.sgnhp.security;
 
 import javax.naming.ldap.InitialLdapContext;
-import org.apache.log4j.Logger;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.Authentication;

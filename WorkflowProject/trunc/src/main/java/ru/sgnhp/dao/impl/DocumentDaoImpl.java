@@ -21,29 +21,32 @@ public class DocumentDaoImpl extends GenericDaoHibernate<DocumentBean, Long> imp
         super(DocumentBean.class);
     }
 
+    @Override
     public List<DocumentBean> findByDocumentNumber(Long documentNumber, DocumentTypeBean documentTypeBean) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("documentTypeBean", documentTypeBean);
         value.put("documentNumber", documentNumber);
         List<DocumentBean> list = this.findByNamedQuery("DocumentBean.findByDocumentNumber", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
     }
 
+    @Override
     public List<DocumentBean> findByDocumentDate(Date startDate, Date finishDate, DocumentTypeBean documentTypeBean) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("documentTypeBean", documentTypeBean);
         value.put("startDate", startDate);
         value.put("finishDate", finishDate);
         List<DocumentBean> list = this.findByNamedQuery("DocumentBean.findByDocumentDate", value);
-        if (list == null || list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         return list;
     }
 
+    @Override
     public int getNewDocumentNumber(Integer currentYear, Long documentTypeUid) {
         int result = 1;
         List list = getSession().createQuery(String.format("SELECT Max(m.documentNumber) "

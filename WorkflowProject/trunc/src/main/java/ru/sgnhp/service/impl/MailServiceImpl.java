@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.BodyPart;
@@ -17,7 +19,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
-import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sgnhp.DateUtils;
@@ -104,8 +105,8 @@ public class MailServiceImpl implements IMailService {
             message.setContent(multipart);
             Transport.send(message);
         } catch (Exception e) {
-            Logger logger = Logger.getLogger(this.getClass());
-            logger.error(e.fillInStackTrace());
+            Logger logger = Logger.getLogger("MailServiceImpl");
+            logger.log(Level.WARNING, "MailServiceImpl");
         }
     }
 
@@ -482,7 +483,7 @@ public class MailServiceImpl implements IMailService {
             message.setContent(multipart);
             Transport.send(message);
         } catch (Exception e) {
-            Logger logger = Logger.getLogger(this.getClass());
+            Logger logger = Logger.getLogger("MailServiceImpl");
             logger.info(e.getMessage());
         }
     }
@@ -591,7 +592,7 @@ public class MailServiceImpl implements IMailService {
             Transport.send(message);
         } catch (Exception e) {
             Logger logger = Logger.getLogger("MailServiceImpl");
-            logger.error(e);
+            logger.log(Level.WARNING, "MailServiceImpl");
         }
     }
 

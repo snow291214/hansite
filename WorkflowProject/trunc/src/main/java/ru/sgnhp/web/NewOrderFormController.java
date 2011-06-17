@@ -125,7 +125,7 @@ public class NewOrderFormController extends AbstractWizardFormController {
         documentBean.setDescription(documentDto.getDescription());
         documentBean.setDocumentDate(documentDto.getDocumentDate());
         documentBean.setDocumentNumber(documentDto.getIncomingNumber());
-        documentBean.setDocumentPrefix(documentDto.getDocumentPrefix().toUpperCase());
+        documentBean.setDocumentPrefix(documentDto.getDocumentPrefix().trim().toUpperCase());
         documentBean.setDocumentTypeBean(getDocumentTypeService().get(documentDto.getDocumentTypeUid()));
         documentBean.setContactPerson(contactUserBean);
         documentBean.setControlPerson(controlUserBean);

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import org.apache.log4j.Logger;
 import org.hibernate.annotations.ForeignKey;
 
 /*****
@@ -116,7 +116,7 @@ public class FileBean implements Serializable {
         if (blobField == null) {
             this.blobField = null;
         }
-        Logger logger = Logger.getRootLogger();
+        Logger logger = Logger.getLogger("FileBean");
         Properties pro = new Properties();
         pro.load(this.getClass().getResourceAsStream("/general.properties"));
         String repositoryPath = pro.getProperty("repository.repositoryPath");

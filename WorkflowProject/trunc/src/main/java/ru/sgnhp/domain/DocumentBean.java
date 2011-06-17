@@ -43,7 +43,7 @@ import org.hibernate.annotations.OnDeleteAction;
     + "d.documentTypeBean = :documentTypeBean"),
     @NamedQuery(name = "DocumentBean.findByDocumentDate", query = "SELECT d FROM "
     + "DocumentBean d WHERE d.documentDate between :startDate and :finishDate and "
-    + "d.documentTypeBean = :documentTypeBean")})
+    + "d.documentTypeBean = :documentTypeBean order by d.documentDate, d.documentNumber")})
 public class DocumentBean implements Serializable {
 
     private static final long serialVersionUID = 10L;

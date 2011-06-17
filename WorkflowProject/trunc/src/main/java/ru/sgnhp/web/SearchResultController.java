@@ -2,6 +2,7 @@ package ru.sgnhp.web;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,7 @@ public class SearchResultController implements Controller {
                         workflowBeans.addAll(beans);
                     } else {
                         Logger logger = Logger.getLogger(this.getClass().getName());
-                        logger.info("Warning! Task without workflows has found!!! Task uid: " + uid.toString());
+                        logger.log(Level.INFO, "Warning! Task without workflows has been found!!! Task uid: {0}", uid.toString());
                     }
                 }
             }
