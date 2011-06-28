@@ -23,12 +23,13 @@ public class DocumentsByPrimaveraId implements Controller {
     private ITaskManagerService taskManagerService;
     private IOutgoingMailService outgoingMailService;
 
+    @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String primaveraUid = request.getParameter("primaveraUid");
         if (primaveraUid == null) {
             return new ModelAndView("index");
         }
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Object> arrayList = new ArrayList<Object>();
         arrayList.add(taskManagerService.getTaskByPrimaveraUid(primaveraUid));
         arrayList.add(outgoingMailService.getByPrimaveraUid(primaveraUid));
         arrayList.add(primaveraUid);

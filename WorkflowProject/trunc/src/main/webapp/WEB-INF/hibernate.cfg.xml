@@ -25,5 +25,10 @@
     <mapping class="ru.sgnhp.domain.DocumentBean"/>
     <mapping class="ru.sgnhp.domain.DocumentTypeBean"/>
     <mapping class="ru.sgnhp.domain.DocumentFileBean"/>
+    <mapping class="ru.sgnhp.domain.ConclusionBean"/>
+    <mapping class="ru.sgnhp.domain.ConclusionTypeBean"/>
+    <mapping class="ru.sgnhp.domain.NegotiationBean"/>
+    <mapping class="ru.sgnhp.domain.NegotiationFileBean"/>
+    <mapping class="ru.sgnhp.domain.NegotiationTypeBean"/>
   </session-factory>
 </hibernate-configuration>
