@@ -34,7 +34,7 @@ public class ConclusionTypeBean implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Column(name = "Name", length = 150)
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "conclusionTypeBean", fetch = FetchType.LAZY)
@@ -43,15 +43,15 @@ public class ConclusionTypeBean implements Serializable {
     public ConclusionTypeBean() {
     }
 
-    public ConclusionTypeBean(Integer uid) {
+    public ConclusionTypeBean(Long uid) {
         this.uid = uid;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

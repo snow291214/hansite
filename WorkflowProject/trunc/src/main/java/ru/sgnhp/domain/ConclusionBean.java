@@ -38,10 +38,10 @@ public class ConclusionBean implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Basic(optional = false)
     @Column(name = "UserUid", nullable = false)
-    private int userUid;
+    private Long userUid;
     @Basic(optional = false)
     @Column(name = "DateOfConclusion", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -61,29 +61,29 @@ public class ConclusionBean implements Serializable {
     public ConclusionBean() {
     }
 
-    public ConclusionBean(Integer uid) {
+    public ConclusionBean(Long uid) {
         this.uid = uid;
     }
 
-    public ConclusionBean(Integer uid, int userUid, Date dateOfConclusion) {
+    public ConclusionBean(Long uid, Long userUid, Date dateOfConclusion) {
         this.uid = uid;
         this.userUid = userUid;
         this.dateOfConclusion = dateOfConclusion;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
-    public int getUserUid() {
+    public Long getUserUid() {
         return userUid;
     }
 
-    public void setUserUid(int userUid) {
+    public void setUserUid(Long userUid) {
         this.userUid = userUid;
     }
 

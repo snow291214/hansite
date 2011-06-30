@@ -1,9 +1,11 @@
 package ru.sgnhp.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -47,6 +50,8 @@ import org.hibernate.annotations.OnDeleteAction;
     @NamedQuery(name = "WorkflowUserBean.findBySessionUid", query = "SELECT w FROM " +
     "WorkflowUserBean w WHERE w.sessionUid = :sessionUid")})
 public class WorkflowUserBean implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowUserBean")
+    private Collection<NegotiationBean> negotiationBeanCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -220,5 +225,14 @@ public class WorkflowUserBean implements Serializable {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @XmlTransient
+    public Collection<NegotiationBean> getNegotiationBeanCollection() {
+        return negotiationBeanCollection;
+    }
+
+    public void setNegotiationBeanCollection(Collection<NegotiationBean> negotiationBeanCollection) {
+        this.negotiationBeanCollection = negotiationBeanCollection;
     }
 }

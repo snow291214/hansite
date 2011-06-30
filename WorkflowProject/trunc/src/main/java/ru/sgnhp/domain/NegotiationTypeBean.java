@@ -34,7 +34,7 @@ public class NegotiationTypeBean implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Column(name = "Name", length = 20)
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "negotiationTypeBean", fetch = FetchType.LAZY)
@@ -43,15 +43,15 @@ public class NegotiationTypeBean implements Serializable {
     public NegotiationTypeBean() {
     }
 
-    public NegotiationTypeBean(Integer uid) {
+    public NegotiationTypeBean(Long uid) {
         this.uid = uid;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

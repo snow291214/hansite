@@ -33,20 +33,10 @@ import org.hibernate.annotations.ForeignKey;
 @NamedQueries({
     @NamedQuery(name = "NegotiationBean.findAll", query = "SELECT n FROM NegotiationBean n"),
     @NamedQuery(name = "NegotiationBean.findByUid", query = "SELECT n FROM NegotiationBean n WHERE n.uid = :uid"),
-    @NamedQuery(name = "NegotiationBean.findByUserUid", query = "SELECT n FROM NegotiationBean n WHERE n.userUid = :userUid"),
     @NamedQuery(name = "NegotiationBean.findByStartDate", query = "SELECT n FROM NegotiationBean n WHERE n.startDate = :startDate"),
     @NamedQuery(name = "NegotiationBean.findByDueDate", query = "SELECT n FROM NegotiationBean n WHERE n.dueDate = :dueDate"),
     @NamedQuery(name = "NegotiationBean.findByFinishDate", query = "SELECT n FROM NegotiationBean n WHERE n.finishDate = :finishDate")})
 public class NegotiationBean implements Serializable {
-    private static final long serialVersionUID = 280620113L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "Uid", nullable = false)
-    private Integer uid;
-    @Basic(optional = false)
-    @Column(name = "UserUid", nullable = false)
-    private int userUid;
     @Column(name = "StartDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
@@ -56,65 +46,37 @@ public class NegotiationBean implements Serializable {
     @Column(name = "FinishDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date finishDate;
+    @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
+    @ManyToOne(optional = false)
+    private WorkflowUserBean workflowUserBean;
+    private static final long serialVersionUID = 280620113L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "Uid", nullable = false)
+    private Long uid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "negotiationBean", fetch = FetchType.LAZY)
     private Collection<ConclusionBean> conclusionBeanCollection;
     @OneToMany(mappedBy = "negotiationBean", fetch = FetchType.LAZY)
     private Collection<NegotiationFileBean> negotiationFileBeanCollection;
     @ForeignKey(name = "fk_negotiations_negotiation_types")
-    @JoinColumn(name = "NegotiationTypeBean", referencedColumnName = "Uid", nullable = false)
+    @JoinColumn(name = "NegotiationTypeUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private NegotiationTypeBean negotiationTypeBean;
-
+    
     public NegotiationBean() {
     }
 
-    public NegotiationBean(Integer uid) {
+    public NegotiationBean(Long uid) {
         this.uid = uid;
     }
 
-    public NegotiationBean(Integer uid, int userUid) {
-        this.uid = uid;
-        this.userUid = userUid;
-    }
-
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
-    }
-
-    public int getUserUid() {
-        return userUid;
-    }
-
-    public void setUserUid(int userUid) {
-        this.userUid = userUid;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public Date getFinishDate() {
-        return finishDate;
-    }
-
-    public void setFinishDate(Date finishDate) {
-        this.finishDate = finishDate;
     }
 
     @XmlTransient
@@ -174,5 +136,42 @@ public class NegotiationBean implements Serializable {
     public void setNegotiationTypeBean(NegotiationTypeBean negotiationTypeBean) {
         this.negotiationTypeBean = negotiationTypeBean;
     }
-    
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Date getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
+    }
+
+    /**
+     * @return the workflowUserBean
+     */
+    public WorkflowUserBean getWorkflowUserBean() {
+        return workflowUserBean;
+    }
+
+    /**
+     * @param workflowUserBean the workflowUserBean to set
+     */
+    public void setWorkflowUserBean(WorkflowUserBean workflowUserBean) {
+        this.workflowUserBean = workflowUserBean;
+    }
 }

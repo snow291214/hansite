@@ -45,7 +45,7 @@ public class NegotiationFileBean implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
-    private Integer uid;
+    private Long uid;
     @Basic(optional = false)
     @Column(name = "FileName", nullable = false, length = 100)
     private String fileName;
@@ -61,20 +61,20 @@ public class NegotiationFileBean implements Serializable {
     public NegotiationFileBean() {
     }
 
-    public NegotiationFileBean(Integer uid) {
+    public NegotiationFileBean(Long uid) {
         this.uid = uid;
     }
 
-    public NegotiationFileBean(Integer uid, String fileName) {
+    public NegotiationFileBean(Long uid, String fileName) {
         this.uid = uid;
         this.fileName = fileName;
     }
 
-    public Integer getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

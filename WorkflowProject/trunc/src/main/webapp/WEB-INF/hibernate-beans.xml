@@ -250,6 +250,8 @@
             </bean>
         </constructor-arg>
         <property name="negotiationDao" ref="negotiationDao" />
+        <property name="userManagerService" ref="userManagerService" />
+        <property name="negotiationTypeService" ref="negotiationTypeService" />
     </bean>
 
     <bean id="negotiationTypeDao" class="ru.sgnhp.dao.impl.NegotiationTypeDaoImpl">
