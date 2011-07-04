@@ -51,6 +51,8 @@ import org.hibernate.annotations.OnDeleteAction;
     "WorkflowUserBean w WHERE w.sessionUid = :sessionUid")})
 public class WorkflowUserBean implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowUserBean")
+    private Collection<ConclusionBean> conclusionBeanCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowUserBean")
     private Collection<NegotiationBean> negotiationBeanCollection;
 
     private static final long serialVersionUID = 1L;
@@ -234,5 +236,14 @@ public class WorkflowUserBean implements Serializable {
 
     public void setNegotiationBeanCollection(Collection<NegotiationBean> negotiationBeanCollection) {
         this.negotiationBeanCollection = negotiationBeanCollection;
+    }
+
+    @XmlTransient
+    public Collection<ConclusionBean> getConclusionBeanCollection() {
+        return conclusionBeanCollection;
+    }
+
+    public void setConclusionBeanCollection(Collection<ConclusionBean> conclusionBeanCollection) {
+        this.conclusionBeanCollection = conclusionBeanCollection;
     }
 }

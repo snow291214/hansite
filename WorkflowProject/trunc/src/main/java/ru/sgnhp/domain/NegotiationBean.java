@@ -37,13 +37,13 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "NegotiationBean.findByDueDate", query = "SELECT n FROM NegotiationBean n WHERE n.dueDate = :dueDate"),
     @NamedQuery(name = "NegotiationBean.findByFinishDate", query = "SELECT n FROM NegotiationBean n WHERE n.finishDate = :finishDate")})
 public class NegotiationBean implements Serializable {
-    @Column(name = "StartDate")
+    @Column(name =     "StartDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-    @Column(name = "DueDate")
+    @Column(name =     "DueDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dueDate;
-    @Column(name = "FinishDate")
+    @Column(name =     "FinishDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date finishDate;
     @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
@@ -137,6 +137,20 @@ public class NegotiationBean implements Serializable {
         this.negotiationTypeBean = negotiationTypeBean;
     }
 
+    /**
+     * @return the workflowUserBean
+     */
+    public WorkflowUserBean getWorkflowUserBean() {
+        return workflowUserBean;
+    }
+
+    /**
+     * @param workflowUserBean the workflowUserBean to set
+     */
+    public void setWorkflowUserBean(WorkflowUserBean workflowUserBean) {
+        this.workflowUserBean = workflowUserBean;
+    }
+
     public Date getStartDate() {
         return startDate;
     }
@@ -159,19 +173,5 @@ public class NegotiationBean implements Serializable {
 
     public void setFinishDate(Date finishDate) {
         this.finishDate = finishDate;
-    }
-
-    /**
-     * @return the workflowUserBean
-     */
-    public WorkflowUserBean getWorkflowUserBean() {
-        return workflowUserBean;
-    }
-
-    /**
-     * @param workflowUserBean the workflowUserBean to set
-     */
-    public void setWorkflowUserBean(WorkflowUserBean workflowUserBean) {
-        this.workflowUserBean = workflowUserBean;
     }
 }

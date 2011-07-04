@@ -33,19 +33,19 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "ConclusionBean.findByUserUid", query = "SELECT c FROM ConclusionBean c WHERE c.userUid = :userUid"),
     @NamedQuery(name = "ConclusionBean.findByDateOfConclusion", query = "SELECT c FROM ConclusionBean c WHERE c.dateOfConclusion = :dateOfConclusion")})
 public class ConclusionBean implements Serializable {
+    @Basic(optional = false)
+    @Column(name = "DateOfConclusion", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfConclusion;
+    @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
+    @ManyToOne(optional = false)
+    private WorkflowUserBean workflowUserBean;
     private static final long serialVersionUID = 280620111L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Uid", nullable = false)
     private Long uid;
-    @Basic(optional = false)
-    @Column(name = "UserUid", nullable = false)
-    private Long userUid;
-    @Basic(optional = false)
-    @Column(name = "DateOfConclusion", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateOfConclusion;
     @Lob
     @Column(name = "Description", length = 65535)
     private String description;
@@ -65,34 +65,12 @@ public class ConclusionBean implements Serializable {
         this.uid = uid;
     }
 
-    public ConclusionBean(Long uid, Long userUid, Date dateOfConclusion) {
-        this.uid = uid;
-        this.userUid = userUid;
-        this.dateOfConclusion = dateOfConclusion;
-    }
-
     public Long getUid() {
         return uid;
     }
 
     public void setUid(Long uid) {
         this.uid = uid;
-    }
-
-    public Long getUserUid() {
-        return userUid;
-    }
-
-    public void setUserUid(Long userUid) {
-        this.userUid = userUid;
-    }
-
-    public Date getDateOfConclusion() {
-        return dateOfConclusion;
-    }
-
-    public void setDateOfConclusion(Date dateOfConclusion) {
-        this.dateOfConclusion = dateOfConclusion;
     }
 
     public String getDescription() {
@@ -157,5 +135,28 @@ public class ConclusionBean implements Serializable {
     public void setConclusionTypeBean(ConclusionTypeBean conclusionTypeBean) {
         this.conclusionTypeBean = conclusionTypeBean;
     }
+
+    public Date getDateOfConclusion() {
+        return dateOfConclusion;
+    }
+
+    public void setDateOfConclusion(Date dateOfConclusion) {
+        this.dateOfConclusion = dateOfConclusion;
+    }
+
+    /**
+     * @return the workflowUserBean
+     */
+    public WorkflowUserBean getWorkflowUserBean() {
+        return workflowUserBean;
+    }
+
+    /**
+     * @param workflowUserBean the workflowUserBean to set
+     */
+    public void setWorkflowUserBean(WorkflowUserBean workflowUserBean) {
+        this.workflowUserBean = workflowUserBean;
+    }
+
     
 }

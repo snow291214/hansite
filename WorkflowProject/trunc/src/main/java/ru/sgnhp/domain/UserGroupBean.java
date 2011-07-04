@@ -1,6 +1,7 @@
 package ru.sgnhp.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -13,6 +14,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -27,6 +29,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "groups", catalog = "workflowdb", schema = "")
 @NamedQueries({@NamedQuery(name = "UserGroupBean.findAll", query = "SELECT u FROM UserGroupBean u"), @NamedQuery(name = "UserGroupBean.findByUid", query = "SELECT u FROM UserGroupBean u WHERE u.uid = :uid"), @NamedQuery(name = "UserGroupBean.findByDescription", query = "SELECT u FROM UserGroupBean u WHERE u.description = :description"), @NamedQuery(name = "UserGroupBean.findByName", query = "SELECT u FROM UserGroupBean u WHERE u.name = :name")})
 public class UserGroupBean implements Serializable {
+    @OneToMany(mappedBy = "groupUid")
+    private Collection<WorkflowUserBean> workflowUserBeanCollection;
     private static final long serialVersionUID = 8L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,5 +108,14 @@ public class UserGroupBean implements Serializable {
 
     public void setUsersSet(Set<WorkflowUserBean> usersSet) {
         this.usersSet = usersSet;
+    }
+
+    @XmlTransient
+    public Collection<WorkflowUserBean> getWorkflowUserBeanCollection() {
+        return workflowUserBeanCollection;
+    }
+
+    public void setWorkflowUserBeanCollection(Collection<WorkflowUserBean> workflowUserBeanCollection) {
+        this.workflowUserBeanCollection = workflowUserBeanCollection;
     }
 }

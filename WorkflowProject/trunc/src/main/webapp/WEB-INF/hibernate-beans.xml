@@ -252,6 +252,9 @@
         <property name="negotiationDao" ref="negotiationDao" />
         <property name="userManagerService" ref="userManagerService" />
         <property name="negotiationTypeService" ref="negotiationTypeService" />
+        <property name="negotiationFileService" ref="negotiationFileService"/>
+        <property name="conclusionService" ref="conclusionService"/>
+        <property name="conclusionTypeService" ref="conclusionTypeService"/>
     </bean>
 
     <bean id="negotiationTypeDao" class="ru.sgnhp.dao.impl.NegotiationTypeDaoImpl">
