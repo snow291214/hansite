@@ -29,7 +29,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "groups", catalog = "workflowdb", schema = "")
 @NamedQueries({@NamedQuery(name = "UserGroupBean.findAll", query = "SELECT u FROM UserGroupBean u"), @NamedQuery(name = "UserGroupBean.findByUid", query = "SELECT u FROM UserGroupBean u WHERE u.uid = :uid"), @NamedQuery(name = "UserGroupBean.findByDescription", query = "SELECT u FROM UserGroupBean u WHERE u.description = :description"), @NamedQuery(name = "UserGroupBean.findByName", query = "SELECT u FROM UserGroupBean u WHERE u.name = :name")})
 public class UserGroupBean implements Serializable {
-    @OneToMany(mappedBy = "groupUid")
+    @OneToMany(mappedBy = "userGroupBean")
     private Collection<WorkflowUserBean> workflowUserBeanCollection;
     private static final long serialVersionUID = 8L;
     @Id

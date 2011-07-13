@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "NegotiationTypeBean.findByUid", query = "SELECT n FROM NegotiationTypeBean n WHERE n.uid = :uid"),
     @NamedQuery(name = "NegotiationTypeBean.findByName", query = "SELECT n FROM NegotiationTypeBean n WHERE n.name = :name")})
 public class NegotiationTypeBean implements Serializable {
-    private static final long serialVersionUID = 280620115L;
+    private static final long serialVersionUID = 13072011L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

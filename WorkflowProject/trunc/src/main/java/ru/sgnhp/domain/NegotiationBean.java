@@ -29,7 +29,6 @@ import org.hibernate.annotations.ForeignKey;
  */
 @Entity
 @Table(name = "negotiations", catalog = "workflowdb", schema = "")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "NegotiationBean.findAll", query = "SELECT n FROM NegotiationBean n"),
     @NamedQuery(name = "NegotiationBean.findByUid", query = "SELECT n FROM NegotiationBean n WHERE n.uid = :uid"),
@@ -46,6 +45,7 @@ public class NegotiationBean implements Serializable {
     @Column(name =     "FinishDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date finishDate;
+    @ForeignKey(name = "fk_negotiations_users")
     @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false)
     private WorkflowUserBean workflowUserBean;

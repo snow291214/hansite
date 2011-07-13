@@ -30,13 +30,17 @@ import org.hibernate.annotations.ForeignKey;
 @NamedQueries({
     @NamedQuery(name = "ConclusionBean.findAll", query = "SELECT c FROM ConclusionBean c"),
     @NamedQuery(name = "ConclusionBean.findByUid", query = "SELECT c FROM ConclusionBean c WHERE c.uid = :uid"),
-    @NamedQuery(name = "ConclusionBean.findByUserUid", query = "SELECT c FROM ConclusionBean c WHERE c.userUid = :userUid"),
+    @NamedQuery(name = "ConclusionBean.findByUserUid", query = "SELECT c FROM ConclusionBean c WHERE c.workflowUserBean = :workflowUserBean"),
+    @NamedQuery(name = "ConclusionBean.findByStartDate", query = "SELECT c FROM ConclusionBean c WHERE c.startDate = :startDate"),
     @NamedQuery(name = "ConclusionBean.findByDateOfConclusion", query = "SELECT c FROM ConclusionBean c WHERE c.dateOfConclusion = :dateOfConclusion")})
 public class ConclusionBean implements Serializable {
-    @Basic(optional = false)
-    @Column(name = "DateOfConclusion", nullable = false)
+    @Column(name = "DateOfConclusion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfConclusion;
+    @Basic(optional =     false)
+    @Column(name = "StartDate", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
     @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false)
     private WorkflowUserBean workflowUserBean;
@@ -136,14 +140,6 @@ public class ConclusionBean implements Serializable {
         this.conclusionTypeBean = conclusionTypeBean;
     }
 
-    public Date getDateOfConclusion() {
-        return dateOfConclusion;
-    }
-
-    public void setDateOfConclusion(Date dateOfConclusion) {
-        this.dateOfConclusion = dateOfConclusion;
-    }
-
     /**
      * @return the workflowUserBean
      */
@@ -156,6 +152,28 @@ public class ConclusionBean implements Serializable {
      */
     public void setWorkflowUserBean(WorkflowUserBean workflowUserBean) {
         this.workflowUserBean = workflowUserBean;
+    }
+
+    /**
+     * @return the startDate
+     */
+    public Date getDateOfConclusion() {
+        return dateOfConclusion;
+    }
+
+    /**
+     * @param startDate the startDate to set
+     */
+    public void setDateOfConclusion(Date dateOfConclusion) {
+        this.dateOfConclusion = dateOfConclusion;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     
