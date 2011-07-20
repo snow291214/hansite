@@ -14,6 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,16 +35,15 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "ConclusionBean.findByStartDate", query = "SELECT c FROM ConclusionBean c WHERE c.startDate = :startDate"),
     @NamedQuery(name = "ConclusionBean.findByDateOfConclusion", query = "SELECT c FROM ConclusionBean c WHERE c.dateOfConclusion = :dateOfConclusion")})
 public class ConclusionBean implements Serializable {
-    @Column(name = "DateOfConclusion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateOfConclusion;
-    @Basic(optional =     false)
+
+    @Basic(optional = false)
     @Column(name = "StartDate", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-    @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
-    @ManyToOne(optional = false)
-    private WorkflowUserBean workflowUserBean;
+    @Column(name = "DateOfConclusion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfConclusion;
+
     private static final long serialVersionUID = 280620111L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,15 +53,22 @@ public class ConclusionBean implements Serializable {
     @Lob
     @Column(name = "Description", length = 65535)
     private String description;
+    
     @ForeignKey(name = "fk_conclusions_negotiations")
     @JoinColumn(name = "NegotiationUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private NegotiationBean negotiationBean;
+    
     @ForeignKey(name = "fk_conclusions_conclusion_types")
     @JoinColumn(name = "ConclusionTypeUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ConclusionTypeBean conclusionTypeBean;
 
+    @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
+    @ManyToOne(optional = false)
+    @OrderBy("lastName")
+    private WorkflowUserBean workflowUserBean;
+    
     public ConclusionBean() {
     }
 
@@ -84,8 +91,6 @@ public class ConclusionBean implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
 
     @Override
     public int hashCode() {
@@ -157,24 +162,22 @@ public class ConclusionBean implements Serializable {
     /**
      * @return the startDate
      */
-    public Date getDateOfConclusion() {
-        return dateOfConclusion;
+    public Date getStartDate() {
+        return startDate;
     }
 
     /**
      * @param startDate the startDate to set
      */
-    public void setDateOfConclusion(Date dateOfConclusion) {
-        this.dateOfConclusion = dateOfConclusion;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    
+    public Date getDateOfConclusion() {
+        return dateOfConclusion;
+    }
+
+    public void setDateOfConclusion(Date dateOfConclusion) {
+        this.dateOfConclusion = dateOfConclusion;
+    }
 }

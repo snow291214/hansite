@@ -32,3 +32,12 @@
         <a href="userReport.htm">Список пользователей</a><br />
     </div>
 </sec:authorize>
+<div>
+    <p>Работа с согласованиями</p>
+    <a href="negotiationStart.htm">Новое согласование</a><br />
+    <a href="negotiations.htm">Мои согласования</a><br />
+    <a href="negotiationsForReview.htm">Ожидают согласования</a><br />
+    <a href="completedNegotiations.htm">Завершенные согласования</a><br />
+    <a href="rejectedNegotiations.htm">Несогласованные</a><br />
+    <a href="negotiationsReport.htm">Реестр согласований</a>
+</div>

@@ -198,4 +198,79 @@
         <property name="documentFileDao" ref="documentFileDao"/>
     </bean>
 
+    <bean id="conclusionDao" class="ru.sgnhp.dao.impl.ConclusionDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="conclusionService" class="ru.sgnhp.service.impl.ConclusionServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.ConclusionBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="conclusionDao" ref="conclusionDao" />
+    </bean>
+
+    <bean id="conclusionTypeDao" class="ru.sgnhp.dao.impl.ConclusionTypeDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="conclusionTypeService" class="ru.sgnhp.service.impl.ConclusionTypeServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.ConclusionTypeBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="conclusionTypeDao" ref="conclusionTypeDao" />
+    </bean>
+    
+    <bean id="negotiationFileDao" class="ru.sgnhp.dao.impl.NegotiationFileDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="negotiationFileService" class="ru.sgnhp.service.impl.NegotiationFileServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.NegotiationFileBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="negotiationFileDao" ref="negotiationFileDao" />
+    </bean>
+
+    <bean id="negotiationDao" class="ru.sgnhp.dao.impl.NegotiationDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="negotiationService" class="ru.sgnhp.service.impl.NegotiationServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.NegotiationBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="negotiationDao" ref="negotiationDao" />
+        <property name="userManagerService" ref="userManagerService" />
+        <property name="negotiationTypeService" ref="negotiationTypeService" />
+        <property name="negotiationFileService" ref="negotiationFileService"/>
+        <property name="conclusionService" ref="conclusionService"/>
+        <property name="conclusionTypeService" ref="conclusionTypeService"/>
+    </bean>
+
+    <bean id="negotiationTypeDao" class="ru.sgnhp.dao.impl.NegotiationTypeDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="negotiationTypeService" class="ru.sgnhp.service.impl.NegotiationTypeServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.NegotiationTypeBean"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="negotiationTypeDao" ref="negotiationTypeDao" />
+    </bean>
+
 </beans>

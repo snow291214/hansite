@@ -1,10 +1,11 @@
 package ru.sgnhp.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import ru.sgnhp.domain.NegotiationBean;
 import ru.sgnhp.domain.NegotiationFileBean;
+import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.dto.NegotiationDto;
 
 /*****
  *
@@ -15,7 +16,7 @@ import ru.sgnhp.domain.NegotiationFileBean;
  */
 public interface INegotiationService extends IGenericService<NegotiationBean, Long> {
 
-    public NegotiationBean createNewNegotiationProcess(Date dueDate, String curatorUid, 
-            List<String> negotiatorUids, String negotiationType,
-            Set<NegotiationFileBean> negotiationFileBeans);
+    public NegotiationBean createNewNegotiationProcess(NegotiationDto negotiationDto, Set<NegotiationFileBean> negotiationFileBeans);
+
+    List<NegotiationBean> findNegotiationsByUser(WorkflowUserBean workflowUserBean);
 }

@@ -69,6 +69,9 @@
                 <prop key="autocompleteAssignees.htm">autocompleteAssigneesController</prop>
                 <prop key="newUser.htm">newUserController</prop>
                 <prop key="userReport.htm">userReportController</prop>
+                <prop key="negotiationStart.htm">negotiationStartController</prop>
+                <prop key="negotiationsForReview.htm">negotiationForReviewController</prop>
+                <prop key="negotiations.htm">negotiationsController</prop>
             </props>
         </property>
     </bean>
@@ -594,6 +597,53 @@
     <bean name="userReportController" class="ru.sgnhp.web.controllers.UserReportController">
         <property name="userManagerService">
             <ref bean="userManagerService"/>
+        </property>
+    </bean>
+
+    <!--Negotiation Start Controller-->
+    <bean name="negotiationStartController" class="ru.sgnhp.web.forms.StartNegotiationFormController">
+        <property name="pages">
+            <list>
+                <value>typeOfNegotiation</value>
+                <value>selectNegotiationReceivers</value>
+                <value>selectNegotiationFiles</value>
+                <value>redirect:index.htm</value>
+            </list>
+        </property>
+        <property name="commandName">
+            <value>negotiationDto</value>
+        </property>
+        <property name="commandClass">
+            <value>ru.sgnhp.dto.NegotiationDto</value>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="negotiationTypeService">
+            <ref bean="negotiationTypeService"/>
+        </property>
+        <property name="negotiationFileService">
+            <ref bean="negotiationFileService"/>
+        </property>
+        <property name="negotiationService">
+            <ref bean="negotiationService"/>
+        </property>
+    </bean>
+
+    <!--Negotiation For Review Controller 19.07.2011-->
+    <bean name="negotiationForReviewController" class="ru.sgnhp.web.controllers.NegotiationForReviewController">
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+    </bean>
+
+    <!--Negotiations Controller 19.07.2011-->
+    <bean name="negotiationsController" class="ru.sgnhp.web.controllers.NegotiationsController">
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="negotiationService">
+            <ref bean="negotiationService"/>
         </property>
     </bean>
 

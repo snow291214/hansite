@@ -50,11 +50,7 @@ import org.hibernate.annotations.OnDeleteAction;
     @NamedQuery(name = "WorkflowUserBean.findBySessionUid", query = "SELECT w FROM " +
     "WorkflowUserBean w WHERE w.sessionUid = :sessionUid")})
 public class WorkflowUserBean implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowUserBean")
-    private Collection<ConclusionBean> conclusionBeanCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowUserBean")
-    private Collection<NegotiationBean> negotiationBeanCollection;
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,7 +91,12 @@ public class WorkflowUserBean implements Serializable {
     @OrderBy("uid desc")
     private Set<OutgoingMailBean> outgoingMailBeans = new HashSet<OutgoingMailBean>();
 
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowUserBean")
+    private Collection<ConclusionBean> conclusionBeanCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowUserBean")
+    private Collection<NegotiationBean> negotiationBeanCollection;
+    
     public WorkflowUserBean() {
     }
 

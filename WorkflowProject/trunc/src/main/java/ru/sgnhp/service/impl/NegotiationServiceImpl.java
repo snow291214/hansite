@@ -1,6 +1,5 @@
 package ru.sgnhp.service.impl;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.springframework.transaction.annotation.Propagation;
@@ -13,6 +12,7 @@ import ru.sgnhp.domain.NegotiationBean;
 import ru.sgnhp.domain.NegotiationFileBean;
 import ru.sgnhp.domain.NegotiationTypeBean;
 import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.dto.NegotiationDto;
 import ru.sgnhp.service.IConclusionService;
 import ru.sgnhp.service.IConclusionTypeService;
 import ru.sgnhp.service.INegotiationFileService;
@@ -56,19 +56,19 @@ public class NegotiationServiceImpl extends GenericServiceImpl<NegotiationBean, 
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
-    public NegotiationBean createNewNegotiationProcess(Date dueDate, String curatorUid,
-            List<String> negotiatorUids, String negotiationType,
+    public NegotiationBean createNewNegotiationProcess(NegotiationDto negotiationDto,
             Set<NegotiationFileBean> negotiationFileBeans) {
 
-        WorkflowUserBean curator = getUserManagerService().getUserByLogin(curatorUid);
-        NegotiationTypeBean negotiationTypeBean = this.getNegotiationTypeService().get(Long.getLong(negotiationType));
+        WorkflowUserBean curator = negotiationDto.getWorkflowUserBean();
+        NegotiationTypeBean negotiationTypeBean = negotiationTypeService.get(Long.parseLong(negotiationDto.getNegotiationTypeUid()));
 
         //Новый процесс
         NegotiationBean negotiationBean = new NegotiationBean();
-        negotiationBean.setDueDate(dueDate);
+        negotiationBean.setDueDate(negotiationDto.getDueDate());
         negotiationBean.setStartDate(DateUtils.nowDate());
         negotiationBean.setNegotiationTypeBean(negotiationTypeBean);
         negotiationBean.setWorkflowUserBean(curator);
+        negotiationBean.setDescription(negotiationDto.getDescription());
         //Добавление файлов к процессу
         negotiationBean.setNegotiationFileBeanCollection(negotiationFileBeans);
         negotiationBean = negotiationDao.save(negotiationBean);
@@ -77,19 +77,27 @@ public class NegotiationServiceImpl extends GenericServiceImpl<NegotiationBean, 
          * После создании согласования, создается список
          * conclusions (заключения).
          * Все conclusions по умолчанию создаются "В работе, uid=3"
+         * и имеют текущую дату
          * 
          */
-        for (String negotiatorUid : negotiatorUids) {
+        for (String negotiatorUid : negotiationDto.getNegotiatorUids()) {
             WorkflowUserBean workflowUserBean = this.getUserManagerService().get(Long.parseLong(negotiatorUid));
             ConclusionBean conclusionBean = new ConclusionBean();
             conclusionBean.setConclusionTypeBean(conclusionTypeService.get(3L));
             conclusionBean.setNegotiationBean(negotiationBean);
             conclusionBean.setWorkflowUserBean(workflowUserBean);
+            conclusionBean.setStartDate(DateUtils.nowDate());
             conclusionService.save(conclusionBean);
         }
         return negotiationBean;
     }
 
+
+    @Override
+    public List<NegotiationBean> findNegotiationsByUser(WorkflowUserBean workflowUserBean) {
+        return negotiationDao.findNegotiationsByUser(workflowUserBean);
+    }
+    
     /**
      * @return the userManagerService
      */
