@@ -34,7 +34,7 @@
                             <td>${negotiation.description}</td>
                             <td>
                                 <c:forEach var="file" items="${negotiation.negotiationFileBeanCollection}">
-                                    <a href="getNegatiationFiles.htm?fileID=${file.uid}">${file.fileName}</a><br />
+                                    <a href="getNegotiationFile.htm?fileID=${file.uid}">${file.fileName}</a><br />
                                 </c:forEach>
                             </td>
                             <td>
@@ -49,9 +49,9 @@
                                     <c:forEach var="conclusion" items="${negotiation.conclusionBeanCollection}">
                                         <tr>
                                             <td>
+                                                ${conclusion.workflowUserBean.lastName}
                                                 ${conclusion.workflowUserBean.firstName} 
                                                 ${conclusion.workflowUserBean.middleName} 
-                                                ${conclusion.workflowUserBean.lastName}
                                             </td>
                                             <td>${conclusion.conclusionTypeBean.name}</td>
                                             <td><fmt:formatDate pattern="dd.MM.yyyy HH:MM" value="${conclusion.startDate}"/></td>

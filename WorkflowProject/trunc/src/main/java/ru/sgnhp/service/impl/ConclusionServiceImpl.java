@@ -1,8 +1,10 @@
 package ru.sgnhp.service.impl;
 
+import java.util.List;
 import ru.sgnhp.dao.IConclusionDao;
 import ru.sgnhp.dao.IGenericDao;
 import ru.sgnhp.domain.ConclusionBean;
+import ru.sgnhp.domain.WorkflowUserBean;
 import ru.sgnhp.service.IConclusionService;
 
 /*****
@@ -32,5 +34,10 @@ public class ConclusionServiceImpl extends GenericServiceImpl<ConclusionBean, Lo
      */
     public void setConclusionDao(IConclusionDao conclusionDao) {
         this.conclusionDao = conclusionDao;
+    }
+
+    @Override
+    public List<ConclusionBean> findActiveConclusionsByUser(WorkflowUserBean workflowUserBean) {
+        return conclusionDao.findActiveConclusionsByUser(workflowUserBean);
     }
 }

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springmodules.org/schema/ehcache
+       http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd">
+    <!--============================== Sheduling  ===========================-->
+ <!--
+ Here are some full examples:
+
+Expression	 Meaning
+0 0 12 * * ?	 Fire at 12pm (noon) every day
+0 15 10 ? * *	 Fire at 10:15am every day
+0 15 10 * * ?	 Fire at 10:15am every day
+0 15 10 * * ? *	 Fire at 10:15am every day
+0 15 10 * * ? 2005	 Fire at 10:15am every day during the year 2005
+0 * 14 * * ?	 Fire every minute starting at 2pm and ending at 2:59pm, every day
+0 0/5 14 * * ?	 Fire every 5 minutes starting at 2pm and ending at 2:55pm, every day
+0 0/5 14,18 * * ?	 Fire every 5 minutes starting at 2pm and ending at 2:55pm, AND fire every 5 minutes starting at 6pm and ending at 6:55pm, every day
+0 0-5 14 * * ?	 Fire every minute starting at 2pm and ending at 2:05pm, every day
+0 10,44 14 ? 3 WED	 Fire at 2:10pm and at 2:44pm every Wednesday in the month of March.
+0 15 10 ? * MON-FRI	 Fire at 10:15am every Monday, Tuesday, Wednesday, Thursday and Friday
+0 15 10 15 * ?	 Fire at 10:15am on the 15th day of every month
+0 15 10 L * ?	 Fire at 10:15am on the last day of every month
+0 15 10 ? * 6L	 Fire at 10:15am on the last Friday of every month
+0 15 10 ? * 6L	 Fire at 10:15am on the last Friday of every month
+0 15 10 ? * 6L 2002-2005	 Fire at 10:15am on every last friday of every month during the years 2002, 2003, 2004 and 2005
+0 15 10 ? * 6#3	 Fire at 10:15am on the third Friday of every month
+0 0 12 1/5 * ?	 Fire at 12pm (noon) every 5 days every month, starting on the first day of the month.
+0 11 11 11 11 ?	 Fire every November 11th at 11:11am.
+ -->
+
+    <!--Напомнинание о невыполненных задачах-->
+    <bean id="methodInvokingJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="taskReminder"/>
+    </bean>
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 00 8 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <!--Отчет о назначенных, но невыполненных задачах-->
+    <bean id="methodInvokingTaskReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="taskReport"/>
+    </bean>
+
+    <bean id="cronTriggerTaskReport" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingTaskReport"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 15 8 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <!--Отчет о задачах, ожидаемых проверки-->
+    <bean id="methodInvokingTasksForReviewReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="tasksForReviewReport"/>
+    </bean>
+
+    <bean id="cronTriggerTasksForReviewReport" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingTasksForReviewReport"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 30 8 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <!--Бэкап входящих-исходящих-->
+    <bean id="methodInvokingDailyIncoming" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="taskManagerService"/>
+        <property name="targetMethod" value="dailyReport"/>
+    </bean>
+
+    <bean id="cronTriggerDailyIncoming" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingDailyIncoming"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 00 18 ? * MON-FRI</value>
+        </property>
+    </bean>
+
+    <bean id="methodInvokingDailyOutgoing" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="outgoingMailService"/>
+        <property name="targetMethod" value="dailyReport"/>
+    </bean>
+
+    <bean id="cronTriggerDailyOutgoing" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingDailyOutgoing"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 00 18 ? * MON-FRI</value>
+        </property>
+    </bean>
+    <!--
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger" />
+                <ref bean="cronTriggerTaskReport" />
+                <ref bean="cronTriggerDailyIncoming" />
+                <ref bean="cronTriggerDailyOutgoing" />
+                <ref bean="cronTriggerTasksForReviewReport" />
+            </list>
+        </property>
+    </bean>
+    -->
+</beans>

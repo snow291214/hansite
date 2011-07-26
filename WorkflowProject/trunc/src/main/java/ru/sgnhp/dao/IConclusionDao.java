@@ -1,6 +1,8 @@
 package ru.sgnhp.dao;
 
+import java.util.List;
 import ru.sgnhp.domain.ConclusionBean;
+import ru.sgnhp.domain.WorkflowUserBean;
 
 /*****
  *
@@ -9,6 +11,7 @@ import ru.sgnhp.domain.ConclusionBean;
  *
  *****
  */
-public interface IConclusionDao extends IGenericDao<ConclusionBean, Long>{
-    
+public interface IConclusionDao extends IGenericDao<ConclusionBean, Long> {
+
+    List<ConclusionBean> findActiveConclusionsByUser(WorkflowUserBean workflowUserBean);
 }

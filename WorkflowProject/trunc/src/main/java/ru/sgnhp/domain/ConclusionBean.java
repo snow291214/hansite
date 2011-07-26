@@ -33,6 +33,7 @@ import org.hibernate.annotations.ForeignKey;
     @NamedQuery(name = "ConclusionBean.findByUid", query = "SELECT c FROM ConclusionBean c WHERE c.uid = :uid"),
     @NamedQuery(name = "ConclusionBean.findByUserUid", query = "SELECT c FROM ConclusionBean c WHERE c.workflowUserBean = :workflowUserBean"),
     @NamedQuery(name = "ConclusionBean.findByStartDate", query = "SELECT c FROM ConclusionBean c WHERE c.startDate = :startDate"),
+    @NamedQuery(name = "ConclusionBean.findActiveConclusionsByUser", query = "SELECT c FROM ConclusionBean c WHERE c.workflowUserBean = :workflowUserBean and c.conclusionTypeBean.uid<>1"),
     @NamedQuery(name = "ConclusionBean.findByDateOfConclusion", query = "SELECT c FROM ConclusionBean c WHERE c.dateOfConclusion = :dateOfConclusion")})
 public class ConclusionBean implements Serializable {
 
@@ -43,7 +44,6 @@ public class ConclusionBean implements Serializable {
     @Column(name = "DateOfConclusion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfConclusion;
-
     private static final long serialVersionUID = 280620111L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,22 +53,19 @@ public class ConclusionBean implements Serializable {
     @Lob
     @Column(name = "Description", length = 65535)
     private String description;
-    
     @ForeignKey(name = "fk_conclusions_negotiations")
     @JoinColumn(name = "NegotiationUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private NegotiationBean negotiationBean;
-    
     @ForeignKey(name = "fk_conclusions_conclusion_types")
     @JoinColumn(name = "ConclusionTypeUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ConclusionTypeBean conclusionTypeBean;
-
     @JoinColumn(name = "UserUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false)
     @OrderBy("lastName")
     private WorkflowUserBean workflowUserBean;
-    
+
     public ConclusionBean() {
     }
 

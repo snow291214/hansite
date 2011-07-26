@@ -209,6 +209,10 @@ table.workflowManager td{
     padding: 5px;
 }
 
+table.workflowManager tr.odd{
+    background-color: #EDEFFF;
+}
+
 td.all{
     font-size:8pt;
     border-width: 1px;
