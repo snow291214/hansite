@@ -73,6 +73,7 @@
                 <prop key="review.htm">negotiationsForReviewController</prop>
                 <prop key="negotiations.htm">negotiationsController</prop>
                 <prop key="getNegotiationFile.htm">negotiationFileController</prop>
+                <prop key="conclusionApprove.htm">conclusionApproveController</prop>
             </props>
         </property>
     </bean>
@@ -655,6 +656,15 @@
     <bean name="negotiationFileController" class="ru.sgnhp.web.controllers.NegotiationFileController">
         <property name="negotiationFileService">
             <ref bean="negotiationFileService"/>
+        </property>
+    </bean>
+    
+    <bean name="conclusionApproveController" class="ru.sgnhp.web.controllers.ConclusionApproveController">
+        <property name="conclusionService">
+            <ref bean="conclusionService"/>
+        </property>
+        <property name="conclusionTypeService">
+            <ref bean="conclusionTypeService"/>
         </property>
     </bean>
     
