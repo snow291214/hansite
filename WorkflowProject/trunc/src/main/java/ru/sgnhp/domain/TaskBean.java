@@ -37,7 +37,7 @@ import org.hibernate.annotations.OnDeleteAction;
     @NamedQuery(name = "TaskBean.findAll", query = "SELECT t FROM TaskBean t"),
     @NamedQuery(name = "TaskBean.findAllIncomingMailByYear", query = "SELECT t FROM TaskBean "
     + "t where t.incomingNumber <> '' and t.startDate BETWEEN :startDate AND :finishDate "
-    + "order by t.incomingNumber, t.startDate"),
+    + "order by t.incomingNumber desc"),
     @NamedQuery(name = "TaskBean.findByUid", query = "SELECT t FROM TaskBean t WHERE t.uid = :uid"),
     @NamedQuery(name = "TaskBean.findByPrimaveraUid", query = "SELECT t FROM "
     + "TaskBean t WHERE t.primaveraUid like :primaveraUid order by t.startDate"),

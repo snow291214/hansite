@@ -48,8 +48,9 @@
                         <a href="conclusionApprove.htm?conclusionUid=${conclusion.uid}">Документ согласован</a> 
                         || 
                         <a href="conclusionReject.htm?conclusionUid=${conclusion.uid}">Документ не согласован</a>
-                        ||
+                        <!--||
                         <a href="#?w=500" rel="popup_name" class="poplight">Тест</a>
+                        -->
                     </td>
                 </tr>
             </c:forEach>

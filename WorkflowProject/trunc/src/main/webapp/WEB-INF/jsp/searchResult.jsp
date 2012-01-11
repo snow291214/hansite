@@ -28,6 +28,7 @@
                         <div class="content">
                             <%@ include file="/WEB-INF/jsp/includes/contentInclude.jsp" %>
                             <a href="<c:url value="roadmap.htm?workflowID=${wf.uid}" />">Просмотреть маршрут задачи</a>
+                            <a href="<c:url value="selectUsers.htm?workflowID=${wf.uid}" />">Передать задачу</a>
                         </div>
                     </div>
                 </div>

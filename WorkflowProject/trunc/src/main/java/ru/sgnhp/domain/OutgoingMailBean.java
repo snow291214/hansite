@@ -38,7 +38,7 @@ import org.hibernate.annotations.OnDeleteAction;
     query = "SELECT o FROM OutgoingMailBean o order by o.outgoingDate desc, o.outgoingNumber"),
     @NamedQuery(name = "OutgoingMailBean.findAllOutgoingByYear", query = "SELECT o " +
     "FROM OutgoingMailBean o WHERE o.outgoingDate between :startDate and :finishDate " +
-    "order by o.outgoingNumber"),
+    "order by o.outgoingNumber desc"),
     @NamedQuery(name = "OutgoingMailBean.findByUid",
     query = "SELECT o FROM OutgoingMailBean o WHERE o.uid = :uid order by " +
     "o.outgoingDate desc, o.outgoingNumber"),
