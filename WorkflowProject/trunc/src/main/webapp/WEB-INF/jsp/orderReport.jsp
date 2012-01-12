@@ -18,6 +18,7 @@
             <td align="center" width="20">Контроль исполнения</td>
             <td align="center" width="5">Электронная копия</td>
         </tr>
+        <!--
         <tr>
             <td align="center">1</td>
             <td align="center">2</td>
@@ -26,6 +27,7 @@
             <td align="center">5</td>
             <td align="center">6</td>
         </tr>
+        -->
         <c:forEach var="m" items="${requestScope.model['orders']}">
             <tr>
                 <td>

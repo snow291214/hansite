@@ -61,10 +61,10 @@
                                 </c:choose>
                                 <c:choose>
                                     <c:when test="${status.value eq 4}">
-                                        <option value="4" selected>Приказ Минздрава</option>
+                                        <option value="4" selected>Приказы сторонних организаций</option>
                                     </c:when>
                                     <c:otherwise>
-                                        <option value="4" >Приказ Минздрава</option>
+                                        <option value="4" >Приказы сторонних организаций</option>
                                     </c:otherwise>
                                 </c:choose>
                             </select>

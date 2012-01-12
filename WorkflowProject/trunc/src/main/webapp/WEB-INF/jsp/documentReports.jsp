@@ -90,7 +90,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="order4">Журнал приказов Минздрава</label></td>
+                    <td><label for="order4">Журнал приказов сторонних организаций</label></td>
                     <td>
                         <input type="radio" name="reportType" id="order4" value="5"/>
                     </td>

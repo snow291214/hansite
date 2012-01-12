@@ -83,11 +83,11 @@ public class MailServiceImpl implements IMailService {
                     + _workflow.getDescription() + "</p>"
                     + "<p style=\"font-family:Arial;font-size:12px;\">"
                     + "Во вложении письма электронная копия документа</p>"
-                    + "<a href=\"" + this.applicationPath
-                    + "\">Просмотреть все задачи</a> <br />"
-                    + "<a href=\"" + this.applicationPath + "workflowManager.htm?workflowID="
-                    + _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
-                    + "<p>Есть вопрос? Звоните: 17-70. Алексей.</p>"
+                    //+ "<a href=\"" + this.applicationPath
+                    //+ "\">Просмотреть все задачи</a> <br />"
+                    //+ "<a href=\"" + this.applicationPath + "workflowManager.htm?workflowID="
+                    //+ _workflow.getUid().toString() + "\">Просмотреть задачу</a>"
+                    //+ "<p>Есть вопрос? Звоните: 17-70. Алексей.</p>"
                     + "</body></html>", "text/html;charset=utf-8");
             multipart.addBodyPart(htmlPart);
 
