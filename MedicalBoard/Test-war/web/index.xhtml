@@ -25,7 +25,7 @@
                     </p:panel>
                     <br />
                     <p:panel header="Персональные данные кандидата на трудоустройство">
-                        <h:panelGrid columns="10">
+                        <h:panelGrid columns="6">
                             <h:outputLabel value="Фамилия" for="lastName" />
                             <p:inputText id="lastName" value="#{indexMBean.patientDto.lastName}" title="Фамилия" />
                             <h:outputLabel value="Имя" for="firstName" />
@@ -89,11 +89,11 @@
                     <p:panel header="Данные о рабочем месте, условия труда и вредные факторы">
                         <h:panelGrid columns="8">
                             <h:outputLabel value="Подразделение" for="departmentName" />
-                            <p:inputTextarea rows="2" cols="40" id="departmentName" value="#{indexMBean.patientDto.departmentName}" title="Подразделение" />
+                            <p:inputTextarea rows="2" cols="20" id="departmentName" value="#{indexMBean.patientDto.departmentName}" title="Подразделение" />
                             <h:outputLabel value="Профессия" for="specialityName" />
-                            <p:inputTextarea rows="2" cols="40" id="specialityName" value="#{indexMBean.patientDto.specialityName}" title="Профессия" />
+                            <p:inputTextarea rows="2" cols="20" id="specialityName" value="#{indexMBean.patientDto.specialityName}" title="Профессия" />
                             <h:outputLabel value="Должность" for="post" />
-                            <p:inputTextarea rows="2" cols="40" id="post" value="#{indexMBean.patientDto.post}" title="Должность" />
+                            <p:inputTextarea rows="2" cols="20" id="post" value="#{indexMBean.patientDto.post}" title="Должность" />
                             <h:outputLabel value="Условия труда:" for="labourCondition" />
                             <h:selectOneMenu id="labourCondition" value="#{indexMBean.patientDto.labourCondition}">
                                 <f:selectItem itemLabel="Нормальные" itemValue="Нормальные" />
