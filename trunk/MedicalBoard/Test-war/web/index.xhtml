@@ -151,6 +151,12 @@
                             </h:commandButton> 
                         </h:panelGrid>
                     </p:panel>
+                    <p:panel>
+                        <p>Передача персональных данных происходит на основании письменного согласия Кандидата на обработку и передачу персональных данных, данного Кандидатом кадровой службе предприятия.</p>
+                        <h:commandButton value="Добавить вредный фактор" > 
+                            <f:ajax render="@form" listener="#{indexMBean.save()}"/> 
+                        </h:commandButton>                         
+                    </p:panel>
                 </p:panel>
             </h:form>
         </f:view>
