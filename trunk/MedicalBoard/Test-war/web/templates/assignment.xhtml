@@ -5,7 +5,7 @@
     <head>
         <title>Направление на медосмотр</title>
     </head>
-    <body style="font-family: Arial, Verdana, Tahoma; font-size: small;">
+    <body style="font-family: Arial, Verdana, Tahoma; font-size: x-small;">
         <h1>Организация: [companyName]</h1>
         <hr/>
         <h1 style="text-align: center;">Направление на медицинский осмотр</h1>
@@ -62,10 +62,21 @@
                 </tr>
                 <tr>
                     <td>11. Вредные или опасные производственные факторы, а также вид работы в соответствии с утвержденным работодателем контингентов работников, подлежащих периодическим осмотрам</td>
-                    <td>[hazards]</td>
+                    <td>
+                        <p>Условия труда [labourCondition]</p>
+                            [hazards]
+                    </td>
                 </tr>
             </tbody>
         </table>
-        
+        <p/><p/><p/>
+        <table style="width:100%;">
+            <tbody>
+                <tr>
+                    <td style="width:50%;text-align: center;">Начальник отдела кадров</td>
+                    <td style="width:50%;text-align: center;">(_____________________)</td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>
