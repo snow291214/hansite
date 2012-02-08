@@ -12,6 +12,7 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!--
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/images</url-pattern>
@@ -28,6 +29,7 @@
         <servlet-name>default</servlet-name>
         <url-pattern>*.js</url-pattern>
     </servlet-mapping>
+    -->
     <servlet>
         <servlet-name>workflow</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
