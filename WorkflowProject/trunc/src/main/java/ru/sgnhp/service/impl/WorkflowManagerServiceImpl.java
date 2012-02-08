@@ -169,11 +169,11 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public void taskReminder() {
-        List<WorkflowUserBean> users = userManagerService.getAll();
+        List<WorkflowUserBean> users = userManagerService.getAllEmailNotify();
         for (WorkflowUserBean user : users) {
             List<WorkflowBean> workflows = this.getRecievedWorkflowsByUserUid(user.getUid());
             if (workflows != null) {
-                //mailService.sendmailSheduler((ArrayList) workflows);
+                mailService.sendmailSheduler((ArrayList) workflows);
             }
         }
     }

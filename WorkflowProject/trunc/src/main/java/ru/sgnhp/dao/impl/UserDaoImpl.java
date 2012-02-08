@@ -39,6 +39,20 @@ public class UserDaoImpl extends GenericDaoHibernate<WorkflowUserBean, Long> imp
     }
 
     @Override
+    public List<WorkflowUserBean> getAllEmailNotify() {
+        Map<String, Object> value = new HashMap<String, Object>();
+        List<WorkflowUserBean> list = this.findByNamedQuery("WorkflowUserBean.findAllEmailNotify", value);
+        for (WorkflowUserBean bean : list) {
+            bean.getReceivedWorkflows();
+            bean.getAssignedWorkflows();
+        }
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list;
+    }
+    
+    @Override
     public WorkflowUserBean getByLogin(String login) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("login", login);

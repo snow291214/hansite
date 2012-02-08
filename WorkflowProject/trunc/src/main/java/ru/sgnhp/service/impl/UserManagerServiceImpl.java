@@ -57,4 +57,9 @@ public class UserManagerServiceImpl extends GenericServiceImpl<WorkflowUserBean,
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
+
+    @Override
+    public List<WorkflowUserBean> getAllEmailNotify() {
+        return userDao.getAllEmailNotify();
+    }
 }

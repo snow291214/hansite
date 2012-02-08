@@ -20,5 +20,7 @@ public interface IUserDao extends IGenericDao<WorkflowUserBean,Long>{
     @Override
     List<WorkflowUserBean> getAll();
 
+    List<WorkflowUserBean> getAllEmailNotify();
+    
     UserDetails loadUserByUsername(String username);
 }

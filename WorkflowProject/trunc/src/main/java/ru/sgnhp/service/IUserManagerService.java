@@ -19,6 +19,8 @@ public interface IUserManagerService extends IGenericService<WorkflowUserBean, L
 
     @Override
     List<WorkflowUserBean> getAll();
+    
+    List<WorkflowUserBean> getAllEmailNotify();
 
     public UserDetails loadUserByUsername(String username);
 }

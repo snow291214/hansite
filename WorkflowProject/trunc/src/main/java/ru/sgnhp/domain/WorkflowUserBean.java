@@ -24,10 +24,10 @@ import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-/*****
+/**
+ * ***
  *
- * @author Alexey Khudyakov
- * @Skype: khudyakov.alexey
+ * @author Alexey Khudyakov @Skype: khudyakov.alexey
  *
  *****
  */
@@ -35,22 +35,23 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "users", catalog = "workflowdb", schema = "")
 @NamedQueries({
     @NamedQuery(name = "WorkflowUserBean.findAll", query = "SELECT w FROM WorkflowUserBean w order by w.lastName"),
+    @NamedQuery(name = "WorkflowUserBean.findAllEmailNotify", query = "SELECT w FROM WorkflowUserBean w where w.emailNotify > 0 order by w.lastName"),
     @NamedQuery(name = "WorkflowUserBean.findByUid", query = "SELECT w FROM WorkflowUserBean w WHERE w.uid = :uid"),
-    @NamedQuery(name = "WorkflowUserBean.findByLogin", query = "SELECT w FROM " +
-    //"WorkflowUserBean w left join fetch w.receivedWorkflows left join fetch w.assignedWorkflows  WHERE w.login = :login"),
+    @NamedQuery(name = "WorkflowUserBean.findByLogin", query = "SELECT w FROM "
+    + //"WorkflowUserBean w left join fetch w.receivedWorkflows left join fetch w.assignedWorkflows  WHERE w.login = :login"),
     "WorkflowUserBean w WHERE w.login = :login"),
-    @NamedQuery(name = "WorkflowUserBean.findByLastName", query = "SELECT w FROM" +
-    " WorkflowUserBean w WHERE w.lastName = :lastName"),
-    @NamedQuery(name = "WorkflowUserBean.findByFirstName", query = "SELECT w FROM " +
-    "WorkflowUserBean w WHERE w.firstName = :firstName"),
-    @NamedQuery(name = "WorkflowUserBean.findByMiddleName", query = "SELECT w FROM " +
-    "WorkflowUserBean w WHERE w.middleName = :middleName"),
-    @NamedQuery(name = "WorkflowUserBean.findByEmail", query = "SELECT w FROM " +
-    "WorkflowUserBean w WHERE w.email = :email"),
-    @NamedQuery(name = "WorkflowUserBean.findBySessionUid", query = "SELECT w FROM " +
-    "WorkflowUserBean w WHERE w.sessionUid = :sessionUid")})
+    @NamedQuery(name = "WorkflowUserBean.findByLastName", query = "SELECT w FROM"
+    + " WorkflowUserBean w WHERE w.lastName = :lastName"),
+    @NamedQuery(name = "WorkflowUserBean.findByFirstName", query = "SELECT w FROM "
+    + "WorkflowUserBean w WHERE w.firstName = :firstName"),
+    @NamedQuery(name = "WorkflowUserBean.findByMiddleName", query = "SELECT w FROM "
+    + "WorkflowUserBean w WHERE w.middleName = :middleName"),
+    @NamedQuery(name = "WorkflowUserBean.findByEmail", query = "SELECT w FROM "
+    + "WorkflowUserBean w WHERE w.email = :email"),
+    @NamedQuery(name = "WorkflowUserBean.findBySessionUid", query = "SELECT w FROM "
+    + "WorkflowUserBean w WHERE w.sessionUid = :sessionUid")})
 public class WorkflowUserBean implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,28 +75,24 @@ public class WorkflowUserBean implements Serializable {
     private Boolean enabled;
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
-
     private Set<WorkflowBean> assignedWorkflows = new HashSet<WorkflowBean>();
-
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
     private Set<WorkflowBean> receivedWorkflows = new HashSet<WorkflowBean>();
-
     @ForeignKey(name = "fk_groups_users")
     @JoinColumn(name = "GroupUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false)
     private UserGroupBean userGroupBean;
-
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "workflowUserBean", fetch = FetchType.LAZY)
     @OrderBy("uid desc")
     private Set<OutgoingMailBean> outgoingMailBeans = new HashSet<OutgoingMailBean>();
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowUserBean")
     private Collection<ConclusionBean> conclusionBeanCollection;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowUserBean")
     private Collection<NegotiationBean> negotiationBeanCollection;
+    @Column(name = "EmailNotify")
+    private Short emailNotify;
     
     public WorkflowUserBean() {
     }
@@ -246,5 +243,13 @@ public class WorkflowUserBean implements Serializable {
 
     public void setConclusionBeanCollection(Collection<ConclusionBean> conclusionBeanCollection) {
         this.conclusionBeanCollection = conclusionBeanCollection;
+    }
+
+    public Short getEmailNotify() {
+        return emailNotify;
+    }
+
+    public void setEmailNotify(Short emailNotify) {
+        this.emailNotify = emailNotify;
     }
 }

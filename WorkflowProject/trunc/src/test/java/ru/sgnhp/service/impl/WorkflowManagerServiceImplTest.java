@@ -1,5 +1,7 @@
 package ru.sgnhp.service.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.junit.Test;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
@@ -67,11 +69,12 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
 //    }
     @Test
     public void testTaskReminder() {
-        List<WorkflowUserBean> users = getUserManagerService().getAll();
-        for (WorkflowUserBean user : users) {
+        List<WorkflowUserBean> users = getUserManagerService().getAllEmailNotify();
+        for (Iterator<WorkflowUserBean> it = users.iterator(); it.hasNext();) {
+            WorkflowUserBean user = it.next();
             List<WorkflowBean> workflows = workflowManagerService.getRecievedWorkflowsByUserUid(user.getUid());
             if (workflows != null) {
-                //mailService.sendmailSheduler((ArrayList) workflows);
+                mailService.sendmailSheduler((ArrayList) workflows);
             }
         }
     }
