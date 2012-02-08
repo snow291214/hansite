@@ -93,6 +93,9 @@ public class WorkflowUserBean implements Serializable {
     private Collection<NegotiationBean> negotiationBeanCollection;
     @Column(name = "EmailNotify")
     private Short emailNotify;
+    @JoinColumn(name = "DepartmentUid", referencedColumnName = "Uid", nullable = false)
+    @ManyToOne(optional = false)
+    private Department department;
     
     public WorkflowUserBean() {
     }
@@ -252,4 +255,19 @@ public class WorkflowUserBean implements Serializable {
     public void setEmailNotify(Short emailNotify) {
         this.emailNotify = emailNotify;
     }
+
+    /**
+     * @return the department
+     */
+    public Department getDepartment() {
+        return department;
+    }
+
+    /**
+     * @param department the department to set
+     */
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
 }
