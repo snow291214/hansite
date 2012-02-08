@@ -8,17 +8,9 @@ import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.BaseFont;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -30,12 +22,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -110,7 +97,7 @@ public class IndexMBean implements Serializable {
     public void setHazardsByAppendix() {
 //        Logger logger = Logger.getAnonymousLogger();
 //        logger.warning(this.getAppendix());
-        hazardList = new ArrayList<SelectItem>();
+        setHazardList(new ArrayList<SelectItem>());
         for (Hazard hazard : this.hazardSessionBean.getHazardByAppendix(this.appendix)) {
             getHazardList().add(new SelectItem(hazard.getParagraph(), hazard.getParagraph() + " - " + hazard.getName()));
         }
@@ -125,6 +112,10 @@ public class IndexMBean implements Serializable {
         this.patientDto.getHazards().add(hazardDto);
     }
 
+    public void clearHazardsList(){
+        patientDto.getHazards().clear();
+    }
+    
     public void deleteTableRow(HazardDto hazardDto) {
 //        Logger logger = Logger.getAnonymousLogger();
 //        logger.warning(hazardDto.toString());
@@ -136,9 +127,9 @@ public class IndexMBean implements Serializable {
         String templatesFolder = ctx.getRealPath("/templates");
         MimeMessage message = new MimeMessage(mailSession);
         try {
-            message.setSubject("test", "utf-8");
+            message.setSubject("Внимание! Новое направление на входной медосмотр!", "utf-8");
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(patientDto.getHrEmail()));
-
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress("remote-register@salavatmed.ru"));
             //Body
             Multipart multipart = new MimeMultipart("related");
             BodyPart htmlPart = new MimeBodyPart();
@@ -169,8 +160,7 @@ public class IndexMBean implements Serializable {
             //Personal
             htmlPart = new MimeBodyPart();
             XStream xstream = new XStream(new DomDriver("UTF-8")); // require XPP3 library
-            os = new ByteArrayOutputStream();
-            xstream.alias("PediatricPatientDto", PatientDto.class);
+            xstream.alias("PatientDto", PatientDto.class);
             DataSource personalDataSource = new ByteArrayDataSource(xstream.toXML(this.patientDto),"application/xml");
             htmlPart.setDataHandler(new DataHandler(personalDataSource));
             htmlPart.setFileName("PersonalData.mxml");
@@ -222,6 +212,26 @@ public class IndexMBean implements Serializable {
 
     public void save() throws IOException, DocumentException {
         this.sendAssignmentThroughEmail(patientDto);
+        this.patientDto.setLastName("");
+        this.patientDto.setFirstName("");
+        this.patientDto.setPatronymicName("");
+        this.patientDto.setBirthday("");
+        this.patientDto.setResidenceStreet("");
+        this.patientDto.setResidenceHome("");
+        this.patientDto.setResidenceFlat("");
+        this.patientDto.setMobilePhone("");
+        this.patientDto.setOmsCertificateNumber("");
+        this.patientDto.setOmsCertificateDate("");
+        this.patientDto.setOmsCertificateCompany("");
+        this.patientDto.setPassportNumber("");
+        this.patientDto.setPassportSeries("");
+        this.patientDto.setPassportIssuer("");
+        this.patientDto.setPassportDateOfIssue("");
+        this.patientDto.setSnils("");
+        this.patientDto.setInn("");
+        //this.patientDto.setDepartmentName("");
+        //this.patientDto.setSpecialityName("");
+        //this.patientDto.setPost(appendix);
     }
 
     private HashMap setAssignmentMap(PatientDto patientDto) {
@@ -352,5 +362,12 @@ public class IndexMBean implements Serializable {
      */
     public void setCounter(int counter) {
         this.counter = counter;
+    }
+
+    /**
+     * @param hazardList the hazardList to set
+     */
+    public void setHazardList(List<SelectItem> hazardList) {
+        this.hazardList = hazardList;
     }
 }
