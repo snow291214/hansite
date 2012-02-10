@@ -1,10 +1,14 @@
 package ru.sgnhp.domain;
 
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.Collection;
+import java.util.Locale;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -20,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d"),
     @NamedQuery(name = "Department.findByUid", query = "SELECT d FROM Department d WHERE d.uid = :uid"),
     @NamedQuery(name = "Department.findByDepartmentName", query = "SELECT d FROM Department d WHERE d.departmentName = :departmentName")})
-public class Department implements Serializable {
+public class Department implements Serializable, Comparable<Department> {
 
     private static final long serialVersionUID = 20L;
     @Id
@@ -31,6 +35,10 @@ public class Department implements Serializable {
     @Column(name = "DepartmentName", length = 255)
     private String departmentName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OrderBy("lastName")
+//    @JoinTable
+//    @FilterJoinTable(name="workflowUserBean", condition="enabled = true")
     private Collection<WorkflowUserBean> workflowUserBeanCollection;
     
     public Department() {
@@ -88,6 +96,12 @@ public class Department implements Serializable {
 
     public void setWorkflowUserBeanCollection(Collection<WorkflowUserBean> workflowUserBeanCollection) {
         this.workflowUserBeanCollection = workflowUserBeanCollection;
+    }
+
+    @Override
+    public int compareTo(Department department) {
+        Collator collator = Collator.getInstance(Locale.getDefault());
+        return collator.compare(this.getDepartmentName(), department.getDepartmentName());
     }
 
 }

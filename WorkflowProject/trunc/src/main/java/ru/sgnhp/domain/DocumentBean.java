@@ -77,8 +77,8 @@ public class DocumentBean implements Serializable {
     @JoinColumn(name = "ControlUserUid", referencedColumnName = "Uid", nullable = false, columnDefinition = "INTEGER(11) UNSIGNED")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private WorkflowUserBean controlPerson;
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentBean", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @OrderBy("fileName")
     private Set<DocumentFileBean> documentFileBeanSet;
 

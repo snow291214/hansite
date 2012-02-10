@@ -6,19 +6,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.sgnhp.domain.Department;
 import ru.sgnhp.domain.WorkflowUserBean;
+import ru.sgnhp.service.IDepartmentService;
 import ru.sgnhp.service.IUserManagerService;
 
-/*****
+/**
+ * ***
  *
- * @author Alexey Khudyakov
- * @Skype: khudyakov.alexey
+ * @author Alexey Khudyakov @Skype: khudyakov.alexey
  *
  *****
  */
 public class SelectUsersFormController extends AbstractController {
 
     private IUserManagerService userManagerService;
+    private IDepartmentService departmentService;
     private String workflowUid;
 
     public IUserManagerService getUserManagerService() {
@@ -42,14 +45,30 @@ public class SelectUsersFormController extends AbstractController {
             request.getSession().setAttribute("checks", checks);
             if (workflowUid == null) {
                 return new ModelAndView(new RedirectView("registerTask.htm"));
-            }else{
+            } else {
                 request.getSession().setAttribute("workflowID", workflowUid);
                 return new ModelAndView(new RedirectView("assignTask.htm"), "workflowID", workflowUid);
             }
         } else {
             workflowUid = request.getParameter("workflowID");
-            List<WorkflowUserBean> users = userManagerService.getAll();
-            return new ModelAndView("selectUsers", "users", users);
+            List<Department> departments = departmentService.getAll();
+            return new ModelAndView("selectUsers", "departments", departments);
+            //List<WorkflowUserBean> users = userManagerService.getAll();
+            //return new ModelAndView("selectUsers", "users", users);
         }
+    }
+
+    /**
+     * @return the departmentService
+     */
+    public IDepartmentService getDepartmentService() {
+        return departmentService;
+    }
+
+    /**
+     * @param departmentService the departmentService to set
+     */
+    public void setDepartmentService(IDepartmentService departmentService) {
+        this.departmentService = departmentService;
     }
 }

@@ -109,17 +109,17 @@ Expression	 Meaning
             <value>0 00 18 ? * MON-FRI</value>
         </property>
     </bean>
-    <!--
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
                 <ref bean="cronTrigger" />
                 <ref bean="cronTriggerTaskReport" />
+                <!--
+                <ref bean="cronTriggerTasksForReviewReport" />
                 <ref bean="cronTriggerDailyIncoming" />
                 <ref bean="cronTriggerDailyOutgoing" />
-                <ref bean="cronTriggerTasksForReviewReport" />
+                -->
             </list>
         </property>
     </bean>
-    -->
 </beans>

@@ -30,5 +30,6 @@
     <mapping class="ru.sgnhp.domain.NegotiationBean"/>
     <mapping class="ru.sgnhp.domain.NegotiationFileBean"/>
     <mapping class="ru.sgnhp.domain.NegotiationTypeBean"/>
+    <mapping class="ru.sgnhp.domain.Department"/>
   </session-factory>
 </hibernate-configuration>

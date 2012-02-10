@@ -26,25 +26,33 @@
     </head>
     <body>
         <h2>Выбор пользователя, для которого создается задача.</h2>
+        ${requestScope.departmets}
         <form name="Form1" method="post" action="${actionUrl}">
             <div class="checklistbox" style="background:#f8f8ff">
                 <table>
-                    <c:forEach items="${requestScope.users}" var="user" varStatus="status">
-                        <c:choose>
-                            <c:when test="${b == true}">
-                                <tr bgcolor="#e2f1f9">
-                                    <c:set var="b" scope="page" value="false" />
-                                </c:when>
-                                <c:otherwise>
-                                <tr>
-                                    <c:set var="b" scope="page" value="true" />
-                                </c:otherwise>
-                            </c:choose>
-                            <td><input TYPE="checkbox" name="checks" VALUE="${user.uid}" onClick="Enable();"></td>
-                            <td><c:out value="${user.lastName}" /></td>
-                            <td><c:out value="${user.firstName}" /></td>
-                            <td><c:out value="${user.middleName}" /></td>
+                    <c:forEach items="${requestScope.departments}" var="department" varStatus="status">
+                        <tr>
+                            <td colspan="4">
+                                <b><c:out value="${department.departmentName}" /></b>
+                            </td>
                         </tr>
+                        <c:forEach items="${department.workflowUserBeanCollection}" var="user" varStatus="status">
+                            <c:choose>
+                                <c:when test="${b == true}">
+                                    <tr bgcolor="#e2f1f9">
+                                        <c:set var="b" scope="page" value="false" />
+                                    </c:when>
+                                    <c:otherwise>
+                                    <tr>
+                                        <c:set var="b" scope="page" value="true" />
+                                    </c:otherwise>
+                                </c:choose>
+                                <td><input TYPE="checkbox" name="checks" VALUE="${user.uid}" onClick="Enable();"></td>
+                                <td><c:out value="${user.lastName}" /></td>
+                                <td><c:out value="${user.firstName}" /></td>
+                                <td><c:out value="${user.middleName}" /></td>
+                            </tr>
+                        </c:forEach>
                     </c:forEach>
                 </table>
             </div>

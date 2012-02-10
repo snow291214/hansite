@@ -271,4 +271,18 @@
         <property name="negotiationTypeDao" ref="negotiationTypeDao" />
     </bean>
 
+    <bean id="departmentDao" class="ru.sgnhp.dao.impl.DepartmentDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="departmentService" class="ru.sgnhp.service.impl.DepartmentServiceImpl">
+        <constructor-arg>
+            <bean class="ru.sgnhp.dao.impl.GenericDaoHibernate">
+                <constructor-arg value="ru.sgnhp.domain.Department"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        <property name="departmentDao" ref="departmentDao" />
+    </bean>
+
 </beans>

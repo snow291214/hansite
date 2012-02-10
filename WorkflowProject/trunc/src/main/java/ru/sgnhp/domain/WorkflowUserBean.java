@@ -34,7 +34,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "users", catalog = "workflowdb", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "WorkflowUserBean.findAll", query = "SELECT w FROM WorkflowUserBean w order by w.lastName"),
+    @NamedQuery(name = "WorkflowUserBean.findAll", query = "SELECT w FROM WorkflowUserBean w where w.enabled = true order by w.lastName"),
     @NamedQuery(name = "WorkflowUserBean.findAllEmailNotify", query = "SELECT w FROM WorkflowUserBean w where w.emailNotify > 0 order by w.lastName"),
     @NamedQuery(name = "WorkflowUserBean.findByUid", query = "SELECT w FROM WorkflowUserBean w WHERE w.uid = :uid"),
     @NamedQuery(name = "WorkflowUserBean.findByLogin", query = "SELECT w FROM "
@@ -96,7 +96,7 @@ public class WorkflowUserBean implements Serializable {
     @JoinColumn(name = "DepartmentUid", referencedColumnName = "Uid", nullable = false)
     @ManyToOne(optional = false)
     private Department department;
-    
+
     public WorkflowUserBean() {
     }
 
@@ -269,5 +269,4 @@ public class WorkflowUserBean implements Serializable {
     public void setDepartment(Department department) {
         this.department = department;
     }
-
 }

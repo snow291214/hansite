@@ -21,13 +21,18 @@ public class UserDaoImplTest extends AbstractTransactionalDataSourceSpringContex
     }
 
     @Test
+    public void testGetAll() {
+        assertEquals(userDao.getAll().size(), 99);
+    }
+    
+    @Test
     public void testGetByLogin() {
-        assertNotNull(userDao.getByLogin("48han"));
+        assertNotNull(userDao.getByLogin("77han"));
     }
 
     @Test
     public void testGetByEmail() {
-        assertNotNull(userDao.getByEmail("87lvs@snos.ru"));
+        assertNotNull(userDao.getByEmail("77han@salavatmed.ru"));
     }
 
     @Override

@@ -177,6 +177,9 @@
         <property name="userManagerService">
             <ref bean="userManagerService" />
         </property>
+        <property name="departmentService">
+            <ref bean="departmentService" />
+        </property>
     </bean>
 
     <!-- Upload Controller-->
