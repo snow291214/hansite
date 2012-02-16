@@ -127,6 +127,11 @@ public class IndexMBean implements Serializable {
         String templatesFolder = ctx.getRealPath("/templates");
         MimeMessage message = new MimeMessage(mailSession);
         try {
+            InternetAddress address = new InternetAddress("workflow@salavatmed.ru");
+            address.setPersonal("Система электронного документооборота ООО 'Медсервис'", "utf-8");
+            message.addHeader("X-Priority", "1");
+            message.setFrom(address);
+            
             message.setSubject("Внимание! Новое направление на входной медосмотр!", "utf-8");
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(patientDto.getHrEmail()));
             message.addRecipient(Message.RecipientType.CC, new InternetAddress("remote-register@salavatmed.ru"));
