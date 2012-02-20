@@ -86,7 +86,8 @@ public class IndexMBean implements Serializable {
         this.userDetails = userSessionBean.getUserByUsername(username).get(0);
         this.patientDto.setFormOfProperty(this.userDetails.getAuthority().getFormOfProperty());
         this.patientDto.setOkved(this.userDetails.getAuthority().getOkved());
-        this.patientDto.setHrManager(this.userDetails.getFullName());
+        this.patientDto.setHrSpecialist(this.userDetails.getFullName());
+        this.patientDto.setHrManager(this.userDetails.getAuthority().getHRManager());
         this.patientDto.setHrEmail(this.userDetails.getEmail());
         this.patientDto.setCompanyName(this.userDetails.getAuthority().getFullName());
         this.patientDto.setMedialogCode(this.userDetails.getAuthority().getMedialogCode());
@@ -241,6 +242,8 @@ public class IndexMBean implements Serializable {
 
     private HashMap setAssignmentMap(PatientDto patientDto) {
         HashMap<String, String> replaceValues = new HashMap<String, String>();
+        replaceValues.put("[hrSpecialist]", patientDto.getHrSpecialist());
+        replaceValues.put("[hrManager]", patientDto.getHrManager());
         replaceValues.put("[formOfProperty]", patientDto.getFormOfProperty());
         replaceValues.put("[okved]", patientDto.getOkved());
         replaceValues.put("[lastName]", patientDto.getLastName());

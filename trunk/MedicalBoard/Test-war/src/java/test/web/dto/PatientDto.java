@@ -13,6 +13,7 @@ import java.util.List;
 public class PatientDto implements Serializable {
     private static final long serialVersionUID = 4L;
     private String login;
+    private String hrSpecialist;
     private String hrManager;
     private String hrEmail;
     private int medialogCode;
@@ -510,5 +511,19 @@ public class PatientDto implements Serializable {
      */
     public void setOkved(String okved) {
         this.okved = okved;
+    }
+
+    /**
+     * @return the hrSpecialist
+     */
+    public String getHrSpecialist() {
+        return hrSpecialist;
+    }
+
+    /**
+     * @param hrSpecialist the hrSpecialist to set
+     */
+    public void setHrSpecialist(String hrSpecialist) {
+        this.hrSpecialist = hrSpecialist;
     }
 }
