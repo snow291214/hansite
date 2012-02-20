@@ -33,6 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Authority.findByUid", query = "SELECT a FROM Authority a WHERE a.uid = :uid"),
     @NamedQuery(name = "Authority.findByAuthority", query = "SELECT a FROM Authority a WHERE a.authority = :authority")})
 public class Authority implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 150)
+    @Column(name = "HRManager")
+    private String hRManager;
     private static final long serialVersionUID = 2L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -177,6 +182,14 @@ public class Authority implements Serializable {
 
     public void setUserCollection(Collection<User> userCollection) {
         this.userCollection = userCollection;
+    }
+
+    public String getHRManager() {
+        return hRManager;
+    }
+
+    public void setHRManager(String hRManager) {
+        this.hRManager = hRManager;
     }
     
 }
