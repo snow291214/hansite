@@ -8,11 +8,7 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
 import ru.sgnhp.DateUtils;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.domain.WorkflowUserBean;
-import ru.sgnhp.service.IMailService;
-import ru.sgnhp.service.IStateManagerService;
-import ru.sgnhp.service.ITaskManagerService;
-import ru.sgnhp.service.IUserManagerService;
-import ru.sgnhp.service.IWorkflowManagerService;
+import ru.sgnhp.service.*;
 
 /**
  *
@@ -67,25 +63,53 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
 //        logger.info(wf.getTaskBean().getDescription());
 //        logger.info("---------------------------------");
 //    }
+//    @Test
+//    public void testTaskReminder() {
+//        List<WorkflowUserBean> users = getUserManagerService().getAllEmailNotify();
+//        for (Iterator<WorkflowUserBean> it = users.iterator(); it.hasNext();) {
+//            WorkflowUserBean user = it.next();
+//            List<WorkflowBean> workflows = workflowManagerService.getRecievedWorkflowsByUserUid(user.getUid());
+//            if (workflows != null) {
+//                mailService.sendmailSheduler((ArrayList) workflows);
+//            }
+//        }
+//    }
+
+//    @Test
+//    public void testTaskReport() {
+//        //List<WorkflowUserBean> users = userManagerService.getAll();
+//        List<WorkflowUserBean> users = new ArrayList<WorkflowUserBean>();
+//        users.add(userManagerService.getUserByLogin("77llv"));
+//        for (Iterator<WorkflowUserBean> it = users.iterator(); it.hasNext();) {
+//            WorkflowUserBean user = it.next();
+//            List<WorkflowBean> uncompletedWorkflows = workflowManagerService.getAllUncompletedByParentUserUid(user.getUid());
+//            if (uncompletedWorkflows != null) {
+//                mailService.sendmailReport(uncompletedWorkflows);
+//            }
+//        }
+//    }
+
     @Test
-    public void testTaskReminder() {
-        List<WorkflowUserBean> users = getUserManagerService().getAllEmailNotify();
+    public void testTaskReportEx() {
+        //List<WorkflowUserBean> users = userManagerService.getAll();
+        List<WorkflowUserBean> users = new ArrayList<WorkflowUserBean>();
+        users.add(userManagerService.getUserByLogin("77llv"));
         for (Iterator<WorkflowUserBean> it = users.iterator(); it.hasNext();) {
             WorkflowUserBean user = it.next();
-            List<WorkflowBean> workflows = workflowManagerService.getRecievedWorkflowsByUserUid(user.getUid());
-            if (workflows != null) {
-                mailService.sendmailSheduler((ArrayList) workflows);
+            List<WorkflowBean> uncompletedWorkflows = workflowManagerService.getAllUncompletedByParentUserUidEx(user.getUid());
+            if (uncompletedWorkflows != null) {
+                mailService.sendmailReport(uncompletedWorkflows);
             }
         }
     }
-
+    
     @Test
     public void testAssignTaskToUser() {
     }
 
     @Test
     public void testIsWorkflowActive(){
-        assertEquals(true, workflowManagerService.isWorkflowActive(763L));
+        assertEquals(false, workflowManagerService.isWorkflowActive(763L));
     }
 
 //    @Test
@@ -102,7 +126,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
         List<WorkflowBean> workflowBeans = workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.TRUE);
         assertNotNull(workflowBeans);
         assertNotNull(workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.FALSE));
-        assertEquals(1, workflowBeans.size());
+        assertEquals(37, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getAssignee().getLastName());
     }
 
@@ -110,7 +134,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     public void testGetCompletedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowManagerService.getCompletedWorkflowsByUserUid(userUid);
         assertNotNull(workflowBeans);
-        assertEquals(19, workflowBeans.size());
+        assertEquals(82, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getReceiver().getLastName());
     }
 

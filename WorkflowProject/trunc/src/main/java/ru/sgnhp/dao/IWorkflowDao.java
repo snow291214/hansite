@@ -6,10 +6,10 @@ import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.dto.WorkflowBeanDto;
 
-/*****
+/**
+ * ***
  *
- * @author Alexey Khudyakov
- * @Skype: khudyakov.alexey
+ * @author Alexey Khudyakov @Skype: khudyakov.alexey
  *
  *****
  */
@@ -36,10 +36,11 @@ public interface IWorkflowDao extends IGenericDao<WorkflowBean, Long> {
     List<WorkflowBean> getWorkflowsByDescription(Long userUid, String description);
 
 //    void updateWorkflow(WorkflowBean workflowBean);
-
     WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean);
 
     List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid);
+
+    List<WorkflowBean> getAllUncompletedByParentUserUidEx(Long parentUserUid);
 
     List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate);
 

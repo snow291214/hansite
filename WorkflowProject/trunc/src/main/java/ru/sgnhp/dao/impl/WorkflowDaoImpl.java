@@ -162,6 +162,17 @@ public class WorkflowDaoImpl extends GenericDaoHibernate<WorkflowBean, Long> imp
     }
 
     @Override
+    public List<WorkflowBean> getAllUncompletedByParentUserUidEx(Long parentUserUid) {
+        Map<String, Object> value = new HashMap<String, Object>();
+        value.put("parentUserUid", parentUserUid);
+        List<WorkflowBean> list = this.findByNamedQuery("WorkflowBean.findAllUncompletedByParentUserUidEx", value);
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list;
+    }
+    
+    @Override
     public List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate) {
         Map<String, Object> value = new HashMap<String, Object>();
         value.put("parentUserUid", parentUserUid);

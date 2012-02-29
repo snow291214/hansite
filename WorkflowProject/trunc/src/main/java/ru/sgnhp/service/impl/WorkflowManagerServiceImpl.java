@@ -153,6 +153,12 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         return workflowDao.getAllUncompletedByParentUserUid(parentUserUid);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
+    public List<WorkflowBean> getAllUncompletedByParentUserUidEx(Long parentUserUid) {
+        return workflowDao.getAllUncompletedByParentUserUidEx(parentUserUid);
+    }
+    
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
     public WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean) {
@@ -181,9 +187,9 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public void taskReport() {
-        //List<WorkflowUserBean> users = userManagerService.getAll();
-        List<WorkflowUserBean> users = new ArrayList<WorkflowUserBean>();
-        users.add(userManagerService.getUserByLogin("77llv"));
+        List<WorkflowUserBean> users = userManagerService.getAllEmailNotify();
+        //List<WorkflowUserBean> users = new ArrayList<WorkflowUserBean>();
+        //users.add(userManagerService.getUserByLogin("77llv"));
         //users.add(userManagerService.getUserByLogin("77knv"));
         //users.add(userManagerService.getUserByLogin("77fdg"));
         for (WorkflowUserBean user : users) {

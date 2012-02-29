@@ -45,7 +45,18 @@ import org.hibernate.annotations.OnDeleteAction;
     @NamedQuery(name = "WorkflowBean.findAllUncompletedByParentUserUid",
     query = "SELECT w FROM WorkflowBean w Where w.assignee.uid = :parentUserUid "
     + "and w.stateBean.stateUid in (0,1,2) "
-    + "and w.receiver.login in ('77fdg', '77knv', '77han') ORDER BY w.receiver.lastName"),
+    + "and w.receiver.enabled = true "
+    + "and w.receiver.department.parentUid = 1 "
+    + "ORDER BY w.receiver.lastName"),
+
+    @NamedQuery(name = "WorkflowBean.findAllUncompletedByParentUserUidEx",
+    query = "SELECT w FROM WorkflowBean w Where w.assignee.uid = :parentUserUid "
+    + "and w.stateBean.stateUid in (0,1,2) "
+    + "and w.receiver.enabled = true "
+    + "and w.receiver.department.parentUid = 1 "
+    + "and w.receiver.manager = 1 "
+    + "ORDER BY w.receiver.lastName"),
+    
     @NamedQuery(name = "WorkflowBean.findByUid", query = "SELECT w FROM WorkflowBean "
     + "w WHERE w.uid = :uid"),
 

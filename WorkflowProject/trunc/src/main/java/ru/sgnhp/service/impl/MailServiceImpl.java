@@ -31,10 +31,10 @@ import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.service.IMailService;
 import ru.sgnhp.service.IWorkflowManagerService;
 
-/*****
+/**
+ * ***
  *
- * @author Alexey Khudyakov
- * @Skype: khudyakov.alexey
+ * @author Alexey Khudyakov @Skype: khudyakov.alexey
  *
  *****
  */
@@ -122,7 +122,9 @@ public class MailServiceImpl implements IMailService {
             address.setPersonal(fromName, "utf-8");
             message.setFrom(address);
 
-            /* Тупое решение, но тем не менее */
+            /*
+             * Тупое решение, но тем не менее
+             */
             if (_workflow.getState().getStateUid() == 3L) {
                 message.addRecipient(Message.RecipientType.TO,
                         new InternetAddress(_workflow.getReceiver().getEmail()));
@@ -232,8 +234,8 @@ public class MailServiceImpl implements IMailService {
                 tableBody += "<tr>"
                         + "<td>" + wf.getTaskBean().getInternalNumber() + "</td>"
                         + "<td>" + wf.getTaskBean().getDescription() + "</td>"
-                        + "<td>" + wf.getTaskBean().getStartDate() + "</td>"
-                        + "<td>" + wf.getTaskBean().getDueDate() + "</td>"
+                        + "<td>" + DateUtils.dateToString(wf.getTaskBean().getStartDate(), "dd.MM.yyyy") + "</td>"
+                        + "<td>" + DateUtils.dateToString(wf.getTaskBean().getDueDate(), "dd.MM.yyyy") + "</td>"
                         + "<td>" + wf.getAssignee().getLastName() + " "
                         + wf.getAssignee().getFirstName() + " "
                         + wf.getAssignee().getMiddleName() + "</td>"
@@ -293,7 +295,7 @@ public class MailServiceImpl implements IMailService {
             for (WorkflowBean wf : wfs) {
                 if (!lastName.equals(wf.getReceiver().getLastName())) {
                     tableBody += "<tr>"
-                            + "<td colspan = 5><br /><b>"
+                            + "<td colspan = 6><br /><b>"
                             + wf.getReceiver().getLastName() + " "
                             + wf.getReceiver().getFirstName() + " "
                             + wf.getReceiver().getMiddleName() + " "
@@ -319,13 +321,16 @@ public class MailServiceImpl implements IMailService {
                             + "<td>"
                             + DateUtils.dateToString(wf.getAssignDate(), "dd.MM.yyyy")
                             + "</td>"
+                            + "<td>"
+                            + DateUtils.dateToString(wf.getTaskBean().getDueDate(), "dd.MM.yyyy")
+                            + "</td>"
                             + "<td>" + wf.getState().getStateDescription() + "</td>"
                             + "</tr>"
                             + "<tr>"
                             + "<td><br />"
-                            + " Маршрут задачи: "
+                            + " Движение задачи по исполнителям: "
                             + "<br />&nbsp;</td>"
-                            + "<td colspan=4><table width=100%>";
+                            + "<td colspan=5><table width=100%>";
                     int c = 1;
                     tableBody += "<tr>"
                             + "<td>Номер п/п</td>"
@@ -375,6 +380,9 @@ public class MailServiceImpl implements IMailService {
                             + "<td>"
                             + DateUtils.dateToString(wf.getAssignDate(), "dd.MM.yyyy")
                             + "</td>"
+                            + "<td>"
+                            + DateUtils.dateToString(wf.getTaskBean().getDueDate(), "dd.MM.yyyy")
+                            + "</td>"
                             + "<td>" + wf.getState().getStateDescription() + "</td>"
                             + "</tr>";
                 }
@@ -391,12 +399,13 @@ public class MailServiceImpl implements IMailService {
                     + "<p>"
                     + "Вами были назначены задания, но они еще не выполнены исполнителями."
                     + "</p>"
-                    + "<table width=100%>"
+                    + "<table width=100%  cellspacing=20 cellpadding=20%>"
                     + "<tr align=center>"
                     + "<td width=5%>Номер п/п</td>"
-                    + "<td width=55%>Текст задачи</td>"
+                    + "<td width=45%>Текст задачи</td>"
                     + "<td width=20%>Задачу получил</td>"
                     + "<td width=10%>Дата назначения задачи</td>"
+                    + "<td width=10%>Срок выполнения задачи</td>"
                     //+ "<td width=30%>Резолюция к задаче</td>"
                     + "<td width=10%>Состояние задачи</td>"
                     + "</tr>"

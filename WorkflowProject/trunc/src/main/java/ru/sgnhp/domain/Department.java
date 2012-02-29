@@ -12,10 +12,10 @@ import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
- * Khudyakov Alexey
- * Skype: khudyakov.alexey
+ * Khudyakov Alexey 
+ * Skype: khudyakov.alexey 
  * Email: khudyakov.alexey@gmail.com
- * 
+ *
  */
 @Entity
 @Table(name = "departments", catalog = "workflowdb", schema = "")
@@ -40,7 +40,10 @@ public class Department implements Serializable, Comparable<Department> {
 //    @JoinTable
 //    @FilterJoinTable(name="workflowUserBean", condition="enabled = true")
     private Collection<WorkflowUserBean> workflowUserBeanCollection;
-    
+    @Basic(optional = false)
+    @Column(name = "ParentUid", nullable = false)
+    private int parentUid;
+
     public Department() {
     }
 
@@ -104,4 +107,11 @@ public class Department implements Serializable, Comparable<Department> {
         return collator.compare(this.getDepartmentName(), department.getDepartmentName());
     }
 
+    public int getParentUid() {
+        return parentUid;
+    }
+
+    public void setParentUid(int parentUid) {
+        this.parentUid = parentUid;
+    }
 }

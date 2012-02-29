@@ -8,10 +8,10 @@ import ru.sgnhp.domain.StateBean;
 import ru.sgnhp.domain.WorkflowBean;
 import ru.sgnhp.dto.WorkflowBeanDto;
 
-/*****
+/**
+ * ***
  *
- * @author Alexey Khudyakov
- * @Skype: khudyakov.alexey
+ * @author Alexey Khudyakov @Skype: khudyakov.alexey
  *
  *****
  */
@@ -32,7 +32,6 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean, L
     List<WorkflowBean> getCompletedWorkflowsByUserUid(Long parentUid);
 
 //    void updateWorkflow(WorkflowBean _workflow);
-
     WorkflowBeanDto updateWorkflowState(WorkflowBeanDto beanDto, StateBean stateBean);
 
     public ArrayList<WorkflowBean> getWorkflowMembersByWorkflowUid(Long workflowUid, Long workflowParentUid, ArrayList roadmap);
@@ -44,6 +43,8 @@ public interface IWorkflowManagerService extends IGenericService<WorkflowBean, L
     List<WorkflowBean> getWorkflowByParentUid(Long workflowUid);
 
     List<WorkflowBean> getAllUncompletedByParentUserUid(Long parentUserUid);
+
+    List<WorkflowBean> getAllUncompletedByParentUserUidEx(Long parentUserUid);
 
     List<WorkflowBean> getWorkflowsByPeriodOfDate(Long parentUserUid, Long userUid, Date startDate, Date finishDate);
 

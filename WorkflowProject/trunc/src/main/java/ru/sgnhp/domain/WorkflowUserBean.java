@@ -51,6 +51,11 @@ import org.hibernate.annotations.OnDeleteAction;
     @NamedQuery(name = "WorkflowUserBean.findBySessionUid", query = "SELECT w FROM "
     + "WorkflowUserBean w WHERE w.sessionUid = :sessionUid")})
 public class WorkflowUserBean implements Serializable {
+    @Basic(optional = false)
+    @Column(name = "Enabled")
+    private boolean enabled;
+    @Column(name = "Manager")
+    private Boolean manager;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -71,8 +76,6 @@ public class WorkflowUserBean implements Serializable {
     private String email;
     @Column(name = "SessionUid", length = 50)
     private String sessionUid;
-    @Column(name = "Enabled")
-    private Boolean enabled;
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
     private Set<WorkflowBean> assignedWorkflows = new HashSet<WorkflowBean>();
@@ -222,14 +225,6 @@ public class WorkflowUserBean implements Serializable {
         this.outgoingMailBeans = outgoingMailBeans;
     }
 
-    public Boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
     @XmlTransient
     public Collection<NegotiationBean> getNegotiationBeanCollection() {
         return negotiationBeanCollection;
@@ -268,5 +263,21 @@ public class WorkflowUserBean implements Serializable {
      */
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Boolean getManager() {
+        return manager;
+    }
+
+    public void setManager(Boolean manager) {
+        this.manager = manager;
     }
 }
