@@ -66,6 +66,21 @@ Expression	 Meaning
         </property>
     </bean>
 
+    <!--Отчет о назначенных, но невыполненных задачах для директора-->
+    <bean id="methodInvokingTaskReportForDirector" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="workflowManagerService"/>
+        <property name="targetMethod" value="taskReportForDirector"/>
+    </bean>
+
+    <bean id="cronTriggerTaskReportForDirector" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="methodInvokingTaskReportForDirector"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 15 8 ? * MON-FRI</value>
+        </property>
+    </bean>
+
     <!--Отчет о задачах, ожидаемых проверки-->
     <bean id="methodInvokingTasksForReviewReport" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="workflowManagerService"/>
@@ -114,6 +129,7 @@ Expression	 Meaning
             <list>
                 <ref bean="cronTrigger" />
                 <ref bean="cronTriggerTaskReport" />
+                <ref bean="cronTriggerTaskReportForDirector" />
                 <ref bean="cronTriggerTasksForReviewReport" />
                 <!--
                 <ref bean="cronTriggerDailyIncoming" />
