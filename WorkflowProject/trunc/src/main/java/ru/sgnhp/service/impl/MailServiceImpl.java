@@ -470,7 +470,8 @@ public class MailServiceImpl implements IMailService {
                     tableBody += "<tr>"
                             + "<td>" + counter + "</td>"
                             + "<td>"
-                            + "Компания: " + wf.getTaskBean().getExternalCompany() +". "
+                            + "Компания: " + wf.getTaskBean().getExternalCompany() 
+                            +". "
                             + wf.getTaskBean().getDescription() + "</td>"
 //                            + "<td>"
 //                            + wf.getReceiver().getLastName() + " "

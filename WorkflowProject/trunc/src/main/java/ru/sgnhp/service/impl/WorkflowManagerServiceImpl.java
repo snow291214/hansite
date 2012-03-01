@@ -208,7 +208,7 @@ public class WorkflowManagerServiceImpl extends GenericServiceImpl<WorkflowBean,
         for (WorkflowUserBean user : users) {
             List<WorkflowBean> uncompletedWorkflows = this.getAllUncompletedByParentUserUidEx(user.getUid());
             if (uncompletedWorkflows != null) {
-                mailService.sendmailReport(uncompletedWorkflows);
+                mailService.sendmailReportForDirector(uncompletedWorkflows);
             }
         }
     }

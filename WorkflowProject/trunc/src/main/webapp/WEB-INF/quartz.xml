@@ -77,7 +77,7 @@ Expression	 Meaning
             <ref bean="methodInvokingTaskReportForDirector"/>
         </property>
         <property name="cronExpression">
-            <value>0 15 8 ? * MON-FRI</value>
+            <value>0 00 7 ? * MON-FRI</value>
         </property>
     </bean>
 
