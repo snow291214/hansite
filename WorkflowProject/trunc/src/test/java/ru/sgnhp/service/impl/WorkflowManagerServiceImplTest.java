@@ -98,7 +98,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
             WorkflowUserBean user = it.next();
             List<WorkflowBean> uncompletedWorkflows = workflowManagerService.getAllUncompletedByParentUserUidEx(user.getUid());
             if (uncompletedWorkflows != null) {
-                mailService.sendmailReport(uncompletedWorkflows);
+                mailService.sendmailReportForDirector(uncompletedWorkflows);
             }
         }
     }
@@ -126,7 +126,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
         List<WorkflowBean> workflowBeans = workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.TRUE);
         assertNotNull(workflowBeans);
         assertNotNull(workflowManagerService.getAssignedWorkflowsByUserUid(userUid, Boolean.FALSE));
-        assertEquals(37, workflowBeans.size());
+        assertEquals(66, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getAssignee().getLastName());
     }
 
@@ -134,7 +134,7 @@ public class WorkflowManagerServiceImplTest extends AbstractTransactionalDataSou
     public void testGetCompletedWorkflowsByUserUid() {
         List<WorkflowBean> workflowBeans = workflowManagerService.getCompletedWorkflowsByUserUid(userUid);
         assertNotNull(workflowBeans);
-        assertEquals(82, workflowBeans.size());
+        assertEquals(107, workflowBeans.size());
         assertEquals("Худяков", workflowBeans.get(0).getReceiver().getLastName());
     }
 

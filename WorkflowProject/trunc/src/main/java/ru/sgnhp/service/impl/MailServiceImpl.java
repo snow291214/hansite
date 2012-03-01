@@ -312,7 +312,9 @@ public class MailServiceImpl implements IMailService {
                     Collections.reverse(roadmap);
                     tableBody += "<tr>"
                             + "<td>" + counter + "</td>"
-                            + "<td>" + wf.getTaskBean().getDescription() + "</td>"
+                            + "<td>"
+                            + "Компания: " + wf.getTaskBean().getExternalCompany() +". "
+                            + wf.getTaskBean().getDescription() + "</td>"
                             + "<td>"
                             + wf.getReceiver().getLastName() + " "
                             + wf.getReceiver().getFirstName() + " "
@@ -371,7 +373,10 @@ public class MailServiceImpl implements IMailService {
                 } else {
                     tableBody += "<tr>"
                             + "<td>" + counter + "</td>"
-                            + "<td>" + wf.getTaskBean().getDescription() + "</td>"
+                            + "<td>"
+                            + "Компания: " + wf.getTaskBean().getExternalCompany() +". "
+                            + wf.getTaskBean().getDescription()
+                            + "</td>"
                             + "<td>"
                             + wf.getReceiver().getLastName() + " "
                             + wf.getReceiver().getFirstName() + " "
@@ -399,7 +404,7 @@ public class MailServiceImpl implements IMailService {
                     + "<p>"
                     + "Вами были назначены задания, но они еще не выполнены исполнителями."
                     + "</p>"
-                    + "<table width=100%  cellspacing=20 cellpadding=20%>"
+                    + "<table width=100%>"
                     + "<tr align=center>"
                     + "<td width=5%>Номер п/п</td>"
                     + "<td width=45%>Текст задачи</td>"
@@ -423,6 +428,120 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
+    public void sendmailReportForDirector(List<WorkflowBean> wfs) {
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", mailHostName);
+        Session session = Session.getDefaultInstance(props, null);
+        MimeMessage message = new MimeMessage(session);
+        try {
+            InternetAddress address = new InternetAddress(fromAddress);
+            address.setPersonal(fromName, "utf-8");
+            message.setFrom(address);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress("reception@salavatmed.ru"));
+            //message.addRecipient(Message.RecipientType.TO, new InternetAddress("77han@salavatmed.ru"));
+            message.setSubject("Отчет о назначенных, но еще не выполненых, задачах.", "utf-8");
+
+            Multipart multipart = new MimeMultipart("related");
+            BodyPart htmlPart = new MimeBodyPart();
+
+            String tableBody = "";
+            int counter = 1;
+            String lastName = "";
+            for (WorkflowBean wf : wfs) {
+                if (!lastName.equals(wf.getReceiver().getLastName())) {
+                    tableBody += "<tr>"
+                            + "<td colspan = 5><br /><b>"
+                            + wf.getReceiver().getLastName() + " "
+                            + wf.getReceiver().getFirstName() + " "
+                            + wf.getReceiver().getMiddleName() + " "
+                            + "</b><br />&nbsp;</td>"
+                            + "</tr>";
+                    lastName = wf.getReceiver().getLastName();
+                    counter = 1;
+                }
+
+                if ((wf.getState().getStateUid() == 1L) & (getWorkflowManagerService().isWorkflowActive(wf.getUid()))) {
+                    ArrayList<WorkflowBean> roadmap = new ArrayList<WorkflowBean>();
+                    roadmap.add(wf);
+                    roadmap = this.getWorkflowManagerService().getWorkflowMembersByWorkflowUid(wf.getUid(), wf.getParentUid(), roadmap);
+                    Collections.reverse(roadmap);
+                    tableBody += "<tr>"
+                            + "<td>" + counter + "</td>"
+                            + "<td>"
+                            + "Компания: " + wf.getTaskBean().getExternalCompany() +". "
+                            + wf.getTaskBean().getDescription() + "</td>"
+//                            + "<td>"
+//                            + wf.getReceiver().getLastName() + " "
+//                            + wf.getReceiver().getFirstName() + " "
+//                            + wf.getReceiver().getMiddleName() + " "
+//                            + "</td>"
+                            + "<td>"
+                            + DateUtils.dateToString(wf.getAssignDate(), "dd.MM.yyyy")
+                            + "</td>"
+                            + "<td>"
+                            + DateUtils.dateToString(wf.getTaskBean().getDueDate(), "dd.MM.yyyy")
+                            + "</td>"
+                            + "<td>В работе у исполнителя</td>"
+                            + "</tr>";
+                } else if ((wf.getState().getStateUid() == 1L) & (!getWorkflowManagerService().isWorkflowActive(wf.getUid()))) {
+                    continue;
+                } else {
+                    tableBody += "<tr>"
+                            + "<td>" + counter + "</td>"
+                            + "<td>"
+                            + "Компания: " + wf.getTaskBean().getExternalCompany() +". "
+                            + wf.getTaskBean().getDescription()
+                            + "</td>"
+//                            + "<td>"
+//                            + wf.getReceiver().getLastName() + " "
+//                            + wf.getReceiver().getFirstName() + " "
+//                            + wf.getReceiver().getMiddleName() + " "
+//                            + "</td>"
+                            + "<td>"
+                            + DateUtils.dateToString(wf.getAssignDate(), "dd.MM.yyyy")
+                            + "</td>"
+                            + "<td>"
+                            + DateUtils.dateToString(wf.getTaskBean().getDueDate(), "dd.MM.yyyy")
+                            + "</td>"
+                            + "<td>" + wf.getState().getStateDescription() + "</td>"
+                            + "</tr>";
+                }
+
+                counter++;
+            }
+
+            htmlPart.setContent("<html><head><style type=\"text/css\"> "
+                    + "body {font-family:Arial;font-size:small;}"
+                    + "table {font-family:Arial; font-size:12pt;border-collapse:collapse;}"
+                    + "td {border: 1px solid #000000;;margins: 5px 5px 5px 5px;}"
+                    + "</style></style></head><body>"
+                    + "<p> Уважаемый руководитель!</p>"
+                    + "<p>"
+                    + "Вами были назначены задания, но они еще не выполнены исполнителями."
+                    + "</p>"
+                    + "<table width=100%>"
+                    + "<tr align=center>"
+                    + "<td width=5%>Номер п/п</td>"
+                    + "<td width=45%>Текст задачи</td>"
+//                    + "<td width=20%>Задачу получил</td>"
+                    + "<td width=10%>Дата назначения задачи</td>"
+                    + "<td width=10%>Срок выполнения задачи</td>"
+                    //+ "<td width=30%>Резолюция к задаче</td>"
+                    + "<td width=10%>Состояние задачи</td>"
+                    + "</tr>"
+                    + tableBody
+                    + "</table>"
+                    + "</body></html>", "text/html;charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+    
     public void setMailHostName(String mailHostName) {
         this.mailHostName = mailHostName;
     }

@@ -25,6 +25,8 @@ public interface IMailService {
     void sendmailSheduler(ArrayList<WorkflowBean> wfs);
 
     void sendmailReport(List<WorkflowBean> wfs);
+    
+    void sendmailReportForDirector(List<WorkflowBean> wfs);
 
     void sendmailOutgoing(OutgoingMailBean outgoingMailBean);
 
