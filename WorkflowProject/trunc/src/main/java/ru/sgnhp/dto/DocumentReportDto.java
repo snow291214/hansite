@@ -1,7 +1,9 @@
 package ru.sgnhp.dto;
 
+import java.io.Serializable;
 
-public class DocumentReportDto {
+
+public class DocumentReportDto implements Serializable {
 
     private int reportType;
     private int reportYear;

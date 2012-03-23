@@ -2,11 +2,7 @@ package ru.sgnhp.web;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -170,7 +166,8 @@ public class NewOrderFormController extends AbstractWizardFormController {
 
         /* Создание списка файлов для задачи */
         Set<FileBean> fileBeans = new HashSet<FileBean>();
-        for (DocumentFileBean documentFileBean : documentFileBeans) {
+        for (Iterator<DocumentFileBean> it = documentFileBeans.iterator(); it.hasNext();) {
+            DocumentFileBean documentFileBean = it.next();
             FileBean fileBean = new FileBean();
             fileBean.setTaskUid(taskBean);
             fileBean.setFileName(documentFileBean.getFileName());

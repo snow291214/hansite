@@ -124,6 +124,11 @@
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.xfire</groupId>
+            <artifactId>xfire-all</artifactId>
+            <version>1.2.4</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>Workflow</finalName>

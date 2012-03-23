@@ -74,6 +74,7 @@
                 <prop key="negotiations.htm">negotiationsController</prop>
                 <prop key="getNegotiationFile.htm">negotiationFileController</prop>
                 <prop key="conclusionApprove.htm">conclusionApproveController</prop>
+                <prop key="/services/services.htm">servicesController</prop>
             </props>
         </property>
     </bean>
@@ -713,4 +714,49 @@
     <!--===============================Ehcache config========================
     <ehcache:config configLocation="classpath:ehcache.xml" />
     -->
+    
+    <!--==================== Web Services Config 13.03.2012 ================ -->
+    
+    <import resource="classpath:org/codehaus/xfire/spring/xfire.xml" />
+
+    <bean id="config" class="org.codehaus.xfire.aegis.type.Configuration">
+        <property name="defaultExtensibleElements" value="false" />
+        <property name="defaultExtensibleAttributes" value="false" />
+        <property name="defaultNillable" value="false" />
+        <property name="defaultMinOccurs" value="1" />
+    </bean>
+
+    <bean id="servicesController" class="org.codehaus.xfire.spring.remoting.XFireExporter">
+        <property name="serviceBean" ref="workflowWSImpl"/>
+        <property name="serviceClass" value="ru.sgnhp.web.service.IWorkflowWS" />     
+        <property name="serviceFactory" value="org.codehaus.xfire.annotations.AnnotationServiceFactory" />
+    </bean>
+    
+    <bean id="workflowWSImpl" class="ru.sgnhp.web.service.impl.WorkflowWSImpl">
+        <property name="documentService">
+            <ref bean="documentService"/>
+        </property>
+        <property name="documentTypeService">
+            <ref bean="documentTypeService"/>
+        </property>
+        <property name="documentFileService">
+            <ref bean="documentFileService"/>
+        </property>
+        <property name="userManagerService">
+            <ref bean="userManagerService"/>
+        </property>
+        <property name="uploadManagerService">
+            <ref bean="uploadManagerService"/>
+        </property>
+        <property name="taskManagerService">
+            <ref bean="taskManagerService"/>
+        </property>
+        <property name="workflowManagerService">
+            <ref bean="workflowManagerService"/>
+        </property>
+        <property name="stateManagerService">
+            <ref bean="stateManagerService"/>
+        </property>
+    </bean>
+    
 </beans>
