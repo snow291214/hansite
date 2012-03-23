@@ -64,7 +64,9 @@ public class IndexMBean implements Serializable {
     private int counter;
     private TemplateHandler handler;
 
-    /** Creates a new instance of IndexMBean */
+    /**
+     * Creates a new instance of IndexMBean
+     */
     public IndexMBean() {
     }
 
@@ -113,10 +115,10 @@ public class IndexMBean implements Serializable {
         this.patientDto.getHazards().add(hazardDto);
     }
 
-    public void clearHazardsList(){
+    public void clearHazardsList() {
         patientDto.getHazards().clear();
     }
-    
+
     public void deleteTableRow(HazardDto hazardDto) {
 //        Logger logger = Logger.getAnonymousLogger();
 //        logger.warning(hazardDto.toString());
@@ -132,8 +134,8 @@ public class IndexMBean implements Serializable {
             address.setPersonal("Система электронного документооборота ООО 'Медсервис'", "utf-8");
             message.addHeader("X-Priority", "1");
             message.setFrom(address);
-            
-            message.setSubject("Внимание! Новое направление на входной медосмотр!", "utf-8");
+
+            message.setSubject(patientDto.getCompanyName() + ". Новое направление на входной медосмотр!", "utf-8");
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(patientDto.getHrEmail()));
             message.addRecipient(Message.RecipientType.CC, new InternetAddress("remote-register@salavatmed.ru"));
             //Body
@@ -167,7 +169,7 @@ public class IndexMBean implements Serializable {
             htmlPart = new MimeBodyPart();
             XStream xstream = new XStream(new DomDriver("UTF-8")); // require XPP3 library
             xstream.alias("PatientDto", PatientDto.class);
-            DataSource personalDataSource = new ByteArrayDataSource(xstream.toXML(this.patientDto),"application/xml");
+            DataSource personalDataSource = new ByteArrayDataSource(xstream.toXML(this.patientDto), "application/xml");
             htmlPart.setDataHandler(new DataHandler(personalDataSource));
             htmlPart.setFileName("PersonalData.mxml");
             multipart.addBodyPart(htmlPart);
