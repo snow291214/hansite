@@ -39,10 +39,10 @@
                                 <p:ajax event="change"/>
                             </p:inputText>
                             <h:outputLabel value="День рождения" for="birthday" />
-                            <p:inputText id="birthday" value="#{indexMBean.patientDto.birthday}" title="День рождения" required="true" validatorMessage="Неправильный формат даты. Корректный вид: 16.12.1979">
+                            <p:inputMask mask="99.99.9999" id="birthday" value="#{indexMBean.patientDto.birthday}" title="День рождения" required="true" validatorMessage="Неправильный формат даты. Корректный вид: 16.12.1979">
                                 <f:validateRegex pattern="^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$"/>
                                 <p:ajax event="blur" update="msg" />  
-                            </p:inputText>
+                            </p:inputMask>
                             <h:outputLabel value="Пол" for="sex" />
                             <h:selectOneMenu id="sex" value="#{indexMBean.patientDto.sex}">
                                 <f:selectItem itemLabel="Мужской" itemValue="0" />
@@ -61,9 +61,9 @@
                             <h:outputLabel value="Мобильный телефон" for="mobilePhone" />
                             <p:inputText id="mobilePhone" value="#{indexMBean.patientDto.mobilePhone}" title="Мобильный телефон"><p:ajax event="change"/></p:inputText>
                             <h:outputLabel value="Номер полиса ОМС" for="omsCertificateNumber" />
-                            <p:inputText id="omsCertificateNumber" value="#{indexMBean.patientDto.omsCertificateNumber}" title="Номер полиса ОМС">
+                            <p:inputMask mask="8(999)999-9999" id="omsCertificateNumber" value="#{indexMBean.patientDto.omsCertificateNumber}" title="Номер полиса ОМС">
                                 <p:ajax event="change"/>
-                            </p:inputText>
+                            </p:inputMask>
                             <h:outputLabel value="Страховая компания" for="omsCertificateCompany" />
                             <h:inputTextarea  rows="2" cols="27" id="omsCertificateCompany" value="#{indexMBean.patientDto.omsCertificateCompany}" title="Страховая компания">
                                 <p:ajax event="change"/>
