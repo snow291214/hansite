@@ -175,7 +175,7 @@ public class IndexMBean implements Serializable {
             htmlPart = new MimeBodyPart();
             XStream xstream = new XStream(new DomDriver("UTF-8")); // require XPP3 library
             xstream.alias("PatientDto", PatientDto.class);
-            DataSource personalDataSource = new ByteArrayDataSource(xstream.toXML(this.patientDto), "application/xml");
+            DataSource personalDataSource = new ByteArrayDataSource(xstream.toXML(this.patientDto), "text/xml;charset=utf-8");
             htmlPart.setDataHandler(new DataHandler(personalDataSource));
             htmlPart.setFileName("PersonalData.mxml");
             multipart.addBodyPart(htmlPart);

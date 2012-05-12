@@ -16,4 +16,5 @@
         <role-name>ROLE_ADMIN</role-name>
         <group-name>ROLE_ADMIN</group-name>
     </security-role-mapping>
+    <parameter-encoding default-charset="UTF-8"/>
 </glassfish-web-app>
