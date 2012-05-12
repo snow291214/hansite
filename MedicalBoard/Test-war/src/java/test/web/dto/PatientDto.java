@@ -13,6 +13,7 @@ import java.util.List;
 public class PatientDto implements Serializable {
     private static final long serialVersionUID = 4L;
     private String login;
+    private String postOfSigner;
     private String hrSpecialist;
     private String hrManager;
     private String hrEmail;
@@ -525,5 +526,19 @@ public class PatientDto implements Serializable {
      */
     public void setHrSpecialist(String hrSpecialist) {
         this.hrSpecialist = hrSpecialist;
+    }
+
+    /**
+     * @return the postOfSigner
+     */
+    public String getPostOfSigner() {
+        return postOfSigner;
+    }
+
+    /**
+     * @param postOfSigner the postOfSigner to set
+     */
+    public void setPostOfSigner(String postOfSigner) {
+        this.postOfSigner = postOfSigner;
     }
 }

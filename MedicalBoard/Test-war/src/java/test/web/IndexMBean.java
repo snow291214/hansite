@@ -89,10 +89,16 @@ public class IndexMBean implements Serializable {
         this.patientDto.setFormOfProperty(this.userDetails.getAuthority().getFormOfProperty());
         this.patientDto.setOkved(this.userDetails.getAuthority().getOkved());
         this.patientDto.setHrSpecialist(this.userDetails.getFullName());
-        this.patientDto.setHrManager(this.userDetails.getAuthority().getHRManager());
         this.patientDto.setHrEmail(this.userDetails.getEmail());
         this.patientDto.setCompanyName(this.userDetails.getAuthority().getFullName());
         this.patientDto.setMedialogCode(this.userDetails.getAuthority().getMedialogCode());
+        if (this.userDetails.getAuthority().getIsDirectorSigner() == 0) {
+            this.patientDto.setPostOfSigner("Начальник отдела кадров");
+            this.patientDto.setHrManager(this.userDetails.getAuthority().getHRManager());
+        } else {
+            this.patientDto.setPostOfSigner("Директор");
+            this.patientDto.setHrManager(this.userDetails.getAuthority().getManager());
+        }
         this.patientDto.setHazards(new ArrayList<HazardDto>());
         this.counter = 0;
     }
@@ -244,6 +250,7 @@ public class IndexMBean implements Serializable {
 
     private HashMap setAssignmentMap(PatientDto patientDto) {
         HashMap<String, String> replaceValues = new HashMap<String, String>();
+        replaceValues.put("[postOfSigner]", patientDto.getPostOfSigner());
         replaceValues.put("[hrSpecialist]", patientDto.getHrSpecialist());
         replaceValues.put("[hrManager]", patientDto.getHrManager());
         replaceValues.put("[formOfProperty]", patientDto.getFormOfProperty());
