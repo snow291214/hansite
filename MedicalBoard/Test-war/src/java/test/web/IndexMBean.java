@@ -93,7 +93,11 @@ public class IndexMBean implements Serializable {
         this.patientDto.setCompanyName(this.userDetails.getAuthority().getFullName());
         this.patientDto.setMedialogCode(this.userDetails.getAuthority().getMedialogCode());
         if (this.userDetails.getAuthority().getIsDirectorSigner() == 0) {
-            this.patientDto.setPostOfSigner("Начальник отдела кадров");
+            if (!"".equals(this.userDetails.getAuthority().getHRManagerName())) {
+                this.patientDto.setPostOfSigner(this.userDetails.getAuthority().getHRManagerName());
+            } else {
+                this.patientDto.setPostOfSigner("Начальник отдела кадров");
+            }
             this.patientDto.setHrManager(this.userDetails.getAuthority().getHRManager());
         } else {
             this.patientDto.setPostOfSigner("Директор");
