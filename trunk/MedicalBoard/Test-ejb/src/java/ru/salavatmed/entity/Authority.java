@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Authority.findByHRManager", query = "SELECT a FROM Authority a WHERE a.hRManager = :hRManager"),
     @NamedQuery(name = "Authority.findByIsDirectorSigner", query = "SELECT a FROM Authority a WHERE a.isDirectorSigner = :isDirectorSigner")})
 public class Authority implements Serializable {
+    @Size(max = 255)
+    @Column(name = "HRManagerName", length = 255)
+    private String hRManagerName;
     private static final long serialVersionUID = 2L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -195,6 +198,14 @@ public class Authority implements Serializable {
     @Override
     public String toString() {
         return "ru.salavatmed.entity.Authority[ uid=" + uid + " ]";
+    }
+
+    public String getHRManagerName() {
+        return hRManagerName;
+    }
+
+    public void setHRManagerName(String hRManagerName) {
+        this.hRManagerName = hRManagerName;
     }
     
 }
