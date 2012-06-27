@@ -30,6 +30,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.ServletContext;
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.lang3.StringUtils;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import ru.salavatmed.ejb.HazardSessionBean;
 import ru.salavatmed.ejb.UserSessionBean;
@@ -93,7 +94,7 @@ public class IndexMBean implements Serializable {
         this.patientDto.setCompanyName(this.userDetails.getAuthority().getFullName());
         this.patientDto.setMedialogCode(this.userDetails.getAuthority().getMedialogCode());
         if (this.userDetails.getAuthority().getIsDirectorSigner() == 0) {
-            if (!"".equals(this.userDetails.getAuthority().getHRManagerName())) {
+            if (StringUtils.isNotEmpty(userDetails.getAuthority().getHRManagerName())) {
                 this.patientDto.setPostOfSigner(this.userDetails.getAuthority().getHRManagerName());
             } else {
                 this.patientDto.setPostOfSigner("Начальник отдела кадров");
